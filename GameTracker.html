@@ -1,0 +1,681 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+    <style> /* General styling */
+.hidden {
+  visibility: hidden;
+}
+    </style>
+    <style> /* Style the tooltip
+.tooltip {
+  font-size: 2vw;
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+    </style>
+    <style> /* Style the links inside the sidenav */
+#SideNav a {
+  position: fixed; /* Position them relative to the viewport - not affected by scrolling */
+  left: -15vw; /* Position them outside of the screen */
+  width: 15vw; 
+  /* height: 5vh; */
+  
+  text-decoration: none; /* Remove underline */
+  font-size: 3vw; 
+  text-align: center; /* Centres text horizontally in the anchor element */
+  line-height: 3vh;  
+  
+  transition: 0.3s; /* Add transition on hover */
+  border-radius: 0 5px 5px 0; /* Rounded corners on the top right and bottom right side */
+  padding: 2vh; 
+}
+
+#SideNav a:hover {
+  left: 0; /* On mouse-over, make the elements appear as they should */
+  color: white; /* White text color */
+  opacity: 1;
+}
+
+#newGame { /* The newgame_verify() link */
+  top: 5vh;
+  background-color: #04AA6D; /* Green */
+  color: #04AA6D;
+}
+
+#back { /* The game_backToPreviousStep() link */
+  top: 20vh;
+  background-color: #2196F3; /* Blue */
+  color: #2196F3; 
+}
+
+#skip {
+  top: 35vh;
+  background-color: #f44336; /* Red */
+  color: #f44336; 
+  opacity: 0;
+}
+
+#contact {
+  top: 50vh;
+  background-color: #555 /* Light Black */
+  color: #555;
+}
+    </style>
+    <style> /* Modal */
+/* (adapted from https://cssdeck.com/labs/css3-sleek-black-modal) */
+.modal {
+  /* basic */
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */ 
+  z-index: 1; /* Sit on top */
+  left: 20vw;
+  top: auto;
+  width: 60vw; 
+  height: 45vh; 
+  background-color: #fff;
+  margin: 0 auto;
+  padding: 30px;
+  text-align: center;
+  /* border-radius */
+  border-radius: 12px;
+  color: white;
+  /* box-shadow */
+  -webkit-box-shadow: rgba(0,0,0,0.5) 0px 3px 10px, rgba(0,0,0,.75) 0 0 70px inset;
+  -moz-box-shadow: rgba(0,0,0,0.5) 0px 3px 10px, rgba(0,0,0,.75) 0 0 70px inset;
+  box-shadow: rgba(0,0,0,0.5) 0px 3px 10px, rgba(0,0,0,.75) 0 0 70px inset;
+  
+  background: #7d7e7d;
+  background: -moz-linear-gradient(top, #7d7e7d, #0e0e0e);
+  background: -webkit-linear-gradient(top, #7d7e7d, #0e0e0e);
+  background: -ms-linear-gradient(top, #7d7e7d, #0e0e0e);
+  background: -o-linear-gradient(top, #7d7e7d, #0e0e0e);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7d7e7d', endColorstr='#0e0e0e',GradientType=0 );
+  background: linear-gradient(to bottom, #7d7e7d, #0e0e0e);
+  
+  border-top: 1px solid #666;
+  overflow: hidden;
+}
+
+#modal h1 {
+  text-align: left;
+  margin: 0;
+  font-size: 6vh;
+  letter-spacing: -1px;
+  margin-bottom: vh;
+  text-shadow: 0 -1px 1px #000, 0 0px 5px rgba(0,0,0,.25);
+}
+
+.modal-content p {
+  margin-top: 7vh 0 10vh;
+  color: #FFD700;
+  font-size: 5vh;
+  text-align: center;
+  text-shadow: 0 0px 5px rgba(0,0,0,.25), 0 -1px 1px #000;
+}
+    
+.modalButtonsArea {
+  margin: 0;
+  position: absolute;
+  width: 60%; /* set the size of the block of buttons relative to the container */
+  top: 85%;   /* starts the block of buttons near the bottom of the screen (see transform below) */
+  left: 50%;  /* starts the block of buttons halfway across the screen (see transform below) */
+  -ms-transform: translate(-50%, -50%); /* moves the block of buttons back and up to centre them */
+  transform: translate(-50%, -50%);
+}
+
+.btn {
+  background: green;
+  display: block;
+  padding: 5% 5%;
+  border-radius: 12px;
+  float:left;
+  
+  text-decoration:none;
+  color: white;
+  margin: 5px 5px 5px 5px;
+  
+  font-weight: bold;
+  text-shadow: 0 0 10px #000;
+  border-top: 1px solid rgb(200,250,100);
+  font-size: 5vh;
+  
+  -webkit-box-shadow: rgba(255,255,255,.3) 0 2px 1px,rgba(0,0,0,.3) 0 -2px 1px, rgba(0,0,0,0.5) 0px 3px 10px, rgba(0,50,0,.75) 0 0 40px inset;
+  -moz-box-shadow: rgba(255,255,255,.3) 0 2px 1px,rgba(0,0,0,.3) 0 -2px 1px, rgba(0,0,0,0.5) 0px 3px 10px, rgba(0,50,0,.75) 0 0 40px inset;
+  box-shadow: rgba(255,255,255,.3) 0 2px 1px,rgba(0,0,0,.3) 0 -2px 1px, rgba(0,0,0,0.5) 0px 3px 10px, rgba(0,50,0,.75) 0 0 40px inset;
+  
+  background: #bfd255;
+  background: -webkit-linear-gradient(top, #bfd255 0%, #8eb92a 50%, #72aa00 51%, #9ecb2d 100%);
+  background: -moz-linear-gradient(top, #bfd255 0%, #8eb92a 50%, #72aa00 51%, #9ecb2d 100%);
+  background: -ms-linear-gradient(top, #bfd255 0%, #8eb92a 50%, #72aa00 51%, #9ecb2d 100%);
+  background: -o-linear-gradient(top, #bfd255 0%, #8eb92a 50%, #72aa00 51%, #9ecb2d 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#bfd255', endColorstr='#9ecb2d',GradientType=0 );
+  background: linear-gradient(to bottom, #bfd255 0%, #8eb92a 50%, #72aa00 51%, #9ecb2d 100%);
+}
+
+.modalClose { /* Styling for the close button (the red x) */
+  background: red; 
+  display: block;
+  padding: 2% 3%;
+  float: right;
+  border-radius: 12px;
+  
+  text-decoration: none;
+  color: white;
+  font-size: 8vh;
+  font-weight: bold;
+  border-top: 1px solid rgb(250,150,100);
+  
+  -webkit-box-shadow: rgba(255,255,255,.3) 0 2px 1px,rgba(0,0,0,.3) 0 -2px 1px, rgba(0,0,0,0.5) 0px 3px 10px, rgba(100,0,0,.75) 0 0 40px inset;
+  -moz-box-shadow: rgba(255,255,255,.3) 0 2px 1px,rgba(0,0,0,.3) 0 -2px 1px, rgba(0,0,0,0.5) 0px 3px 10px, rgba(100,0,0,.75) 0 0 40px inset;
+  box-shadow: rgba(255,255,255,.3) 0 2px 1px,rgba(0,0,0,.3) 0 -2px 1px, rgba(0,0,0,0.5) 0px 3px 10px, rgba(100,0,0,.75) 0 0 40px inset;
+  
+  text-shadow: 0 0 10px #000;
+  
+  background: #f3c5bd;
+  background: -webkit-linear-gradient(top, #f3c5bd 0%, #e86c57 50%, #ea2803 51%, #ff6600 100%);
+  background: -moz-linear-gradient(top, #f3c5bd 0%, #e86c57 50%, #ea2803 51%, #ff6600 100%);
+  background: -ms-linear-gradient(top, #f3c5bd 0%, #e86c57 50%, #ea2803 51%, #ff6600 100%);
+  background: -o-linear-gradient(top, #f3c5bd 0%, #e86c57 50%, #ea2803 51%, #ff6600 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3c5bd', endColorstr='#ff6600',GradientType=0 );
+  background: linear-gradient(to bottom, #f3c5bd 0%, #e86c57 50%, #ea2803 51%, #ff6600 100%);
+}
+
+a:active { /* ??? */
+  position:relative;
+  top:3px;
+}
+  
+.fade-in { /* Used to fade in the banner when changing to a new phase */
+  animation: fadeIn ease 2s;
+  -webkit-animation: fadeIn ease 2s;
+  -moz-animation: fadeIn ease 2s;
+  -o-animation: fadeIn ease 2s;
+  -ms-animation: fadeIn ease 2s;
+}
+@keyframes fadeIn         { 0% { opacity:0; } 100% { opacity:1; } }
+@-moz-keyframes fadeIn    { 0% { opacity:0; } 100% { opacity:1; } }
+@-webkit-keyframes fadeIn { 0% { opacity:0; } 100% { opacity:1; } }
+@-o-keyframes fadeIn      { 0% { opacity:0; } 100% { opacity:1; } }
+@-ms-keyframes fadeIn     { 0% { opacity:0; } 100% { opacity:1; } }
+
+.fade-out { /* Used to fade out the banner when moving to a new step */
+  animation: fadeOut ease 2s;
+  -webkit-animation: fadeOut ease 2s;
+  -moz-animation: fadeOut ease 28s;
+  -o-animation: fadeOut ease 2s;
+  -ms-animation: fadeOut ease 2s;
+}
+@keyframes fadeOut         { 0% { opacity:1; } 100% { opacity:0; } }
+@-moz-keyframes fadeOut    { 0% { opacity:1; } 100% { opacity:0; } }
+@-webkit-keyframes fadeOut { 0% { opacity:1; } 100% { opacity:0; } }
+@-o-keyframes fadeOut      { 0% { opacity:1; } 100% { opacity:0; } }
+@-ms-keyframes fadeOut     { 0% { opacity:1; } 100% { opacity:0; } }
+    </style>
+    <style>
+body { 
+  /* background-repeat: no-repeat; */
+  background-attachment: scroll;
+  background-position: -0% -0%; 
+  
+    -webkit-transition: background 1s;
+    -moz-transition: background 1s;
+    -o-transition: background 1s;
+    transition: background 1s;
+}
+    </style>
+</head>
+    <body>
+        <div id='SideNav' class='sidenav'>
+          <div class='sidenavbtn' onclick='newgame_verify()'><a href='#' id='newGame'>New Game</a></div>
+          <div class='sidenavbtn'><a href='#' id='back'></a></div>
+          <div class='sidenavbtn'><a href='#' id='skip'></a></div>
+          <a href='#' id='contact'>Contact</a>
+        </div>
+        <div id='GameModal' class='modal'>
+            <div class='modal-content'>
+                <div class='modalBanner hidden'>banner: round information goes here</div>
+                <div class='modalChangeBanner hidden'>banner: phase change information goes here</div>
+                <span class='modalClose'>&times;</span>
+                <h1>header: phase information goes here</h1>
+                <p>detail: step information goes here</p>
+                <div class='modalButtonsArea'></div>
+            </div>
+        </div>
+		<canvas id='GameCanvas'></canvas>
+        <script> /* define game steps */
+        var sequence = JSON.parse('{ "phases": [ "Setup", "Resource", "Planning", "Quest", "Travel", "Encounter", "Combat", "Refresh" ] ' +
+                                  ' ,"steps": [ { "phase": 0, "name": "Extract Campaign Setup cards" } ' +
+                                  '            ,{ "phase": 0, "name": "Place Heroes" } ' +
+                                  '            ,{ "phase": 0, "name": "Shuffle Player Decks" } ' +
+                                  '            ,{ "phase": 0, "name": "Set Threat Levels" } ' +
+                                  '            ,{ "phase": 0, "name": "Create Token Banks" } ' +
+                                  '            ,{ "phase": 0, "name": "Determine First Player" } ' +
+                                  '            ,{ "phase": 0, "name": "Place Quest Cards" } ' +
+                                  '            ,{ "phase": 0, "name": "Perform Campaign Setup" } ' +
+                                  '            ,{ "phase": 0, "name": "Perform Scenario Setup" } ' +
+                                  '            ,{ "phase": 0, "name": "Shuffle Encounter Deck" } ' +
+                                  '            ,{ "phase": 0, "name": "Draw Starting Hand (6 cards)" } ' +
+                                  '            ,{ "phase": 1, "name": "Gather Resources", "gameloopto" : "Pass First Player Token", "box" : [120,245,880,440] } ' +
+                                  '            ,{ "phase": 1, "name": "Draw a Card", "actionwindow" : "true", "box" : [120,455,880,660] } ' +
+                                  '            ,{ "phase": 2, "name": "Special Action Window", "playerloopto" : "Special Action Window", "box" : [120,1135,880,1420] } ' + 
+                                  '            ,{ "phase": 3, "name": "Action Window", "box" : [120,1770,880,1980] } ' +
+                                  '            ,{ "phase": 3, "name": "Commit Characters", "actionwindow" : "true", "box" : [120,1980,880,2200] } ' +
+                                  '            ,{ "phase": 3, "name": "Staging", "actionwindow" : "true", "box" : [120,2200,880,2400] } ' +
+                                  '            ,{ "phase": 3, "name": "Quest Resolution", "actionwindow" : "true", "box" : [120,2400,880,2620] } ' +
+                                  '            ,{ "phase": 4, "name": "Travel Opportunity", "actionwindow" : "true", "box" : [120,3070,880,3290] } ' +
+                                  '            ,{ "phase": 5, "name": "Optional Engagements", "actionwindow" : "true", "box" : [1540,230,2225,410] } ' +
+                                  '            ,{ "phase": 5, "name": "Engagement Checks", "actionwindow" : "true", "box" : [1540,410,2225,590] } ' +
+                                  '            ,{ "phase": 6, "name": "Combat Check", "allskip" : "No Combat?", "skipto" : "Ready All Cards", "box" : [1145,880,1900,975] } ' +
+                                  '            ,{ "phase": 6, "name": "Deal Shadow Card", "actionwindow" : "true", "allskip" : "No Enemies Are Attacking Players?", "skipto" : "Choose Enemy and Attackers", "playerloopto" : "Deal Shadow Card", "box" : [1145,975,1900,1170] } ' +
+                                  '            ,{ "phase": 6, "stage": "Enemy Attack", "name": "Choose Attacking Enemy", "actionwindow" : "true", "playerskip" : "Player Is Not Under Attack?", "skipto" : "Choose Attacking Enemy", "playerloopto" : "Determine Enemy and Defender Combat Damage", "box" : [1145,1360,1900,1585] } ' +
+                                  '            ,{ "phase": 6, "stage": "Enemy Attack", "name": "Declare Defender", "actionwindow" : "true", "box" : [1145,1585,1900,1775] } ' +
+                                  '            ,{ "phase": 6, "stage": "Enemy Attack", "name": "Reveal & Resolve Shadow Effects", "actionwindow" : "true", "box" : [1145,1775,1900,1970] } ' +
+                                  '            ,{ "phase": 6, "stage": "Enemy Attack", "name": "Determine Enemy and Defender Combat Damage", "actionwindow" : "true", "box" : [1145,1970,1900,2160] } ' +
+                                  '            ,{ "phase": 6, "stage": "Player Attack", "name": "Choose Enemy and Attackers", "actionwindow" : "true", "playerskip" : "Player Is Not Attacking An Enemy?", "skipto" : "Choose Enemy and Attackers", "playerloopto" : "Determine Attacker and Enemy Combat Damage", "box" : [2010,1065,2775,1380] } ' +
+                                  '            ,{ "phase": 6, "stage": "Player Attack", "name": "Determine Attacker Strength", "actionwindow" : "true" , "box" : [2010,1380,2775,1575] } ' +
+                                  '            ,{ "phase": 6, "stage": "Player Attack", "name": "Determine Attacker and Enemy Combat Damage", "actionwindow" : "true", "box" : [2010,1575,2775,1770] } ' +
+                                  '            ,{ "phase": 6, "name": "Discard All Shadow Cards", "box" : [2010,2180,2775,2270] } ' +
+                                  '            ,{ "phase": 7, "name": "Ready All Cards", "box" : [1615,2790,2345,2965] } ' +
+                                  '            ,{ "phase": 7, "name": "Raise Threat Levels", "box" : [1615,2965,2345,3055] } ' +
+                                  '            ,{ "phase": 7, "name": "Pass First Player Token", "actionwindow" : "true", "box" : [1615,3055,2345,3240] } ' +
+                                  '           ]' +
+                                  '}'
+                                 );
+        </script>
+        <script> /* main code */
+        var navBack = document.getElementById('back');
+        var navSkip = document.getElementById('skip');
+        var modal = document.getElementById('GameModal');
+        var modalBanner = modal.getElementsByClassName('modalBanner')[0];
+        var modalChangeBanner = modal.getElementsByClassName('modalChangeBanner')[0];
+        var modalHeader = modal.getElementsByTagName('h1')[0];
+        var modalDetail = modal.getElementsByTagName('p')[0];
+        var modalClose = modal.getElementsByClassName('modalClose')[0];
+        var modalButtonsArea = modal.getElementsByClassName('modalButtonsArea')[0]; 
+		var gameCanvas = document.getElementById('GameCanvas');
+        var AllPlayers = 0; // indicates a step is performed by all players    
+        var backgroundSize		
+        
+        //localStorage.clear()
+        initialize();
+		
+		function loadBackground(url) {  
+          const img = new Image();
+		  img.addEventListener("load", function() {
+			backgroundSize = [this.naturalWidth, this.naturalHeight];
+		  });
+		  img.src = url;
+		  document.body.style.backgroundImage = "url('" + url + "')";  	 
+		}
+        
+        function initialize() {
+          navBack.parentElement.classList.add('hidden');
+          modalChangeBanner.innerHTML = '';    
+		  gameCanvas.style.visibility = "hidden";   
+
+          loadBackground('http://drive.google.com/uc?export=view&id=11Ox2RMoj3ELVhDeCu2mrURSRzX15L9Gn');		       
+		  
+          // translate the step names that define loops into step numbers
+          for(var step = 0; step < sequence.steps.length; step++) { 
+            if (sequence.steps[step].gameloopto != null) {
+              var gameloopend = findStepNum(sequence.steps[step].gameloopto);
+              sequence.steps[step].gameloopend = gameloopend;
+              sequence.steps[gameloopend].gameloopstart = step;
+            }
+            if (sequence.steps[step].playerloopto != null) {
+              var playerloopend = findStepNum(sequence.steps[step].playerloopto);
+              sequence.steps[step].playerloopend = playerloopend;
+              sequence.steps[playerloopend].playerloopstart = step;
+            }
+          }
+          
+          if (localStorage.getItem('stateHistory') != null) {
+            initialState = parseInt(localStorage.getItem('stateHistory').split(',')[0], 10);
+            game_setCurrentState(initialState);            
+          }
+        }
+
+        function hideModal() { // hide the modal
+          modal.style.display = 'none';
+        } 
+
+        function newgame_verify() { // Open modal to verify a new game is starting
+          var closeInfo = '(press &times; to return without starting a new game)';
+          var prompt = 'How many players in the new game?';
+          var buttons = [];
+          for(var x = 1; x < 5; x++) {
+            buttons[x] = generateButton('&nbsp;' + x + '&nbsp;', 'newgame_start(' + x + ')');
+          }
+          showModal('', closeInfo, true, prompt, '', buttons);
+        }
+
+        function newgame_start(numPlayers) { // Resets the page for a new game
+          localStorage.removeItem('stateHistory');
+          var initialState = numPlayers * 578495;
+          localStorage.setItem('stateHistory', initialState.toString());
+          game_advanceToStep(0, AllPlayers);
+        }
+
+        function game_advanceToStep(newStepNum, asPlayer=null) { // shows the modal information for a step in the game
+          // At this point we have not yet changed our state to be in the new step. 
+          // We are gathering information about the current state we are moving from and the new state we are move to.
+          var stateHistory = localStorage.getItem('stateHistory');
+          var fromState    = parseInt(stateHistory.split(',')[0], 10);
+          
+          var fromRound         = modulo(fromState, 53);
+          var fromStepNum       = modulo(fromState, 37); 
+          var fromStep          = sequence.steps[fromStepNum];    
+          var fromPhaseNum      = fromStep.phase;   
+          var fromPlayer        = modulo(fromState, 5); 
+          var fromNumPlayers    = modulo(fromState, 7);
+          var fromVictoryPoints = modulo(fromState, 59);    
+          
+          var newStep = sequence.steps[newStepNum];
+          var newPlayer = (asPlayer == null) ? fromPlayer : asPlayer;
+          
+          if ((fromStep.playerloopstart != null) &&
+              (fromPlayer == fromNumPlayers)) { // are we at the end of a player loop?
+            newPlayer = 0;
+          }
+          
+		  if (newStep.playerloopend != null) { // are we entering a player loop?
+            newPlayer++;
+          }
+          
+          var toRound         = fromRound + ((newStep.gameloopend == null) ? 0 : 1);
+          var toStepNum       = newStepNum;
+          var toStep          = newStep;      
+          var toPhaseNum      = newStep.phase;
+          var toPlayer        = newPlayer;
+          var toNumPlayers    = fromNumPlayers;
+          var toVictoryPoints = fromVictoryPoints;
+          
+          var newState = toRound * 382025 + 
+                         toStepNum * -109445 + 
+                         toPlayer * 1619786 +
+                         toNumPlayers * 578495 +
+                         toVictoryPoints * 1578605;
+                         
+          var newRound    = toRound;
+          var newPhaseNum = toPhaseNum;
+		  
+          console.log('round:' + fromRound + '->' + newRound +
+                      ' phase:' + fromPhaseNum + '->' + newPhaseNum +
+                      ' step:' + fromStepNum + '->' + toStepNum +
+                      ' player:' + fromPlayer + '->' + toPlayer +
+                      //' skip:' + ((newStep.skip == null) ? '' : 'skip') + ((newStep.playerskip == null) ? '' : 'playerskip') + '->' + newStep.skipto +
+                      '');
+                      
+          game_setCurrentState(newState);
+        }
+        
+        function game_backToPreviousStep() {
+          var stateHistory = localStorage.getItem('stateHistory');
+          var fromState    = parseInt(stateHistory.split(',')[0], 10);
+          var toState      = parseInt(stateHistory.split(',')[1], 10); // go back 2 states in the history because we have already added the current state to the history
+		  localStorage.setItem('stateHistory', stateHistory.slice(stateHistory.split(',', 3).join(',').length + 1)); // removes the first two states from the history
+          
+          var fromRound         = modulo(fromState, 53);
+          var fromStepNum       = modulo(fromState, 37); 
+          var fromStep          = sequence.steps[fromStepNum];    
+          var fromPhaseNum      = fromStep.phase;   
+          var fromPlayer        = modulo(fromState, 5); 
+          var fromNumPlayers    = modulo(fromState, 7);
+          var fromVictoryPoints = modulo(fromState, 59);    
+          
+          var toRound         = modulo(toState, 53);
+          var toStepNum       = modulo(toState, 37); 
+          var toStep          = sequence.steps[toStepNum];    
+          var toPhaseNum      = toStep.phase;   
+          var toPlayer        = modulo(toState, 5); 
+          var toNumPlayers    = modulo(toState, 7);
+          var toVictoryPoints = modulo(toState, 59);   
+		  
+          //console.log('round:' + fromRound + '->' + toRound +
+          //            ' phase:' + fromPhaseNum + '->' + toPhaseNum +
+          //            ' step:' + fromStepNum + '->' + toStepNum +
+          //            ' player:' + fromPlayer + '->' + toPlayer +
+          //            //' skip:' + ((newStep.skip == null) ? '' : 'skip') + ((newStep.playerskip == null) ? '' : 'playerskip') + '->' + newStep.skipto +
+          //            '');
+		  
+          game_setCurrentState(toState);
+        }
+        
+        function game_setCurrentState(currentState) {  
+          var stateHistory = localStorage.getItem('stateHistory');
+          localStorage.setItem('stateHistory', currentState + ',' + stateHistory); 
+          
+          var previousState    = parseInt(stateHistory.split(',')[0], 10);
+          var previousRound    = modulo(previousState, 53);
+          var previousStepNum  = modulo(previousState, 37); 
+          var previousStep     = sequence.steps[previousStepNum];
+          var previousPhaseNum = previousStep.phase;
+           
+          var currentRound         = modulo(currentState, 53);
+          var currentStepNum       = modulo(currentState, 37); 
+          var currentStep          = sequence.steps[currentStepNum];
+          var currentPhaseNum      = currentStep.phase;  
+          var currentPlayer        = modulo(currentState, 5);
+          var currentNumPlayers    = modulo(currentState, 7);
+          //var currentVictoryPoints = modulo(currentState, 59);
+          
+          // banner: shows the current round
+          var banner = (currentRound == 0) ? '' : 'Round ' + currentRound;
+          
+          // change banner: shows when the phase changes
+          var isPhaseChange = (currentPhaseNum != previousPhaseNum);
+          var changeBanner = (isPhaseChange) 
+                             ? 'End of the ' + sequence.phases[previousPhaseNum] + ' Phase<br>' +
+                               'Start of the ' + sequence.phases[currentPhaseNum] + ' Phase'
+                             : '';
+          // close button: shows only for the new game state
+          var showClose = false;
+          
+          // header: shows the current phase and stage
+          var header = sequence.phases[currentPhaseNum] + ' Phase' +
+                       ((currentStep.stage == null) ? '' : ': ' + currentStep.stage + ' Stage');
+          
+          // text: shows the current step
+          var hasActionWindow = currentStep.actionwindow;
+          var detail = currentStep.name + (hasActionWindow ? '<br>&amp;<br>Action Window' : '');        
+          if (currentPlayer != AllPlayers) { // are we inside a loop?
+            detail = (currentPlayer == 1 ? 'First Player' : 'Player ' + currentPlayer) + ': ' + detail;
+          } 
+          
+          // buttons
+		  var isLastPlayer = (currentPlayer == currentNumPlayers);
+          var nextStepNum = (currentStep.gameloopstart != null)                        ? currentStep.gameloopstart :
+                            ((currentStep.playerloopstart != null) && (!isLastPlayer)) ? currentStep.playerloopstart :
+                                                                                         currentStepNum + 1; 
+          var buttons = [ generateButton('Next', 'game_advanceToStep(' + nextStepNum + ')') ];
+		  
+		  // sidenav: back		  
+          var showBack = (currentPhaseNum > 0); 
+          
+          // sidenav: skip 
+          var skipInfo = null;
+          var skip = ((currentStep.allskip != null) && (currentPlayer <= 1)) ? currentStep.allskip :
+                     (currentStep.playerskip != null)                        ? currentStep.playerskip :
+                                                                               null;												   
+          if (skip != null) {           
+            var skipToStepNum = (isLastPlayer && (currentStep.playerskip != null)) 
+			                    ? currentStep.playerloopend + 1
+			                    : findStepNum(currentStep.skipto);
+            var skipToPlayer = currentPlayer;
+			// if this is the last player in a player loop then reset the player number
+			if ((currentStep.playerskip != null) && (currentPlayer == currentNumPlayers)) {
+			  skipToPlayer = AllPlayers;
+			} else {
+              // if we are skipping out of a loop (or over one) then reset the player number
+              for (var step = currentStepNum; step < skipToStepNum; step++) {
+                if (sequence.steps[step].loopstart != null) {
+                  skipToPlayer = AllPlayers;
+                  break;
+                }
+              }
+			}
+            skipInfo = [skip, skipToStepNum, skipToPlayer];         
+          }
+		  
+		  // repositioning of the background image
+		  var box = currentStep.box;
+          
+          showModal(banner, changeBanner, showClose, header, detail, buttons, showBack, skipInfo, box);
+        }
+        
+        function showModal(bannerText, changeBannerText, showClose, headerText, detailText, buttons, showBack, skipInfo=null, box=null) { // display the modal     
+          // banner:
+          modalBanner.innerHTML = bannerText;
+          if (bannerText == '') {
+            modalBanner.classList.add('hidden');
+          } else {
+            modalBanner.classList.remove('hidden');
+          }
+
+          // change banner:       
+          if (modalChangeBanner.innerHTML != changeBannerText) {
+            modalChangeBanner.classList.remove('fade-in', 'fade-out');
+            if (changeBannerText == '') {           
+              modalChangeBanner.classList.add('fade-out');
+              modalChangeBanner.addEventListener('animationend', clearmodalChangeBanner);
+            } else {            
+              modalChangeBanner.classList.add('hidden');
+              modalChangeBanner.innerHTML = changeBannerText;
+              modalChangeBanner.classList.add('fade-in');
+              modalChangeBanner.classList.remove('hidden');
+            }
+          }
+          function clearmodalChangeBanner() {
+            modalChangeBanner.classList.add('hidden');
+            modalChangeBanner.innerHTML = ''; 
+            modalChangeBanner.removeEventListener('animationend', clearmodalChangeBanner);
+          }     
+
+           // close button:   
+          if (showClose) { // make the modal close <span> appear
+            modalClose.style.display = 'block';             
+            modalClose.onclick = function() { // When the user clicks on <span> (x), close the modal
+              hideModal();
+              if (localStorage.getItem('stateHistory') != null) {
+                latestsState = parseInt(localStorage.getItem('stateHistory').split(',')[0], 10);
+                game_setCurrentState(latestsState);            
+              }
+            }
+          } else { // hide the modal close <span>    
+            modalClose.style.display = 'none'; 
+          }
+          
+          // header:
+          modalHeader.innerHTML = headerText;
+          
+          // detail:
+          modalDetail.innerHTML = detailText;  
+          
+          // buttons:
+          modalButtonsArea.innerHTML = '';
+          buttons.forEach(b => modalButtonsArea.innerHTML += b);
+          
+          // back:
+          if (showBack) {
+            navBack.innerHTML = 'Back';
+            navBack.parentElement.onclick = function() { game_backToPreviousStep(); }   
+            navBack.parentElement.classList.remove('hidden');
+          } else {
+            navBack.innerHTML = '';
+            navBack.parentElement.classList.add('hidden');
+          }
+          
+          // sideNavs:
+          if (skipInfo == null) {           
+            navSkip.style.left = null;
+            navSkip.style.color = null;
+            navSkip.parentElement.onclick = null;
+            navSkip.innerHTML = '';
+            navSkip.parentElement.classList.add('hidden');
+          } else {
+            var skipToStepNum = skipInfo[1];
+            var skipToPlayer  = skipInfo[2];
+            navSkip.innerHTML = skipInfo[0];
+            navSkip.parentElement.onclick = function() { game_advanceToStep(skipToStepNum, skipToPlayer); }    
+            navSkip.parentElement.classList.remove('hidden');
+            navSkip.style.left = '0';
+            navSkip.style.color = 'white';
+            navSkip.style.opacity = 1;
+          }
+          
+		  if (box == null) {
+			gameCanvas.style.visibility = "hidden";
+		  } else {
+			gameCanvas.style.visibility = "visible";
+		    var modalBottom = Math.ceil(modal.offsetTop + modal.offsetHeight);
+		    var modalRight = Math.ceil(modal.offsetLeft + modal.offsetWidth);
+		    console.log("modal:" + modal.offsetLeft + "," + modal.offsetTop + "," + modalRight + "," + modalBottom + " " + modal.offsetWidth + 'x' + modal.offsetHeight);
+		    console.log("window:" + window.screen.width + 'x' + window.screen.height);
+		    console.log("box:" + box);
+		    var backgroundOffsetTop = modalBottom - box[1] + 110;
+		    var backgroundOffsetLeft = Math.floor(modal.offsetLeft + (modal.offsetWidth + box[0] - box[2]) / 2) - box[0];
+		    console.log("backgroundOffsetLeft = Math.floor(" + modal.offsetLeft + " + (" + modal.offsetWidth + " + " + box[0] + " - " + box[2] + ") / 2) = " + backgroundOffsetLeft);
+		    document.body.style.backgroundPosition = backgroundOffsetLeft + "px " + backgroundOffsetTop + "px";
+		    console.log("backgroundPosition = -" + backgroundOffsetLeft + "px " + backgroundOffsetTop + "px");
+		    
+		    var canvasOffsetTop = modalBottom  + 110;
+		    var canvasOffsetLeft = backgroundOffsetLeft + box[0] - 5;
+		    gameCanvas.width = box[2] - box[0] + 5;
+		    gameCanvas.height = box[3] - box[1] + 5;
+		    gameCanvas.style.position = "absolute";
+		    gameCanvas.style.top = canvasOffsetTop + "px";
+		    gameCanvas.style.left = canvasOffsetLeft + "px";
+		    console.log("canvas: " + canvasOffsetLeft + "," + canvasOffsetTop);
+		    
+		    var ctx = gameCanvas.getContext("2d");
+		    ctx.beginPath();
+		    ctx.lineWidth = "4";
+		    ctx.strokeStyle = "blue";
+		    ctx.rect(0, 0, box[2] - box[0], box[3] - box[1]);
+		    ctx.stroke();
+		  }
+			
+		  modal.style.display = 'block';  // make the modal appear  
+		}
+        
+        function generateButton(buttonText, onclick=null) {
+          var ocevent = (onclick == null) ? '' : " onclick='" + onclick + "'";
+          
+          return "<button type='button' class='btn'" + ocevent + '>' + buttonText + '</button>';
+        }
+        
+        function findStepNum(searchName) {
+          var step = null;
+          for(step = 0; step < sequence.steps.length; step++) { 
+            if (sequence.steps[step].name == searchName) { 
+              break 
+            };
+          };
+          return step;            
+        }
+        
+        function modulo(dividend, divisor) { // because in javascript % is remainder not modulo
+          return ((dividend % divisor ) + divisor ) % divisor
+        }
+        </script>
+    </body>
+</html>
