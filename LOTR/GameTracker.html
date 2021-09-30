@@ -2,34 +2,18 @@
 <html>
     <head>
     <style> /* General styling */
+body { 
+  /* background-repeat: no-repeat; */
+  background-attachment: scroll;
+  background-position: -0% -0%; 
+  
+    -webkit-transition: background 1s;
+    -moz-transition: background 1s;
+    -o-transition: background 1s;
+    transition: background 1s;
+}
 .hidden {
   visibility: hidden;
-}
-    </style>
-    <style> /* Style the tooltip
-.tooltip {
-  font-size: 2vw;
-  position: relative;
-  display: inline-block;
-  border-bottom: 1px dotted black;
-}
-
-.tooltip .tooltiptext {
-  visibility: hidden;
-  width: 120px;
-  background-color: black;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px 0;
-
-  /* Position the tooltip */
-  position: absolute;
-  z-index: 1;
-}
-
-.tooltip:hover .tooltiptext {
-  visibility: visible;
 }
     </style>
     <style> /* Style the links inside the sidenav */
@@ -230,18 +214,19 @@ a:active { /* ??? */
 @-o-keyframes fadeOut      { 0% { opacity:1; } 100% { opacity:0; } }
 @-ms-keyframes fadeOut     { 0% { opacity:1; } 100% { opacity:0; } }
     </style>
-    <style>
-body { 
-  /* background-repeat: no-repeat; */
-  background-attachment: scroll;
-  background-position: -0% -0%; 
-  
-    -webkit-transition: background 1s;
-    -moz-transition: background 1s;
-    -o-transition: background 1s;
-    transition: background 1s;
+	<style> /* Rules */
+.rules {
+  position: fixed; /* Stay in place */ 
+  z-index: 2; /* Sit on top of Modal */
+  left: auto;
+  top: auto; 
+  background: #909497;
 }
-    </style>
+.rules object{
+  width: 80vw; 
+  height: 75vh;
+}
+	</style>
 </head>
     <body>
         <div id='SideNav' class='sidenav'>
@@ -260,26 +245,25 @@ body {
                 <div class='modalButtonsArea'></div>
             </div>
         </div>
-<div>
-    <object data='/Images/LOTR LCG - Rule Compendium v2.0.pdf' type='application/pdf' width='50%' height="75%">
-        alt : <a href="test.pdf">test.pdf</a>
-    </object>
-</div>
+        <div id='GameRules' class='rules hidden'>
+          <span class='modalClose' onclick='gameRules.classList.add("hidden")'>&times;</span>
+		  <div id='RulesDisplay'></div>
+		</div>
 		<canvas id='GameCanvas'></canvas>
         <script> /* define game steps */
         var sequence = JSON.parse('{ "phases": [ "Setup", "Resource", "Planning", "Quest", "Travel", "Encounter", "Combat", "Refresh" ] ' +
                                   ' ,"steps": [ { "phase": 0, "name": "Extract Campaign Setup cards" } ' +
-                                  '            ,{ "phase": 0, "name": "Place Heroes" } ' +
-                                  '            ,{ "phase": 0, "name": "Shuffle Player Decks" } ' +
-                                  '            ,{ "phase": 0, "name": "Set Threat Levels" } ' +
-                                  '            ,{ "phase": 0, "name": "Create Token Banks" } ' +
-                                  '            ,{ "phase": 0, "name": "Determine First Player" } ' +
-                                  '            ,{ "phase": 0, "name": "Place Quest Cards" } ' +
-                                  '            ,{ "phase": 0, "name": "Perform Campaign Setup" } ' +
+                                  '            ,{ "phase": 0, "name": "Shuffle Player Decks", "rules" : [47,0,0] } ' +
+                                  '            ,{ "phase": 0, "name": "Shuffle Encounter Deck", "rules" : [47,0,130] } ' +
+                                  '            ,{ "phase": 0, "name": "Place Heroes", "rules" : [47,0,400] } ' +
+                                  '            ,{ "phase": 0, "name": "Perform Campaign Setup", "rules" : [47,0,430] } ' +
+                                  '            ,{ "phase": 0, "name": "Set Threat Levels", "rules" : [47,0,400] } ' +
+                                  '            ,{ "phase": 0, "name": "Create Token Banks", "rules" : [47,0,300] } ' +
+                                  '            ,{ "phase": 0, "name": "Determine First Player", "rules" : [47,0,380] } ' +
+                                  '            ,{ "phase": 0, "name": "Draw Starting Hand (6 cards)", "rules" : [47,0,450] } ' +
+                                  '            ,{ "phase": 0, "name": "Place Quest Cards", "rules" : [47,0,540] } ' +
                                   '            ,{ "phase": 0, "name": "Perform Scenario Setup" } ' +
-                                  '            ,{ "phase": 0, "name": "Shuffle Encounter Deck" } ' +
-                                  '            ,{ "phase": 0, "name": "Draw Starting Hand (6 cards)" } ' +
-                                  '            ,{ "phase": 1, "name": "Gather Resources", "gameloopto" : "Pass First Player Token", "box" : [120,245,880,440] } ' +
+                                  '            ,{ "phase": 1, "name": "Gather Resources", "gameloopto" : "Pass First Player Token", "box" : [120,245,880,440],  "rules" : [48,0,500] }' +
                                   '            ,{ "phase": 1, "name": "Draw a Card", "actionwindow" : "true", "box" : [120,455,880,660] } ' +
                                   '            ,{ "phase": 2, "name": "Special Action Window", "playerloopto" : "Special Action Window", "box" : [120,1135,880,1420] } ' + 
                                   '            ,{ "phase": 3, "name": "Action Window", "box" : [120,1770,880,1980] } ' +
@@ -317,16 +301,19 @@ body {
         var modalClose = modal.getElementsByClassName('modalClose')[0];
         var modalButtonsArea = modal.getElementsByClassName('modalButtonsArea')[0]; 
 		var gameCanvas = document.getElementById('GameCanvas');
+		var gameRules = document.getElementById('GameRules');
+		var gameRulesDisplay = document.getElementById('RulesDisplay');
         var AllPlayers = 0; // indicates a step is performed by all players    
-        var backgroundSize		
+        var backgroundSize;
         
-        //localStorage.clear()
-        initialize();
+        loadBackground('./Images/Round.png');
 		
 		function loadBackground(url) {  
           const img = new Image();
-		  img.addEventListener("load", function() {
-			backgroundSize = [this.naturalWidth, this.naturalHeight];
+		  img.addEventListener('load', function() {
+			backgroundSize = [this.naturalWidth, this.naturalHeight];			
+			// once the background is loaded, then the rest of the page can be set up.
+			initialize();
 		  });
 		  img.src = url;
 		  document.body.style.backgroundImage = "url('" + url + "')";  	 
@@ -335,9 +322,7 @@ body {
         function initialize() {
           navBack.parentElement.classList.add('hidden');
           modalChangeBanner.innerHTML = '';    
-		  gameCanvas.style.visibility = "hidden";   
-		  
-          loadBackground('/Images/Round.png');
+		  gameCanvas.style.visibility = 'hidden';   		  
 		  
           // translate the step names that define loops into step numbers
           for(var step = 0; step < sequence.steps.length; step++) { 
@@ -353,6 +338,7 @@ body {
             }
           }
           
+          //localStorage.clear()
           if (localStorage.getItem('stateHistory') != null) {
             initialState = parseInt(localStorage.getItem('stateHistory').split(',')[0], 10);
             game_setCurrentState(initialState);            
@@ -455,12 +441,12 @@ body {
           var toNumPlayers    = modulo(toState, 7);
           var toVictoryPoints = modulo(toState, 59);   
 		  
-          //console.log('round:' + fromRound + '->' + toRound +
-          //            ' phase:' + fromPhaseNum + '->' + toPhaseNum +
-          //            ' step:' + fromStepNum + '->' + toStepNum +
-          //            ' player:' + fromPlayer + '->' + toPlayer +
-          //            //' skip:' + ((newStep.skip == null) ? '' : 'skip') + ((newStep.playerskip == null) ? '' : 'playerskip') + '->' + newStep.skipto +
-          //            '');
+          console.log('round:' + fromRound + '->' + toRound +
+                      ' phase:' + fromPhaseNum + '->' + toPhaseNum +
+                      ' step:' + fromStepNum + '->' + toStepNum +
+                      ' player:' + fromPlayer + '->' + toPlayer +
+                      //' skip:' + ((newStep.skip == null) ? '' : 'skip') + ((newStep.playerskip == null) ? '' : 'playerskip') + '->' + newStep.skipto +
+                      '');
 		  
           game_setCurrentState(toState);
         }
@@ -507,11 +493,15 @@ body {
           } 
           
           // buttons
+		  var buttons = [];
 		  var isLastPlayer = (currentPlayer == currentNumPlayers);
           var nextStepNum = (currentStep.gameloopstart != null)                        ? currentStep.gameloopstart :
                             ((currentStep.playerloopstart != null) && (!isLastPlayer)) ? currentStep.playerloopstart :
                                                                                          currentStepNum + 1; 
-          var buttons = [ generateButton('Next', 'game_advanceToStep(' + nextStepNum + ')') ];
+          buttons.push(generateButton('Next', 'game_advanceToStep(' + nextStepNum + ')'));
+		  if (currentStep.rules != null) {
+		    buttons.push(generateButton('Help', 'game_showRules(' + currentStep.rules[0] + ',' + currentStep.rules[1] + ',' + currentStep.rules[2] + ')'));
+		  }
 		  
 		  // sidenav: back		  
           var showBack = (currentPhaseNum > 0); 
@@ -628,33 +618,27 @@ body {
           }
           
 		  if (box == null) {
-			gameCanvas.style.visibility = "hidden";
+			gameCanvas.style.visibility = 'hidden';
 		  } else {
-			gameCanvas.style.visibility = "visible";
+			gameCanvas.style.visibility = 'visible';
 		    var modalBottom = Math.ceil(modal.offsetTop + modal.offsetHeight);
 		    var modalRight = Math.ceil(modal.offsetLeft + modal.offsetWidth);
-		    console.log("modal:" + modal.offsetLeft + "," + modal.offsetTop + "," + modalRight + "," + modalBottom + " " + modal.offsetWidth + 'x' + modal.offsetHeight);
-		    console.log("window:" + window.screen.width + 'x' + window.screen.height);
-		    console.log("box:" + box);
 		    var backgroundOffsetTop = modalBottom - box[1] + 110;
 		    var backgroundOffsetLeft = Math.floor(modal.offsetLeft + (modal.offsetWidth + box[0] - box[2]) / 2) - box[0];
-		    console.log("backgroundOffsetLeft = Math.floor(" + modal.offsetLeft + " + (" + modal.offsetWidth + " + " + box[0] + " - " + box[2] + ") / 2) = " + backgroundOffsetLeft);
-		    document.body.style.backgroundPosition = backgroundOffsetLeft + "px " + backgroundOffsetTop + "px";
-		    console.log("backgroundPosition = -" + backgroundOffsetLeft + "px " + backgroundOffsetTop + "px");
+		    document.body.style.backgroundPosition = backgroundOffsetLeft + 'px ' + backgroundOffsetTop + 'px';
 		    
 		    var canvasOffsetTop = modalBottom  + 110;
 		    var canvasOffsetLeft = backgroundOffsetLeft + box[0] - 5;
 		    gameCanvas.width = box[2] - box[0] + 5;
 		    gameCanvas.height = box[3] - box[1] + 5;
-		    gameCanvas.style.position = "absolute";
-		    gameCanvas.style.top = canvasOffsetTop + "px";
-		    gameCanvas.style.left = canvasOffsetLeft + "px";
-		    console.log("canvas: " + canvasOffsetLeft + "," + canvasOffsetTop);
+		    gameCanvas.style.position = 'absolute';
+		    gameCanvas.style.top = canvasOffsetTop + 'px';
+		    gameCanvas.style.left = canvasOffsetLeft + 'px';
 		    
-		    var ctx = gameCanvas.getContext("2d");
+		    var ctx = gameCanvas.getContext('2d');
 		    ctx.beginPath();
-		    ctx.lineWidth = "4";
-		    ctx.strokeStyle = "blue";
+		    ctx.lineWidth = '4';
+		    ctx.strokeStyle = 'blue';
 		    ctx.rect(0, 0, box[2] - box[0], box[3] - box[1]);
 		    ctx.stroke();
 		  }
@@ -662,7 +646,13 @@ body {
 		  modal.style.display = 'block';  // make the modal appear  
 		}
         
-        function generateButton(buttonText, onclick=null) {
+        function game_showRules(pageNum, hOffset, vOffset) {
+		  console.log('showRules: ' + pageNum);
+		  gameRulesDisplay.innerHTML = "<object data='./Images/RulesCompendium_v2.0.pdf#page=" + pageNum + "&zoom=100," + hOffset + "," + vOffset + "&pagemode=none&view=FitH' type='application/pdf'></object>";
+		  gameRules.classList.remove('hidden');
+		}
+		
+		function generateButton(buttonText, onclick=null) {
           var ocevent = (onclick == null) ? '' : " onclick='" + onclick + "'";
           
           return "<button type='button' class='btn'" + ocevent + '>' + buttonText + '</button>';
