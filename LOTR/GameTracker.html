@@ -2,34 +2,52 @@
 <html>
     <head>
     <style> /* General styling */
+body { 
+  /* background-repeat: no-repeat; */
+  background-attachment: scroll;
+  background-position: -0% -0%; 
+  
+    -webkit-transition: background 1s;
+    -moz-transition: background 1s;
+    -o-transition: background 1s;
+    transition: background 1s;
+}
+
 .hidden {
   visibility: hidden;
 }
-    </style>
-    <style> /* Style the tooltip
-.tooltip {
-  font-size: 2vw;
-  position: relative;
-  display: inline-block;
-  border-bottom: 1px dotted black;
+
+.closeBtn { /* Styling for the close button (the red x) */
+  background: red; 
+  display: block;
+  padding: 2% 3%;
+  float: right;
+  border-radius: 12px;
+  
+  text-decoration: none;
+  color: white;
+  font-size: 4vh;
+  font-weight: bold;
+  border-top: 1px solid rgb(250,150,100);
+  
+  -webkit-box-shadow: rgba(255,255,255,.3) 0 2px 1px,rgba(0,0,0,.3) 0 -2px 1px, rgba(0,0,0,0.5) 0px 3px 10px, rgba(100,0,0,.75) 0 0 40px inset;
+  -moz-box-shadow: rgba(255,255,255,.3) 0 2px 1px,rgba(0,0,0,.3) 0 -2px 1px, rgba(0,0,0,0.5) 0px 3px 10px, rgba(100,0,0,.75) 0 0 40px inset;
+  box-shadow: rgba(255,255,255,.3) 0 2px 1px,rgba(0,0,0,.3) 0 -2px 1px, rgba(0,0,0,0.5) 0px 3px 10px, rgba(100,0,0,.75) 0 0 40px inset;
+  
+  text-shadow: 0 0 10px #000;
+  
+  background: #f3c5bd;
+  background: -webkit-linear-gradient(top, #f3c5bd 0%, #e86c57 50%, #ea2803 51%, #ff6600 100%);
+  background: -moz-linear-gradient(top, #f3c5bd 0%, #e86c57 50%, #ea2803 51%, #ff6600 100%);
+  background: -ms-linear-gradient(top, #f3c5bd 0%, #e86c57 50%, #ea2803 51%, #ff6600 100%);
+  background: -o-linear-gradient(top, #f3c5bd 0%, #e86c57 50%, #ea2803 51%, #ff6600 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3c5bd', endColorstr='#ff6600',GradientType=0 );
+  background: linear-gradient(to bottom, #f3c5bd 0%, #e86c57 50%, #ea2803 51%, #ff6600 100%);
 }
 
-.tooltip .tooltiptext {
-  visibility: hidden;
-  width: 120px;
-  background-color: black;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px 0;
-
-  /* Position the tooltip */
-  position: absolute;
-  z-index: 1;
-}
-
-.tooltip:hover .tooltiptext {
-  visibility: visible;
+.buttonHolder { /* centres buttons within their div */
+  display: flex; 
+  justify-content: center;
 }
     </style>
     <style> /* Style the links inside the sidenav */
@@ -90,7 +108,6 @@
   left: 20vw;
   top: auto;
   width: 60vw; 
-  height: 45vh; 
   background-color: #fff;
   margin: 0 auto;
   padding: 30px;
@@ -120,29 +137,19 @@
   margin: 0;
   font-size: 6vh;
   letter-spacing: -1px;
-  margin-bottom: vh;
-  text-shadow: 0 -1px 1px #000, 0 0px 5px rgba(0,0,0,.25);
+  margin-bottom: 1vh;
+  text-shadow: 0 -1px 1px #000, 0 0px 3px rgba(0,0,0,.25);
 }
 
 .modal-content p {
-  margin-top: 7vh 0 10vh;
+  margin-top: 5vh 0 7vh;
   color: #FFD700;
   font-size: 5vh;
   text-align: center;
   text-shadow: 0 0px 5px rgba(0,0,0,.25), 0 -1px 1px #000;
 }
-    
-.modalButtonsArea {
-  margin: 0;
-  position: absolute;
-  width: 60%; /* set the size of the block of buttons relative to the container */
-  top: 85%;   /* starts the block of buttons near the bottom of the screen (see transform below) */
-  left: 50%;  /* starts the block of buttons halfway across the screen (see transform below) */
-  -ms-transform: translate(-50%, -50%); /* moves the block of buttons back and up to centre them */
-  transform: translate(-50%, -50%);
-}
 
-.btn {
+.modalBtn {
   background: green;
   display: block;
   padding: 5% 5%;
@@ -156,7 +163,7 @@
   font-weight: bold;
   text-shadow: 0 0 10px #000;
   border-top: 1px solid rgb(200,250,100);
-  font-size: 5vh;
+  font-size: 4vh;
   
   -webkit-box-shadow: rgba(255,255,255,.3) 0 2px 1px,rgba(0,0,0,.3) 0 -2px 1px, rgba(0,0,0,0.5) 0px 3px 10px, rgba(0,50,0,.75) 0 0 40px inset;
   -moz-box-shadow: rgba(255,255,255,.3) 0 2px 1px,rgba(0,0,0,.3) 0 -2px 1px, rgba(0,0,0,0.5) 0px 3px 10px, rgba(0,50,0,.75) 0 0 40px inset;
@@ -169,34 +176,6 @@
   background: -o-linear-gradient(top, #bfd255 0%, #8eb92a 50%, #72aa00 51%, #9ecb2d 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#bfd255', endColorstr='#9ecb2d',GradientType=0 );
   background: linear-gradient(to bottom, #bfd255 0%, #8eb92a 50%, #72aa00 51%, #9ecb2d 100%);
-}
-
-.modalClose { /* Styling for the close button (the red x) */
-  background: red; 
-  display: block;
-  padding: 2% 3%;
-  float: right;
-  border-radius: 12px;
-  
-  text-decoration: none;
-  color: white;
-  font-size: 8vh;
-  font-weight: bold;
-  border-top: 1px solid rgb(250,150,100);
-  
-  -webkit-box-shadow: rgba(255,255,255,.3) 0 2px 1px,rgba(0,0,0,.3) 0 -2px 1px, rgba(0,0,0,0.5) 0px 3px 10px, rgba(100,0,0,.75) 0 0 40px inset;
-  -moz-box-shadow: rgba(255,255,255,.3) 0 2px 1px,rgba(0,0,0,.3) 0 -2px 1px, rgba(0,0,0,0.5) 0px 3px 10px, rgba(100,0,0,.75) 0 0 40px inset;
-  box-shadow: rgba(255,255,255,.3) 0 2px 1px,rgba(0,0,0,.3) 0 -2px 1px, rgba(0,0,0,0.5) 0px 3px 10px, rgba(100,0,0,.75) 0 0 40px inset;
-  
-  text-shadow: 0 0 10px #000;
-  
-  background: #f3c5bd;
-  background: -webkit-linear-gradient(top, #f3c5bd 0%, #e86c57 50%, #ea2803 51%, #ff6600 100%);
-  background: -moz-linear-gradient(top, #f3c5bd 0%, #e86c57 50%, #ea2803 51%, #ff6600 100%);
-  background: -ms-linear-gradient(top, #f3c5bd 0%, #e86c57 50%, #ea2803 51%, #ff6600 100%);
-  background: -o-linear-gradient(top, #f3c5bd 0%, #e86c57 50%, #ea2803 51%, #ff6600 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3c5bd', endColorstr='#ff6600',GradientType=0 );
-  background: linear-gradient(to bottom, #f3c5bd 0%, #e86c57 50%, #ea2803 51%, #ff6600 100%);
 }
 
 a:active { /* ??? */
@@ -230,18 +209,57 @@ a:active { /* ??? */
 @-o-keyframes fadeOut      { 0% { opacity:1; } 100% { opacity:0; } }
 @-ms-keyframes fadeOut     { 0% { opacity:1; } 100% { opacity:0; } }
     </style>
-    <style>
-body { 
-  /* background-repeat: no-repeat; */
-  background-attachment: scroll;
-  background-position: -0% -0%; 
-  
-    -webkit-transition: background 1s;
-    -moz-transition: background 1s;
-    -o-transition: background 1s;
-    transition: background 1s;
+	<style> /* Rules */
+.rules {
+  position: fixed; /* Stay in place */ 
+  z-index: 2; /* Sit on top of Modal */
+  left: auto;
+  top: auto; 
+  background: #909497;
 }
-    </style>
+
+#gameRulesHeader {
+  margin-top: 7vh 0 10vh;
+  color: #FFD700;
+  font-size: 5vh;
+  text-align: center;
+  text-shadow: 0 0px 5px rgba(0,0,0,.25), 0 -1px 1px #000;
+}
+
+.rules object{
+  width: 95vw; 
+  height: 70vh;
+}
+
+.rulesBtn {
+  background: DarkTurquoise;
+  display: block;
+  padding: 2% 2%;
+  border-radius: 12px;
+  float:left;
+  
+  text-decoration:none;
+  color: white;
+  margin: 1px 1px 1px 1px;
+  
+  font-weight: bold;
+  text-shadow: 0 0 10px #000;
+  border-top: 1px solid rgb(200,250,100);
+  font-size: 2vh;
+  
+  -webkit-box-shadow: rgba(255,255,255,.3) 0 2px 1px,rgba(0,0,0,.3) 0 -2px 1px, rgba(0,0,0,0.5) 0px 3px 5px, rgba(0,50,0,.75) 0 0 20px inset;
+  -moz-box-shadow: rgba(255,255,255,.3) 0 2px 1px,rgba(0,0,0,.3) 0 -2px 1px, rgba(0,0,0,0.5) 0px 3px 5px, rgba(0,50,0,.75) 0 0 20px inset;
+  box-shadow: rgba(255,255,255,.3) 0 2px 1px,rgba(0,0,0,.3) 0 -2px 1px, rgba(0,0,0,0.5) 0px 3px 5px, rgba(0,50,0,.75) 0 0 2 inset;
+  
+  background: #bfd255;
+  background: -webkit-linear-gradient(top, #bfd255 0%, #8eb92a 50%, #72aa00 51%, #9ecb2d 100%);
+  background: -moz-linear-gradient(top, #bfd255 0%, #8eb92a 50%, #72aa00 51%, #9ecb2d 100%);
+  background: -ms-linear-gradient(top, #bfd255 0%, #8eb92a 50%, #72aa00 51%, #9ecb2d 100%);
+  background: -o-linear-gradient(top, #bfd255 0%, #8eb92a 50%, #72aa00 51%, #9ecb2d 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#bfd255', endColorstr='#9ecb2d',GradientType=0 );
+  background: linear-gradient(to bottom, #bfd255 0%, #8eb92a 50%, #72aa00 51%, #9ecb2d 100%);
+}
+	</style>
 </head>
     <body>
         <div id='SideNav' class='sidenav'>
@@ -254,49 +272,61 @@ body {
             <div class='modal-content'>
                 <div class='modalBanner hidden'>banner: round information goes here</div>
                 <div class='modalChangeBanner hidden'>banner: phase change information goes here</div>
-                <span class='modalClose'>&times;</span>
+                <span id='modalClose' class='closeBtn'>&times;</span>
                 <h1>header: phase information goes here</h1>
                 <p>detail: step information goes here</p>
-                <div class='modalButtonsArea'></div>
+                <div class='modalButtonsArea buttonHolder'></div>
             </div>
         </div>
+        <div id='GameRules' class='rules hidden'>
+		  <div id='gameRulesHeader'>
+		    <span class='closeBtn' onclick='gameRules.classList.add("hidden")'>&times;</span>
+			<p>step name goes here</p>
+		  </div>
+		  <div id='RulesDisplay'></div>
+		</div>
 		<canvas id='GameCanvas'></canvas>
         <script> /* define game steps */
         var sequence = JSON.parse('{ "phases": [ "Setup", "Resource", "Planning", "Quest", "Travel", "Encounter", "Combat", "Refresh" ] ' +
+		                          // box format (in px): [left, top, right, bottom]
+		                          // help format: [compendium_info, companion_info, action_window_info]
+                                  //              compendium_info:    [page number, page horiz offset, vert offset]
+								  //              companion_info:     [page number]
+								  //              action_window_info: [page number, vert offset]
                                   ' ,"steps": [ { "phase": 0, "name": "Extract Campaign Setup cards" } ' +
-                                  '            ,{ "phase": 0, "name": "Place Heroes" } ' +
-                                  '            ,{ "phase": 0, "name": "Shuffle Player Decks" } ' +
-                                  '            ,{ "phase": 0, "name": "Set Threat Levels" } ' +
-                                  '            ,{ "phase": 0, "name": "Create Token Banks" } ' +
-                                  '            ,{ "phase": 0, "name": "Determine First Player" } ' +
-                                  '            ,{ "phase": 0, "name": "Place Quest Cards" } ' +
-                                  '            ,{ "phase": 0, "name": "Perform Campaign Setup" } ' +
-                                  '            ,{ "phase": 0, "name": "Perform Scenario Setup" } ' +
-                                  '            ,{ "phase": 0, "name": "Shuffle Encounter Deck" } ' +
-                                  '            ,{ "phase": 0, "name": "Draw Starting Hand (6 cards)" } ' +
-                                  '            ,{ "phase": 1, "name": "Gather Resources", "gameloopto" : "Pass First Player Token", "box" : [120,245,880,440] } ' +
-                                  '            ,{ "phase": 1, "name": "Draw a Card", "actionwindow" : "true", "box" : [120,455,880,660] } ' +
-                                  '            ,{ "phase": 2, "name": "Special Action Window", "playerloopto" : "Special Action Window", "box" : [120,1135,880,1420] } ' + 
-                                  '            ,{ "phase": 3, "name": "Action Window", "box" : [120,1770,880,1980] } ' +
-                                  '            ,{ "phase": 3, "name": "Commit Characters", "actionwindow" : "true", "box" : [120,1980,880,2200] } ' +
-                                  '            ,{ "phase": 3, "name": "Staging", "actionwindow" : "true", "box" : [120,2200,880,2400] } ' +
-                                  '            ,{ "phase": 3, "name": "Quest Resolution", "actionwindow" : "true", "box" : [120,2400,880,2620] } ' +
-                                  '            ,{ "phase": 4, "name": "Travel Opportunity", "actionwindow" : "true", "box" : [120,3070,880,3290] } ' +
-                                  '            ,{ "phase": 5, "name": "Optional Engagements", "actionwindow" : "true", "box" : [1540,230,2225,410] } ' +
-                                  '            ,{ "phase": 5, "name": "Engagement Checks", "actionwindow" : "true", "box" : [1540,410,2225,590] } ' +
+                                  '            ,{ "phase": 0, "name": "Shuffle Player Decks", "help" : [[47,0,135],[209]] } ' +
+                                  '            ,{ "phase": 0, "name": "Shuffle Encounter Deck", "help" : [[47,0,130],[209]] } ' +
+                                  '            ,{ "phase": 0, "name": "Place Heroes", "help" : [[47,0,400],[210]] } ' +
+                                  '            ,{ "phase": 0, "name": "Perform Campaign Setup", "help" : [[47,0,700],[210]] } ' +
+                                  '            ,{ "phase": 0, "name": "Set Threat Levels", "help" : [[47,0,400],[210]] } ' +
+                                  '            ,{ "phase": 0, "name": "Create Token Banks", "help" : [[47,500,305],[211]] } ' +
+                                  '            ,{ "phase": 0, "name": "Determine First Player", "help" : [[47,500,380],[212]] } ' +
+                                  '            ,{ "phase": 0, "name": "Draw Starting Hand", "help" : [[47,500,455],[213]] } ' +
+                                  '            ,{ "phase": 0, "name": "Place Quest Cards", "help" : [[47,500,555],[214]] } ' +
+                                  '            ,{ "phase": 0, "name": "Perform Scenario Setup", "help" : [[47,500,650],[215]] } ' +
+                                  '            ,{ "phase": 1, "name": "Gather Resources", "gameloopto" : "Pass First Player Token", "box" : [120,245,880,440], "help" : [[48,0,510],[217]] }' +
+                                  '            ,{ "phase": 1, "name": "Draw a Card", "actionwindow" : "true", "box" : [120,455,880,660,217], "help" : [[48,0,620],[217],[128,400]] } ' +
+                                  '            ,{ "phase": 2, "name": "Special Action Window", "playerloopto" : "Special Action Window", "box" : [120,1135,880,1420], "help" : [[48,0,710],[218],[128,600]] } ' + 
+                                  '            ,{ "phase": 3, "name": "Quest Action Window", "box" : [120,1770,880,1980], "help" : [[],[218],[128,920]] } ' +
+                                  '            ,{ "phase": 3, "name": "Commit Characters", "actionwindow" : "true", "box" : [120,1980,880,2200], "help" : [[48,500,100],[220],[129,50]] } ' +
+                                  '            ,{ "phase": 3, "name": "Staging", "actionwindow" : "true", "box" : [120,2200,880,2400], "help" : [[48,500,380],[221],[129,280]] } ' +
+                                  '            ,{ "phase": 3, "name": "Quest Resolution", "actionwindow" : "true", "box" : [120,2400,880,2620], "help" : [[48,500,825],[222],[129,420]] } ' +
+                                  '            ,{ "phase": 4, "name": "Travel Opportunity", "actionwindow" : "true", "box" : [120,3070,880,3290], "help" : [[49,500,100],[227],[129,725]] } ' +
+                                  '            ,{ "phase": 5, "name": "Optional Engagement", "actionwindow" : "true", "box" : [1540,230,2225,410], "help" : [[49,500,750],[232],[129,910]] } ' +
+                                  '            ,{ "phase": 5, "name": "Engagement Checks", "actionwindow" : "true", "box" : [1540,410,2225,590], "help" : [[50,0,50],[233],[129,980]] } ' +
                                   '            ,{ "phase": 6, "name": "Combat Check", "allskip" : "No Combat?", "skipto" : "Ready All Cards", "box" : [1145,880,1900,975] } ' +
-                                  '            ,{ "phase": 6, "name": "Deal Shadow Card", "actionwindow" : "true", "allskip" : "No Enemies Are Attacking Players?", "skipto" : "Choose Enemy and Attackers", "playerloopto" : "Deal Shadow Card", "box" : [1145,975,1900,1170] } ' +
-                                  '            ,{ "phase": 6, "stage": "Enemy Attack", "name": "Choose Attacking Enemy", "actionwindow" : "true", "playerskip" : "Player Is Not Under Attack?", "skipto" : "Choose Attacking Enemy", "playerloopto" : "Determine Enemy and Defender Combat Damage", "box" : [1145,1360,1900,1585] } ' +
-                                  '            ,{ "phase": 6, "stage": "Enemy Attack", "name": "Declare Defender", "actionwindow" : "true", "box" : [1145,1585,1900,1775] } ' +
-                                  '            ,{ "phase": 6, "stage": "Enemy Attack", "name": "Reveal & Resolve Shadow Effects", "actionwindow" : "true", "box" : [1145,1775,1900,1970] } ' +
-                                  '            ,{ "phase": 6, "stage": "Enemy Attack", "name": "Determine Enemy and Defender Combat Damage", "actionwindow" : "true", "box" : [1145,1970,1900,2160] } ' +
-                                  '            ,{ "phase": 6, "stage": "Player Attack", "name": "Choose Enemy and Attackers", "actionwindow" : "true", "playerskip" : "Player Is Not Attacking An Enemy?", "skipto" : "Choose Enemy and Attackers", "playerloopto" : "Determine Attacker and Enemy Combat Damage", "box" : [2010,1065,2775,1380] } ' +
-                                  '            ,{ "phase": 6, "stage": "Player Attack", "name": "Determine Attacker Strength", "actionwindow" : "true" , "box" : [2010,1380,2775,1575] } ' +
-                                  '            ,{ "phase": 6, "stage": "Player Attack", "name": "Determine Attacker and Enemy Combat Damage", "actionwindow" : "true", "box" : [2010,1575,2775,1770] } ' +
-                                  '            ,{ "phase": 6, "name": "Discard All Shadow Cards", "box" : [2010,2180,2775,2270] } ' +
-                                  '            ,{ "phase": 7, "name": "Ready All Cards", "box" : [1615,2790,2345,2965] } ' +
-                                  '            ,{ "phase": 7, "name": "Raise Threat Levels", "box" : [1615,2965,2345,3055] } ' +
-                                  '            ,{ "phase": 7, "name": "Pass First Player Token", "actionwindow" : "true", "box" : [1615,3055,2345,3240] } ' +
+                                  '            ,{ "phase": 6, "name": "Deal Shadow Card", "actionwindow" : "true", "allskip" : "No Enemies Are Attacking Players?", "skipto" : "Choose Enemy and Attackers", "playerloopto" : "Deal Shadow Card", "box" : [1145,975,1900,1170], "help" : [[50,0,845],[237],[130,130]] } ' +
+                                  '            ,{ "phase": 6, "stage": "Enemy Attack", "name": "Choose Attacking Enemy", "actionwindow" : "true", "playerskip" : "Player Is Not Under Attack?", "skipto" : "Choose Attacking Enemy", "playerloopto" : "Determine Enemy and Defender Combat Damage", "box" : [1145,1360,1900,1585], "help" : [[50,500,150],[238],[130,270]] } ' +
+                                  '            ,{ "phase": 6, "stage": "Enemy Attack", "name": "Declare Defender", "actionwindow" : "true", "box" : [1145,1585,1900,1775], "help" : [[50,500,190],[238],[130,410]] } ' +
+                                  '            ,{ "phase": 6, "stage": "Enemy Attack", "name": "Reveal & Resolve Shadow Effects", "actionwindow" : "true", "box" : [1145,1775,1900,1970], "help" : [[50,500,300],[238],[130,535]] } ' +
+                                  '            ,{ "phase": 6, "stage": "Enemy Attack", "name": "Determine Enemy and Defender Combat Damage", "actionwindow" : "true", "box" : [1145,1970,1900,2160], "help" : [[50,0,340],[238],[130,730]] } ' +
+                                  '            ,{ "phase": 6, "stage": "Player Attack", "name": "Choose Enemy and Attackers", "actionwindow" : "true", "playerskip" : "Player Is Not Attacking An Enemy?", "skipto" : "Choose Enemy and Attackers", "playerloopto" : "Determine Attacker and Enemy Combat Damage", "box" : [2010,1065,2775,1380], "help" : [[51,0,290],[240],[131,85]] } ' +
+                                  '            ,{ "phase": 6, "stage": "Player Attack", "name": "Determine Attacker Strength", "actionwindow" : "true" , "box" : [2010,1380,2775,1575], "help" : [[51,0,345],[240],[131,160]] } ' +
+                                  '            ,{ "phase": 6, "stage": "Player Attack", "name": "Determine Attacker and Enemy Combat Damage", "actionwindow" : "true", "box" : [2010,1575,2775,1770], "help" : [[51,0,390],[240],[131,350]] } ' +
+                                  '            ,{ "phase": 6, "name": "Discard All Shadow Cards", "box" : [2010,2180,2775,2270], "help" : [[51,0,860],[],[131,510]] } ' +
+                                  '            ,{ "phase": 7, "name": "Ready All Cards", "box" : [1615,2790,2345,2965], "help" : [[52,500,315],[255],[]] } ' +
+                                  '            ,{ "phase": 7, "name": "Raise Threat Levels", "box" : [1615,2965,2345,3055], "help" : [[52,500,315],[255],[]] } ' +
+                                  '            ,{ "phase": 7, "name": "Pass First Player Token", "actionwindow" : "true", "box" : [1615,3055,2345,3240], "help" : [[52,500,315],[255],[]] } ' +
                                   '           ]' +
                                   '}'
                                  );
@@ -309,19 +339,25 @@ body {
         var modalChangeBanner = modal.getElementsByClassName('modalChangeBanner')[0];
         var modalHeader = modal.getElementsByTagName('h1')[0];
         var modalDetail = modal.getElementsByTagName('p')[0];
-        var modalClose = modal.getElementsByClassName('modalClose')[0];
+        var modalClose = document.getElementById('modalClose');
         var modalButtonsArea = modal.getElementsByClassName('modalButtonsArea')[0]; 
 		var gameCanvas = document.getElementById('GameCanvas');
+		var gameRules = document.getElementById('GameRules');
+		var gameRulesHeader = document.getElementById('gameRulesHeader');
+		var gameRulesText = gameRulesHeader.getElementsByTagName('p')[0];
+		var gameRulesDisplay = document.getElementById('RulesDisplay');
         var AllPlayers = 0; // indicates a step is performed by all players    
-        var backgroundSize		
+        var backgroundSize;
+		var compendiumIsPreferred = true;
         
-        //localStorage.clear()
-        initialize();
+        loadBackground('./Images/Round.png');
 		
 		function loadBackground(url) {  
           const img = new Image();
-		  img.addEventListener("load", function() {
-			backgroundSize = [this.naturalWidth, this.naturalHeight];
+		  img.addEventListener('load', function() {
+			backgroundSize = [this.naturalWidth, this.naturalHeight];			
+			// once the background is loaded, then the rest of the page can be set up.
+			initialize();
 		  });
 		  img.src = url;
 		  document.body.style.backgroundImage = "url('" + url + "')";  	 
@@ -330,9 +366,7 @@ body {
         function initialize() {
           navBack.parentElement.classList.add('hidden');
           modalChangeBanner.innerHTML = '';    
-		  gameCanvas.style.visibility = "hidden";   
-		  
-          loadBackground('./Images/Round.png');
+		  gameCanvas.style.visibility = 'hidden';   		  
 		  
           // translate the step names that define loops into step numbers
           for(var step = 0; step < sequence.steps.length; step++) { 
@@ -348,9 +382,10 @@ body {
             }
           }
           
+          //localStorage.clear()
           if (localStorage.getItem('stateHistory') != null) {
             initialState = parseInt(localStorage.getItem('stateHistory').split(',')[0], 10);
-            game_setCurrentState(initialState);            
+            game_setCurrentState(initialState, true);            
           }
         }
 
@@ -450,20 +485,22 @@ body {
           var toNumPlayers    = modulo(toState, 7);
           var toVictoryPoints = modulo(toState, 59);   
 		  
-          //console.log('round:' + fromRound + '->' + toRound +
-          //            ' phase:' + fromPhaseNum + '->' + toPhaseNum +
-          //            ' step:' + fromStepNum + '->' + toStepNum +
-          //            ' player:' + fromPlayer + '->' + toPlayer +
-          //            //' skip:' + ((newStep.skip == null) ? '' : 'skip') + ((newStep.playerskip == null) ? '' : 'playerskip') + '->' + newStep.skipto +
-          //            '');
+          console.log('round:' + fromRound + '->' + toRound +
+                      ' phase:' + fromPhaseNum + '->' + toPhaseNum +
+                      ' step:' + fromStepNum + '->' + toStepNum +
+                      ' player:' + fromPlayer + '->' + toPlayer +
+                      //' skip:' + ((newStep.skip == null) ? '' : 'skip') + ((newStep.playerskip == null) ? '' : 'playerskip') + '->' + newStep.skipto +
+                      '');
 		  
           game_setCurrentState(toState);
         }
         
-        function game_setCurrentState(currentState) {  
+        function game_setCurrentState(currentState, isRefresh=false) {  
           var stateHistory = localStorage.getItem('stateHistory');
-          localStorage.setItem('stateHistory', currentState + ',' + stateHistory); 
-          
+		  if (!isRefresh) {
+            localStorage.setItem('stateHistory', currentState + ',' + stateHistory); 
+          }
+		  
           var previousState    = parseInt(stateHistory.split(',')[0], 10);
           var previousRound    = modulo(previousState, 53);
           var previousStepNum  = modulo(previousState, 37); 
@@ -496,17 +533,21 @@ body {
           
           // text: shows the current step
           var hasActionWindow = currentStep.actionwindow;
-          var detail = currentStep.name + (hasActionWindow ? '<br>&amp;<br>Action Window' : '');        
+          var detail = currentStep.name + (hasActionWindow ? '<br>&amp;<br>Action Window' : '');
           if (currentPlayer != AllPlayers) { // are we inside a loop?
             detail = (currentPlayer == 1 ? 'First Player' : 'Player ' + currentPlayer) + ': ' + detail;
           } 
           
           // buttons
+		  var buttons = [];
 		  var isLastPlayer = (currentPlayer == currentNumPlayers);
           var nextStepNum = (currentStep.gameloopstart != null)                        ? currentStep.gameloopstart :
                             ((currentStep.playerloopstart != null) && (!isLastPlayer)) ? currentStep.playerloopstart :
                                                                                          currentStepNum + 1; 
-          var buttons = [ generateButton('Next', 'game_advanceToStep(' + nextStepNum + ')') ];
+          buttons.push(generateButton('Next', 'game_advanceToStep(' + nextStepNum + ')'));
+		  if (currentStep.help != null) {
+		    buttons.push(generateButton('Help', 'game_showHelp("' + currentStep.name + '",' + JSON.stringify(currentStep.help) + ')'));
+		  }
 		  
 		  // sidenav: back		  
           var showBack = (currentPhaseNum > 0); 
@@ -588,7 +629,7 @@ body {
           modalHeader.innerHTML = headerText;
           
           // detail:
-          modalDetail.innerHTML = detailText;  
+          modalDetail.innerHTML = detailText.replace('Action Window','<span style="color:SpringGreen">Action Window</span>');  
           
           // buttons:
           modalButtonsArea.innerHTML = '';
@@ -622,45 +663,71 @@ body {
             navSkip.style.opacity = 1;
           }
           
+		  modal.style.display = 'block';  // make the modal appear  
+		  
+		  // background image and highlighting box:
+		  // (this must be done AFTER the modal box has been rendered)
 		  if (box == null) {
-			gameCanvas.style.visibility = "hidden";
+			gameCanvas.style.visibility = 'hidden';
 		  } else {
-			gameCanvas.style.visibility = "visible";
+			gameCanvas.style.visibility = 'visible';
 		    var modalBottom = Math.ceil(modal.offsetTop + modal.offsetHeight);
 		    var modalRight = Math.ceil(modal.offsetLeft + modal.offsetWidth);
-		    console.log("modal:" + modal.offsetLeft + "," + modal.offsetTop + "," + modalRight + "," + modalBottom + " " + modal.offsetWidth + 'x' + modal.offsetHeight);
-		    console.log("window:" + window.screen.width + 'x' + window.screen.height);
-		    console.log("box:" + box);
 		    var backgroundOffsetTop = modalBottom - box[1] + 110;
 		    var backgroundOffsetLeft = Math.floor(modal.offsetLeft + (modal.offsetWidth + box[0] - box[2]) / 2) - box[0];
-		    console.log("backgroundOffsetLeft = Math.floor(" + modal.offsetLeft + " + (" + modal.offsetWidth + " + " + box[0] + " - " + box[2] + ") / 2) = " + backgroundOffsetLeft);
-		    document.body.style.backgroundPosition = backgroundOffsetLeft + "px " + backgroundOffsetTop + "px";
-		    console.log("backgroundPosition = -" + backgroundOffsetLeft + "px " + backgroundOffsetTop + "px");
+		    document.body.style.backgroundPosition = backgroundOffsetLeft + 'px ' + backgroundOffsetTop + 'px';
 		    
 		    var canvasOffsetTop = modalBottom  + 110;
 		    var canvasOffsetLeft = backgroundOffsetLeft + box[0] - 5;
 		    gameCanvas.width = box[2] - box[0] + 5;
 		    gameCanvas.height = box[3] - box[1] + 5;
-		    gameCanvas.style.position = "absolute";
-		    gameCanvas.style.top = canvasOffsetTop + "px";
-		    gameCanvas.style.left = canvasOffsetLeft + "px";
-		    console.log("canvas: " + canvasOffsetLeft + "," + canvasOffsetTop);
+		    gameCanvas.style.position = 'absolute';
+		    gameCanvas.style.top = canvasOffsetTop + 'px';
+		    gameCanvas.style.left = canvasOffsetLeft + 'px';
 		    
-		    var ctx = gameCanvas.getContext("2d");
+		    var ctx = gameCanvas.getContext('2d');
 		    ctx.beginPath();
-		    ctx.lineWidth = "4";
-		    ctx.strokeStyle = "blue";
+		    ctx.lineWidth = '4';
+		    ctx.strokeStyle = 'blue';
 		    ctx.rect(0, 0, box[2] - box[0], box[3] - box[1]);
 		    ctx.stroke();
 		  }
-			
-		  modal.style.display = 'block';  // make the modal appear  
 		}
         
-        function generateButton(buttonText, onclick=null) {
+        function game_showHelp(stepText, helpLocations) {
+		  var compendiumInfo = helpLocations[0];
+		  var companionInfo = (helpLocations.length < 2) ? [] : helpLocations[1];
+		  var actionWindowInfo = (helpLocations.length < 3) ? [] : helpLocations[2];
+		  gameRulesText.innerHTML = 
+		    stepText + 
+		    '<div class="buttonHolder">' +
+		    ((compendiumInfo.length == 0) ? '' : generateButton('Compendium', 'compendiumIsPreferred=true;game_showCompendium(' + compendiumInfo.toString() + ')', 'rulesBtn')) +
+		    ((companionInfo.length == 0) ? '' : generateButton('Companion', 'compendiumIsPreferred=false;game_showCompanion(' + companionInfo[0] + ')', 'rulesBtn')) +
+		    ((actionWindowInfo.length == 0) ? '' : generateButton('Action Window', 'game_showCompendium(' + actionWindowInfo[0] + ',0,' + actionWindowInfo[1] + ')', 'rulesBtn')) + 
+		    '</div>';
+		  
+		  if (compendiumIsPreferred || (onlinePage=null)) {
+		    game_showCompendium(compendiumInfo[0], compendiumInfo[1], compendiumInfo[2]);
+		  } else {
+		    game_showCompanion(companionInfo[0]);
+		  }
+		}
+		
+		function game_showCompendium(pageNum, hOffset, vOffset) {
+		  var pdfOptions = '#page=' + pageNum + '&zoom=100,' + hOffset + ',' + vOffset + '&pagemode=none&view=FitH';
+		  gameRulesDisplay.innerHTML = "<object data='./Images/RulesCompendium_v2.0.pdf" + pdfOptions + " type='application/pdf'></object>";		  
+		  gameRules.classList.remove('hidden');
+		}
+		
+		function game_showCompanion(pageNum) {
+		  gameRulesDisplay.innerHTML = "<object data='https://lotr-lcg-quest-companion.gamersdungeon.net/#Rule" + pageNum + "' type='text/html'></object>";
+		  gameRules.classList.remove('hidden');
+		}
+		
+		function generateButton(buttonText, onclick=null, btnClass='modalBtn') {
           var ocevent = (onclick == null) ? '' : " onclick='" + onclick + "'";
           
-          return "<button type='button' class='btn'" + ocevent + '>' + buttonText + '</button>';
+          return "<button type='button' class='" + btnClass + "'" + ocevent + '>' + buttonText + '</button>';
         }
         
         function findStepNum(searchName) {
