@@ -80,22 +80,27 @@ body {
 }
 
 #back { /* The game_backToPreviousStep() link */
-  top: 20vh;
+  top: 16vh;
   background-color: #2196F3; /* Blue */
   color: #2196F3; 
 }
 
 #skip {
-  top: 35vh;
+  top: 27vh;
   background-color: #f44336; /* Red */
   color: #f44336; 
-  opacity: 0;
 }
 
-#contact {
-  top: 50vh;
-  background-color: #555 /* Light Black */
-  color: #555;
+#elim {
+  top: 38vh;
+  background-color: #050505; /* Light Black */
+  color: #050505;
+}
+
+#vp {
+  top: 49vh;
+  background-color: #BDB76B; /* Dark Khaki */
+  color: #BDB76B;
 }
     </style>
     <style> /* Modal */
@@ -176,6 +181,10 @@ body {
   background: -o-linear-gradient(top, #bfd255 0%, #8eb92a 50%, #72aa00 51%, #9ecb2d 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#bfd255', endColorstr='#9ecb2d',GradientType=0 );
   background: linear-gradient(to bottom, #bfd255 0%, #8eb92a 50%, #72aa00 51%, #9ecb2d 100%);
+}
+
+.modalBtn.small {
+  font-size: 2vw;
 }
 
 a:active { /* ??? */
@@ -266,7 +275,8 @@ a:active { /* ??? */
           <div class='sidenavbtn' onclick='newgame_verify()'><a href='#' id='newGame'>New Game</a></div>
           <div class='sidenavbtn'><a href='#' id='back'></a></div>
           <div class='sidenavbtn'><a href='#' id='skip'></a></div>
-          <a href='#' id='contact'>Contact</a>
+          <div class='sidenavbtn'><a href='#' id='elim'></a></div>
+          <div class='sidenavbtn'><a href='#' id='vp'></a></div>
         </div>
         <div id='GameModal' class='modal'>
             <div class='modal-content'>
@@ -334,6 +344,8 @@ a:active { /* ??? */
         <script> /* main code */
         var navBack = document.getElementById('back');
         var navSkip = document.getElementById('skip');
+        var navElim = document.getElementById('elim');
+        var navVP = document.getElementById('vp');
         var modal = document.getElementById('GameModal');
         var modalBanner = modal.getElementsByClassName('modalBanner')[0];
         var modalChangeBanner = modal.getElementsByClassName('modalChangeBanner')[0];
@@ -501,35 +513,19 @@ a:active { /* ??? */
             localStorage.setItem('stateHistory', currentState + ',' + stateHistory); 
           }
 		  
-          var previousState    = parseInt(stateHistory.split(',')[0], 10);
-          var previousRound    = modulo(previousState, 53);
-          var previousStepNum  = modulo(previousState, 37); 
-          var previousStep     = sequence.steps[previousStepNum];
-          var previousPhaseNum = previousStep.phase;
-           
-          var currentRound         = modulo(currentState, 53);
-          var currentStepNum       = modulo(currentState, 37); 
-          var currentStep          = sequence.steps[currentStepNum];
-          var currentPhaseNum      = currentStep.phase;  
-          var currentPlayer        = modulo(currentState, 5);
-          var currentNumPlayers    = modulo(currentState, 7);
-          //var currentVictoryPoints = modulo(currentState, 59);
+          var previousState     = parseInt(stateHistory.split(',')[0], 10);
+
+          var currentStepNum    = modulo(currentState, 37); 
+          var currentStep       = sequence.steps[currentStepNum];
+          var currentPhaseNum   = currentStep.phase;  
+          var currentPlayer     = modulo(currentState, 5);
+          var currentNumPlayers = modulo(currentState, 7);
           
-          // banner: shows the current round
-          var banner = (currentRound == 0) ? '' : 'Round ' + currentRound;
-          
-          // change banner: shows when the phase changes
-          var isPhaseChange = (currentPhaseNum != previousPhaseNum);
-          var changeBanner = (isPhaseChange) 
-                             ? 'End of the ' + sequence.phases[previousPhaseNum] + ' Phase<br>' +
-                               'Start of the ' + sequence.phases[currentPhaseNum] + ' Phase'
-                             : '';
-          // close button: shows only for the new game state
-          var showClose = false;
-          
-          // header: shows the current phase and stage
-          var header = sequence.phases[currentPhaseNum] + ' Phase' +
-                       ((currentStep.stage == null) ? '' : ': ' + currentStep.stage + ' Stage');
+		  var bannerInfo = game_setStandardBanners(currentState, previousState);
+		  var banner       = bannerInfo[0];
+		  var changeBanner = bannerInfo[1];
+		  var showClose    = bannerInfo[2];
+		  var header       = bannerInfo[3];
           
           // text: shows the current step
           var hasActionWindow = currentStep.actionwindow;
@@ -577,13 +573,198 @@ a:active { /* ??? */
             skipInfo = [skip, skipToStepNum, skipToPlayer];         
           }
 		  
+		  // sidenav: eliminate player
+		  var showElim = ((currentNumPlayers > 1) && (currentPhaseNum > 0));
+		  
+		  // sidenav: victory points
+		  var showVP = (currentPhaseNum > 0);
+		  
+		  var sidenavInfo = [showBack, skipInfo, showElim, showVP];
+		  
 		  // repositioning of the background image
 		  var box = currentStep.box;
           
-          showModal(banner, changeBanner, showClose, header, detail, buttons, showBack, skipInfo, box);
+          showModal(banner, changeBanner, showClose, header, detail, buttons, sidenavInfo, box);
         }
+		
+		function game_setStandardBanners(currentState, previousState) {
+          var previousStepNum      = modulo(previousState, 37); 
+          var previousStep         = sequence.steps[previousStepNum];
+          var previousPhaseNum     = previousStep.phase;
+           
+          var currentRound         = modulo(currentState, 53);
+          var currentStepNum       = modulo(currentState, 37); 
+          var currentStep          = sequence.steps[currentStepNum];
+          var currentPhaseNum      = currentStep.phase;  
+          var currentNumPlayers    = modulo(currentState, 7);
+          var currentVictoryPoints = modulo(currentState, 59);
+		  
+          // banner: shows the current round
+          var banner = (currentRound == 0) 
+		               ? '' 
+					   : 'Round ' + currentRound +
+		                 ((currentNumPlayers == 1) ? '' : ' (' + currentNumPlayers + ' players)') +
+					     ((currentVictoryPoints == 0) ? '' : ' VP: ' + currentVictoryPoints);
+          
+          // change banner: shows when the phase changes
+          var isPhaseChange = (currentPhaseNum != previousPhaseNum);
+          var changeBanner = (isPhaseChange) 
+                             ? 'End of the ' + sequence.phases[previousPhaseNum] + ' Phase<br>' +
+                               'Start of the ' + sequence.phases[currentPhaseNum] + ' Phase'
+                             : '';
+          
+		  // close button: shows only for the new game state
+          var showClose = false;
+          
+          // header: shows the current phase and stage
+          var header = sequence.phases[currentPhaseNum] + ' Phase' +
+                       ((currentStep.stage == null) ? '' : ': ' + currentStep.stage + ' Stage');
+		  
+		  return [banner, changeBanner, showClose, header];
+	    }
         
-        function showModal(bannerText, changeBannerText, showClose, headerText, detailText, buttons, showBack, skipInfo=null, box=null) { // display the modal     
+        function game_showHelp(stepText, helpLocations) {
+		  var compendiumInfo = helpLocations[0];
+		  var companionInfo = (helpLocations.length < 2) ? [] : helpLocations[1];
+		  var actionWindowInfo = (helpLocations.length < 3) ? [] : helpLocations[2];
+		  gameRulesText.innerHTML = 
+		    stepText + 
+		    '<div class="buttonHolder">' +
+		    ((compendiumInfo.length == 0) ? '' : generateButton('Compendium', 'compendiumIsPreferred=true;game_showCompendium(' + compendiumInfo.toString() + ')', 'rulesBtn')) +
+		    ((companionInfo.length == 0) ? '' : generateButton('Companion', 'compendiumIsPreferred=false;game_showCompanion(' + companionInfo[0] + ')', 'rulesBtn')) +
+		    ((actionWindowInfo.length == 0) ? '' : generateButton('Action Window', 'game_showCompendium(' + actionWindowInfo[0] + ',0,' + actionWindowInfo[1] + ')', 'rulesBtn')) + 
+		    '</div>';
+		  
+		  if (compendiumIsPreferred || (onlinePage=null)) {
+		    game_showCompendium(compendiumInfo[0], compendiumInfo[1], compendiumInfo[2]);
+		  } else {
+		    game_showCompanion(companionInfo[0]);
+		  }
+		}
+		
+		function game_showCompendium(pageNum, hOffset, vOffset) {
+		  var pdfOptions = '#page=' + pageNum + '&zoom=100,' + hOffset + ',' + vOffset + '&pagemode=none&view=FitH';
+		  gameRulesDisplay.innerHTML = "<object data='./Images/RulesCompendium_v2.0.pdf" + pdfOptions + " type='application/pdf'></object>";		  
+		  gameRules.classList.remove('hidden');
+		}
+		
+		function game_showCompanion(pageNum) {
+		  gameRulesDisplay.innerHTML = "<object data='https://lotr-lcg-quest-companion.gamersdungeon.net/#Rule" + pageNum + "' type='text/html'></object>";
+		  gameRules.classList.remove('hidden');
+		}
+		
+		function game_verifyElimPlayer() {
+          var stateHistory = localStorage.getItem('stateHistory');
+		  var currentState = parseInt(stateHistory.split(',')[0], 10);
+		  
+          var previousState        = parseInt(stateHistory.split(',')[1], 10);
+		  
+          var currentRound         = modulo(currentState, 53);
+          var currentStepNum       = modulo(currentState, 37); 
+          var currentPlayer        = modulo(currentState, 5); 
+          var currentNumPlayers    = modulo(currentState, 7);
+          var currentVictoryPoints = modulo(currentState, 59);
+		  
+		  var bannerInfo = game_setStandardBanners(currentState, previousState);
+		  var banner       = bannerInfo[0];
+		  var changeBanner = bannerInfo[1];
+		  var showClose    = bannerInfo[2];
+		  var header       = bannerInfo[3];
+		  
+          // text: 
+		  var detail = 'Remove one Player?';
+          
+          // buttons
+		  var buttons = [];
+          var newState = currentRound * 382025 + 
+                         currentStepNum * -109445 + 
+                         currentPlayer * 1619786 +
+                         (currentNumPlayers - 1) * 578495 +
+                         currentVictoryPoints * 1578605;
+          buttons.push(generateButton('Yes', 'game_setCurrentState(' + newState + ')'));
+		  buttons.push(generateButton('No', 'game_setCurrentState(' + currentState + ',"true")'));
+		  
+		  // sidenav: back		  
+          var showBack = false; 
+          
+          // sidenav: skip 
+          var skipInfo = null;
+          		 
+		  // sidenav: eliminate player
+		  var showElim = false;
+		  
+		  // sidenav: victory points
+		  var showVP = false;
+		  
+		  var sidenavInfo = [showBack, skipInfo, showElim, showVP];
+		  
+		  // repositioning of the background image
+		  var box = null;
+          
+          showModal(banner, changeBanner, showClose, header, detail, buttons, sidenavInfo, box);
+		}
+		
+		function game_changeVP(newState=null) {
+          var stateHistory = localStorage.getItem('stateHistory');
+		  var currentState = parseInt(stateHistory.split(',')[0], 10);
+		  
+		  if (newState == null) {
+		    newState = currentState;
+		  }
+		  
+          var previousState    = parseInt(stateHistory.split(',')[1], 10);
+		  
+          var newRound         = modulo(newState, 53);
+          var newStepNum       = modulo(newState, 37); 
+          var newPlayer        = modulo(newState, 5); 
+          var newNumPlayers    = modulo(newState, 7);
+          var newVictoryPoints = modulo(newState, 59);
+		  
+		  var bannerInfo = game_setStandardBanners(newState, previousState);
+		  var banner       = bannerInfo[0];
+		  var changeBanner = bannerInfo[1];
+		  var showClose    = bannerInfo[2];
+		  var header       = bannerInfo[3];
+		  
+          // text: 
+		  var detail = 'Adjust Victory Points';
+          
+          // buttons
+		  var buttons = [];
+		  if (newVictoryPoints > 4) {
+		    buttons.push(generateButton('-5', 'game_changeVP(' + (newState - 5 * 1578605) + ')', 'modalBtn small'));
+		  }
+		  if (newVictoryPoints > 0) {
+		    buttons.push(generateButton('-1', 'game_changeVP(' + (newState - 1578605) + ')', 'modalBtn small'));
+		  }
+		  if (newState != currentState) {
+		    buttons.push(generateButton('Done', 'game_setCurrentState(' + newState + ')', 'modalBtn small'));
+		  }
+		  buttons.push(generateButton('+1', 'game_changeVP(' + (newState + 1578605) + ')', 'modalBtn small'));
+		  buttons.push(generateButton('+5', 'game_changeVP(' + (newState + 5 * 1578605) + ')', 'modalBtn small'));		    
+		  buttons.push(generateButton('Cancel', 'game_setCurrentState(' + currentState + ',"true")', 'modalBtn small'));
+		  
+		  // sidenav: back		  
+          var showBack = false; 
+          
+          // sidenav: skip 
+          var skipInfo = null;
+          		 
+		  // sidenav: eliminate player
+		  var showElim = false;
+		  
+		  // sidenav: victory points
+		  var showVP = false;
+		  
+		  var sidenavInfo = [showBack, skipInfo, showElim, showVP];
+		  
+		  // repositioning of the background image
+		  var box = null;
+          
+          showModal(banner, changeBanner, showClose, header, detail, buttons, sidenavInfo, box);
+		}
+		
+        function showModal(bannerText, changeBannerText, showClose, headerText, detailText, buttons, sidenavInfo, box=null) { // display the modal     
           // banner:
           modalBanner.innerHTML = bannerText;
           if (bannerText == '') {
@@ -635,33 +816,42 @@ a:active { /* ??? */
           modalButtonsArea.innerHTML = '';
           buttons.forEach(b => modalButtonsArea.innerHTML += b);
           
-          // back:
+		  // sideNavs:
+		  var showBack = (sidenavInfo == null) ? false : sidenavInfo[0];
+		  var skipInfo = (sidenavInfo == null) ? null : sidenavInfo[1];
+		  var showElim = (sidenavInfo == null) ? false : sidenavInfo[2]
+		  var showVP   = (sidenavInfo == null) ? false : sidenavInfo[3];
+		  
+          // sideNavs: back:
           if (showBack) {
-            navBack.innerHTML = 'Back';
-            navBack.parentElement.onclick = function() { game_backToPreviousStep(); }   
-            navBack.parentElement.classList.remove('hidden');
+			showSidenav(navBack, 'Back', function() { game_backToPreviousStep(); });
           } else {
-            navBack.innerHTML = '';
-            navBack.parentElement.classList.add('hidden');
+		    hideSidenav(navBack);
           }
           
-          // sideNavs:
+          // sideNavs: skip:
           if (skipInfo == null) {           
-            navSkip.style.left = null;
-            navSkip.style.color = null;
-            navSkip.parentElement.onclick = null;
-            navSkip.innerHTML = '';
-            navSkip.parentElement.classList.add('hidden');
+			hideSidenav(navSkip);
           } else {
+		    var skiptext      = skipInfo[0];
             var skipToStepNum = skipInfo[1];
             var skipToPlayer  = skipInfo[2];
-            navSkip.innerHTML = skipInfo[0];
-            navSkip.parentElement.onclick = function() { game_advanceToStep(skipToStepNum, skipToPlayer); }    
-            navSkip.parentElement.classList.remove('hidden');
-            navSkip.style.left = '0';
-            navSkip.style.color = 'white';
-            navSkip.style.opacity = 1;
+			showSidenav(navSkip, skiptext, function() { game_advanceToStep(skipToStepNum, skipToPlayer); });
           }
+
+          // sideNavs: eliminate player:
+          if (showElim) {
+		    showSidenav(navElim, 'Elimination', function() { game_verifyElimPlayer(); });
+		  } else {
+		    hideSidenav(navElim);
+		  }
+		  
+		  // sideNavs: victory points:
+		  if (showVP) {
+		    showSidenav(navVP, 'Points', function() { game_changeVP(); });
+	      } else {
+		    hideSidenav(navVP);
+		  }		  
           
 		  modal.style.display = 'block';  // make the modal appear  
 		  
@@ -693,37 +883,18 @@ a:active { /* ??? */
 		    ctx.stroke();
 		  }
 		}
+		
+		function showSidenav(navElement, textContent, onclick) {
+		  navElement.innerHTML = textContent;
+		  navElement.parentElement.onclick = onclick;
+		  navElement.parentElement.classList.remove('hidden');
+		}
+		
+		function hideSidenav(navElement) {
+		  navElement.innerHTML = '';
+		  navElement.parentElement.classList.add('hidden');
+		}
         
-        function game_showHelp(stepText, helpLocations) {
-		  var compendiumInfo = helpLocations[0];
-		  var companionInfo = (helpLocations.length < 2) ? [] : helpLocations[1];
-		  var actionWindowInfo = (helpLocations.length < 3) ? [] : helpLocations[2];
-		  gameRulesText.innerHTML = 
-		    stepText + 
-		    '<div class="buttonHolder">' +
-		    ((compendiumInfo.length == 0) ? '' : generateButton('Compendium', 'compendiumIsPreferred=true;game_showCompendium(' + compendiumInfo.toString() + ')', 'rulesBtn')) +
-		    ((companionInfo.length == 0) ? '' : generateButton('Companion', 'compendiumIsPreferred=false;game_showCompanion(' + companionInfo[0] + ')', 'rulesBtn')) +
-		    ((actionWindowInfo.length == 0) ? '' : generateButton('Action Window', 'game_showCompendium(' + actionWindowInfo[0] + ',0,' + actionWindowInfo[1] + ')', 'rulesBtn')) + 
-		    '</div>';
-		  
-		  if (compendiumIsPreferred || (onlinePage=null)) {
-		    game_showCompendium(compendiumInfo[0], compendiumInfo[1], compendiumInfo[2]);
-		  } else {
-		    game_showCompanion(companionInfo[0]);
-		  }
-		}
-		
-		function game_showCompendium(pageNum, hOffset, vOffset) {
-		  var pdfOptions = '#page=' + pageNum + '&zoom=100,' + hOffset + ',' + vOffset + '&pagemode=none&view=FitH';
-		  gameRulesDisplay.innerHTML = "<object data='./Images/RulesCompendium_v2.0.pdf" + pdfOptions + " type='application/pdf'></object>";		  
-		  gameRules.classList.remove('hidden');
-		}
-		
-		function game_showCompanion(pageNum) {
-		  gameRulesDisplay.innerHTML = "<object data='https://lotr-lcg-quest-companion.gamersdungeon.net/#Rule" + pageNum + "' type='text/html'></object>";
-		  gameRules.classList.remove('hidden');
-		}
-		
 		function generateButton(buttonText, onclick=null, btnClass='modalBtn') {
           var ocevent = (onclick == null) ? '' : " onclick='" + onclick + "'";
           
