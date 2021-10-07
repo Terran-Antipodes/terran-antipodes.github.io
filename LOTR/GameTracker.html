@@ -1,347 +1,457 @@
 <!DOCTYPE HTML>
 <html>
-    <head>
+<head>
     <style> /* General styling */
-body { 
-  /* background-repeat: no-repeat; */
-  background-attachment: scroll;
-  background-position: -0% -0%; 
-  
-    -webkit-transition: background 1s;
-    -moz-transition: background 1s;
-    -o-transition: background 1s;
-    transition: background 1s;
-}
+        html {
+            height: 100%;
+            overflow: auto;
+        }
 
-.hidden {
-  visibility: hidden;
-}
+        body {
+            height: 100%;
+        }
 
-.closeBtn { /* Styling for the close button (the red x) */
-  background: red; 
-  display: block;
-  padding: 2% 3%;
-  float: right;
-  border-radius: 12px;
-  
-  text-decoration: none;
-  color: white;
-  font-size: 4vh;
-  font-weight: bold;
-  border-top: 1px solid rgb(250,150,100);
-  
-  -webkit-box-shadow: rgba(255,255,255,.3) 0 2px 1px,rgba(0,0,0,.3) 0 -2px 1px, rgba(0,0,0,0.5) 0px 3px 10px, rgba(100,0,0,.75) 0 0 40px inset;
-  -moz-box-shadow: rgba(255,255,255,.3) 0 2px 1px,rgba(0,0,0,.3) 0 -2px 1px, rgba(0,0,0,0.5) 0px 3px 10px, rgba(100,0,0,.75) 0 0 40px inset;
-  box-shadow: rgba(255,255,255,.3) 0 2px 1px,rgba(0,0,0,.3) 0 -2px 1px, rgba(0,0,0,0.5) 0px 3px 10px, rgba(100,0,0,.75) 0 0 40px inset;
-  
-  text-shadow: 0 0 10px #000;
-  
-  background: #f3c5bd;
-  background: -webkit-linear-gradient(top, #f3c5bd 0%, #e86c57 50%, #ea2803 51%, #ff6600 100%);
-  background: -moz-linear-gradient(top, #f3c5bd 0%, #e86c57 50%, #ea2803 51%, #ff6600 100%);
-  background: -ms-linear-gradient(top, #f3c5bd 0%, #e86c57 50%, #ea2803 51%, #ff6600 100%);
-  background: -o-linear-gradient(top, #f3c5bd 0%, #e86c57 50%, #ea2803 51%, #ff6600 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3c5bd', endColorstr='#ff6600',GradientType=0 );
-  background: linear-gradient(to bottom, #f3c5bd 0%, #e86c57 50%, #ea2803 51%, #ff6600 100%);
-}
+        .hidden {
+            visibility: hidden;
+        }
 
-.buttonHolder { /* centres buttons within their div */
-  display: flex; 
-  justify-content: center;
-}
+        .closeBtn { /* Styling for the close button (the red x) */
+            background: red;
+            display: block;
+            padding: 2% 3%;
+            float: right;
+            border-radius: 12px;
+            text-decoration: none;
+            color: white;
+            font-size: 4vh;
+            font-weight: bold;
+            border-top: 1px solid rgb(250,150,100);
+            -webkit-box-shadow: rgba(255,255,255,.3) 0 2px 1px,rgba(0,0,0,.3) 0 -2px 1px, rgba(0,0,0,0.5) 0px 3px 10px, rgba(100,0,0,.75) 0 0 40px inset;
+            -moz-box-shadow: rgba(255,255,255,.3) 0 2px 1px,rgba(0,0,0,.3) 0 -2px 1px, rgba(0,0,0,0.5) 0px 3px 10px, rgba(100,0,0,.75) 0 0 40px inset;
+            box-shadow: rgba(255,255,255,.3) 0 2px 1px,rgba(0,0,0,.3) 0 -2px 1px, rgba(0,0,0,0.5) 0px 3px 10px, rgba(100,0,0,.75) 0 0 40px inset;
+            text-shadow: 0 0 10px #000;
+            background: #f3c5bd;
+            background: -webkit-linear-gradient(top, #f3c5bd 0%, #e86c57 50%, #ea2803 51%, #ff6600 100%);
+            background: -moz-linear-gradient(top, #f3c5bd 0%, #e86c57 50%, #ea2803 51%, #ff6600 100%);
+            background: -ms-linear-gradient(top, #f3c5bd 0%, #e86c57 50%, #ea2803 51%, #ff6600 100%);
+            background: -o-linear-gradient(top, #f3c5bd 0%, #e86c57 50%, #ea2803 51%, #ff6600 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3c5bd', endColorstr='#ff6600',GradientType=0 );
+            background: linear-gradient(to bottom, #f3c5bd 0%, #e86c57 50%, #ea2803 51%, #ff6600 100%);
+            opacity: 1;
+        }
+
+        .buttonHolder { /* centres buttons within their div */
+            display: flex;
+            justify-content: center;
+        }
+
+        .bordered {
+            border: 2px dashed blue;
+        }
     </style>
-    <style> /* Style the links inside the sidenav */
-#SideNav a {
-  position: fixed; /* Position them relative to the viewport - not affected by scrolling */
-  left: -15vw; /* Position them outside of the screen */
-  width: 15vw; 
-  /* height: 5vh; */
-  
-  text-decoration: none; /* Remove underline */
-  font-size: 3vw; 
-  text-align: center; /* Centres text horizontally in the anchor element */
-  line-height: 3vh;  
-  
-  transition: 0.3s; /* Add transition on hover */
-  border-radius: 0 5px 5px 0; /* Rounded corners on the top right and bottom right side */
-  padding: 2vh; 
-}
+    <style> /* Background display */
+        .BackgroundContainer {
+            height: 100%;
+        }
 
-#SideNav a:hover {
-  left: 0; /* On mouse-over, make the elements appear as they should */
-  color: white; /* White text color */
-  opacity: 1;
-}
+        .fixed {
+            background-attachment: fixed;
+            background-repeat: repeat-y;
+            background-position: center center;
+            height: 100%;
+            width: 100%;
+            color: #eeeeee;
+            text-align: center;
+            display: table;
+        }
 
-#newGame { /* The newgame_verify() link */
-  top: 5vh;
-  background-color: #04AA6D; /* Green */
-  color: #04AA6D;
-}
+        .bg_1 {
+            background-image: url("https://images-cdn.fantasyflightgames.com/filer_public/bc/46/bc4690f5-b669-400b-bc4f-6e92cb813451/mec16_preview.jpg");
+            background-size: cover;
+            height: 1350px;
+        }
 
-#back { /* The game_backToPreviousStep() link */
-  top: 16vh;
-  background-color: #2196F3; /* Blue */
-  color: #2196F3; 
-}
+        .bg_2 {
+            background-image: url("http://images-cdn.fantasyflightgames.com/filer_public/c8/03/c80313c8-af07-43f8-af92-d6fb8cda51c2/kn22_preview.jpg");
+            background-size: cover;
+            height: 950px;
+        }
 
-#skip {
-  top: 27vh;
-  background-color: #f44336; /* Red */
-  color: #f44336; 
-}
+        .bg_3 {
+            background-image: url("https://images-cdn.fantasyflightgames.com/filer_public/cf/62/cf622e9b-9e77-40c2-98be-5a8c27a8f745/mec01_step_01.jpg");
+            background-size: cover;
+            height: 455px;
+        }
 
-#elim {
-  top: 38vh;
-  background-color: #050505; /* Light Black */
-  color: #050505;
-}
+        .bg_4 {
+            background-image: url("http://images-cdn.fantasyflightgames.com/filer_public/00/6e/006e18e0-cd00-4083-9ce6-42ead3f90f05/jme01_preview_1.jpg");
+            background-size: cover;
+            height: 1100px;
+        }
 
-#vp {
-  top: 49vh;
-  background-color: #BDB76B; /* Dark Khaki */
-  color: #BDB76B;
-}
+        .bg_5 {
+            background-image: url("https://images-cdn.fantasyflightgames.com/filer_public/47/df/47df5db1-b712-489e-9dd3-67f71becbb73/mec01_step_02.jpg");
+            background-size: cover;
+            height: 850px;
+        }
+
+        .bg_6 {
+            background-image: url("https://images-cdn.fantasyflightgames.com/filer_public/bd/7c/bd7cf918-9c0f-4010-aff9-417431615ce7/mec01_step_00.jpg");
+            background-size: cover;
+            height: 1050px;
+        }
+    </style>
+    <style> /* Sequence display area */
+        #SequenceArea {
+            height: 100%;
+            position: absolute;
+            top: 0;
+            width: 100%;
+            background-position: center center;
+            vertical-align: middle;
+            background-repeat: repeat-y;
+            background-attachment: scroll;
+        }
+      
+        #CanvasArea {
+            width: 100%
+        }
+    </style>
+    <style> /* Style the links inside the sidenav */     
+        #SideNav a {
+            position: fixed; /* Position them relative to the viewport - not affected by scrolling */
+            left: -15vw; /* Position them outside of the screen */
+            width: 15vw;
+            /* height: 5vh; */
+
+            text-decoration: none; /* Remove underline */
+            font-size: 3vw;
+            text-align: center; /* Centres text horizontally in the anchor element */
+            line-height: 3vh;
+            transition: 0.3s; /* Add transition on hover */
+            border-radius: 0 5px 5px 0; /* Rounded corners on the top right and bottom right side */
+            padding: 2vh;
+        }
+
+            #SideNav a:hover {
+                left: 0; /* On mouse-over, make the elements appear as they should */
+                color: white; /* White text color */
+                opacity: 1;
+            }
+
+        #newGame { /* The newgame_verify() link */
+            top: 5vh;
+            background-color: #04AA6D; /* Green */
+            color: #04AA6D;
+        }
+
+        #back { /* The game_backToPreviousStep() link */
+            top: 16vh;
+            background-color: #2196F3; /* Blue */
+            color: #2196F3;
+        }
+
+        #skip {
+            top: 27vh;
+            background-color: #f44336; /* Red */
+            color: #f44336;
+        }
+
+        #elim {
+            top: 38vh;
+            background-color: #050505; /* Light Black */
+            color: #050505;
+        }
+
+        #vp {
+            top: 49vh;
+            background-color: #BDB76B; /* Dark Khaki */
+            color: #BDB76B;
+        }
     </style>
     <style> /* Modal */
-/* (adapted from https://cssdeck.com/labs/css3-sleek-black-modal) */
-.modal {
-  /* basic */
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */ 
-  z-index: 1; /* Sit on top */
-  left: 20vw;
-  top: auto;
-  width: 60vw; 
-  background-color: #fff;
-  margin: 0 auto;
-  padding: 30px;
-  text-align: center;
-  /* border-radius */
-  border-radius: 12px;
-  color: white;
-  /* box-shadow */
-  -webkit-box-shadow: rgba(0,0,0,0.5) 0px 3px 10px, rgba(0,0,0,.75) 0 0 70px inset;
-  -moz-box-shadow: rgba(0,0,0,0.5) 0px 3px 10px, rgba(0,0,0,.75) 0 0 70px inset;
-  box-shadow: rgba(0,0,0,0.5) 0px 3px 10px, rgba(0,0,0,.75) 0 0 70px inset;
-  
-  background: #7d7e7d;
-  background: -moz-linear-gradient(top, #7d7e7d, #0e0e0e);
-  background: -webkit-linear-gradient(top, #7d7e7d, #0e0e0e);
-  background: -ms-linear-gradient(top, #7d7e7d, #0e0e0e);
-  background: -o-linear-gradient(top, #7d7e7d, #0e0e0e);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7d7e7d', endColorstr='#0e0e0e',GradientType=0 );
-  background: linear-gradient(to bottom, #7d7e7d, #0e0e0e);
-  
-  border-top: 1px solid #666;
-  overflow: hidden;
-}
+        /* (adapted from https://cssdeck.com/labs/css3-sleek-black-modal) */
+        .modal {
+            /* basic */
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 10; /* Sit on top other elements*/
+            left: 20vw;
+            top: 2vw;
+            width: 60vw;
+            background-color: #fff;
+            margin: 0 auto;
+            padding: 30px;
+            text-align: center;
+            /* border-radius */
+            border-radius: 12px;
+            color: white;
+            /* box-shadow */
+            -webkit-box-shadow: rgba(0,0,0,0.5) 0px 3px 10px, rgba(0,0,0,.75) 0 0 70px inset;
+            -moz-box-shadow: rgba(0,0,0,0.5) 0px 3px 10px, rgba(0,0,0,.75) 0 0 70px inset;
+            box-shadow: rgba(0,0,0,0.5) 0px 3px 10px, rgba(0,0,0,.75) 0 0 70px inset;
+            background: rgba(125, 126, 125, 0.85);
+            background: -moz-linear-gradient(top, rgba(125, 126, 125, 0.85), rgba(14, 14, 14, 0.85));
+            background: -webkit-linear-gradient(top, rgba(125, 126, 125, 0.85), rgba(14, 14, 14, 0.85));
+            background: -ms-linear-gradient(top, rgba(125, 126, 125, 0.85), rgba(14, 14, 14, 0.85));
+            background: -o-linear-gradient(top, rgba(125, 126, 125, 0.85), rgba(14, 14, 14, 0.85));
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7d7e7d', endColorstr='#0e0e0e',GradientType=0 );
+            background: linear-gradient(to bottom, rgba(125, 126, 125, 0.85), rgba(14, 14, 14, 0.85));
+            border-top: 1px solid #666;
+            overflow: hidden;
+        }
 
-#modal h1 {
-  text-align: left;
-  margin: 0;
-  font-size: 6vh;
-  letter-spacing: -1px;
-  margin-bottom: 1vh;
-  text-shadow: 0 -1px 1px #000, 0 0px 3px rgba(0,0,0,.25);
-}
+        #modal h1 {
+            text-align: left;
+            margin: 0;
+            font-size: 6vh;
+            letter-spacing: -1px;
+            margin-bottom: 1vh;
+            text-shadow: 0 -1px 1px #000, 0 0px 3px rgba(0,0,0,.25);
+        }
 
-.modal-content p {
-  margin-top: 5vh 0 7vh;
-  color: #FFD700;
-  font-size: 5vh;
-  text-align: center;
-  text-shadow: 0 0px 5px rgba(0,0,0,.25), 0 -1px 1px #000;
-}
+        .modal-content p {
+            margin-top: 5vh 0 7vh;
+            color: #FFD700;
+            font-size: 5vh;
+            text-align: center;
+            text-shadow: 0 0px 5px rgba(0,0,0,.25), 0 -1px 1px #000;
+        }
 
-.modalBtn {
-  background: green;
-  display: block;
-  padding: 5% 5%;
-  border-radius: 12px;
-  float:left;
-  
-  text-decoration:none;
-  color: white;
-  margin: 5px 5px 5px 5px;
-  
-  font-weight: bold;
-  text-shadow: 0 0 10px #000;
-  border-top: 1px solid rgb(200,250,100);
-  font-size: 4vh;
-  
-  -webkit-box-shadow: rgba(255,255,255,.3) 0 2px 1px,rgba(0,0,0,.3) 0 -2px 1px, rgba(0,0,0,0.5) 0px 3px 10px, rgba(0,50,0,.75) 0 0 40px inset;
-  -moz-box-shadow: rgba(255,255,255,.3) 0 2px 1px,rgba(0,0,0,.3) 0 -2px 1px, rgba(0,0,0,0.5) 0px 3px 10px, rgba(0,50,0,.75) 0 0 40px inset;
-  box-shadow: rgba(255,255,255,.3) 0 2px 1px,rgba(0,0,0,.3) 0 -2px 1px, rgba(0,0,0,0.5) 0px 3px 10px, rgba(0,50,0,.75) 0 0 40px inset;
-  
-  background: #bfd255;
-  background: -webkit-linear-gradient(top, #bfd255 0%, #8eb92a 50%, #72aa00 51%, #9ecb2d 100%);
-  background: -moz-linear-gradient(top, #bfd255 0%, #8eb92a 50%, #72aa00 51%, #9ecb2d 100%);
-  background: -ms-linear-gradient(top, #bfd255 0%, #8eb92a 50%, #72aa00 51%, #9ecb2d 100%);
-  background: -o-linear-gradient(top, #bfd255 0%, #8eb92a 50%, #72aa00 51%, #9ecb2d 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#bfd255', endColorstr='#9ecb2d',GradientType=0 );
-  background: linear-gradient(to bottom, #bfd255 0%, #8eb92a 50%, #72aa00 51%, #9ecb2d 100%);
-}
+        .modalBtn {
+            background: green;
+            display: block;
+            padding: 5% 5%;
+            border-radius: 12px;
+            float: left;
+            text-decoration: none;
+            color: white;
+            margin: 5px 5px 5px 5px;
+            font-weight: bold;
+            text-shadow: 0 0 10px #000;
+            border-top: 1px solid rgb(200,250,100);
+            font-size: 4vh;
+            -webkit-box-shadow: rgba(255,255,255,.3) 0 2px 1px,rgba(0,0,0,.3) 0 -2px 1px, rgba(0,0,0,0.5) 0px 3px 10px, rgba(0,50,0,.75) 0 0 40px inset;
+            -moz-box-shadow: rgba(255,255,255,.3) 0 2px 1px,rgba(0,0,0,.3) 0 -2px 1px, rgba(0,0,0,0.5) 0px 3px 10px, rgba(0,50,0,.75) 0 0 40px inset;
+            box-shadow: rgba(255,255,255,.3) 0 2px 1px,rgba(0,0,0,.3) 0 -2px 1px, rgba(0,0,0,0.5) 0px 3px 10px, rgba(0,50,0,.75) 0 0 40px inset;
+            background: #bfd255;
+            background: -webkit-linear-gradient(top, #bfd255 0%, #8eb92a 50%, #72aa00 51%, #9ecb2d 100%);
+            background: -moz-linear-gradient(top, #bfd255 0%, #8eb92a 50%, #72aa00 51%, #9ecb2d 100%);
+            background: -ms-linear-gradient(top, #bfd255 0%, #8eb92a 50%, #72aa00 51%, #9ecb2d 100%);
+            background: -o-linear-gradient(top, #bfd255 0%, #8eb92a 50%, #72aa00 51%, #9ecb2d 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#bfd255', endColorstr='#9ecb2d',GradientType=0 );
+            background: linear-gradient(to bottom, #bfd255 0%, #8eb92a 50%, #72aa00 51%, #9ecb2d 100%);
+        }
 
-.modalBtn.small {
-  font-size: 2vw;
-}
+            .modalBtn.small {
+                font-size: 2vw;
+            }
 
-a:active { /* ??? */
-  position:relative;
-  top:3px;
-}
-  
-.fade-in { /* Used to fade in the banner when changing to a new phase */
-  animation: fadeIn ease 2s;
-  -webkit-animation: fadeIn ease 2s;
-  -moz-animation: fadeIn ease 2s;
-  -o-animation: fadeIn ease 2s;
-  -ms-animation: fadeIn ease 2s;
-}
-@keyframes fadeIn         { 0% { opacity:0; } 100% { opacity:1; } }
-@-moz-keyframes fadeIn    { 0% { opacity:0; } 100% { opacity:1; } }
-@-webkit-keyframes fadeIn { 0% { opacity:0; } 100% { opacity:1; } }
-@-o-keyframes fadeIn      { 0% { opacity:0; } 100% { opacity:1; } }
-@-ms-keyframes fadeIn     { 0% { opacity:0; } 100% { opacity:1; } }
+        a:active { /* ??? */
+            position: relative;
+            top: 3px;
+        }
 
-.fade-out { /* Used to fade out the banner when moving to a new step */
-  animation: fadeOut ease 2s;
-  -webkit-animation: fadeOut ease 2s;
-  -moz-animation: fadeOut ease 28s;
-  -o-animation: fadeOut ease 2s;
-  -ms-animation: fadeOut ease 2s;
-}
-@keyframes fadeOut         { 0% { opacity:1; } 100% { opacity:0; } }
-@-moz-keyframes fadeOut    { 0% { opacity:1; } 100% { opacity:0; } }
-@-webkit-keyframes fadeOut { 0% { opacity:1; } 100% { opacity:0; } }
-@-o-keyframes fadeOut      { 0% { opacity:1; } 100% { opacity:0; } }
-@-ms-keyframes fadeOut     { 0% { opacity:1; } 100% { opacity:0; } }
+        .fade-in { /* Used to fade in the banner when changing to a new phase */
+            animation: fadeIn ease 2s;
+            -webkit-animation: fadeIn ease 2s;
+            -moz-animation: fadeIn ease 2s;
+            -o-animation: fadeIn ease 2s;
+            -ms-animation: fadeIn ease 2s;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; } 
+            100% { opacity: 1; }
+        }
+
+        @-moz-keyframes fadeIn {
+            0% { opacity: 0; } 
+            100% { opacity: 1; }
+        }
+
+        @-webkit-keyframes fadeIn {
+            0% { opacity: 0; } 
+            100% { opacity: 1; }
+        }
+
+        @-o-keyframes fadeIn {
+            0% { opacity: 0; } 
+            100% { opacity: 1; }
+        }
+
+        @-ms-keyframes fadeIn {
+            0% { opacity: 0; } 
+            100% { opacity: 1; }
+        }
+
+        .fade-out { /* Used to fade out the banner when moving to a new step */
+            animation: fadeOut ease 2s;
+            -webkit-animation: fadeOut ease 2s;
+            -moz-animation: fadeOut ease 28s;
+            -o-animation: fadeOut ease 2s;
+            -ms-animation: fadeOut ease 2s;
+        }
+
+        @keyframes fadeOut {
+            0% { opacity: 1; } 
+            100% { opacity: 0; }
+        }
+
+        @-moz-keyframes fadeOut {
+            0% { opacity: 1; } 
+            100% { opacity: 0; }
+        }
+
+        @-webkit-keyframes fadeOut {
+            0% { opacity: 1; } 
+            100% { opacity: 0; }
+        }
+
+        @-o-keyframes fadeOut {
+            0% { opacity: 1; } 
+            100% { opacity: 0; }
+        }
+
+        @-ms-keyframes fadeOut {
+            0% { opacity: 1; } 
+            100% { opacity: 0; }
+        }
     </style>
-	<style> /* Rules */
-.rules {
-  position: fixed; /* Stay in place */ 
-  z-index: 2; /* Sit on top of Modal */
-  left: auto;
-  top: auto; 
-  background: #909497;
-}
+    <style> /* Rules */
+        .rules {
+            position: fixed; /* Stay in place */
+            z-index: 20; /* Sit on top of Modal */
+            left: auto;
+            top: auto;
+            background: #909497;
+        }
 
-#gameRulesHeader {
-  margin-top: 7vh 0 10vh;
-  color: #FFD700;
-  font-size: 5vh;
-  text-align: center;
-  text-shadow: 0 0px 5px rgba(0,0,0,.25), 0 -1px 1px #000;
-}
+        #gameRulesHeader {
+            margin-top: 7vh 0 10vh;
+            color: #FFD700;
+            font-size: 5vh;
+            text-align: center;
+            text-shadow: 0 0px 5px rgba(0,0,0,.25), 0 -1px 1px #000;
+        }
 
-.rules object{
-  width: 95vw; 
-  height: 70vh;
-}
+        .rules object {
+            width: 95vw;
+            height: 70vh;
+        }
 
-.rulesBtn {
-  background: DarkTurquoise;
-  display: block;
-  padding: 2% 2%;
-  border-radius: 12px;
-  float:left;
-  
-  text-decoration:none;
-  color: white;
-  margin: 1px 1px 1px 1px;
-  
-  font-weight: bold;
-  text-shadow: 0 0 10px #000;
-  border-top: 1px solid rgb(200,250,100);
-  font-size: 2vh;
-  
-  -webkit-box-shadow: rgba(255,255,255,.3) 0 2px 1px,rgba(0,0,0,.3) 0 -2px 1px, rgba(0,0,0,0.5) 0px 3px 5px, rgba(0,50,0,.75) 0 0 20px inset;
-  -moz-box-shadow: rgba(255,255,255,.3) 0 2px 1px,rgba(0,0,0,.3) 0 -2px 1px, rgba(0,0,0,0.5) 0px 3px 5px, rgba(0,50,0,.75) 0 0 20px inset;
-  box-shadow: rgba(255,255,255,.3) 0 2px 1px,rgba(0,0,0,.3) 0 -2px 1px, rgba(0,0,0,0.5) 0px 3px 5px, rgba(0,50,0,.75) 0 0 2 inset;
-  
-  background: #bfd255;
-  background: -webkit-linear-gradient(top, #bfd255 0%, #8eb92a 50%, #72aa00 51%, #9ecb2d 100%);
-  background: -moz-linear-gradient(top, #bfd255 0%, #8eb92a 50%, #72aa00 51%, #9ecb2d 100%);
-  background: -ms-linear-gradient(top, #bfd255 0%, #8eb92a 50%, #72aa00 51%, #9ecb2d 100%);
-  background: -o-linear-gradient(top, #bfd255 0%, #8eb92a 50%, #72aa00 51%, #9ecb2d 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#bfd255', endColorstr='#9ecb2d',GradientType=0 );
-  background: linear-gradient(to bottom, #bfd255 0%, #8eb92a 50%, #72aa00 51%, #9ecb2d 100%);
-}
-	</style>
+        .rulesBtn {
+            background: DarkTurquoise;
+            display: block;
+            padding: 2% 2%;
+            border-radius: 12px;
+            float: left;
+            text-decoration: none;
+            color: white;
+            margin: 1px 1px 1px 1px;
+            font-weight: bold;
+            text-shadow: 0 0 10px #000;
+            border-top: 1px solid rgb(200,250,100);
+            font-size: 2vh;
+            -webkit-box-shadow: rgba(255,255,255,.3) 0 2px 1px,rgba(0,0,0,.3) 0 -2px 1px, rgba(0,0,0,0.5) 0px 3px 5px, rgba(0,50,0,.75) 0 0 20px inset;
+            -moz-box-shadow: rgba(255,255,255,.3) 0 2px 1px,rgba(0,0,0,.3) 0 -2px 1px, rgba(0,0,0,0.5) 0px 3px 5px, rgba(0,50,0,.75) 0 0 20px inset;
+            box-shadow: rgba(255,255,255,.3) 0 2px 1px,rgba(0,0,0,.3) 0 -2px 1px, rgba(0,0,0,0.5) 0px 3px 5px, rgba(0,50,0,.75) 0 0 2 inset;
+            background: #bfd255;
+            background: -webkit-linear-gradient(top, #bfd255 0%, #8eb92a 50%, #72aa00 51%, #9ecb2d 100%);
+            background: -moz-linear-gradient(top, #bfd255 0%, #8eb92a 50%, #72aa00 51%, #9ecb2d 100%);
+            background: -ms-linear-gradient(top, #bfd255 0%, #8eb92a 50%, #72aa00 51%, #9ecb2d 100%);
+            background: -o-linear-gradient(top, #bfd255 0%, #8eb92a 50%, #72aa00 51%, #9ecb2d 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#bfd255', endColorstr='#9ecb2d',GradientType=0 );
+            background: linear-gradient(to bottom, #bfd255 0%, #8eb92a 50%, #72aa00 51%, #9ecb2d 100%);
+        }
+    </style>
 </head>
-    <body>
-        <div id='SideNav' class='sidenav'>
-          <div class='sidenavbtn' onclick='newgame_verify()'><a href='#' id='newGame'>New Game</a></div>
-          <div class='sidenavbtn'><a href='#' id='back'></a></div>
-          <div class='sidenavbtn'><a href='#' id='skip'></a></div>
-          <div class='sidenavbtn'><a href='#' id='elim'></a></div>
-          <div class='sidenavbtn'><a href='#' id='vp'></a></div>
+<body>
+    <div class="BackgroundContainer">
+        <div class="fixed bg_1"></div>
+        <div class="fixed bg_2"></div>
+        <div class="fixed bg_3"></div>
+        <div class="fixed bg_4"></div>
+        <div class="fixed bg_5"></div>
+        <div class="fixed bg_6"></div>
+    </div>
+    <div id="SequenceArea">
+        <!-- <canvas id='GameCanvas'></canvas> -->
+    </div>
+    <div id='SideNav' class='sidenav'>
+        <div class='sidenavbtn' onclick='newgame_verify()'><a href='#' id='newGame'>New Game</a></div>
+        <div class='sidenavbtn'><a href='#' id='back'></a></div>
+        <div class='sidenavbtn'><a href='#' id='skip'></a></div>
+        <div class='sidenavbtn'><a href='#' id='elim'></a></div>
+        <div class='sidenavbtn'><a href='#' id='vp'></a></div>
+    </div>
+    <div id='GameModal' class='modal'>
+        <div class='modal-content'>
+            <div class='modalBanner'>banner: round information goes here</div>
+            <div class='modalChangeBanner'>banner: phase change information goes here</div>
+            <span id='modalClose' class='closeBtn'>&times;</span>
+            <h1>header: phase information goes here</h1>
+            <p>detail: step information goes here</p>
+            <div class='modalButtonsArea buttonHolder'></div>
         </div>
-        <div id='GameModal' class='modal'>
-            <div class='modal-content'>
-                <div class='modalBanner hidden'>banner: round information goes here</div>
-                <div class='modalChangeBanner hidden'>banner: phase change information goes here</div>
-                <span id='modalClose' class='closeBtn'>&times;</span>
-                <h1>header: phase information goes here</h1>
-                <p>detail: step information goes here</p>
-                <div class='modalButtonsArea buttonHolder'></div>
-            </div>
+    </div>
+    <div id='GameHighlight' class='bordered'></div>
+    <div id='GameRules' class='rules'>
+        <div id='gameRulesHeader'>
+            <span class='closeBtn' onclick='gameRules.classList.add("hidden")'>&times;</span>
+            <p>step name goes here</p>
         </div>
-        <div id='GameRules' class='rules hidden'>
-		  <div id='gameRulesHeader'>
-		    <span class='closeBtn' onclick='gameRules.classList.add("hidden")'>&times;</span>
-			<p>step name goes here</p>
-		  </div>
-		  <div id='RulesDisplay'></div>
-		</div>
-		<canvas id='GameCanvas'></canvas>
-        <script> /* define game steps */
+        <div id='RulesDisplay'></div>
+    </div>
+    <script>
+        /* define game steps */
         var sequence = JSON.parse('{ "phases": [ "Setup", "Resource", "Planning", "Quest", "Travel", "Encounter", "Combat", "Refresh" ] ' +
-		                          // box format (in px): [left, top, right, bottom]
-		                          // help format: [compendium_info, companion_info, action_window_info]
-                                  //              compendium_info:    [page number, page horiz offset, vert offset]
-								  //              companion_info:     [page number]
-								  //              action_window_info: [page number, vert offset]
-                                  ' ,"steps": [ { "phase": 0, "name": "Extract Campaign Setup cards" } ' +
-                                  '            ,{ "phase": 0, "name": "Shuffle Player Decks", "help" : [[47,0,135],[209]] } ' +
-                                  '            ,{ "phase": 0, "name": "Shuffle Encounter Deck", "help" : [[47,0,130],[209]] } ' +
-                                  '            ,{ "phase": 0, "name": "Place Heroes", "help" : [[47,0,400],[210]] } ' +
-                                  '            ,{ "phase": 0, "name": "Perform Campaign Setup", "help" : [[47,0,700],[210]] } ' +
-                                  '            ,{ "phase": 0, "name": "Set Threat Levels", "help" : [[47,0,400],[210]] } ' +
-                                  '            ,{ "phase": 0, "name": "Create Token Banks", "help" : [[47,500,305],[211]] } ' +
-                                  '            ,{ "phase": 0, "name": "Determine First Player", "help" : [[47,500,380],[212]] } ' +
-                                  '            ,{ "phase": 0, "name": "Draw Starting Hand", "help" : [[47,500,455],[213]] } ' +
-                                  '            ,{ "phase": 0, "name": "Place Quest Cards", "help" : [[47,500,555],[214]] } ' +
-                                  '            ,{ "phase": 0, "name": "Perform Scenario Setup", "help" : [[47,500,650],[215]] } ' +
-                                  '            ,{ "phase": 1, "name": "Gather Resources", "gameloopto" : "Pass First Player Token", "box" : [120,245,880,440], "help" : [[48,0,510],[217]] }' +
-                                  '            ,{ "phase": 1, "name": "Draw a Card", "actionwindow" : "true", "box" : [120,455,880,660,217], "help" : [[48,0,620],[217],[128,400]] } ' +
-                                  '            ,{ "phase": 2, "name": "Special Action Window", "playerloopto" : "Special Action Window", "box" : [120,1135,880,1420], "help" : [[48,0,710],[218],[128,600]] } ' + 
-                                  '            ,{ "phase": 3, "name": "Quest Action Window", "box" : [120,1770,880,1980], "help" : [[],[218],[128,920]] } ' +
-                                  '            ,{ "phase": 3, "name": "Commit Characters", "actionwindow" : "true", "box" : [120,1980,880,2200], "help" : [[48,500,100],[220],[129,50]] } ' +
-                                  '            ,{ "phase": 3, "name": "Staging", "actionwindow" : "true", "box" : [120,2200,880,2400], "help" : [[48,500,380],[221],[129,280]] } ' +
-                                  '            ,{ "phase": 3, "name": "Quest Resolution", "actionwindow" : "true", "box" : [120,2400,880,2620], "help" : [[48,500,825],[222],[129,420]] } ' +
-                                  '            ,{ "phase": 4, "name": "Travel Opportunity", "actionwindow" : "true", "box" : [120,3070,880,3290], "help" : [[49,500,100],[227],[129,725]] } ' +
-                                  '            ,{ "phase": 5, "name": "Optional Engagement", "actionwindow" : "true", "box" : [1540,230,2225,410], "help" : [[49,500,750],[232],[129,910]] } ' +
-                                  '            ,{ "phase": 5, "name": "Engagement Checks", "actionwindow" : "true", "box" : [1540,410,2225,590], "help" : [[50,0,50],[233],[129,980]] } ' +
-                                  '            ,{ "phase": 6, "name": "Combat Check", "allskip" : "No Combat?", "skipto" : "Ready All Cards", "box" : [1145,880,1900,975] } ' +
-                                  '            ,{ "phase": 6, "name": "Deal Shadow Card", "actionwindow" : "true", "allskip" : "No Enemies Are Attacking Players?", "skipto" : "Choose Enemy and Attackers", "playerloopto" : "Deal Shadow Card", "box" : [1145,975,1900,1170], "help" : [[50,0,845],[237],[130,130]] } ' +
-                                  '            ,{ "phase": 6, "stage": "Enemy Attack", "name": "Choose Attacking Enemy", "actionwindow" : "true", "playerskip" : "Player Is Not Under Attack?", "skipto" : "Choose Attacking Enemy", "playerloopto" : "Determine Enemy and Defender Combat Damage", "box" : [1145,1360,1900,1585], "help" : [[50,500,150],[238],[130,270]] } ' +
-                                  '            ,{ "phase": 6, "stage": "Enemy Attack", "name": "Declare Defender", "actionwindow" : "true", "box" : [1145,1585,1900,1775], "help" : [[50,500,190],[238],[130,410]] } ' +
-                                  '            ,{ "phase": 6, "stage": "Enemy Attack", "name": "Reveal & Resolve Shadow Effects", "actionwindow" : "true", "box" : [1145,1775,1900,1970], "help" : [[50,500,300],[238],[130,535]] } ' +
-                                  '            ,{ "phase": 6, "stage": "Enemy Attack", "name": "Determine Enemy and Defender Combat Damage", "actionwindow" : "true", "box" : [1145,1970,1900,2160], "help" : [[50,0,340],[238],[130,730]] } ' +
-                                  '            ,{ "phase": 6, "stage": "Player Attack", "name": "Choose Enemy and Attackers", "actionwindow" : "true", "playerskip" : "Player Is Not Attacking An Enemy?", "skipto" : "Choose Enemy and Attackers", "playerloopto" : "Determine Attacker and Enemy Combat Damage", "box" : [2010,1065,2775,1380], "help" : [[51,0,290],[240],[131,85]] } ' +
-                                  '            ,{ "phase": 6, "stage": "Player Attack", "name": "Determine Attacker Strength", "actionwindow" : "true" , "box" : [2010,1380,2775,1575], "help" : [[51,0,345],[240],[131,160]] } ' +
-                                  '            ,{ "phase": 6, "stage": "Player Attack", "name": "Determine Attacker and Enemy Combat Damage", "actionwindow" : "true", "box" : [2010,1575,2775,1770], "help" : [[51,0,390],[240],[131,350]] } ' +
-                                  '            ,{ "phase": 6, "name": "Discard All Shadow Cards", "box" : [2010,2180,2775,2270], "help" : [[51,0,860],[],[131,510]] } ' +
-                                  '            ,{ "phase": 7, "name": "Ready All Cards", "box" : [1615,2790,2345,2965], "help" : [[52,500,315],[255],[]] } ' +
-                                  '            ,{ "phase": 7, "name": "Raise Threat Levels", "box" : [1615,2965,2345,3055], "help" : [[52,500,315],[255],[]] } ' +
-                                  '            ,{ "phase": 7, "name": "Pass First Player Token", "actionwindow" : "true", "box" : [1615,3055,2345,3240], "help" : [[52,500,315],[255],[]] } ' +
-                                  '           ]' +
-                                  '}'
-                                 );
-        </script>
-        <script> /* main code */
+            // box format (in px): [left, top, right, bottom]
+            // help format: [compendium_info, companion_info, action_window_info]
+            //              compendium_info:    [page number, page horiz offset, vert offset]
+            //              companion_info:     [page number]
+            //              action_window_info: [page number, vert offset]
+            ' ,"steps": [ { "phase": 0, "name": "Extract Campaign Setup cards" } ' +
+            '            ,{ "phase": 0, "name": "Shuffle Player Decks", "help" : [[47,0,135],[209]] } ' +
+            '            ,{ "phase": 0, "name": "Shuffle Encounter Deck", "help" : [[47,0,130],[209]] } ' +
+            '            ,{ "phase": 0, "name": "Place Heroes", "help" : [[47,0,400],[210]] } ' +
+            '            ,{ "phase": 0, "name": "Perform Campaign Setup", "help" : [[47,0,700],[210]] } ' +
+            '            ,{ "phase": 0, "name": "Set Threat Levels", "help" : [[47,0,400],[210]] } ' +
+            '            ,{ "phase": 0, "name": "Create Token Banks", "help" : [[47,500,305],[211]] } ' +
+            '            ,{ "phase": 0, "name": "Determine First Player", "help" : [[47,500,380],[212]] } ' +
+            '            ,{ "phase": 0, "name": "Draw Starting Hand", "help" : [[47,500,455],[213]] } ' +
+            '            ,{ "phase": 0, "name": "Place Quest Cards", "help" : [[47,500,555],[214]] } ' +
+            '            ,{ "phase": 0, "name": "Perform Scenario Setup", "help" : [[47,500,650],[215]] } ' +
+            '            ,{ "phase": 1, "name": "Gather Resources", "gameloopto" : "Pass First Player Token", "box" : [0,70,470,190], "help" : [[48,0,510],[217]] }' +
+            '            ,{ "phase": 1, "name": "Draw a Card", "actionwindow" : "true", "box" : [0,190,470,310,217], "help" : [[48,0,620],[217],[128,400]] } ' +
+            '            ,{ "phase": 2, "name": "Special Action Window", "playerloopto" : "Special Action Window", "box" : [0,520,470,680], "help" : [[48,0,710],[218],[128,600]] } ' +
+            '            ,{ "phase": 3, "name": "Quest Action Window", "box" : [0,840,470,960], "help" : [[],[218],[128,920]] } ' +
+            '            ,{ "phase": 3, "name": "Commit Characters", "actionwindow" : "true", "box" : [0,960,470,1080], "help" : [[48,500,100],[220],[129,50]] } ' +
+            '            ,{ "phase": 3, "name": "Staging", "actionwindow" : "true", "box" : [0,1080,470,1195], "help" : [[48,500,380],[221],[129,280]] } ' +
+            '            ,{ "phase": 3, "name": "Quest Resolution", "actionwindow" : "true", "box" : [0,1195,470,1310], "help" : [[48,500,825],[222],[129,420]] } ' +
+            '            ,{ "phase": 4, "name": "Travel Opportunity", "actionwindow" : "true", "box" : [0,1530,470,1650], "help" : [[49,500,100],[227],[129,725]] } ' +
+            '            ,{ "phase": 5, "name": "Optional Engagement", "actionwindow" : "true", "box" : [0,1860,470,1980], "help" : [[49,500,750],[232],[129,910]] } ' +
+            '            ,{ "phase": 5, "name": "Engagement Checks", "actionwindow" : "true", "box" : [0,1980,470,2100], "help" : [[50,0,50],[233],[129,980]] } ' +
+            '            ,{ "phase": 6, "name": "Combat Check", "allskip" : "No Combat?", "skipto" : "Ready All Cards", "box" : [0,2215,470,2320] } ' +
+            '            ,{ "phase": 6, "name": "Deal Shadow Card", "actionwindow" : "true", "allskip" : "No Enemies Are Attacking Players?", "skipto" : "Choose Enemy and Attackers", "playerloopto" : "Deal Shadow Card", "box" : [0,2320,470,2430], "help" : [[50,0,845],[237],[130,130]] } ' +
+            '            ,{ "phase": 6, "stage": "Enemy Attack", "name": "Choose Attacking Enemy", "actionwindow" : "true", "playerskip" : "Player Is Not Under Attack?", "skipto" : "Choose Attacking Enemy", "playerloopto" : "Determine Enemy and Defender Combat Damage", "box" : [0,2480,470,2675], "help" : [[50,500,150],[238],[130,270]] } ' +
+            '            ,{ "phase": 6, "stage": "Enemy Attack", "name": "Declare Defender", "actionwindow" : "true", "box" : [0,2675,470,2795], "help" : [[50,500,190],[238],[130,410]] } ' +
+            '            ,{ "phase": 6, "stage": "Enemy Attack", "name": "Reveal & Resolve Shadow Effects", "actionwindow" : "true", "box" : [0,2795,470,2915], "help" : [[50,500,300],[238],[130,535]] } ' +
+            '            ,{ "phase": 6, "stage": "Enemy Attack", "name": "Determine Enemy and Defender Combat Damage", "actionwindow" : "true", "box" : [0,2915,470,3035], "help" : [[50,0,340],[238],[130,730]] } ' +
+            '            ,{ "phase": 6, "stage": "Player Attack", "name": "Choose Enemy and Attackers", "actionwindow" : "true", "playerskip" : "Player Is Not Attacking An Enemy?", "skipto" : "Choose Enemy and Attackers", "playerloopto" : "Determine Attacker and Enemy Combat Damage", "box" : [0,3330,470,3585], "help" : [[51,0,290],[240],[131,85]] } ' +
+            '            ,{ "phase": 6, "stage": "Player Attack", "name": "Determine Attacker Strength", "actionwindow" : "true" , "box" : [0,3585,470,3705], "help" : [[51,0,345],[240],[131,160]] } ' +
+            '            ,{ "phase": 6, "stage": "Player Attack", "name": "Determine Attacker and Enemy Combat Damage", "actionwindow" : "true", "box" : [0,3705,470,3825], "help" : [[51,0,390],[240],[131,350]] } ' +
+            '            ,{ "phase": 6, "name": "Discard All Shadow Cards", "box" : [0,4060,470,4110], "help" : [[51,0,860],[],[131,510]] } ' +
+            '            ,{ "phase": 7, "name": "Ready All Cards", "box" : [0,4265,470,4320], "help" : [[52,500,315],[255],[]] } ' +
+            '            ,{ "phase": 7, "name": "Raise Threat Levels", "box" : [0,4325,470,4380], "help" : [[52,500,315],[255],[]] } ' +
+            '            ,{ "phase": 7, "name": "Pass First Player Token", "actionwindow" : "true", "box" : [0,4380,470,4435], "help" : [[52,500,315],[255],[]] } ' +
+            '           ]' +
+            '}'
+        );
+    </script>
+    <script>
+        /* main code */
+        var SequenceArea = document.getElementById('SequenceArea')
         var navBack = document.getElementById('back');
         var navSkip = document.getElementById('skip');
         var navElim = document.getElementById('elim');
@@ -352,568 +462,581 @@ a:active { /* ??? */
         var modalHeader = modal.getElementsByTagName('h1')[0];
         var modalDetail = modal.getElementsByTagName('p')[0];
         var modalClose = document.getElementById('modalClose');
-        var modalButtonsArea = modal.getElementsByClassName('modalButtonsArea')[0]; 
-		var gameCanvas = document.getElementById('GameCanvas');
-		var gameRules = document.getElementById('GameRules');
-		var gameRulesHeader = document.getElementById('gameRulesHeader');
-		var gameRulesText = gameRulesHeader.getElementsByTagName('p')[0];
-		var gameRulesDisplay = document.getElementById('RulesDisplay');
-        var AllPlayers = 0; // indicates a step is performed by all players    
-        var backgroundSize;
-		var compendiumIsPreferred = true;
-        
-        loadBackground('./Images/Round.png');
-		
-		function loadBackground(url) {  
-          const img = new Image();
-		  img.addEventListener('load', function() {
-			backgroundSize = [this.naturalWidth, this.naturalHeight];			
-			// once the background is loaded, then the rest of the page can be set up.
-			initialize();
-		  });
-		  img.src = url;
-		  document.body.style.backgroundImage = "url('" + url + "')";  	 
-		}
-        
+        var modalButtonsArea = modal.getElementsByClassName('modalButtonsArea')[0];
+        var gameHighlight = document.getElementById('GameHighlight');
+        var gameRules = document.getElementById('GameRules');
+        var gameRulesHeader = document.getElementById('gameRulesHeader');
+        var gameRulesText = gameRulesHeader.getElementsByTagName('p')[0];
+        var gameRulesDisplay = document.getElementById('RulesDisplay');
+        var AllPlayers = 0; // indicates a step is performed by all players
+        var SequenceImageVOffset;
+        var compendiumIsPreferred = true;
+
+        loadBackground('./Images/RoundSequence.png');
+
+        function loadBackground(url) {
+            const img = new Image();
+            img.addEventListener('load', function () {
+                var sequenceImageH = this.naturalHeight;
+                var sequenceAreaH = Math.floor(sequenceImageH * 1.25);
+                SequenceArea.style.height = sequenceAreaH + 'px';
+                SequenceImageVOffset = Math.floor((sequenceAreaH - sequenceImageH) / 2);
+                // once the background is loaded, then the rest of the page can be set up.
+                initialize();
+            });
+            img.src = url;
+            SequenceArea.style.backgroundImage = "url('" + url + "')";
+        }
+
         function initialize() {
-          navBack.parentElement.classList.add('hidden');
-          modalChangeBanner.innerHTML = '';    
-		  gameCanvas.style.visibility = 'hidden';   		  
-		  
-          // translate the step names that define loops into step numbers
-          for(var step = 0; step < sequence.steps.length; step++) { 
-            if (sequence.steps[step].gameloopto != null) {
-              var gameloopend = findStepNum(sequence.steps[step].gameloopto);
-              sequence.steps[step].gameloopend = gameloopend;
-              sequence.steps[gameloopend].gameloopstart = step;
+            navBack.parentElement.classList.add('hidden');
+            modalBanner.classList.add('hidden');
+            modalChangeBanner.classList.add('hidden');
+            modalChangeBanner.innerHTML = '';
+            gameRules.classList.add('hidden');
+            gameHighlight.classList.add('hidden');;
+
+            // translate the step names that define loops into step numbers
+            for (var step = 0; step < sequence.steps.length; step++) {
+                if (sequence.steps[step].gameloopto != null) {
+                    var gameloopend = findStepNum(sequence.steps[step].gameloopto);
+                    sequence.steps[step].gameloopend = gameloopend;
+                    sequence.steps[gameloopend].gameloopstart = step;
+                }
+                if (sequence.steps[step].playerloopto != null) {
+                    var playerloopend = findStepNum(sequence.steps[step].playerloopto);
+                    sequence.steps[step].playerloopend = playerloopend;
+                    sequence.steps[playerloopend].playerloopstart = step;
+                }
             }
-            if (sequence.steps[step].playerloopto != null) {
-              var playerloopend = findStepNum(sequence.steps[step].playerloopto);
-              sequence.steps[step].playerloopend = playerloopend;
-              sequence.steps[playerloopend].playerloopstart = step;
+
+            //localStorage.clear()
+            if (localStorage.getItem('stateHistory') != null) {
+                initialState = parseInt(localStorage.getItem('stateHistory').split(',')[0], 10);
+                game_setCurrentState(initialState, true);
             }
-          }
-          
-          //localStorage.clear()
-          if (localStorage.getItem('stateHistory') != null) {
-            initialState = parseInt(localStorage.getItem('stateHistory').split(',')[0], 10);
-            game_setCurrentState(initialState, true);            
-          }
         }
 
         function hideModal() { // hide the modal
-          modal.style.display = 'none';
-        } 
+            modal.style.display = 'none';
+        }
 
         function newgame_verify() { // Open modal to verify a new game is starting
-          var closeInfo = '(press &times; to return without starting a new game)';
-          var prompt = 'How many players in the new game?';
-          var buttons = [];
-          for(var x = 1; x < 5; x++) {
-            buttons[x] = generateButton('&nbsp;' + x + '&nbsp;', 'newgame_start(' + x + ')');
-          }
-          showModal('', closeInfo, true, prompt, '', buttons);
+            var closeInfo = '(press &times; to return without starting a new game)';
+            var prompt = 'How many players in the new game?';
+            var buttons = [];
+            for (var x = 1; x < 5; x++) {
+                buttons[x] = generateButton('&nbsp;' + x + '&nbsp;', 'newgame_start(' + x + ')');
+            }
+            showModal('', closeInfo, true, prompt, '', buttons);
         }
 
         function newgame_start(numPlayers) { // Resets the page for a new game
-          localStorage.removeItem('stateHistory');
-          var initialState = numPlayers * 578495;
-          localStorage.setItem('stateHistory', initialState.toString());
-          game_advanceToStep(0, AllPlayers);
+            localStorage.removeItem('stateHistory');
+            var initialState = numPlayers * 578495;
+            localStorage.setItem('stateHistory', initialState.toString());
+            game_advanceToStep(0, AllPlayers);
         }
 
-        function game_advanceToStep(newStepNum, asPlayer=null) { // shows the modal information for a step in the game
-          // At this point we have not yet changed our state to be in the new step. 
-          // We are gathering information about the current state we are moving from and the new state we are move to.
-          var stateHistory = localStorage.getItem('stateHistory');
-          var fromState    = parseInt(stateHistory.split(',')[0], 10);
-          
-          var fromRound         = modulo(fromState, 53);
-          var fromStepNum       = modulo(fromState, 37); 
-          var fromStep          = sequence.steps[fromStepNum];    
-          var fromPhaseNum      = fromStep.phase;   
-          var fromPlayer        = modulo(fromState, 5); 
-          var fromNumPlayers    = modulo(fromState, 7);
-          var fromVictoryPoints = modulo(fromState, 59);    
-          
-          var newStep = sequence.steps[newStepNum];
-          var newPlayer = (asPlayer == null) ? fromPlayer : asPlayer;
-          
-          if ((fromStep.playerloopstart != null) &&
-              (fromPlayer == fromNumPlayers)) { // are we at the end of a player loop?
-            newPlayer = 0;
-          }
-          
-		  if (newStep.playerloopend != null) { // are we entering a player loop?
-            newPlayer++;
-          }
-          
-          var toRound         = fromRound + ((newStep.gameloopend == null) ? 0 : 1);
-          var toStepNum       = newStepNum;
-          var toStep          = newStep;      
-          var toPhaseNum      = newStep.phase;
-          var toPlayer        = newPlayer;
-          var toNumPlayers    = fromNumPlayers;
-          var toVictoryPoints = fromVictoryPoints;
-          
-          var newState = toRound * 382025 + 
-                         toStepNum * -109445 + 
-                         toPlayer * 1619786 +
-                         toNumPlayers * 578495 +
-                         toVictoryPoints * 1578605;
-                         
-          var newRound    = toRound;
-          var newPhaseNum = toPhaseNum;
-		  
-          console.log('round:' + fromRound + '->' + newRound +
-                      ' phase:' + fromPhaseNum + '->' + newPhaseNum +
-                      ' step:' + fromStepNum + '->' + toStepNum +
-                      ' player:' + fromPlayer + '->' + toPlayer +
-                      //' skip:' + ((newStep.skip == null) ? '' : 'skip') + ((newStep.playerskip == null) ? '' : 'playerskip') + '->' + newStep.skipto +
-                      '');
-                      
-          game_setCurrentState(newState);
+        function game_advanceToStep(newStepNum, asPlayer = null) { // shows the modal information for a step in the game
+            // At this point we have not yet changed our state to be in the new step.
+            // We are gathering information about the current state we are moving from and the new state we are move to.
+            var stateHistory = localStorage.getItem('stateHistory');
+            var fromState = parseInt(stateHistory.split(',')[0], 10);
+
+            var fromRound = modulo(fromState, 53);
+            var fromStepNum = modulo(fromState, 37);
+            var fromStep = sequence.steps[fromStepNum];
+            var fromPhaseNum = fromStep.phase;
+            var fromPlayer = modulo(fromState, 5);
+            var fromNumPlayers = modulo(fromState, 7);
+            var fromVictoryPoints = modulo(fromState, 59);
+
+            var newStep = sequence.steps[newStepNum];
+            var newPlayer = (asPlayer == null) ? fromPlayer : asPlayer;
+
+            if ((fromStep.playerloopstart != null) &&
+                (fromPlayer == fromNumPlayers)) { // are we at the end of a player loop?
+                newPlayer = 0;
+            }
+
+            if (newStep.playerloopend != null) { // are we entering a player loop?
+                newPlayer++;
+            }
+
+            var toRound = fromRound + ((newStep.gameloopend == null) ? 0 : 1);
+            var toStepNum = newStepNum;
+            var toPhaseNum = newStep.phase;
+            var toPlayer = newPlayer;
+            var toNumPlayers = fromNumPlayers;
+            var toVictoryPoints = fromVictoryPoints;
+
+            var newState = toRound * 382025 +
+                toStepNum * 3940020 +
+                toPlayer * 1619786 +
+                toNumPlayers * 578495 +
+                toVictoryPoints * 1578605;
+
+            var newRound = toRound;
+            var newPhaseNum = toPhaseNum;
+
+            console.log('round:' + fromRound + '->' + newRound +
+                ' phase:' + fromPhaseNum + '->' + newPhaseNum +
+                ' step:' + fromStepNum + '->' + toStepNum +
+                ' player:' + fromPlayer + '->' + toPlayer +
+                //' skip:' + ((newStep.skip == null) ? '' : 'skip') + ((newStep.playerskip == null) ? '' : 'playerskip') + '->' + newStep.skipto +
+                '');
+
+            game_setCurrentState(newState);
         }
-        
+
         function game_backToPreviousStep() {
-          var stateHistory = localStorage.getItem('stateHistory');
-          var fromState    = parseInt(stateHistory.split(',')[0], 10);
-          var toState      = parseInt(stateHistory.split(',')[1], 10); // go back 2 states in the history because we have already added the current state to the history
-		  localStorage.setItem('stateHistory', stateHistory.slice(stateHistory.split(',', 3).join(',').length + 1)); // removes the first two states from the history
-          
-          var fromRound         = modulo(fromState, 53);
-          var fromStepNum       = modulo(fromState, 37); 
-          var fromStep          = sequence.steps[fromStepNum];    
-          var fromPhaseNum      = fromStep.phase;   
-          var fromPlayer        = modulo(fromState, 5); 
-          var fromNumPlayers    = modulo(fromState, 7);
-          var fromVictoryPoints = modulo(fromState, 59);    
-          
-          var toRound         = modulo(toState, 53);
-          var toStepNum       = modulo(toState, 37); 
-          var toStep          = sequence.steps[toStepNum];    
-          var toPhaseNum      = toStep.phase;   
-          var toPlayer        = modulo(toState, 5); 
-          var toNumPlayers    = modulo(toState, 7);
-          var toVictoryPoints = modulo(toState, 59);   
-		  
-          console.log('round:' + fromRound + '->' + toRound +
-                      ' phase:' + fromPhaseNum + '->' + toPhaseNum +
-                      ' step:' + fromStepNum + '->' + toStepNum +
-                      ' player:' + fromPlayer + '->' + toPlayer +
-                      //' skip:' + ((newStep.skip == null) ? '' : 'skip') + ((newStep.playerskip == null) ? '' : 'playerskip') + '->' + newStep.skipto +
-                      '');
-		  
-          game_setCurrentState(toState);
-        }
-        
-        function game_setCurrentState(currentState, isRefresh=false) {  
-          var stateHistory = localStorage.getItem('stateHistory');
-		  if (!isRefresh) {
-            localStorage.setItem('stateHistory', currentState + ',' + stateHistory); 
-          }
-		  
-          var previousState     = parseInt(stateHistory.split(',')[0], 10);
+            var stateHistory = localStorage.getItem('stateHistory');
+            var fromState = parseInt(stateHistory.split(',')[0], 10);
+            var toState = parseInt(stateHistory.split(',')[1], 10); // go back 2 states in the history because we have already added the current state to the history
+            localStorage.setItem('stateHistory', stateHistory.slice(stateHistory.split(',', 3).join(',').length + 1)); // removes the first two states from the history
 
-          var currentStepNum    = modulo(currentState, 37); 
-          var currentStep       = sequence.steps[currentStepNum];
-          var currentPhaseNum   = currentStep.phase;  
-          var currentPlayer     = modulo(currentState, 5);
-          var currentNumPlayers = modulo(currentState, 7);
-          
-		  var bannerInfo = game_setStandardBanners(currentState, previousState);
-		  var banner       = bannerInfo[0];
-		  var changeBanner = bannerInfo[1];
-		  var showClose    = bannerInfo[2];
-		  var header       = bannerInfo[3];
-          
-          // text: shows the current step
-          var hasActionWindow = currentStep.actionwindow;
-          var detail = currentStep.name + (hasActionWindow ? '<br>&amp;<br>Action Window' : '');
-          if (currentPlayer != AllPlayers) { // are we inside a loop?
-            detail = (currentPlayer == 1 ? 'First Player' : 'Player ' + currentPlayer) + ': ' + detail;
-          } 
-          
-          // buttons
-		  var buttons = [];
-		  var isLastPlayer = (currentPlayer == currentNumPlayers);
-          var nextStepNum = (currentStep.gameloopstart != null)                        ? currentStep.gameloopstart :
-                            ((currentStep.playerloopstart != null) && (!isLastPlayer)) ? currentStep.playerloopstart :
-                                                                                         currentStepNum + 1; 
-          buttons.push(generateButton('Next', 'game_advanceToStep(' + nextStepNum + ')'));
-		  if (currentStep.help != null) {
-		    buttons.push(generateButton('Help', 'game_showHelp("' + currentStep.name + '",' + JSON.stringify(currentStep.help) + ')'));
-		  }
-		  
-		  // sidenav: back		  
-          var showBack = (currentPhaseNum > 0); 
-          
-          // sidenav: skip 
-          var skipInfo = null;
-          var skip = ((currentStep.allskip != null) && (currentPlayer <= 1)) ? currentStep.allskip :
-                     (currentStep.playerskip != null)                        ? currentStep.playerskip :
-                                                                               null;												   
-          if (skip != null) {           
-            var skipToStepNum = (isLastPlayer && (currentStep.playerskip != null)) 
-			                    ? currentStep.playerloopend + 1
-			                    : findStepNum(currentStep.skipto);
-            var skipToPlayer = currentPlayer;
-			// if this is the last player in a player loop then reset the player number
-			if ((currentStep.playerskip != null) && (currentPlayer == currentNumPlayers)) {
-			  skipToPlayer = AllPlayers;
-			} else {
-              // if we are skipping out of a loop (or over one) then reset the player number
-              for (var step = currentStepNum; step < skipToStepNum; step++) {
-                if (sequence.steps[step].loopstart != null) {
-                  skipToPlayer = AllPlayers;
-                  break;
+            var fromRound = modulo(fromState, 53);
+            var fromStepNum = modulo(fromState, 37);
+            var fromStep = sequence.steps[fromStepNum];
+            var fromPhaseNum = fromStep.phase;
+            var fromPlayer = modulo(fromState, 5);
+            // var fromNumPlayers = modulo(fromState, 7);
+            // var fromVictoryPoints = modulo(fromState, 59);
+
+            var toRound = modulo(toState, 53);
+            var toStepNum = modulo(toState, 37);
+            var toStep = sequence.steps[toStepNum];
+            var toPhaseNum = toStep.phase;
+            var toPlayer = modulo(toState, 5);
+            // var toNumPlayers = modulo(toState, 7);
+            // var toVictoryPoints = modulo(toState, 59);
+
+            console.log('round:' + fromRound + '->' + toRound +
+                ' phase:' + fromPhaseNum + '->' + toPhaseNum +
+                ' step:' + fromStepNum + '->' + toStepNum +
+                ' player:' + fromPlayer + '->' + toPlayer +
+                //' skip:' + ((newStep.skip == null) ? '' : 'skip') + ((newStep.playerskip == null) ? '' : 'playerskip') + '->' + newStep.skipto +
+                '');
+
+            game_setCurrentState(toState);
+        }
+
+        function game_setCurrentState(currentState, isRefresh = false) {
+            var stateHistory = localStorage.getItem('stateHistory');
+            if (!isRefresh) {
+                localStorage.setItem('stateHistory', currentState + ',' + stateHistory);
+            }
+
+            var previousState = parseInt(stateHistory.split(',')[0], 10);
+
+            var currentStepNum = modulo(currentState, 37);
+            var currentStep = sequence.steps[currentStepNum];
+            var currentPhaseNum = currentStep.phase;
+            var currentPlayer = modulo(currentState, 5);
+            var currentNumPlayers = modulo(currentState, 7);
+
+            var bannerInfo = game_setStandardBanners(currentState, previousState);
+            var banner = bannerInfo[0];
+            var changeBanner = bannerInfo[1];
+            var showClose = bannerInfo[2];
+            var header = bannerInfo[3];
+
+            // text: shows the current step
+            var hasActionWindow = currentStep.actionwindow;
+            var detail = currentStep.name + (hasActionWindow ? '<br>&amp;<br>Action Window' : '');
+            if (currentPlayer != AllPlayers) { // are we inside a loop?
+                detail = (currentPlayer == 1 ? 'First Player' : 'Player ' + currentPlayer) + ': ' + detail;
+            }
+
+            // buttons
+            var buttons = [];
+            var isLastPlayer = (currentPlayer == currentNumPlayers);
+            var nextStepNum = (currentStep.gameloopstart != null) ? currentStep.gameloopstart :
+                ((currentStep.playerloopstart != null) && (!isLastPlayer)) ? currentStep.playerloopstart :
+                    currentStepNum + 1;
+            buttons.push(generateButton('Next', 'game_advanceToStep(' + nextStepNum + ')'));
+            if (currentStep.help != null) {
+                buttons.push(generateButton('Help', 'game_showHelp("' + currentStep.name + '",' + JSON.stringify(currentStep.help) + ')'));
+            }
+
+            // sidenav: back
+            var showBack = (currentPhaseNum > 0);
+
+            // sidenav: skip
+            var skipInfo = null;
+            var skip = ((currentStep.allskip != null) && (currentPlayer <= 1)) ? currentStep.allskip :
+                (currentStep.playerskip != null) ? currentStep.playerskip :
+                    null;
+            if (skip != null) {
+                var skipToStepNum = (isLastPlayer && (currentStep.playerskip != null))
+                    ? currentStep.playerloopend + 1
+                    : findStepNum(currentStep.skipto);
+                var skipToPlayer = currentPlayer;
+                // if this is the last player in a player loop then reset the player number
+                if ((currentStep.playerskip != null) && (currentPlayer == currentNumPlayers)) {
+                    skipToPlayer = AllPlayers;
+                } else {
+                    // if we are skipping out of a loop (or over one) then reset the player number
+                    for (var step = currentStepNum; step < skipToStepNum; step++) {
+                        if (sequence.steps[step].loopstart != null) {
+                            skipToPlayer = AllPlayers;
+                            break;
+                        }
+                    }
                 }
-              }
-			}
-            skipInfo = [skip, skipToStepNum, skipToPlayer];         
-          }
-		  
-		  // sidenav: eliminate player
-		  var showElim = ((currentNumPlayers > 1) && (currentPhaseNum > 0));
-		  
-		  // sidenav: victory points
-		  var showVP = (currentPhaseNum > 0);
-		  
-		  var sidenavInfo = [showBack, skipInfo, showElim, showVP];
-		  
-		  // repositioning of the background image
-		  var box = currentStep.box;
-          
-          showModal(banner, changeBanner, showClose, header, detail, buttons, sidenavInfo, box);
+                skipInfo = [skip, skipToStepNum, skipToPlayer];
+            }
+
+            // sidenav: eliminate player
+            var showElim = ((currentNumPlayers > 1) && (currentPhaseNum > 0));
+
+            // sidenav: victory points
+            var showVP = (currentPhaseNum > 0);
+
+            var sidenavInfo = [showBack, skipInfo, showElim, showVP];
+
+            // repositioning of the background image
+            var box = currentStep.box;
+
+            sleep(250).then(() => {
+                showModal(banner, changeBanner, showClose, header, detail, buttons, sidenavInfo, box);
+            });
         }
-		
-		function game_setStandardBanners(currentState, previousState) {
-          var previousStepNum      = modulo(previousState, 37); 
-          var previousStep         = sequence.steps[previousStepNum];
-          var previousPhaseNum     = previousStep.phase;
-           
-          var currentRound         = modulo(currentState, 53);
-          var currentStepNum       = modulo(currentState, 37); 
-          var currentStep          = sequence.steps[currentStepNum];
-          var currentPhaseNum      = currentStep.phase;  
-          var currentNumPlayers    = modulo(currentState, 7);
-          var currentVictoryPoints = modulo(currentState, 59);
-		  
-          // banner: shows the current round
-          var banner = (currentRound == 0) 
-		               ? '' 
-					   : 'Round ' + currentRound +
-		                 ((currentNumPlayers == 1) ? '' : ' (' + currentNumPlayers + ' players)') +
-					     ((currentVictoryPoints == 0) ? '' : ' VP: ' + currentVictoryPoints);
-          
-          // change banner: shows when the phase changes
-          var isPhaseChange = (currentPhaseNum != previousPhaseNum);
-          var changeBanner = (isPhaseChange) 
-                             ? 'End of the ' + sequence.phases[previousPhaseNum] + ' Phase<br>' +
-                               'Start of the ' + sequence.phases[currentPhaseNum] + ' Phase'
-                             : '';
-          
-		  // close button: shows only for the new game state
-          var showClose = false;
-          
-          // header: shows the current phase and stage
-          var header = sequence.phases[currentPhaseNum] + ' Phase' +
-                       ((currentStep.stage == null) ? '' : ': ' + currentStep.stage + ' Stage');
-		  
-		  return [banner, changeBanner, showClose, header];
-	    }
-        
+
+        function game_setStandardBanners(currentState, previousState) {
+            var previousStepNum = modulo(previousState, 37);
+            var previousStep = sequence.steps[previousStepNum];
+            var previousPhaseNum = previousStep.phase;
+
+            var currentRound = modulo(currentState, 53);
+            var currentStepNum = modulo(currentState, 37);
+            var currentStep = sequence.steps[currentStepNum];
+            var currentPhaseNum = currentStep.phase;
+            var currentNumPlayers = modulo(currentState, 7);
+            var currentVictoryPoints = modulo(currentState, 59);
+
+            // banner: shows the current round
+            var banner = (currentRound == 0)
+                ? ''
+                : 'Round ' + currentRound +
+                ((currentNumPlayers == 1) ? '' : ' (' + currentNumPlayers + ' players)') +
+                ((currentVictoryPoints == 0) ? '' : ' VP: ' + currentVictoryPoints);
+
+            // change banner: shows when the phase changes
+            var isPhaseChange = (currentPhaseNum != previousPhaseNum);
+            var changeBanner = (isPhaseChange)
+                ? 'End of the ' + sequence.phases[previousPhaseNum] + ' Phase<br>' +
+                'Start of the ' + sequence.phases[currentPhaseNum] + ' Phase'
+                : '';
+
+            // close button: shows only for the new game state
+            var showClose = false;
+
+            // header: shows the current phase and stage
+            var header = sequence.phases[currentPhaseNum] + ' Phase' +
+                ((currentStep.stage == null) ? '' : ': ' + currentStep.stage + ' Stage');
+
+            return [banner, changeBanner, showClose, header];
+        }
+
         function game_showHelp(stepText, helpLocations) {
-		  var compendiumInfo = helpLocations[0];
-		  var companionInfo = (helpLocations.length < 2) ? [] : helpLocations[1];
-		  var actionWindowInfo = (helpLocations.length < 3) ? [] : helpLocations[2];
-		  gameRulesText.innerHTML = 
-		    stepText + 
-		    '<div class="buttonHolder">' +
-		    ((compendiumInfo.length == 0) ? '' : generateButton('Compendium', 'compendiumIsPreferred=true;game_showCompendium(' + compendiumInfo.toString() + ')', 'rulesBtn')) +
-		    ((companionInfo.length == 0) ? '' : generateButton('Companion', 'compendiumIsPreferred=false;game_showCompanion(' + companionInfo[0] + ')', 'rulesBtn')) +
-		    ((actionWindowInfo.length == 0) ? '' : generateButton('Action Window', 'game_showCompendium(' + actionWindowInfo[0] + ',0,' + actionWindowInfo[1] + ')', 'rulesBtn')) + 
-		    '</div>';
-		  
-		  if (compendiumIsPreferred || (onlinePage=null)) {
-		    game_showCompendium(compendiumInfo[0], compendiumInfo[1], compendiumInfo[2]);
-		  } else {
-		    game_showCompanion(companionInfo[0]);
-		  }
-		}
-		
-		function game_showCompendium(pageNum, hOffset, vOffset) {
-		  var pdfOptions = '#page=' + pageNum + '&zoom=100,' + hOffset + ',' + vOffset + '&pagemode=none&view=FitH';
-		  gameRulesDisplay.innerHTML = "<object data='./Images/RulesCompendium_v2.0.pdf" + pdfOptions + " type='application/pdf'></object>";		  
-		  gameRules.classList.remove('hidden');
-		}
-		
-		function game_showCompanion(pageNum) {
-		  gameRulesDisplay.innerHTML = "<object data='https://lotr-lcg-quest-companion.gamersdungeon.net/#Rule" + pageNum + "' type='text/html'></object>";
-		  gameRules.classList.remove('hidden');
-		}
-		
-		function game_verifyElimPlayer() {
-          var stateHistory = localStorage.getItem('stateHistory');
-		  var currentState = parseInt(stateHistory.split(',')[0], 10);
-		  
-          var previousState        = parseInt(stateHistory.split(',')[1], 10);
-		  
-          var currentRound         = modulo(currentState, 53);
-          var currentStepNum       = modulo(currentState, 37); 
-          var currentPlayer        = modulo(currentState, 5); 
-          var currentNumPlayers    = modulo(currentState, 7);
-          var currentVictoryPoints = modulo(currentState, 59);
-		  
-		  var bannerInfo = game_setStandardBanners(currentState, previousState);
-		  var banner       = bannerInfo[0];
-		  var changeBanner = bannerInfo[1];
-		  var showClose    = bannerInfo[2];
-		  var header       = bannerInfo[3];
-		  
-          // text: 
-		  var detail = 'Remove one Player?';
-          
-          // buttons
-		  var buttons = [];
-          var newState = currentRound * 382025 + 
-                         currentStepNum * -109445 + 
-                         currentPlayer * 1619786 +
-                         (currentNumPlayers - 1) * 578495 +
-                         currentVictoryPoints * 1578605;
-          buttons.push(generateButton('Yes', 'game_setCurrentState(' + newState + ')'));
-		  buttons.push(generateButton('No', 'game_setCurrentState(' + currentState + ',"true")'));
-		  
-		  // sidenav: back		  
-          var showBack = false; 
-          
-          // sidenav: skip 
-          var skipInfo = null;
-          		 
-		  // sidenav: eliminate player
-		  var showElim = false;
-		  
-		  // sidenav: victory points
-		  var showVP = false;
-		  
-		  var sidenavInfo = [showBack, skipInfo, showElim, showVP];
-		  
-		  // repositioning of the background image
-		  var box = null;
-          
-          showModal(banner, changeBanner, showClose, header, detail, buttons, sidenavInfo, box);
-		}
-		
-		function game_changeVP(newState=null) {
-          var stateHistory = localStorage.getItem('stateHistory');
-		  var currentState = parseInt(stateHistory.split(',')[0], 10);
-		  
-		  if (newState == null) {
-		    newState = currentState;
-		  }
-		  
-          var previousState    = parseInt(stateHistory.split(',')[1], 10);
-		  
-          var newRound         = modulo(newState, 53);
-          var newStepNum       = modulo(newState, 37); 
-          var newPlayer        = modulo(newState, 5); 
-          var newNumPlayers    = modulo(newState, 7);
-          var newVictoryPoints = modulo(newState, 59);
-		  
-		  var bannerInfo = game_setStandardBanners(newState, previousState);
-		  var banner       = bannerInfo[0];
-		  var changeBanner = bannerInfo[1];
-		  var showClose    = bannerInfo[2];
-		  var header       = bannerInfo[3];
-		  
-          // text: 
-		  var detail = 'Adjust Victory Points';
-          
-          // buttons
-		  var buttons = [];
-		  if (newVictoryPoints > 4) {
-		    buttons.push(generateButton('-5', 'game_changeVP(' + (newState - 5 * 1578605) + ')', 'modalBtn small'));
-		  }
-		  if (newVictoryPoints > 0) {
-		    buttons.push(generateButton('-1', 'game_changeVP(' + (newState - 1578605) + ')', 'modalBtn small'));
-		  }
-		  if (newState != currentState) {
-		    buttons.push(generateButton('Done', 'game_setCurrentState(' + newState + ')', 'modalBtn small'));
-		  }
-		  buttons.push(generateButton('+1', 'game_changeVP(' + (newState + 1578605) + ')', 'modalBtn small'));
-		  buttons.push(generateButton('+5', 'game_changeVP(' + (newState + 5 * 1578605) + ')', 'modalBtn small'));		    
-		  buttons.push(generateButton('Cancel', 'game_setCurrentState(' + currentState + ',"true")', 'modalBtn small'));
-		  
-		  // sidenav: back		  
-          var showBack = false; 
-          
-          // sidenav: skip 
-          var skipInfo = null;
-          		 
-		  // sidenav: eliminate player
-		  var showElim = false;
-		  
-		  // sidenav: victory points
-		  var showVP = false;
-		  
-		  var sidenavInfo = [showBack, skipInfo, showElim, showVP];
-		  
-		  // repositioning of the background image
-		  var box = null;
-          
-          showModal(banner, changeBanner, showClose, header, detail, buttons, sidenavInfo, box);
-		}
-		
-        function showModal(bannerText, changeBannerText, showClose, headerText, detailText, buttons, sidenavInfo, box=null) { // display the modal     
-          // banner:
-          modalBanner.innerHTML = bannerText;
-          if (bannerText == '') {
-            modalBanner.classList.add('hidden');
-          } else {
-            modalBanner.classList.remove('hidden');
-          }
+            var compendiumInfo = helpLocations[0];
+            var companionInfo = (helpLocations.length < 2) ? [] : helpLocations[1];
+            var actionWindowInfo = (helpLocations.length < 3) ? [] : helpLocations[2];
+            gameRulesText.innerHTML =
+                stepText +
+                '<div class="buttonHolder">' +
+                ((compendiumInfo.length == 0) ? '' : generateButton('Compendium', 'compendiumIsPreferred=true;game_showCompendium(' + compendiumInfo.toString() + ')', 'rulesBtn')) +
+                ((companionInfo.length == 0) ? '' : generateButton('Companion', 'compendiumIsPreferred=false;game_showCompanion(' + companionInfo[0] + ')', 'rulesBtn')) +
+                ((actionWindowInfo.length == 0) ? '' : generateButton('Action Window', 'game_showCompendium(' + actionWindowInfo[0] + ',0,' + actionWindowInfo[1] + ')', 'rulesBtn')) +
+                '</div>';
 
-          // change banner:       
-          if (modalChangeBanner.innerHTML != changeBannerText) {
-            modalChangeBanner.classList.remove('fade-in', 'fade-out');
-            if (changeBannerText == '') {           
-              modalChangeBanner.classList.add('fade-out');
-              modalChangeBanner.addEventListener('animationend', clearmodalChangeBanner);
-            } else {            
-              modalChangeBanner.classList.add('hidden');
-              modalChangeBanner.innerHTML = changeBannerText;
-              modalChangeBanner.classList.add('fade-in');
-              modalChangeBanner.classList.remove('hidden');
+            if (compendiumIsPreferred || (onlinePage = null)) {
+                game_showCompendium(compendiumInfo[0], compendiumInfo[1], compendiumInfo[2]);
+            } else {
+                game_showCompanion(companionInfo[0]);
             }
-          }
-          function clearmodalChangeBanner() {
-            modalChangeBanner.classList.add('hidden');
-            modalChangeBanner.innerHTML = ''; 
-            modalChangeBanner.removeEventListener('animationend', clearmodalChangeBanner);
-          }     
-
-           // close button:   
-          if (showClose) { // make the modal close <span> appear
-            modalClose.style.display = 'block';             
-            modalClose.onclick = function() { // When the user clicks on <span> (x), close the modal
-              hideModal();
-              if (localStorage.getItem('stateHistory') != null) {
-                latestsState = parseInt(localStorage.getItem('stateHistory').split(',')[0], 10);
-                game_setCurrentState(latestsState);            
-              }
-            }
-          } else { // hide the modal close <span>    
-            modalClose.style.display = 'none'; 
-          }
-          
-          // header:
-          modalHeader.innerHTML = headerText;
-          
-          // detail:
-          modalDetail.innerHTML = detailText.replace('Action Window','<span style="color:SpringGreen">Action Window</span>');  
-          
-          // buttons:
-          modalButtonsArea.innerHTML = '';
-          buttons.forEach(b => modalButtonsArea.innerHTML += b);
-          
-		  // sideNavs:
-		  var showBack = (sidenavInfo == null) ? false : sidenavInfo[0];
-		  var skipInfo = (sidenavInfo == null) ? null : sidenavInfo[1];
-		  var showElim = (sidenavInfo == null) ? false : sidenavInfo[2]
-		  var showVP   = (sidenavInfo == null) ? false : sidenavInfo[3];
-		  
-          // sideNavs: back:
-          if (showBack) {
-			showSidenav(navBack, 'Back', function() { game_backToPreviousStep(); });
-          } else {
-		    hideSidenav(navBack);
-          }
-          
-          // sideNavs: skip:
-          if (skipInfo == null) {           
-			hideSidenav(navSkip);
-          } else {
-		    var skiptext      = skipInfo[0];
-            var skipToStepNum = skipInfo[1];
-            var skipToPlayer  = skipInfo[2];
-			showSidenav(navSkip, skiptext, function() { game_advanceToStep(skipToStepNum, skipToPlayer); });
-          }
-
-          // sideNavs: eliminate player:
-          if (showElim) {
-		    showSidenav(navElim, 'Elimination', function() { game_verifyElimPlayer(); });
-		  } else {
-		    hideSidenav(navElim);
-		  }
-		  
-		  // sideNavs: victory points:
-		  if (showVP) {
-		    showSidenav(navVP, 'Points', function() { game_changeVP(); });
-	      } else {
-		    hideSidenav(navVP);
-		  }		  
-          
-		  modal.style.display = 'block';  // make the modal appear  
-		  
-		  // background image and highlighting box:
-		  // (this must be done AFTER the modal box has been rendered)
-		  if (box == null) {
-			gameCanvas.style.visibility = 'hidden';
-		  } else {
-			gameCanvas.style.visibility = 'visible';
-		    var modalBottom = Math.ceil(modal.offsetTop + modal.offsetHeight);
-		    var modalRight = Math.ceil(modal.offsetLeft + modal.offsetWidth);
-		    var backgroundOffsetTop = modalBottom - box[1] + 110;
-		    var backgroundOffsetLeft = Math.floor(modal.offsetLeft + (modal.offsetWidth + box[0] - box[2]) / 2) - box[0];
-		    document.body.style.backgroundPosition = backgroundOffsetLeft + 'px ' + backgroundOffsetTop + 'px';
-		    
-		    var canvasOffsetTop = modalBottom  + 110;
-		    var canvasOffsetLeft = backgroundOffsetLeft + box[0] - 5;
-		    gameCanvas.width = box[2] - box[0] + 5;
-		    gameCanvas.height = box[3] - box[1] + 5;
-		    gameCanvas.style.position = 'absolute';
-		    gameCanvas.style.top = canvasOffsetTop + 'px';
-		    gameCanvas.style.left = canvasOffsetLeft + 'px';
-		    
-		    var ctx = gameCanvas.getContext('2d');
-		    ctx.beginPath();
-		    ctx.lineWidth = '4';
-		    ctx.strokeStyle = 'blue';
-		    ctx.rect(0, 0, box[2] - box[0], box[3] - box[1]);
-		    ctx.stroke();
-		  }
-		}
-		
-		function showSidenav(navElement, textContent, onclick) {
-		  navElement.innerHTML = textContent;
-		  navElement.parentElement.onclick = onclick;
-		  navElement.parentElement.classList.remove('hidden');
-		}
-		
-		function hideSidenav(navElement) {
-		  navElement.innerHTML = '';
-		  navElement.parentElement.classList.add('hidden');
-		}
-        
-		function generateButton(buttonText, onclick=null, btnClass='modalBtn') {
-          var ocevent = (onclick == null) ? '' : " onclick='" + onclick + "'";
-          
-          return "<button type='button' class='" + btnClass + "'" + ocevent + '>' + buttonText + '</button>';
         }
-        
+
+        function game_showCompendium(pageNum, hOffset, vOffset) {
+            var pdfOptions = '#page=' + pageNum + '&zoom=100,' + hOffset + ',' + vOffset + '&pagemode=none&view=FitH';
+            gameRulesDisplay.innerHTML = "<object data='./Images/RulesCompendium_v2.0.pdf" + pdfOptions + " type='application/pdf'></object>";
+            gameRules.classList.remove('hidden');
+        }
+
+        function game_showCompanion(pageNum) {
+            gameRulesDisplay.innerHTML = "<object data='https://lotr-lcg-quest-companion.gamersdungeon.net/#Rule" + pageNum + "' type='text/html'></object>";
+            gameRules.classList.remove('hidden');
+        }
+
+        function game_verifyElimPlayer() {
+            var stateHistory = localStorage.getItem('stateHistory');
+            var currentState = parseInt(stateHistory.split(',')[0], 10);
+
+            var previousState = parseInt(stateHistory.split(',')[1], 10);
+
+            var currentRound = modulo(currentState, 53);
+            var currentStepNum = modulo(currentState, 37);
+            var currentPlayer = modulo(currentState, 5);
+            var currentNumPlayers = modulo(currentState, 7);
+            var currentVictoryPoints = modulo(currentState, 59);
+
+            var bannerInfo = game_setStandardBanners(currentState, previousState);
+            var banner = bannerInfo[0];
+            var changeBanner = bannerInfo[1];
+            var showClose = bannerInfo[2];
+            var header = bannerInfo[3];
+
+            // text:
+            var detail = 'Remove one Player?';
+
+            // buttons
+            var buttons = [];
+            var newState = currentRound * 382025 +
+                currentStepNum * 3940020 +
+                currentPlayer * 1619786 +
+                (currentNumPlayers - 1) * 578495 +
+                currentVictoryPoints * 1578605;
+            buttons.push(generateButton('Yes', 'game_setCurrentState(' + newState + ')'));
+            buttons.push(generateButton('No', 'game_setCurrentState(' + currentState + ',"true")'));
+
+            // sidenav: back
+            var showBack = false;
+
+            // sidenav: skip
+            var skipInfo = null;
+
+            // sidenav: eliminate player
+            var showElim = false;
+
+            // sidenav: victory points
+            var showVP = false;
+
+            var sidenavInfo = [showBack, skipInfo, showElim, showVP];
+
+            // repositioning of the background image
+            var box = null;
+
+            showModal(banner, changeBanner, showClose, header, detail, buttons, sidenavInfo, box);
+        }
+
+        function game_changeVP(newState = null) {
+            var stateHistory = localStorage.getItem('stateHistory');
+            var currentState = parseInt(stateHistory.split(',')[0], 10);
+
+            if (newState == null) {
+                newState = currentState;
+            }
+
+            var previousState = parseInt(stateHistory.split(',')[1], 10);
+
+            // var newRound = modulo(newState, 53);
+            // var newStepNum = modulo(newState, 37);
+            // var newPlayer = modulo(newState, 5);
+            // var newNumPlayers = modulo(newState, 7);
+            var newVictoryPoints = modulo(newState, 59);
+
+            var bannerInfo = game_setStandardBanners(newState, previousState);
+            var banner = bannerInfo[0];
+            var changeBanner = bannerInfo[1];
+            var showClose = bannerInfo[2];
+            var header = bannerInfo[3];
+
+            // text:
+            var detail = 'Adjust Victory Points';
+
+            // buttons
+            var buttons = [];
+            if (newVictoryPoints > 4) {
+                buttons.push(generateButton('-5', 'game_changeVP(' + (newState - 5 * 1578605) + ')', 'modalBtn small'));
+            }
+            if (newVictoryPoints > 0) {
+                buttons.push(generateButton('-1', 'game_changeVP(' + (newState - 1578605) + ')', 'modalBtn small'));
+            }
+            if (newState != currentState) {
+                buttons.push(generateButton('Done', 'game_setCurrentState(' + newState + ')', 'modalBtn small'));
+            }
+            buttons.push(generateButton('+1', 'game_changeVP(' + (newState + 1578605) + ')', 'modalBtn small'));
+            buttons.push(generateButton('+5', 'game_changeVP(' + (newState + 5 * 1578605) + ')', 'modalBtn small'));
+            buttons.push(generateButton('Cancel', 'game_setCurrentState(' + currentState + ',"true")', 'modalBtn small'));
+
+            // sidenav: back
+            var showBack = false;
+
+            // sidenav: skip
+            var skipInfo = null;
+
+            // sidenav: eliminate player
+            var showElim = false;
+
+            // sidenav: victory points
+            var showVP = false;
+
+            var sidenavInfo = [showBack, skipInfo, showElim, showVP];
+
+            // repositioning of the background image
+            var box = null;
+
+            showModal(banner, changeBanner, showClose, header, detail, buttons, sidenavInfo, box);
+        }
+
+        function showModal(bannerText, changeBannerText, showClose, headerText, detailText, buttons, sidenavInfo, box = null) { // display the modal
+            // banner:
+            modalBanner.innerHTML = bannerText;
+            if (bannerText == '') {
+                modalBanner.classList.add('hidden');
+            } else {
+                modalBanner.classList.remove('hidden');
+            }
+
+            // change banner:
+            if (modalChangeBanner.innerHTML != changeBannerText) {
+                modalChangeBanner.classList.remove('fade-in', 'fade-out');
+                if (changeBannerText == '') {
+                    modalChangeBanner.classList.add('fade-out');
+                    modalChangeBanner.addEventListener('animationend', clearmodalChangeBanner);
+                } else {
+                    modalChangeBanner.classList.add('hidden');
+                    modalChangeBanner.innerHTML = changeBannerText;
+                    modalChangeBanner.classList.add('fade-in');
+                    modalChangeBanner.classList.remove('hidden');
+                }
+            }
+            function clearmodalChangeBanner() {
+                modalChangeBanner.classList.add('hidden');
+                modalChangeBanner.innerHTML = '';
+                modalChangeBanner.removeEventListener('animationend', clearmodalChangeBanner);
+            }
+
+            // close button:
+            if (showClose) { // make the modal close <span> appear
+                modalClose.style.display = 'block';
+                modalClose.onclick = function () { // When the user clicks on <span> (x), close the modal
+                    hideModal();
+                    if (localStorage.getItem('stateHistory') != null) {
+                        latestsState = parseInt(localStorage.getItem('stateHistory').split(',')[0], 10);
+                        game_setCurrentState(latestsState);
+                    }
+                }
+            } else { // hide the modal close <span>
+                modalClose.style.display = 'none';
+            }
+
+            // header:
+            modalHeader.innerHTML = headerText;
+
+            // detail:
+            modalDetail.innerHTML = detailText.replace('Action Window', '<span style="color:SpringGreen">Action Window</span>');
+
+            // buttons:
+            modalButtonsArea.innerHTML = '';
+            buttons.forEach(b => modalButtonsArea.innerHTML += b);
+
+            // sideNavs:
+            var showBack = (sidenavInfo == null) ? false : sidenavInfo[0];
+            var skipInfo = (sidenavInfo == null) ? null : sidenavInfo[1];
+            var showElim = (sidenavInfo == null) ? false : sidenavInfo[2]
+            var showVP = (sidenavInfo == null) ? false : sidenavInfo[3];
+
+            // sideNavs: back:
+            if (showBack) {
+                showSidenav(navBack, 'Back', function () { game_backToPreviousStep(); });
+            } else {
+                hideSidenav(navBack);
+            }
+
+            // sideNavs: skip:
+            if (skipInfo == null) {
+                hideSidenav(navSkip);
+            } else {
+                var skiptext = skipInfo[0];
+                var skipToStepNum = skipInfo[1];
+                var skipToPlayer = skipInfo[2];
+                showSidenav(navSkip, skiptext, function () { game_advanceToStep(skipToStepNum, skipToPlayer); });
+            }
+
+            // sideNavs: eliminate player:
+            if (showElim) {
+                showSidenav(navElim, 'Elimination', function () { game_verifyElimPlayer(); });
+            } else {
+                hideSidenav(navElim);
+            }
+
+            // sideNavs: victory points:
+            if (showVP) {
+                showSidenav(navVP, 'Points', function () { game_changeVP(); });
+            } else {
+                hideSidenav(navVP);
+            }
+
+            modal.style.display = 'block';  // make the modal appear
+
+            // background image and highlighting box:
+            // (this must be done AFTER the modal box has been rendered)
+            if (box == null) {
+                gameHighlight.classList.add('hidden');
+            } else {
+                var canvasOffset = 50;
+                var modalBottom = Math.ceil(modal.offsetTop + modal.offsetHeight);
+                var sequenceImageOffsetTop = Math.floor(SequenceImageVOffset - modalBottom + box[1] - canvasOffset);
+                // console.log('SequenceImageVOffset [' + SequenceImageVOffset + '] - modalBottom [' + modalBottom + '] + boxH[' + box[1] + '] - canvasOffset[' + canvasOffset + '] = ' + sequenceImageOffsetTop);
+                window.scrollTo({
+                    top: sequenceImageOffsetTop,
+                    left: 0,
+                    behavior: 'smooth'
+                });
+                console.log('modal=(x,' + modalBottom + ') box=(' + box.toString() + ') scrollTo=(0,' + sequenceImageOffsetTop + ')');
+
+                var highlightHeight = box[3] - box[1];
+                var highlightWidth = box[2] - box[0];
+                var highlightOffsetTop = SequenceImageVOffset + box[1];
+                var highlightOffsetLeft = Math.floor((window.innerWidth - highlightWidth) / 2);
+                gameHighlight.classList.remove('hidden');
+                gameHighlight.style.position = 'absolute';
+                gameHighlight.style.position = 'absolute';
+                gameHighlight.style.top = highlightOffsetTop + 'px';
+                gameHighlight.style.left = Math.floor((highlightOffsetLeft * 100) / window.innerWidth) + 'vw';
+                gameHighlight.style.width = Math.floor((highlightWidth * 100) / window.innerWidth) + 'vw';
+                gameHighlight.style.height = highlightHeight + 'px';
+                console.log('highlight top=' + gameHighlight.style.top + ' left=' + gameHighlight.style.left + ' width=' + gameHighlight.style.width + ' height=' + gameHighlight.style.height);
+            }
+        }
+
+        function showSidenav(navElement, textContent, onclick) {
+            navElement.innerHTML = textContent;
+            navElement.parentElement.onclick = onclick;
+            navElement.parentElement.classList.remove('hidden');
+        }
+
+        function hideSidenav(navElement) {
+            navElement.innerHTML = '';
+            navElement.parentElement.classList.add('hidden');
+        }
+
+        function generateButton(buttonText, onclick = null, btnClass = 'modalBtn') {
+            var ocevent = (onclick == null) ? '' : " onclick='" + onclick + "'";
+
+            return "<button type='button' class='" + btnClass + "'" + ocevent + '>' + buttonText + '</button>';
+        }
+
         function findStepNum(searchName) {
-          var step = null;
-          for(step = 0; step < sequence.steps.length; step++) { 
-            if (sequence.steps[step].name == searchName) { 
-              break 
+            var step = null;
+            for (step = 0; step < sequence.steps.length; step++) {
+                if (sequence.steps[step].name == searchName) {
+                    break
+                };
             };
-          };
-          return step;            
+            return step;
         }
-        
+
         function modulo(dividend, divisor) { // because in javascript % is remainder not modulo
-          return ((dividend % divisor ) + divisor ) % divisor
+            return ((dividend % divisor) + divisor) % divisor
         }
-        </script>
-    </body>
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+    </script>
+</body>
 </html>
