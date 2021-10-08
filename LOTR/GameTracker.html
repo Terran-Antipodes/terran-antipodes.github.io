@@ -72,7 +72,7 @@
         }
 
         .bg_2 {
-            background-image: url("http://images-cdn.fantasyflightgames.com/filer_public/c8/03/c80313c8-af07-43f8-af92-d6fb8cda51c2/kn22_preview.jpg");
+            background-image: url("https://images-cdn.fantasyflightgames.com/filer_public/c8/03/c80313c8-af07-43f8-af92-d6fb8cda51c2/kn22_preview.jpg");
             background-size: cover;
             height: 950px;
         }
@@ -84,7 +84,7 @@
         }
 
         .bg_4 {
-            background-image: url("http://images-cdn.fantasyflightgames.com/filer_public/00/6e/006e18e0-cd00-4083-9ce6-42ead3f90f05/jme01_preview_1.jpg");
+            background-image: url("https://images-cdn.fantasyflightgames.com/filer_public/00/6e/006e18e0-cd00-4083-9ce6-42ead3f90f05/jme01_preview_1.jpg");
             background-size: cover;
             height: 1100px;
         }
@@ -179,6 +179,7 @@
             left: 20vw;
             top: 2vw;
             width: 60vw;
+            height: 45%;
             background-color: #fff;
             margin: 0 auto;
             padding: 30px;
@@ -322,8 +323,9 @@
         .rules {
             position: fixed; /* Stay in place */
             z-index: 20; /* Sit on top of Modal */
-            left: auto;
-            top: auto;
+            left: 5vw;
+            width: 90vw;
+            top: 2vw;
             background: #909497;
         }
 
@@ -336,7 +338,7 @@
         }
 
         .rules object {
-            width: 95vw;
+            width: 90vw;
             height: 70vh;
         }
 
@@ -394,15 +396,15 @@
             <p>detail: step information goes here</p>
             <div class='modalButtonsArea buttonHolder'></div>
         </div>
+        <div id='GameRules' class='rules'>
+            <div id='gameRulesHeader'>
+                <span class='closeBtn' onclick='gameRules.classList.add("hidden")'>&times;</span>
+                <p>step name goes here</p>
+            </div>
+            <div id='RulesDisplay'></div>
+        </div>
     </div>
     <div id='GameHighlight' class='bordered'></div>
-    <div id='GameRules' class='rules'>
-        <div id='gameRulesHeader'>
-            <span class='closeBtn' onclick='gameRules.classList.add("hidden")'>&times;</span>
-            <p>step name goes here</p>
-        </div>
-        <div id='RulesDisplay'></div>
-    </div>
     <script>
         /* define game steps */
         var sequence = JSON.parse('{ "phases": [ "Setup", "Resource", "Planning", "Quest", "Travel", "Encounter", "Combat", "Refresh" ] ' +
@@ -986,8 +988,7 @@
                     left: 0,
                     behavior: 'smooth'
                 });
-                console.log('modal=(x,' + modalBottom + ') box=(' + box.toString() + ') scrollTo=(0,' + sequenceImageOffsetTop + ')');
-
+                
                 var highlightHeight = box[3] - box[1];
                 var highlightWidth = box[2] - box[0];
                 var highlightOffsetTop = SequenceImageVOffset + box[1];
@@ -999,7 +1000,6 @@
                 gameHighlight.style.left = Math.floor((highlightOffsetLeft * 100) / window.innerWidth) + 'vw';
                 gameHighlight.style.width = Math.floor((highlightWidth * 100) / window.innerWidth) + 'vw';
                 gameHighlight.style.height = highlightHeight + 'px';
-                console.log('highlight top=' + gameHighlight.style.top + ' left=' + gameHighlight.style.left + ' width=' + gameHighlight.style.width + ' height=' + gameHighlight.style.height);
             }
         }
 
