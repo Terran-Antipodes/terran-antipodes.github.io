@@ -369,6 +369,15 @@
             background: linear-gradient(to bottom, #bfd255 0%, #8eb92a 50%, #72aa00 51%, #9ecb2d 100%);
         }
     </style>
+    <style>
+        #Footer {
+            font-size: 1vw;
+            position: fixed;
+            bottom: 0px;
+            float: left;
+            z-index: 50;
+        }
+    </style>
 </head>
 <body>
     <div class="BackgroundContainer">
@@ -405,6 +414,7 @@
         </div>
     </div>
     <div id='GameHighlight' class='bordered'></div>
+    <div id='VersionArea'>v1.1.1</div>
     <script>
         /* define game steps */
         var sequence = JSON.parse('{ "phases": [ "Setup", "Resource", "Planning", "Quest", "Travel", "Encounter", "Combat", "Refresh" ] ' +
