@@ -115,8 +115,9 @@
             background-attachment: scroll;
         }
       
-        #CanvasArea {
-            width: 100%
+        #GameHighlight {
+            position: absolute;
+            z-index: 2;
         }
     </style>
     <style> /* Style the links inside the sidenav */     
@@ -180,7 +181,6 @@
             left: 20vw;
             top: 2vw;
             width: 60vw;
-            height: 45%;
             z-index: 10;
             background-color: #fff;
             margin: 0 auto;
@@ -994,8 +994,6 @@
                 var highlightOffsetTop = SequenceImageVOffset + box[1];
                 var highlightOffsetLeft = Math.floor((window.innerWidth - highlightWidth) / 2);
                 gameHighlight.classList.remove('hidden');
-                gameHighlight.style.position = 'absolute';
-                gameHighlight.style.position = 'absolute';
                 gameHighlight.style.top = highlightOffsetTop + 'px';
                 gameHighlight.style.left = Math.floor((highlightOffsetLeft * 100) / window.innerWidth) + 'vw';
                 gameHighlight.style.width = Math.floor((highlightWidth * 100) / window.innerWidth) + 'vw';
