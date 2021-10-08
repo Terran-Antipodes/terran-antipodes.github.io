@@ -52,6 +52,7 @@
     <style> /* Background display */
         .BackgroundContainer {
             height: 100%;
+            z-index: 0;
         }
 
         .fixed {
@@ -107,6 +108,7 @@
             position: absolute;
             top: 0;
             width: 100%;
+            z-index: 1;
             background-position: center center;
             vertical-align: middle;
             background-repeat: repeat-y;
@@ -122,7 +124,7 @@
             position: fixed; /* Position them relative to the viewport - not affected by scrolling */
             left: -15vw; /* Position them outside of the screen */
             width: 15vw;
-            /* height: 5vh; */
+            z-index: 20;
 
             text-decoration: none; /* Remove underline */
             font-size: 3vw;
@@ -133,11 +135,11 @@
             padding: 2vh;
         }
 
-            #SideNav a:hover {
-                left: 0; /* On mouse-over, make the elements appear as they should */
-                color: white; /* White text color */
-                opacity: 1;
-            }
+        #SideNav a:hover {
+            left: 0; /* On mouse-over, make the elements appear as they should */
+            color: white; /* White text color */
+            opacity: 1;
+        }
 
         #newGame { /* The newgame_verify() link */
             top: 5vh;
@@ -175,11 +177,11 @@
             /* basic */
             display: none; /* Hidden by default */
             position: fixed; /* Stay in place */
-            z-index: 10; /* Sit on top other elements*/
             left: 20vw;
             top: 2vw;
             width: 60vw;
             height: 45%;
+            z-index: 10;
             background-color: #fff;
             margin: 0 auto;
             padding: 30px;
@@ -244,9 +246,9 @@
             background: linear-gradient(to bottom, #bfd255 0%, #8eb92a 50%, #72aa00 51%, #9ecb2d 100%);
         }
 
-            .modalBtn.small {
-                font-size: 2vw;
-            }
+        .modalBtn.small {
+            font-size: 2vw;
+        }
 
         a:active { /* ??? */
             position: relative;
@@ -322,7 +324,7 @@
     <style> /* Rules */
         .rules {
             position: fixed; /* Stay in place */
-            z-index: 20; /* Sit on top of Modal */
+            z-index: 11; /* Sit on top of Modal */
             left: 5vw;
             width: 90vw;
             top: 2vw;
@@ -377,9 +379,7 @@
         <div class="fixed bg_5"></div>
         <div class="fixed bg_6"></div>
     </div>
-    <div id="SequenceArea">
-        <!-- <canvas id='GameCanvas'></canvas> -->
-    </div>
+    <div id="SequenceArea"></div>
     <div id='SideNav' class='sidenav'>
         <div class='sidenavbtn' onclick='newgame_verify()'><a href='#' id='newGame'>New Game</a></div>
         <div class='sidenavbtn'><a href='#' id='back'></a></div>
