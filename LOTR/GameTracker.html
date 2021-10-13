@@ -419,7 +419,7 @@
     </div>
     <div id='InfoArea'></div>
     <script>
-        var version = 'v1.2.0';
+        var version = 'v1.2.1';
 
         /* define game steps */
         var sequence = JSON.parse('{ "phases": [ "Setup", "Resource", "Planning", "Quest", "Travel", "Encounter", "Combat", "Refresh" ] ' +
@@ -552,10 +552,6 @@
                 initialState = parseInt(stateHistory.split(',')[0], 10);
                 game_setCurrentState(initialState, true);
             }
-        }
-
-        function hideModal() { // hide the modal
-            modal.style.display = 'none';
         }
 
         function newgame_verify() { // Open modal to verify a new game is starting
@@ -700,7 +696,8 @@
 
             // text: shows the current step
             var hasActionWindow = currentStep.actionwindow;
-            var detail = currentStep.name + (hasActionWindow ? '<br>&amp;<br>Action Window' : '');
+            var detail = ((currentStep.name.includes('Action Window')) ? '<span style="color:SpringGreen">' + currentStep.name + '<step>' : currentStep.name) +
+                         (hasActionWindow ? '<br>&amp;<br><span style="color:SpringGreen">Action Window</span>' : '');
             if (!isAllPlayers) { // are we inside a loop?
                 detail = (isFirstPlayer ? 'First Player' : 'Player ' + currentPlayer) + ': ' + detail;
             }
@@ -985,7 +982,7 @@
             modalHeader.innerHTML = headerText;
 
             // detail:
-            modalDetail.innerHTML = detailText.replace('Action Window', '<span style="color:SpringGreen">Action Window</span>');
+            modalDetail.innerHTML = detailText;
 
             // buttons:
             modalButtonsArea.innerHTML = '';
@@ -1037,6 +1034,10 @@
             } else {
                 showOutline(box);
             }
+        }
+
+        function hideModal() { // hide the modal
+            modal.style.display = 'none';
         }
 
         function showOutline(box) {
