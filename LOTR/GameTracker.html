@@ -69,37 +69,31 @@
         .bg_1 {
             background-image: url("https://images-cdn.fantasyflightgames.com/filer_public/bc/46/bc4690f5-b669-400b-bc4f-6e92cb813451/mec16_preview.jpg");
             background-size: cover;
-            height: 1350px;
         }
 
         .bg_2 {
             background-image: url("https://images-cdn.fantasyflightgames.com/filer_public/c8/03/c80313c8-af07-43f8-af92-d6fb8cda51c2/kn22_preview.jpg");
             background-size: cover;
-            height: 950px;
         }
 
         .bg_3 {
             background-image: url("https://images-cdn.fantasyflightgames.com/filer_public/cf/62/cf622e9b-9e77-40c2-98be-5a8c27a8f745/mec01_step_01.jpg");
             background-size: cover;
-            height: 455px;
         }
 
         .bg_4 {
             background-image: url("https://images-cdn.fantasyflightgames.com/filer_public/00/6e/006e18e0-cd00-4083-9ce6-42ead3f90f05/jme01_preview_1.jpg");
             background-size: cover;
-            height: 1100px;
         }
 
         .bg_5 {
             background-image: url("https://images-cdn.fantasyflightgames.com/filer_public/47/df/47df5db1-b712-489e-9dd3-67f71becbb73/mec01_step_02.jpg");
             background-size: cover;
-            height: 850px;
         }
 
         .bg_6 {
             background-image: url("https://images-cdn.fantasyflightgames.com/filer_public/bd/7c/bd7cf918-9c0f-4010-aff9-417431615ce7/mec01_step_00.jpg");
             background-size: cover;
-            height: 1050px;
         }
     </style>
     <style> /* Sequence display area */
@@ -468,6 +462,7 @@
             '            ,{ "phase": 7, "name": "Raise Threat Levels", "boxes" : [0,4325,470,4380], "help" : [[52,500,315],[255],[]] } ' +
             '            ,{ "phase": 7, "name": "Pass First Player Token", "actionwindow" : "true", "boxes" : [0,4380,470,4500], "help" : [[52,500,315],[255],[]] } ' +
             '           ]' +
+            ' ,"areas": [0,777,1740,2195,3281,4145,4594]' +
             '}'
         );
 
@@ -518,7 +513,6 @@
                 initialize();
             });
             img.src = url;
-            //SequenceArea.innerHTML = '<img src="' + url + .style.backgroundImage = "url('" + url + "')";
         }
 
         function initialize() {
@@ -527,7 +521,17 @@
             modalChangeBanner.classList.add('hidden');
             modalChangeBanner.innerHTML = '';
             gameRules.classList.add('hidden');
-            gameOutline.classList.add('hidden');;
+            gameOutline.classList.add('hidden');
+
+            var bounds = SequenceImage.getBoundingClientRect();
+            var vscale = bounds.height / sequenceImageSize[0]; // factor: 1px of the sequence image is being rendered as ?px high onscreen
+            var offset = SequenceArea.offsetTop
+            var images = BackgroundContainer.getElementsByClassName('fixed');
+            for (var index = 1; index <= images.length; index++) {
+                images[index - 1].style.height = offset + (sequence.areas[index] - sequence.areas[index - 1]) * vscale + 'px';
+                offset = 0;
+                console.log('images[' + (index - 1) + '] height=' + offset +' + (' + sequence.areas[index] + ' - ' + sequence.areas[index - 1] + ') * ' + vscale+' = ' + images[index - 1].style.height);
+            }
 
             // translate the step names that define loops into step numbers
             for (var step = 0; step < sequence.steps.length; step++) {
@@ -545,7 +549,6 @@
                     sequence.steps[step].skipto = findStepNum(sequence.steps[step].teamskip[1]);
                 }
             }
-
 
             var stateHistory = localStorage.getItem('stateHistory');
             if (stateHistory) {
