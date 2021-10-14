@@ -2,10 +2,12 @@
 This website is an SPA intended to provide a non-commercial aid while playing the [Lord of the Rings LCG](https://www.fantasyflightgames.com/en/products/the-lord-of-the-rings-the-card-game/) from [Final Flight Game](https://www.fantasyflightgames.com/en/index/).
 
 ##Version History
+###v1.2.3
+Background images change daily.
 ###v1.2.2
-Corrected sizing of the background images.
+i6: Corrected sizing of the background images.
 ###v1.2.1
-Corrected confusing colouring of "Action Window" text.
+i4: Corrected confusing colouring of "Action Window" text.
 ###v1.2.0
 Use new encoding values.
 Changes to display of sequence image.

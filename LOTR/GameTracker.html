@@ -65,36 +65,6 @@
             text-align: center;
             display: table;
         }
-
-        .bg_1 {
-            background-image: url("https://images-cdn.fantasyflightgames.com/filer_public/bc/46/bc4690f5-b669-400b-bc4f-6e92cb813451/mec16_preview.jpg");
-            background-size: cover;
-        }
-
-        .bg_2 {
-            background-image: url("https://images-cdn.fantasyflightgames.com/filer_public/c8/03/c80313c8-af07-43f8-af92-d6fb8cda51c2/kn22_preview.jpg");
-            background-size: cover;
-        }
-
-        .bg_3 {
-            background-image: url("https://images-cdn.fantasyflightgames.com/filer_public/cf/62/cf622e9b-9e77-40c2-98be-5a8c27a8f745/mec01_step_01.jpg");
-            background-size: cover;
-        }
-
-        .bg_4 {
-            background-image: url("https://images-cdn.fantasyflightgames.com/filer_public/00/6e/006e18e0-cd00-4083-9ce6-42ead3f90f05/jme01_preview_1.jpg");
-            background-size: cover;
-        }
-
-        .bg_5 {
-            background-image: url("https://images-cdn.fantasyflightgames.com/filer_public/47/df/47df5db1-b712-489e-9dd3-67f71becbb73/mec01_step_02.jpg");
-            background-size: cover;
-        }
-
-        .bg_6 {
-            background-image: url("https://images-cdn.fantasyflightgames.com/filer_public/bd/7c/bd7cf918-9c0f-4010-aff9-417431615ce7/mec01_step_00.jpg");
-            background-size: cover;
-        }
     </style>
     <style> /* Sequence display area */
         #SequenceArea {
@@ -413,10 +383,11 @@
     </div>
     <div id='InfoArea'></div>
     <script>
-        var version = 'v1.2.2';
+        var version = 'v1.2.3';
 
         /* define game steps */
-        var sequence = JSON.parse('{ "phases": [ "Setup", "Resource", "Planning", "Quest", "Travel", "Encounter", "Combat", "Refresh" ] ' +
+        var sequence = JSON.parse(
+            '{ "phases": [ "Setup", "Resource", "Planning", "Quest", "Travel", "Encounter", "Combat", "Refresh" ] ' +
             // boxes format (in px): [left, top, right, bottom] or [initialplayerbox, subsequentplayerbox, finalplayerbox]
             // help format: [compendium_info, companion_info, action_window_info]
             //              compendium_info:    [page number, page horiz offset, vert offset]
@@ -461,8 +432,51 @@
             '            ,{ "phase": 7, "name": "Ready All Cards", "boxes" : [0,4265,470,4320], "help" : [[52,500,315],[255],[]] } ' +
             '            ,{ "phase": 7, "name": "Raise Threat Levels", "boxes" : [0,4325,470,4380], "help" : [[52,500,315],[255],[]] } ' +
             '            ,{ "phase": 7, "name": "Pass First Player Token", "actionwindow" : "true", "boxes" : [0,4380,470,4500], "help" : [[52,500,315],[255],[]] } ' +
+            '           ]' + 
+                                                       // RESOURCE & PLANNING
+            ' ,"areas": [ { "voffset": 0   , "images": [ "https://images-cdn.fantasyflightgames.com/filer_public/bc/46/bc4690f5-b669-400b-bc4f-6e92cb813451/mec16_preview.jpg" ' +
+            '                                           ,"https://images-cdn.fantasyflightgames.com/filer_public/e4/a5/e4a52d3a-5484-492f-a628-6948e65fe26f/jme07_preview1.jpg" ' +
+            '                                           ,"https://images-cdn.fantasyflightgames.com/filer_public/c8/7e/c87eb0e6-2b62-442b-b151-157b73c9d310/ffi-preview.jpg" ' +
+            '                                           ,"https://images-cdn.fantasyflightgames.com/filer_public/0c/29/0c29b8cc-3f7a-4a90-a063-64576995a29d/mec32_one-ring_preview.jpg" ' +
+            '                                           ,"https://images-cdn.fantasyflightgames.com/filer_public/bc/28/bc28f1d8-cfab-489b-bbe4-b0704715f471/mec34_preview.jpg" ] } ' +
+                                                       // QUEST & TRAVEL
+            '            ,{ "voffset": 777 , "images": [ "https://images-cdn.fantasyflightgames.com/filer_public/c8/03/c80313c8-af07-43f8-af92-d6fb8cda51c2/kn22_preview.jpg" ' +
+            '                                           ,"https://images-cdn.fantasyflightgames.com/filer_public/03/89/0389ccb0-5fc0-4027-bc00-5bbc4d26882e/mec86_preview1.jpg" ' +
+            '                                           ,"https://images-cdn.fantasyflightgames.com/filer_public/b7/1f/b71f7ce7-d492-46ec-878f-6d245f99e077/mec56-preview2.jpg" ' +
+            '                                           ,"https://images-cdn.fantasyflightgames.com/filer_public/bc/0d/bc0dda1d-5722-4f61-abe0-60b868665aa2/umen43_growing-stench-art.jpg" ' +
+            '                                           ,"https://images-cdn.fantasyflightgames.com/filer_public/a1/a3/a1a30a48-11f9-4c61-8a35-e7a5eeff823a/umen35-palace-ruins-art.jpg" ' +
+            '                                           ,"https://images-cdn.fantasyflightgames.com/filer_public/69/76/697670b3-9205-4cd6-b2f3-16f974b5d17c/mec62_art_cracks-of-doom.png" ' +
+            '                                           ,"https://images-cdn.fantasyflightgames.com/filer_public/e4/2f/e42f7766-9576-40f9-a04b-913bcad74fb6/jme01_preview_7.jpg"] } ' +
+                                                       // ENCOUNTER
+            '            ,{ "voffset": 1740, "images": [ "https://images-cdn.fantasyflightgames.com/filer_public/cf/62/cf622e9b-9e77-40c2-98be-5a8c27a8f745/mec01_step_01.jpg" ' +
+            '                                           ,"https://images-cdn.fantasyflightgames.com/filer_public/47/df/47df5db1-b712-489e-9dd3-67f71becbb73/mec01_step_02.jpg" ' +
+            '                                           ,"https://images-cdn.fantasyflightgames.com/filer_public/3c/84/3c849cf3-e3b0-48ec-bd5f-312178c7974f/jme03-04_preview2.jpg" ' +
+            '                                           ,"https://images-cdn.fantasyflightgames.com/filer_public/dc/ef/dcefcd54-6869-419b-9a42-8edd87dc47df/umen35-shadow-the-orcs-art.jpg" ' +
+            '                                           ,"https://images-cdn.fantasyflightgames.com/filer_public/aa/40/aa40ab22-6d12-469e-9be4-89e57dc6a5ad/umec84-85_preview1.jpg" ' +
+            '                                           ,"https://images-cdn.fantasyflightgames.com/filer_public/51/23/512344fe-ba2a-493f-a051-cfee98d40c44/umen37-39_art_forced-off-track.png" ' +
+            '                                           ,"https://images-cdn.fantasyflightgames.com/filer_public/09/59/09593360-9add-4e04-aa8b-e242fb93f68b/umen28_preview.jpg" ' +
+            '                                           ,"https://images-cdn.fantasyflightgames.com/filer_public/4f/e0/4fe0002f-3fd3-463b-8000-4b01ee45d992/mes01-05_preview1.png"] } ' +
+                                                       // ENEMY ATTACK
+            '            ,{ "voffset": 2195, "images": [ "https://images-cdn.fantasyflightgames.com/filer_public/00/6e/006e18e0-cd00-4083-9ce6-42ead3f90f05/jme01_preview_1.jpg" ' +
+            '                                           ,"https://images-cdn.fantasyflightgames.com/filer_public/10/3d/103d50a4-2789-4e99-91d0-5cb1e8e20f46/umen43_wicked-hobbits-art.jpg" ' +
+            '                                           ,"https://images-cdn.fantasyflightgames.com/filer_public/3e/c5/3ec56810-9135-4d9e-ad9b-63b041398aad/umen36_preview.png" ' +
+            '                                           ,"https://images-cdn.fantasyflightgames.com/filer_public/3a/42/3a42f3c8-58da-45f9-b081-39329b5a5aca/umen20-34_preview.png" ' +
+            '                                           ,"https://images-cdn.fantasyflightgames.com/filer_public/b1/5d/b15d737a-8382-4e29-b746-9e65b3663fc9/mec54-city-besieged-art.jpg" ' +
+            '                                           ,"https://images-cdn.fantasyflightgames.com/filer_public/54/2d/542d8e96-93dd-444f-b04c-2a4a1af0a8c1/mec101_announcement_preview.png"] } ' +
+                                                        // PLAYER ATTACK
+            '            ,{ "voffset": 3281, "images": [ "https://images-cdn.fantasyflightgames.com/filer_public/6b/ab/6baba999-f2ff-492f-abd1-ad9893f1556e/mec_fellowship_2017_art_battle.png" ' +
+            '                                           ,"https://images-cdn.fantasyflightgames.com/filer_public/ed/cc/edcc9c29-9bfa-4e25-b6ae-8e339893005a/fellowship2015_preview1.jpg" ' +
+            '                                           ,"https://images-cdn.fantasyflightgames.com/filer_public/4e/5a/4e5a5a48-7678-45d2-bce0-a5c10bab1546/mec_fellowship_2017_art_siege.png"] } ' +
+                                                       // REFRESH
+            '            ,{ "voffset": 4145, "images": [ "https://images-cdn.fantasyflightgames.com/filer_public/bd/7c/bd7cf918-9c0f-4010-aff9-417431615ce7/mec01_step_00.jpg" ' +
+            '                                           ,"https://images-cdn.fantasyflightgames.com/filer_public/8f/66/8f66dc61-addd-4d8a-9a07-42f070536499/mec08_preview.jpg" ' +
+            '                                           ,"https://images-cdn.fantasyflightgames.com/filer_public/28/53/28531b9e-a3f6-4c50-a1ec-39899ac073cb/mec17_preview.jpg" ' +
+            '                                           ,"https://images-cdn.fantasyflightgames.com/filer_public/b4/3f/b43f119e-4850-44f5-b8c7-c21b1f2c1174/umen47_art_desecrated-pavilion.png" ' +
+            '                                           ,"https://images-cdn.fantasyflightgames.com/filer_public/54/d8/54d87a57-b29c-4d7f-8951-2d94a676f902/umec64_coverart.jpg" ' +
+            '                                           ,"https://images-cdn.fantasyflightgames.com/filer_public/58/b5/58b54268-64b1-441b-a007-e2686e9e89e6/jme01_preview_5.png"] } ' +
+
+            '            ,{ "voffset": 4594, "images": [""] } ' +
             '           ]' +
-            ' ,"areas": [0,777,1740,2195,3281,4145,4594]' +
             '}'
         );
 
@@ -527,10 +541,14 @@
             var vscale = bounds.height / sequenceImageSize[0]; // factor: 1px of the sequence image is being rendered as ?px high onscreen
             var offset = SequenceArea.offsetTop
             var images = BackgroundContainer.getElementsByClassName('fixed');
-            for (var index = 1; index <= images.length; index++) {
-                images[index - 1].style.height = offset + (sequence.areas[index] - sequence.areas[index - 1]) * vscale + 'px';
+            for (var index = 0; index < images.length; index++) {
+                var imageTop = sequence.areas[index].voffset;
+                var imageBottom = sequence.areas[index + 1].voffset;
+                images[index].style.height = offset + (imageBottom - imageTop) * vscale + 'px';
+                var selection = modulo(new Date().getDate(), sequence.areas[index].images.length);
+                images[index].style.backgroundImage = "url('" + sequence.areas[index].images[selection] + "')";
+                images[index].style.backgroundSize = "cover";
                 offset = 0;
-                console.log('images[' + (index - 1) + '] height=' + offset +' + (' + sequence.areas[index] + ' - ' + sequence.areas[index - 1] + ') * ' + vscale+' = ' + images[index - 1].style.height);
             }
 
             // translate the step names that define loops into step numbers
