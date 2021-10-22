@@ -833,6 +833,7 @@
                 stepText +
                 '<div class="buttonHolder">' +
                 ((compendiumInfo.length == 0) ? '' : generateButton('Compendium', 'compendiumIsPreferred=true;game_showCompendium(' + compendiumInfo.toString() + ')', 'rulesBtn')) +
+                ((compendiumInfo.length == 0) ? '' : generateButton('HTML Compendium', 'compendiumIsPreferred=true;game_showCompendiumWebPage(' + compendiumInfo.toString() + ')', 'rulesBtn')) +
                 ((companionInfo.length == 0) ? '' : generateButton('Companion', 'compendiumIsPreferred=false;game_showCompanion(' + companionInfo[0] + ')', 'rulesBtn')) +
                 ((actionWindowInfo.length == 0) ? '' : generateButton('Action Window', 'game_showCompendium(' + actionWindowInfo[0] + ',0,' + actionWindowInfo[1] + ')', 'rulesBtn')) +
                 '</div>';
@@ -847,6 +848,12 @@
         function game_showCompendium(pageNum, hOffset, vOffset) {
             var pdfOptions = '#page=' + pageNum + '&zoom=100,' + hOffset + ',' + vOffset + '&pagemode=none&view=FitH';
             gameRulesDisplay.innerHTML = "<object data='./Images/RulesCompendium_v2.0.pdf" + pdfOptions + " type='application/pdf'></object>";
+            gameRules.classList.remove('hidden');
+        }
+
+        function game_showCompendiumWebPage(pageNum, hOffset, vOffset) {
+            var htmlOptions = '#' + pageNum + '_' + vOffset + '&pagemode=none&view=FitH';
+            gameRulesDisplay.innerHTML = "<object data='./RulesCompendium_v2.0/Rules_Compendium_v2_0.html'></object>";
             gameRules.classList.remove('hidden');
         }
 
