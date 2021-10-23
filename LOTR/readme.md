@@ -2,6 +2,10 @@
 This website is an SPA intended to provide a non-commercial aid while playing the [Lord of the Rings LCG](https://www.fantasyflightgames.com/en/products/the-lord-of-the-rings-the-card-game/) from [Final Flight Game](https://www.fantasyflightgames.com/en/index/).
 
 ##Version History
+###v1.2.5
+Added copyrights and attributions. Added About button. Standardized SideNav naming conventions. Removed unneeded stylings and classes.
+###v1.2.4
+Cleanup of data organization and comments. Removed obsolete CCS elements. Images change based on day rather than day of the month.
 ###v1.2.3
 Background images change daily.
 ###v1.2.2
