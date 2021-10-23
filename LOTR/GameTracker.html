@@ -84,10 +84,9 @@
             z-index: 2;
         }
     </style>
-    <style> /* Style the links inside the sidenav */     
-        #SideNav a {
+    <style> /* Style the SideNavs to be sliding buttons */     
+        #SideNavLeft a,#SideNavRight a {
             position: fixed; /* Position them relative to the viewport - not affected by scrolling */
-            left: -15vw; /* Position them outside of the screen */
             width: 15vw;
             z-index: 20;
 
@@ -96,12 +95,27 @@
             text-align: center; /* Centres text horizontally in the anchor element */
             line-height: 3vh;
             transition: 0.3s; /* Add transition on hover */
-            border-radius: 0 5px 5px 0; /* Rounded corners on the top right and bottom right side */
             padding: 2vh;
         }
 
-        #SideNav a:hover {
+        #SideNavLeft a {
+            border-radius: 0 5px 5px 0; /* Rounded corners on the top right and bottom right side */
+            left: -15vw; /* Position them outside of the screen */
+        }
+
+        #SideNavLeft a:hover {
             left: 0; /* On mouse-over, make the elements appear as they should */
+            color: white; /* White text color */
+            opacity: 1;
+        }
+
+        #SideNavRight a {
+            border-radius: 5px 0 0 5px; /* Rounded corners on the top left and bottom left side */
+            right: -15vw; /* Position them outside of the screen */
+        }
+
+        #SideNavRight a:hover {
+            right: 0; /* On mouse-over, make the elements appear as they should */
             color: white; /* White text color */
             opacity: 1;
         }
@@ -134,6 +148,12 @@
             top: 60vh;
             background-color: #BDB76B; /* Dark Khaki */
             color: #BDB76B;
+        }
+
+        #about {
+            top: 60vh;
+            background-color: #FFC300; /* Gold */
+            color: #FFC300;
         }
     </style>
     <style> /* Modal */
@@ -333,6 +353,19 @@
             float: left;
             z-index: 50;
         }
+
+        #RightsArea {
+            font-size: 2vw;
+            position: absolute;
+            top: 15vh;
+            bottom: 15vh;
+            left: 10vw;
+            width: 80vw;
+            text-align: center;
+            color: white;
+            background-color: SlateGray;
+            z-index: 50;
+        }
     </style>
 </head>
 <body>
@@ -347,12 +380,15 @@
     <div id="SequenceArea">
         <div id='gameOutline' class='bordered'></div>
     </div>
-    <div id='SideNav' class='sidenav'>
-        <div class='sidenavbtn' onclick='newgame_verify()'><a href='#' id='newGame'>New Game</a></div>
-        <div class='sidenavbtn'><a href='#' id='back'></a></div>
-        <div class='sidenavbtn'><a href='#' id='skip'></a></div>
-        <div class='sidenavbtn'><a href='#' id='elim'></a></div>
-        <div class='sidenavbtn'><a href='#' id='vp'></a></div>
+    <div id='SideNavLeft'>
+        <div onclick='newgame_verify()'><a href='#' id='newGame'>New Game</a></div>
+        <div class='hidden'><a href='#' id='back'></a></div>
+        <div class='hidden'><a href='#' id='skip'></a></div>
+        <div class='hidden'><a href='#' id='elim'></a></div>
+        <div class='hidden'><a href='#' id='vp'></a></div>
+    </div>
+    <div id='SideNavRight'>
+        <div onclick='toggleAbout()'><a href='#' id='about'>About</a></div>
     </div>
     <div id='GameModal' class='modal'>
         <div class='modal-content'>
@@ -372,8 +408,15 @@
         </div>
     </div>
     <div id='InfoArea'></div>
+    <div id='RightsArea' class='hidden'>
+        <span style='vertical-align:middle'>
+            The GameTracker webpage is property of Clive Pottinger.<br />
+            All displayed images, arts, fonts and The Lord of The Rings: The Card Game are copyrighted at © Fantasy Flight Games. The copyrightable portions of The Lord of the Rings: The Card Game and its expansions are © 2011 - 2020 Fantasy Flight Publishing, Inc. The Lord of the Rings, and the characters, items, events and places therein are trademarks or registered trademarks of The Saul Zaentz Company / Middle-earthEnterprises and are used, under license, by Fantasy Flight Games. Living Card Game, LCG, LCG logo and FantasyFlight Supply are trademarks and/or registered trademarks of Fantasy Flight Publishing, Inc. All Rights Reserved to their respective owners.<br />
+            The Rules Compendium and Rules Companion are the intellectual property of Mathieu Martin.
+        </span>
+    </div>
     <script>
-        var version = 'v1.2.4';
+        var version = 'v1.2.5';
 
         /* define game steps */
         var sequence = JSON.parse(
@@ -422,7 +465,7 @@
             '            ,{ "phase": 7, "name": "Ready All Cards", "boxes" : [0,4265,470,4320], "help" : [[52,500,315],[255],[]] } ' +
             '            ,{ "phase": 7, "name": "Raise Threat Levels", "boxes" : [0,4325,470,4380], "help" : [[52,500,315],[255],[]] } ' +
             '            ,{ "phase": 7, "name": "Pass First Player Token", "actionwindow" : "true", "boxes" : [0,4380,470,4500], "help" : [[52,500,315],[255],[]] } ' +
-            '           ]' + 
+            '           ]' +
             ' ,"areas": [ { "name": "RESOURCE & PLANNING" ' +
             '              ,"voffset": 0 ' +
             '              ,"images": [ "https://images-cdn.fantasyflightgames.com/filer_public/bc/46/bc4690f5-b669-400b-bc4f-6e92cb813451/mec16_preview.jpg" ' +
@@ -508,6 +551,7 @@
         var navSkip = document.getElementById('skip');
         var navElim = document.getElementById('elim');
         var navVP = document.getElementById('vp');
+        var navAbout = document.getElementById('vp');
         var modal = document.getElementById('GameModal');
         var modalBanner = modal.getElementsByClassName('modalBanner')[0];
         var modalChangeBanner = modal.getElementsByClassName('modalChangeBanner')[0];
@@ -520,11 +564,13 @@
         var gameRulesHeader = document.getElementById('gameRulesHeader');
         var gameRulesText = gameRulesHeader.getElementsByTagName('p')[0];
         var gameRulesDisplay = document.getElementById('RulesDisplay');
+        var infoArea = document.getElementById('InfoArea');
+        var rightsArea = document.getElementById('RightsArea');
         var compendiumIsPreferred = true;
     </script>
     <script>
         /* main code */
-        document.getElementById('InfoArea').innerHTML = version;
+        infoArea.innerHTML = version;
         loadBackground('./Images/RoundSequence.png');
 
         function loadBackground(url) {
@@ -728,7 +774,7 @@
             // text: shows the current step
             var hasActionWindow = currentStep.actionwindow;
             var detail = ((currentStep.name.includes('Action Window')) ? '<span style="color:SpringGreen">' + currentStep.name + '<step>' : currentStep.name) +
-                         (hasActionWindow ? '<br>&amp;<br><span style="color:SpringGreen">Action Window</span>' : '');
+                (hasActionWindow ? '<br>&amp;<br><span style="color:SpringGreen">Action Window</span>' : '');
             if (!isAllPlayers) { // are we inside a loop?
                 detail = (isFirstPlayer ? 'First Player' : 'Player ' + currentPlayer) + ': ' + detail;
             }
@@ -740,10 +786,10 @@
                 buttons.push(generateButton('Help', 'game_showHelp("' + currentStep.name + '",' + JSON.stringify(currentStep.help) + ')'));
             }
 
-            // sidenav: back
+            // SideNav: back
             var showBack = (currentPhaseNum > 0);
 
-            // sidenav: skip
+            // SideNav: skip
             var skipInfo = null;
             switch (true) {
                 case ((currentStep.teamskip != null) && (isAllPlayers || isFirstPlayer)):
@@ -756,13 +802,13 @@
                     break;
             }
 
-            // sidenav: eliminate player
+            // SideNav: eliminate player
             var showElim = ((currentNumPlayers > 1) && (currentPhaseNum > 0));
 
-            // sidenav: victory points
+            // SideNav: victory points
             var showVP = (currentPhaseNum > 0);
 
-            var sidenavInfo = [showBack, skipInfo, showElim, showVP];
+            var sideNavInfo = [showBack, skipInfo, showElim, showVP];
 
             // repositioning of the background image
             var box;
@@ -785,7 +831,7 @@
             }
 
             sleep(250).then(() => {
-                showModal(banner, changeBanner, showClose, header, detail, buttons, sidenavInfo, box);
+                showModal(banner, changeBanner, showClose, header, detail, buttons, sideNavInfo, box);
             });
         }
 
@@ -887,24 +933,24 @@
             buttons.push(generateButton('Yes', 'game_setCurrentState(' + newState + ')'));
             buttons.push(generateButton('No', 'game_setCurrentState(' + currentState + ',"true")'));
 
-            // sidenav: back
+            // SideNav: back
             var showBack = false;
 
-            // sidenav: skip
+            // SideNav: skip
             var skipInfo = null;
 
-            // sidenav: eliminate player
+            // SideNav: eliminate player
             var showElim = false;
 
-            // sidenav: victory points
+            // SideNav: victory points
             var showVP = false;
 
-            var sidenavInfo = [showBack, skipInfo, showElim, showVP];
+            var sideNavInfo = [showBack, skipInfo, showElim, showVP];
 
             // repositioning of the background image
             var box = null;
 
-            showModal(banner, changeBanner, showClose, header, detail, buttons, sidenavInfo, box);
+            showModal(banner, changeBanner, showClose, header, detail, buttons, sideNavInfo, box);
         }
 
         function game_changeVP(newState = null) {
@@ -947,27 +993,27 @@
             buttons.push(generateButton('+5', 'game_changeVP(' + (newState + 5 * ceVP.cram) + ')', 'modalBtn small'));
             buttons.push(generateButton('Cancel', 'game_setCurrentState(' + currentState + ',"true")', 'modalBtn small'));
 
-            // sidenav: back
+            // SideNav: back
             var showBack = false;
 
-            // sidenav: skip
+            // SideNav: skip
             var skipInfo = null;
 
-            // sidenav: eliminate player
+            // SideNav: eliminate player
             var showElim = false;
 
-            // sidenav: victory points
+            // SideNav: victory points
             var showVP = false;
 
-            var sidenavInfo = [showBack, skipInfo, showElim, showVP];
+            var sideNavInfo = [showBack, skipInfo, showElim, showVP];
 
             // repositioning of the background image
             var box = null;
 
-            showModal(banner, changeBanner, showClose, header, detail, buttons, sidenavInfo, box);
+            showModal(banner, changeBanner, showClose, header, detail, buttons, sideNavInfo, box);
         }
 
-        function showModal(bannerText, changeBannerText, showClose, headerText, detailText, buttons, sidenavInfo, box = null) { // display the modal
+        function showModal(bannerText, changeBannerText, showClose, headerText, detailText, buttons, sideNavInfo, box = null) { // display the modal
             // banner:
             modalBanner.innerHTML = bannerText;
             if (bannerText == '') {
@@ -1019,41 +1065,41 @@
             modalButtonsArea.innerHTML = '';
             buttons.forEach(b => modalButtonsArea.innerHTML += b);
 
-            // sideNavs:
-            var showBack = (sidenavInfo == null) ? false : sidenavInfo[0];
-            var skipInfo = (sidenavInfo == null) ? null : sidenavInfo[1];
-            var showElim = (sidenavInfo == null) ? false : sidenavInfo[2]
-            var showVP = (sidenavInfo == null) ? false : sidenavInfo[3];
+            // SideNavs:
+            var showBack = (sideNavInfo == null) ? false : sideNavInfo[0];
+            var skipInfo = (sideNavInfo == null) ? null : sideNavInfo[1];
+            var showElim = (sideNavInfo == null) ? false : sideNavInfo[2]
+            var showVP = (sideNavInfo == null) ? false : sideNavInfo[3];
 
-            // sideNavs: back:
+            // SideNavs: back:
             if (showBack) {
-                showSidenav(navBack, 'Back', function () { game_backToPreviousStep(); });
+                showSideNav(navBack, 'Back', function () { game_backToPreviousStep(); });
             } else {
-                hideSidenav(navBack);
+                hideSideNav(navBack);
             }
 
-            // sideNavs: skip:
+            // SideNavs: skip:
             if (skipInfo == null) {
-                hideSidenav(navSkip);
+                hideSideNav(navSkip);
             } else {
                 var skiptext = skipInfo[0];
                 var skipToStepNum = skipInfo[1];
                 var skipToPlayer = skipInfo[2];
-                showSidenav(navSkip, skiptext, function () { game_advanceToStep(skipToStepNum, skipToPlayer); });
+                showSideNav(navSkip, skiptext, function () { game_advanceToStep(skipToStepNum, skipToPlayer); });
             }
 
-            // sideNavs: eliminate player:
+            // SideNavs: eliminate player:
             if (showElim) {
-                showSidenav(navElim, 'Elimination', function () { game_verifyElimPlayer(); });
+                showSideNav(navElim, 'Elimination', function () { game_verifyElimPlayer(); });
             } else {
-                hideSidenav(navElim);
+                hideSideNav(navElim);
             }
 
-            // sideNavs: victory points:
+            // SideNavs: victory points:
             if (showVP) {
-                showSidenav(navVP, 'Points', function () { game_changeVP(); });
+                showSideNav(navVP, 'Points', function () { game_changeVP(); });
             } else {
-                hideSidenav(navVP);
+                hideSideNav(navVP);
             }
 
             modal.style.display = 'block';  // make the modal appear
@@ -1098,15 +1144,34 @@
             gameOutline.classList.remove('hidden');
         }
 
-        function showSidenav(navElement, textContent, onclick) {
+        function showSideNav(navElement, textContent, onclick) {
             navElement.innerHTML = textContent;
             navElement.parentElement.onclick = onclick;
             navElement.parentElement.classList.remove('hidden');
         }
 
-        function hideSidenav(navElement) {
+        function hideSideNav(navElement) {
             navElement.innerHTML = '';
             navElement.parentElement.classList.add('hidden');
+        }
+
+        function toggleAbout() {
+            if (rightsArea.classList.contains('hidden')) {
+                infoArea.style.color = 'white';
+                rightsArea.classList.add('fade-in');
+                rightsArea.classList.remove('hidden');
+            } else {
+                infoArea.style.color = 'black';
+                rightsArea.classList.remove('fade-in');
+                rightsArea.classList.add('fade-out');
+                rightsArea.addEventListener('animationend', hideRights);
+
+                function hideRights() {
+                    rightsArea.classList.add('hidden');
+                    rightsArea.classList.remove('fade-out');
+                    rightsArea.removeEventListener('animationend', hideRights);
+                }
+            }
         }
 
         function generateButton(buttonText, onclick = null, btnClass = 'modalBtn') {
