@@ -46,6 +46,73 @@
         .bordered {
             border: 2px dashed blue;
         }
+        
+        .optionContainer {
+            display: block;
+            position: relative;
+            padding-left: 4vw;
+            margin-bottom: 1vh;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        /* Hide the browser's default radio buttons and checkboxes */
+        .optionContainer input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+
+        /* show this radio button or checkbox instead */
+        .radbtn,.chkbox {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 2.5vw;
+            width: 2.5vw;
+            background-color: #EEEEEE;
+            border-radius: 50%;
+        }
+
+        /* On mouse-over, add a grey background color */
+        .optionContainer:hover input ~ .radbtn,.optionContainer:hover input ~ .chkbox {
+            background-color: #CCCCCC;
+        }
+
+        /* When the button is selected, add a blue background */
+        .optionContainer input:checked ~ .radbtn,.optionContainer input:checked ~ .chkbox {
+            background-color: #2196F3;
+        }
+
+        /* Create the indicator (hidden when not checked) */
+        .radbtn:after,.chkbox:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        /* Show the indicator when selected */
+        .optionContainer input:checked ~ .radbtn:after,.optionContainer input:checked ~ .chkbox:after {
+            display: block;
+        }
+
+        /* Style the indicator */
+        .optionContainer .radbtn:after,.optionContainer .chkbox:after {
+            left: 9px;
+            top: 3px;
+            width: 2px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2.5px 2.5px 0;
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+        }
     </style>
     <style> /* Background display */
         .BackgroundContainer {
@@ -128,32 +195,38 @@
 
         #back { /* The game_backToPreviousStep() link */
             top: 16vh;
-            background-color: #2196F3; /* Blue */
+            background-color: #2196F3; 
             color: #2196F3;
         }
 
         #skip {
             top: 27vh;
-            background-color: #f44336; /* Red */
+            background-color: #f44336; 
             color: #f44336;
         }
 
         #elim {
             top: 49vh;
-            background-color: #050505; /* Light Black */
+            background-color: #050505;
             color: #050505;
         }
 
         #vp {
             top: 60vh;
-            background-color: #BDB76B; /* Dark Khaki */
+            background-color: #BDB76B; 
             color: #BDB76B;
+        }
+
+        #options {
+            top: 49vh;
+            background-color: #FFC300; 
+            color: #FFC300;
         }
 
         #about {
             top: 60vh;
-            background-color: #FFC300; /* Gold */
-            color: #FFC300;
+            background-color: #C8FF00; 
+            color: #C8FF00;
         }
     </style>
     <style> /* Modal */
@@ -356,15 +429,40 @@
 
         #RightsArea {
             font-size: 2vw;
+            text-align: center;
             position: absolute;
+            padding: 2vh 2vw;
             top: 15vh;
-            bottom: 15vh;
             left: 10vw;
             width: 80vw;
-            text-align: center;
             color: white;
             background-color: SlateGray;
             z-index: 50;
+        }
+
+        #OptionsArea {
+            font-size: 2vw;
+            position: absolute;
+            top: 15vh;
+            left: 20vw;
+            width: 60vw;
+            color: white;
+            background-color: SlateGray;
+            z-index: 50;
+        }
+
+        .optionSet {
+            text-align: left;
+            left: 20%;
+            right: 20%;
+            margin: 5vh 5vw;
+            padding: 2vh 2vw;
+            border: 2px solid peachpuff;
+        }
+
+        .optionSet p {
+            font-weight: bold;
+            margin: 1vh 1vw;
         }
     </style>
 </head>
@@ -388,6 +486,7 @@
         <div class='hidden'><a href='#' id='vp'></a></div>
     </div>
     <div id='SideNavRight'>
+        <div class='hidden' onclick='toggleOptions()'><a href='#' id='options'>Options</a></div>
         <div onclick='toggleAbout()'><a href='#' id='about'>About</a></div>
     </div>
     <div id='GameModal' class='modal'>
@@ -408,15 +507,35 @@
         </div>
     </div>
     <div id='InfoArea'></div>
-    <div id='RightsArea' class='hidden'>
+    <div id='OptionsArea'>
+        <div class='optionSet'>
+            <label class='optionContainer'>Playing a campaign
+                <input id='optionCampaign' type='checkbox' onchange='recordOptions'>
+                <span class='chkbox'></span>
+            </label>
+        </div>
+        <div class='optionSet'>
+            <p>Display the Compendium as:</p>
+            <label class='optionContainer'>a PDF
+                <input id='optionCompendium' type='radio' name='compendium' onchange='recordOptions' value='0'>
+                <span class='radbtn'></span>
+            </label>
+            
+            <label class='optionContainer'>HTML (recommended for mobile devices)
+                <input id='optionCompendium' type='radio' name='compendium' onchange='recordOptions' value='1'>
+                <span class='radbtn'></span>
+            </label>
+        </div>
+    </div>
+    <div id='RightsArea'>
         <span style='vertical-align:middle'>
             The GameTracker webpage is property of Clive Pottinger. Email any comments or concerns to terran.antipodes@gmail.com<br />
-            All displayed images, arts, fonts and The Lord of The Rings: The Card Game are copyrighted at © Fantasy Flight Games. The copyrightable portions of The Lord of the Rings: The Card Game and its expansions are © 2011 - 2020 Fantasy Flight Publishing, Inc. The Lord of the Rings, and the characters, items, events and places therein are trademarks or registered trademarks of The Saul Zaentz Company / Middle-earthEnterprises and are used, under license, by Fantasy Flight Games. Living Card Game, LCG, LCG logo and FantasyFlight Supply are trademarks and/or registered trademarks of Fantasy Flight Publishing, Inc. All Rights Reserved to their respective owners.<br />
+            All displayed images, arts, fonts and The Lord of The Rings: The Card Game are copyrighted at ï¿½ Fantasy Flight Games. The copyrightable portions of The Lord of the Rings: The Card Game and its expansions are ï¿½ 2011 - 2020 Fantasy Flight Publishing, Inc. The Lord of the Rings, and the characters, items, events and places therein are trademarks or registered trademarks of The Saul Zaentz Company / Middle-earthEnterprises and are used, under license, by Fantasy Flight Games. Living Card Game, LCG, LCG logo and FantasyFlight Supply are trademarks and/or registered trademarks of Fantasy Flight Publishing, Inc. All Rights Reserved to their respective owners.<br />
             The Rules Compendium and Rules Companion are the intellectual property of, and used by permission by, Mathieu Martin.
         </span>
     </div>
     <script>
-        var version = 'v1.2.6';
+        var version = 'v1.3.0';
 
         /* define game steps */
         var sequence = JSON.parse(
@@ -533,80 +652,76 @@
             '}'
         );
 
-        var AllPlayers = 0; // player number used when a step is performed by all players
+        const ALLPLAYERS = 0; // player number used when a step is performed by all players
 
         /* define state encoding values (see https://clivesyabb.com/2021/10/01/encoding-multiple-values-in-a-single-number/) */
-        var cePlayer = { cram: 2057566, extract: 5 };
-        var cePlayers = { cram: -734845, extract: 7 };
-        var ceStep = { cram: 1422785, extract: 47 };
-        var ceRound = { cram: -2135210, extract: 53 };
-        var ceVP = { cram: -610295, extract: 59 };
+        const PLAYER_EV  = { cram:  2057566, extract:  5 };
+        const PLAYERS_EV = { cram:  -734845, extract:  7 };
+        const STEP_EV    = { cram:  1422785, extract: 47 };
+        const ROUND_EV   = { cram: -2135210, extract: 53 };
+        const VP_EV      = { cram:  -610295, extract: 59 };
 
         /* define webpage constants */
-        var BackgroundContainer = document.getElementsByClassName('BackgroundContainer')[0];
-        var SequenceArea = document.getElementById('SequenceArea');
+        const BACKGROUND_CONTAINER = document.getElementsByClassName('BackgroundContainer')[0];
+        const SEQUENCE_AREA        = document.getElementById('SequenceArea');
+        const NAV_BACK             = document.getElementById('back');
+        const NAV_SKIP             = document.getElementById('skip');
+        const NAV_ELIM             = document.getElementById('elim');
+        const NAV_VP               = document.getElementById('vp');
+        const MODAL                = document.getElementById('GameModal');
+        const MODAL_BANNER         = MODAL.getElementsByClassName('modalBanner')[0];
+        const MODAL_CHANGE_BANNER  = MODAL.getElementsByClassName('modalChangeBanner')[0];
+        const MODAL_HEADER         = MODAL.getElementsByTagName('h1')[0];
+        const MODAL_DETAIL         = MODAL.getElementsByTagName('p')[0];
+        const MODAL_CLOSE          = document.getElementById('modalClose');
+        const MODAL_BUTTONS_AREA   = MODAL.getElementsByClassName('modalButtonsArea')[0];
+        const GAME_OUTLINE         = document.getElementById('gameOutline');
+        const GAME_RULES           = document.getElementById('GameRules');
+        const GAME_RULES_HEADER    = document.getElementById('gameRulesHeader');
+        const GAME_RULES_TEXT      = GAME_RULES_HEADER.getElementsByTagName('p')[0];
+        const GAME_RULES_DISPLAY   = document.getElementById('RulesDisplay');
+        const INFO_AREA            = document.getElementById('InfoArea');
+        const OPTIONS_AREA         = document.getElementById('OptionsArea');
+        const OPTION_CAMPAIGN      = document.getElementById('optionCampaign');
+        const OPTION_COMPENDIUM    = document.getElementById('optionCompendium');
+        const RIGHTS_AREA          = document.getElementById('RightsArea');
+
+        /* define webpage globals */
         var SequenceImage;
-        var sequenceImageSize;
-        var navBack = document.getElementById('back');
-        var navSkip = document.getElementById('skip');
-        var navElim = document.getElementById('elim');
-        var navVP = document.getElementById('vp');
-        var navAbout = document.getElementById('vp');
-        var modal = document.getElementById('GameModal');
-        var modalBanner = modal.getElementsByClassName('modalBanner')[0];
-        var modalChangeBanner = modal.getElementsByClassName('modalChangeBanner')[0];
-        var modalHeader = modal.getElementsByTagName('h1')[0];
-        var modalDetail = modal.getElementsByTagName('p')[0];
-        var modalClose = document.getElementById('modalClose');
-        var modalButtonsArea = modal.getElementsByClassName('modalButtonsArea')[0];
-        var gameOutline = document.getElementById('gameOutline');
-        var gameRules = document.getElementById('GameRules');
-        var gameRulesHeader = document.getElementById('gameRulesHeader');
-        var gameRulesText = gameRulesHeader.getElementsByTagName('p')[0];
-        var gameRulesDisplay = document.getElementById('RulesDisplay');
-        var infoArea = document.getElementById('InfoArea');
-        var rightsArea = document.getElementById('RightsArea');
-        var compendiumIsPreferred = true;
+        var SequenceImageSize;
+        var CompendiumIsPreferred = true;
+        // var CampaignMode = false;
+        // var CompendiumAsPdf = true;
     </script>
     <script>
         /* main code */
-        infoArea.innerHTML = version;
+        INFO_AREA.innerHTML = version;
         loadBackground('./Images/RoundSequence.png');
 
         function loadBackground(url) {
             const img = new Image();
             img.addEventListener('load', function () {
-                sequenceImageSize = [this.naturalHeight, this.naturalWidth];
+                SequenceImageSize = [this.naturalHeight, this.naturalWidth];
                 // once the background is loaded, then the rest of the page can be set up.
-                SequenceArea.appendChild(img);
-                SequenceImage = SequenceArea.getElementsByTagName('img')[0];
+                SEQUENCE_AREA.appendChild(img);
+                SequenceImage = SEQUENCE_AREA.getElementsByTagName('img')[0];
+                setImages();
+                window.onresize = setImages;
+
                 initialize();
             });
             img.src = url;
         }
 
         function initialize() {
-            navBack.parentElement.classList.add('hidden');
-            modalBanner.classList.add('hidden');
-            modalChangeBanner.classList.add('hidden');
-            modalChangeBanner.innerHTML = '';
-            gameRules.classList.add('hidden');
-            gameOutline.classList.add('hidden');
-
-            // set the background images and size them so that, when scrolling down, each image appears behind the corresponding area of the sequence.
-            var bounds = SequenceImage.getBoundingClientRect();
-            var vscale = bounds.height / sequenceImageSize[0]; // vscale: 1px of the sequence image is being rendered as ?px high onscreen
-            var offset = SequenceArea.offsetTop
-            var images = BackgroundContainer.getElementsByClassName('fixed');
-            for (var index = 0; index < images.length; index++) {
-                var imageTop = sequence.areas[index].voffset;
-                var imageBottom = sequence.areas[index + 1].voffset;
-                images[index].style.height = offset + (imageBottom - imageTop) * vscale + 'px';
-                var selection = modulo(Math.floor(Date.now() / 86400000), sequence.areas[index].images.length);
-                images[index].style.backgroundImage = "url('" + sequence.areas[index].images[selection] + "')";
-                images[index].style.backgroundSize = "cover";
-                offset = 0;
-            }
+            NAV_BACK.parentElement.classList.add('hidden');
+            MODAL_BANNER.classList.add('hidden');
+            MODAL_CHANGE_BANNER.classList.add('hidden');
+            MODAL_CHANGE_BANNER.innerHTML = '';
+            GAME_RULES.classList.add('hidden');
+            GAME_OUTLINE.classList.add('hidden');
+            OPTIONS_AREA.classList.add('hidden');
+            RIGHTS_AREA.classList.add('hidden');
 
             // translate the step names that define loops into step numbers
             for (var step = 0; step < sequence.steps.length; step++) {
@@ -627,8 +742,30 @@
 
             var stateHistory = localStorage.getItem('stateHistory');
             if (stateHistory) {
+                var options = parseInt(stateHistory.split(',').at(-1), 10);
+                CompendiumIsPreferred = ((options & 1) == 1);
+                // CampaignMode = ((options & 2) == 2);
+                // CompendiumAsPdf = ((options & 4) == 4);
+
                 initialState = parseInt(stateHistory.split(',')[0], 10);
                 game_setCurrentState(initialState, true);
+            }
+        }
+
+        function setImages() {        
+            // set the background images and size them so that, when scrolling down, each image appears behind the corresponding area of the sequence.
+            var bounds = SequenceImage.getBoundingClientRect();
+            var vscale = bounds.height / SequenceImageSize[0]; // vscale: 1px of the sequence image is being rendered as ?px high onscreen
+            var offset = SEQUENCE_AREA.offsetTop
+            var images = BACKGROUND_CONTAINER.getElementsByClassName('fixed');
+            for (var index = 0; index < images.length; index++) {
+                var imageTop = sequence.areas[index].voffset;
+                var imageBottom = sequence.areas[index + 1].voffset;
+                images[index].style.height = offset + (imageBottom - imageTop) * vscale + 'px';
+                var selection = modulo(Math.floor(Date.now() / 86400000), sequence.areas[index].images.length);
+                images[index].style.backgroundImage = "url('" + sequence.areas[index].images[selection] + "')";
+                images[index].style.backgroundSize = "cover";
+                offset = 0;
             }
         }
 
@@ -644,9 +781,12 @@
 
         function newgame_start(numPlayers) { // Resets the page for a new game
             localStorage.removeItem('stateHistory');
-            var initialState = numPlayers * cePlayers.cram;
-            localStorage.setItem('stateHistory', initialState.toString());
-            game_advanceToStep(0, AllPlayers);
+            var initialState = numPlayers * PLAYERS_EV.cram;
+            var options = CompendiumIsPreferred = ((options & 1) == 1);
+                          // CampaignMode = ((options & 2) == 2);
+                          // CompendiumAsPdf = ((options & 4) == 4);
+            localStorage.setItem('stateHistory', initialState.toString()) + ',' + options.toString();
+            game_advanceToStep(0, ALLPLAYERS);
         }
 
         function game_advanceToStep(newStepNum, newPlayer = null, newRound = null) { // shows the modal information for a step in the game
@@ -655,10 +795,10 @@
             var stateHistory = localStorage.getItem('stateHistory');
             var fromState = parseInt(stateHistory.split(',')[0], 10);
 
-            var fromRound = modulo(fromState, ceRound.extract);
-            var fromPlayer = modulo(fromState, cePlayer.extract);
-            var fromNumPlayers = modulo(fromState, cePlayers.extract);
-            var fromVictoryPoints = modulo(fromState, ceVP.extract);
+            var fromRound = modulo(fromState, ROUND_EV.extract);
+            var fromPlayer = modulo(fromState, PLAYER_EV.extract);
+            var fromNumPlayers = modulo(fromState, PLAYERS_EV.extract);
+            var fromVictoryPoints = modulo(fromState, VP_EV.extract);
 
             var toRound = (newRound == null) ? fromRound : newRound;
             var toStepNum = newStepNum;
@@ -668,18 +808,18 @@
             var toVictoryPoints = fromVictoryPoints;
 
             // check if we starting new loop
-            if ((toPlayer == AllPlayers) && (toStep.teamloop)) {
+            if ((toPlayer == ALLPLAYERS) && (toStep.teamloop)) {
                 toPlayer = 1;
             }
 
             var newState =
-                toRound * ceRound.cram +
-                toStepNum * ceStep.cram +
-                toPlayer * cePlayer.cram +
-                toNumPlayers * cePlayers.cram +
-                toVictoryPoints * ceVP.cram;
+                toRound * ROUND_EV.cram +
+                toStepNum * STEP_EV.cram +
+                toPlayer * PLAYER_EV.cram +
+                toNumPlayers * PLAYERS_EV.cram +
+                toVictoryPoints * VP_EV.cram;
 
-            // var fromStepNum = modulo(fromState, ceStep.extract);
+            // var fromStepNum = modulo(fromState, STEP_EV.extract);
             // var fromStep = sequence.steps[fromStepNum];
             // var fromPhaseNum = fromStep.phase;
             // var toPhaseNum = toStep.phase;
@@ -700,20 +840,20 @@
             localStorage.setItem('stateHistory', stateHistory.slice(stateHistory.split(',', 3).join(',').length + 1)); // removes the first two states from the history
 
             // var fromState = parseInt(stateHistory.split(',')[0], 10);
-            // var fromStepNum = modulo(fromState, ceStep.extract);
+            // var fromStepNum = modulo(fromState, STEP_EV.extract);
             // var fromStep = sequence.steps[fromStepNum];
-            // var fromRound = modulo(fromState, ceRound.extract);
+            // var fromRound = modulo(fromState, ROUND_EV.extract);
             // var fromPhaseNum = fromStep.phase;
-            // var fromPlayer = modulo(fromState, cePlayer.extract);
-            // var fromNumPlayers = modulo(fromState, cePlayers.extract);
-            // var fromVictoryPoints = modulo(fromState, ceVP.extract);
-            // var toStepNum = modulo(toState, ceStep.extract);
+            // var fromPlayer = modulo(fromState, PLAYER_EV.extract);
+            // var fromNumPlayers = modulo(fromState, PLAYERS_EV.extract);
+            // var fromVictoryPoints = modulo(fromState, VP_EV.extract);
+            // var toStepNum = modulo(toState, STEP_EV.extract);
             // var toStep = sequence.steps[toStepNum];
-            // var toRound = modulo(toState, ceRound.extract);
+            // var toRound = modulo(toState, ROUND_EV.extract);
             // var toPhaseNum = toStep.phase;
-            // var toPlayer = modulo(toState, cePlayer.extract);
-            // var toNumPlayers = modulo(toState, cePlayers.extract);
-            // var toVictoryPoints = modulo(toState, ceVP.extract);
+            // var toPlayer = modulo(toState, PLAYER_EV.extract);
+            // var toNumPlayers = modulo(toState, PLAYERS_EV.extract);
+            // var toVictoryPoints = modulo(toState, VP_EV.extract);
             // console.log('backToPreviousStep -> round:' + fromRound + '->' + toRound +
             //             ' phase:' + fromPhaseNum + '->' + toPhaseNum +
             //             ' step:' + fromStepNum + '->' + toStepNum + ' (' + sequence.steps[toStepNum].name + ')' +
@@ -733,12 +873,12 @@
 
             var previousState = parseInt(stateHistory.split(',')[0], 10);
 
-            var currentStepNum = modulo(currentState, ceStep.extract);
+            var currentStepNum = modulo(currentState, STEP_EV.extract);
             var currentStep = sequence.steps[currentStepNum];
             var currentPhaseNum = currentStep.phase;
-            var currentPlayer = modulo(currentState, cePlayer.extract);
-            var currentNumPlayers = modulo(currentState, cePlayers.extract);
-            var currentRound = modulo(currentState, ceRound.extract);
+            var currentPlayer = modulo(currentState, PLAYER_EV.extract);
+            var currentNumPlayers = modulo(currentState, PLAYERS_EV.extract);
+            var currentRound = modulo(currentState, ROUND_EV.extract);
             // console.log('setCurrentState -> set current -> round:' + currentRound  +
             //              ' phase:' + currentPhaseNum +
             //              ' step:' + currentStepNum + ' (' + sequence.steps[currentStepNum].name + ')' +
@@ -752,7 +892,7 @@
             var showClose = bannerInfo[2];
             var header = bannerInfo[3];
 
-            var isAllPlayers = (currentPlayer == AllPlayers);
+            var isAllPlayers = (currentPlayer == ALLPLAYERS);
             var isFirstPlayer = (currentPlayer == 1);
             var isLastPlayer = (currentPlayer == currentNumPlayers);
 
@@ -762,11 +902,11 @@
             switch (true) {
                 case (currentStep.teamloopstart != null):
                     nextStepNum = (isLastPlayer) ? currentStepNum + 1 : currentStep.teamloopstart;
-                    nextPlayer = (isLastPlayer) ? AllPlayers : currentPlayer + 1;
+                    nextPlayer = (isLastPlayer) ? ALLPLAYERS : currentPlayer + 1;
                     break;
                 case (currentStep.gameloopstart != null):
                     nextStepNum = currentStep.gameloopstart;
-                    nextPlayer = AllPlayers;
+                    nextPlayer = ALLPLAYERS;
                     nextRound = currentRound + 1;
                     break;
             }
@@ -793,11 +933,11 @@
             var skipInfo = null;
             switch (true) {
                 case ((currentStep.teamskip != null) && (isAllPlayers || isFirstPlayer)):
-                    skipInfo = [currentStep.teamskip[0], currentStep.skipto, AllPlayers];
+                    skipInfo = [currentStep.teamskip[0], currentStep.skipto, ALLPLAYERS];
                     break;
                 case (currentStep.playerskip != null):
                     var skiptoStepNum = (isLastPlayer) ? currentStep.teamloopend + 1 : currentStepNum;
-                    var skiptoPlayer = (isLastPlayer) ? AllPlayers : currentPlayer + 1;
+                    var skiptoPlayer = (isLastPlayer) ? ALLPLAYERS : currentPlayer + 1;
                     skipInfo = [currentStep.playerskip, skiptoStepNum, skiptoPlayer];
                     break;
             }
@@ -836,16 +976,16 @@
         }
 
         function game_setStandardBanners(currentState, previousState) {
-            var previousStepNum = modulo(previousState, ceStep.extract);
+            var previousStepNum = modulo(previousState, STEP_EV.extract);
             var previousStep = sequence.steps[previousStepNum];
             var previousPhaseNum = previousStep.phase;
 
-            var currentRound = modulo(currentState, ceRound.extract);
-            var currentStepNum = modulo(currentState, ceStep.extract);
+            var currentRound = modulo(currentState, ROUND_EV.extract);
+            var currentStepNum = modulo(currentState, STEP_EV.extract);
             var currentStep = sequence.steps[currentStepNum];
             var currentPhaseNum = currentStep.phase;
-            var currentNumPlayers = modulo(currentState, cePlayers.extract);
-            var currentVictoryPoints = modulo(currentState, ceVP.extract);
+            var currentNumPlayers = modulo(currentState, PLAYERS_EV.extract);
+            var currentVictoryPoints = modulo(currentState, VP_EV.extract);
 
             // banner: shows the current round
             var banner = (currentRound == 0)
@@ -875,15 +1015,15 @@
             var compendiumInfo = helpLocations[0];
             var companionInfo = (helpLocations.length < 2) ? [] : helpLocations[1];
             var actionWindowInfo = (helpLocations.length < 3) ? [] : helpLocations[2];
-            gameRulesText.innerHTML =
+            GAME_RULES_TEXT.innerHTML =
                 stepText +
                 '<div class="buttonHolder">' +
-                ((compendiumInfo.length == 0) ? '' : generateButton('Compendium', 'compendiumIsPreferred=true;game_showCompendium(' + compendiumInfo.toString() + ')', 'rulesBtn')) +
-                ((companionInfo.length == 0) ? '' : generateButton('Companion', 'compendiumIsPreferred=false;game_showCompanion(' + companionInfo[0] + ')', 'rulesBtn')) +
+                ((compendiumInfo.length == 0) ? '' : generateButton('Compendium', 'CompendiumIsPreferred=true;game_showCompendium(' + compendiumInfo.toString() + ')', 'rulesBtn')) +
+                ((companionInfo.length == 0) ? '' : generateButton('Companion', 'CompendiumIsPreferred=false;game_showCompanion(' + companionInfo[0] + ')', 'rulesBtn')) +
                 ((actionWindowInfo.length == 0) ? '' : generateButton('Action Window', 'game_showCompendium(' + actionWindowInfo[0] + ',0,' + actionWindowInfo[1] + ')', 'rulesBtn')) +
                 '</div>';
 
-            if (compendiumIsPreferred || (onlinePage = null)) {
+            if (CompendiumIsPreferred || (onlinePage = null)) {
                 game_showCompendium(compendiumInfo[0], compendiumInfo[1], compendiumInfo[2]);
             } else {
                 game_showCompanion(companionInfo[0]);
@@ -892,13 +1032,13 @@
 
         function game_showCompendium(pageNum, hOffset, vOffset) {
             var pdfOptions = '#page=' + pageNum + '&zoom=100,' + hOffset + ',' + vOffset + '&pagemode=none&view=FitH';
-            gameRulesDisplay.innerHTML = "<object data='./Images/RulesCompendium_v2.0.pdf" + pdfOptions + " type='application/pdf'></object>";
-            gameRules.classList.remove('hidden');
+            GAME_RULES_DISPLAY.innerHTML = "<object data='./Images/RulesCompendium_v2.0.pdf" + pdfOptions + " type='application/pdf'></object>";
+            GAME_RULES.classList.remove('hidden');
         }
 
         function game_showCompanion(pageNum) {
-            gameRulesDisplay.innerHTML = "<object data='https://lotr-lcg-quest-companion.gamersdungeon.net/#Rule" + pageNum + "' type='text/html'></object>";
-            gameRules.classList.remove('hidden');
+            GAME_RULES_DISPLAY.innerHTML = "<object data='https://lotr-lcg-quest-companion.gamersdungeon.net/#Rule" + pageNum + "' type='text/html'></object>";
+            GAME_RULES.classList.remove('hidden');
         }
 
         function game_verifyElimPlayer() {
@@ -907,11 +1047,11 @@
 
             var previousState = parseInt(stateHistory.split(',')[1], 10);
 
-            var currentRound = modulo(currentState, ceRound.extract);
-            var currentStepNum = modulo(currentState, ceStep.extract);
-            var currentPlayer = modulo(currentState, cePlayer.extract);
-            var currentNumPlayers = modulo(currentState, cePlayers.extract);
-            var currentVictoryPoints = modulo(currentState, ceVP.extract);
+            var currentRound = modulo(currentState, ROUND_EV.extract);
+            var currentStepNum = modulo(currentState, STEP_EV.extract);
+            var currentPlayer = modulo(currentState, PLAYER_EV.extract);
+            var currentNumPlayers = modulo(currentState, PLAYERS_EV.extract);
+            var currentVictoryPoints = modulo(currentState, VP_EV.extract);
 
             var bannerInfo = game_setStandardBanners(currentState, previousState);
             var banner = bannerInfo[0];
@@ -925,11 +1065,11 @@
             // buttons
             var buttons = [];
             var newState =
-                currentRound * ceRound.cram +
-                currentStepNum * ceStep.cram +
-                currentPlayer * cePlayer.cram +
-                (currentNumPlayers - 1) * cePlayers.cram +
-                currentVictoryPoints * ceVP.cram;
+                currentRound * ROUND_EV.cram +
+                currentStepNum * STEP_EV.cram +
+                currentPlayer * PLAYER_EV.cram +
+                (currentNumPlayers - 1) * PLAYERS_EV.cram +
+                currentVictoryPoints * VP_EV.cram;
             buttons.push(generateButton('Yes', 'game_setCurrentState(' + newState + ')'));
             buttons.push(generateButton('No', 'game_setCurrentState(' + currentState + ',"true")'));
 
@@ -963,11 +1103,11 @@
 
             var previousState = parseInt(stateHistory.split(',')[1], 10);
 
-            // var newRound = modulo(newState, ceRound.extract);
-            // var newStepNum = modulo(newState, ceStep.extract);
-            // var newPlayer = modulo(newState, cePlayer.extract);
-            // var newNumPlayers = modulo(newState, cePlayers.extract);
-            var newVictoryPoints = modulo(newState, ceVP.extract);
+            // var newRound = modulo(newState, ROUND_EV.extract);
+            // var newStepNum = modulo(newState, STEP_EV.extract);
+            // var newPlayer = modulo(newState, PLAYER_EV.extract);
+            // var newNumPlayers = modulo(newState, PLAYERS_EV.extract);
+            var newVictoryPoints = modulo(newState, VP_EV.extract);
 
             var bannerInfo = game_setStandardBanners(newState, previousState);
             var banner = bannerInfo[0];
@@ -981,16 +1121,16 @@
             // buttons
             var buttons = [];
             if (newVictoryPoints > 4) {
-                buttons.push(generateButton('-5', 'game_changeVP(' + (newState - 5 * ceVP.cram) + ')', 'modalBtn small'));
+                buttons.push(generateButton('-5', 'game_changeVP(' + (newState - 5 * VP_EV.cram) + ')', 'modalBtn small'));
             }
             if (newVictoryPoints > 0) {
-                buttons.push(generateButton('-1', 'game_changeVP(' + (newState - ceVP.cram) + ')', 'modalBtn small'));
+                buttons.push(generateButton('-1', 'game_changeVP(' + (newState - VP_EV.cram) + ')', 'modalBtn small'));
             }
             if (newState != currentState) {
                 buttons.push(generateButton('Done', 'game_setCurrentState(' + newState + ')', 'modalBtn small'));
             }
-            buttons.push(generateButton('+1', 'game_changeVP(' + (newState + ceVP.cram) + ')', 'modalBtn small'));
-            buttons.push(generateButton('+5', 'game_changeVP(' + (newState + 5 * ceVP.cram) + ')', 'modalBtn small'));
+            buttons.push(generateButton('+1', 'game_changeVP(' + (newState + VP_EV.cram) + ')', 'modalBtn small'));
+            buttons.push(generateButton('+5', 'game_changeVP(' + (newState + 5 * VP_EV.cram) + ')', 'modalBtn small'));
             buttons.push(generateButton('Cancel', 'game_setCurrentState(' + currentState + ',"true")', 'modalBtn small'));
 
             // SideNav: back
@@ -1015,36 +1155,36 @@
 
         function showModal(bannerText, changeBannerText, showClose, headerText, detailText, buttons, sideNavInfo, box = null) { // display the modal
             // banner:
-            modalBanner.innerHTML = bannerText;
+            MODAL_BANNER.innerHTML = bannerText;
             if (bannerText == '') {
-                modalBanner.classList.add('hidden');
+                MODAL_BANNER.classList.add('hidden');
             } else {
-                modalBanner.classList.remove('hidden');
+                MODAL_BANNER.classList.remove('hidden');
             }
 
             // change banner:
-            if (modalChangeBanner.innerHTML != changeBannerText) {
-                modalChangeBanner.classList.remove('fade-in', 'fade-out');
+            if (MODAL_CHANGE_BANNER.innerHTML != changeBannerText) {
+                MODAL_CHANGE_BANNER.classList.remove('fade-in', 'fade-out');
                 if (changeBannerText == '') {
-                    modalChangeBanner.classList.add('fade-out');
-                    modalChangeBanner.addEventListener('animationend', clearmodalChangeBanner);
+                    MODAL_CHANGE_BANNER.classList.add('fade-out');
+                    MODAL_CHANGE_BANNER.addEventListener('animationend', clearmodalChangeBanner);
                 } else {
-                    modalChangeBanner.classList.add('hidden');
-                    modalChangeBanner.innerHTML = changeBannerText;
-                    modalChangeBanner.classList.add('fade-in');
-                    modalChangeBanner.classList.remove('hidden');
+                    MODAL_CHANGE_BANNER.classList.add('hidden');
+                    MODAL_CHANGE_BANNER.innerHTML = changeBannerText;
+                    MODAL_CHANGE_BANNER.classList.add('fade-in');
+                    MODAL_CHANGE_BANNER.classList.remove('hidden');
                 }
             }
             function clearmodalChangeBanner() {
-                modalChangeBanner.classList.add('hidden');
-                modalChangeBanner.innerHTML = '';
-                modalChangeBanner.removeEventListener('animationend', clearmodalChangeBanner);
+                MODAL_CHANGE_BANNER.classList.add('hidden');
+                MODAL_CHANGE_BANNER.innerHTML = '';
+                MODAL_CHANGE_BANNER.removeEventListener('animationend', clearmodalChangeBanner);
             }
 
             // close button:
             if (showClose) { // make the modal close <span> appear
-                modalClose.style.display = 'block';
-                modalClose.onclick = function () { // When the user clicks on <span> (x), close the modal
+                MODAL_CLOSE.style.display = 'block';
+                MODAL_CLOSE.onclick = function () { // When the user clicks on <span> (x), close the modal
                     hideModal();
                     if (localStorage.getItem('stateHistory')) {
                         latestsState = parseInt(localStorage.getItem('stateHistory').split(',')[0], 10);
@@ -1052,79 +1192,79 @@
                     }
                 }
             } else { // hide the modal close <span>
-                modalClose.style.display = 'none';
+                MODAL_CLOSE.style.display = 'none';
             }
 
             // header:
-            modalHeader.innerHTML = headerText;
+            MODAL_HEADER.innerHTML = headerText;
 
             // detail:
-            modalDetail.innerHTML = detailText;
+            MODAL_DETAIL.innerHTML = detailText;
 
             // buttons:
-            modalButtonsArea.innerHTML = '';
-            buttons.forEach(b => modalButtonsArea.innerHTML += b);
+            MODAL_BUTTONS_AREA.innerHTML = '';
+            buttons.forEach(b => MODAL_BUTTONS_AREA.innerHTML += b);
 
             // SideNavs:
             var showBack = (sideNavInfo == null) ? false : sideNavInfo[0];
-            var skipInfo = (sideNavInfo == null) ? null : sideNavInfo[1];
+            var skipInfo = (sideNavInfo == null) ? null  : sideNavInfo[1];
             var showElim = (sideNavInfo == null) ? false : sideNavInfo[2]
-            var showVP = (sideNavInfo == null) ? false : sideNavInfo[3];
+            var showVP   = (sideNavInfo == null) ? false : sideNavInfo[3];
 
             // SideNavs: back:
             if (showBack) {
-                showSideNav(navBack, 'Back', function () { game_backToPreviousStep(); });
+                showSideNav(NAV_BACK, 'Back', function () { game_backToPreviousStep(); });
             } else {
-                hideSideNav(navBack);
+                hideSideNav(NAV_BACK);
             }
 
             // SideNavs: skip:
             if (skipInfo == null) {
-                hideSideNav(navSkip);
+                hideSideNav(NAV_SKIP);
             } else {
                 var skiptext = skipInfo[0];
                 var skipToStepNum = skipInfo[1];
                 var skipToPlayer = skipInfo[2];
-                showSideNav(navSkip, skiptext, function () { game_advanceToStep(skipToStepNum, skipToPlayer); });
+                showSideNav(NAV_SKIP, skiptext, function () { game_advanceToStep(skipToStepNum, skipToPlayer); });
             }
 
             // SideNavs: eliminate player:
             if (showElim) {
-                showSideNav(navElim, 'Elimination', function () { game_verifyElimPlayer(); });
+                showSideNav(NAV_ELIM, 'Elimination', function () { game_verifyElimPlayer(); });
             } else {
-                hideSideNav(navElim);
+                hideSideNav(NAV_ELIM);
             }
 
             // SideNavs: victory points:
             if (showVP) {
-                showSideNav(navVP, 'Points', function () { game_changeVP(); });
+                showSideNav(NAV_VP, 'Points', function () { game_changeVP(); });
             } else {
-                hideSideNav(navVP);
+                hideSideNav(NAV_VP);
             }
 
-            modal.style.display = 'block';  // make the modal appear
+            MODAL.style.display = 'block';  // make the modal appear
 
             // background image and outlining box:
             // (this must be done AFTER the modal box has been rendered)
             if (box == null) {
-                gameOutline.classList.add('hidden');
+                GAME_OUTLINE.classList.add('hidden');
             } else {
                 showOutline(box);
             }
         }
 
         function hideModal() { // hide the modal
-            modal.style.display = 'none';
+            MODAL.style.display = 'none';
         }
 
         function showOutline(box) {
             var bounds = SequenceImage.getBoundingClientRect();
-            var vscale = bounds.height / sequenceImageSize[0]; // factor: 1px of the sequence image is being rendered as ?px high onscreen
-            var hscale = bounds.width / sequenceImageSize[1];  // factor: 1px of the sequence image is being rendered as ?px wide onscreen
+            var vscale = bounds.height / SequenceImageSize[0]; // factor: 1px of the sequence image is being rendered as ?px high onscreen
+            var hscale = bounds.width / SequenceImageSize[1];  // factor: 1px of the sequence image is being rendered as ?px wide onscreen
 
-            var modalBottom = Math.ceil(modal.offsetTop + modal.offsetHeight);
+            var modalBottom = Math.ceil(MODAL.offsetTop + MODAL.offsetHeight);
             var outlineOffset = Math.floor(Math.max(window.innerHeight / 20, 25)); // how many pixels from the bottom of the modal to where the current step will be shown.
-            var sequenceAreaTargetOffset = Math.max((modalBottom + outlineOffset) - SequenceArea.offsetTop, 0); // how many pixels from the top of the sequence image display area to where we want to scroll the current step to.
+            var sequenceAreaTargetOffset = Math.max((modalBottom + outlineOffset) - SEQUENCE_AREA.offsetTop, 0); // how many pixels from the top of the sequence image display area to where we want to scroll the current step to.
 
             // scroll the sequence image to show the current step under the modal
             var sequenceImageOffsetTop = Math.max(box[1] * vscale - sequenceAreaTargetOffset * vscale, 0);
@@ -1138,10 +1278,10 @@
             var boxHeight = (box[3] - box[1]) * vscale;
             var boxWidth = (box[2] - box[0]) * hscale;
 
-            gameOutline.style.top = boxTop + 'px';
-            gameOutline.style.height = boxHeight + 'px';
-            gameOutline.style.width = boxWidth + 'px';
-            gameOutline.classList.remove('hidden');
+            GAME_OUTLINE.style.top = boxTop + 'px';
+            GAME_OUTLINE.style.height = boxHeight + 'px';
+            GAME_OUTLINE.style.width = boxWidth + 'px';
+            GAME_OUTLINE.classList.remove('hidden');
         }
 
         function showSideNav(navElement, textContent, onclick) {
@@ -1156,21 +1296,69 @@
         }
 
         function toggleAbout() {
-            if (rightsArea.classList.contains('hidden')) {
-                infoArea.style.color = 'white';
-                rightsArea.classList.add('fade-in');
-                rightsArea.classList.remove('hidden');
+            if (RIGHTS_AREA.classList.contains('hidden')) {
+                INFO_AREA.style.color = 'white';
+                RIGHTS_AREA.classList.add('fade-in');
+                RIGHTS_AREA.classList.remove('hidden');
+                RIGHTS_AREA.addEventListener('animationend', fadeinRightsDone);
             } else {
-                infoArea.style.color = 'black';
-                rightsArea.classList.remove('fade-in');
-                rightsArea.classList.add('fade-out');
-                rightsArea.addEventListener('animationend', hideRights);
+                INFO_AREA.style.color = 'black';
+                RIGHTS_AREA.classList.remove('fade-in');
+                RIGHTS_AREA.classList.add('fade-out');
+                RIGHTS_AREA.addEventListener('animationend', hideRights);
+            }
 
-                function hideRights() {
-                    rightsArea.classList.add('hidden');
-                    rightsArea.classList.remove('fade-out');
-                    rightsArea.removeEventListener('animationend', hideRights);
+            function fadeinRightsDone() {                
+                window.addEventListener('click', userclicksanywhere);
+                RIGHTS_AREA.removeEventListener('animationend', fadeinRightsDone);
+            }
+
+            function userclicksanywhere(e) {
+                window.removeEventListener('click', userclicksanywhere);
+                toggleAbout();
+            }
+
+            function hideRights() {
+                RIGHTS_AREA.classList.add('hidden');
+                RIGHTS_AREA.classList.remove('fade-out');
+                RIGHTS_AREA.removeEventListener('animationend', hideRights);
+            }
+        }
+
+        function toggleOptions() {
+            OPTION_CAMPAIGN.checked = CampaignMode;
+
+            if (OPTIONS_AREA.classList.contains('hidden')) {
+                OPTIONS_AREA.classList.add('fade-in');
+                OPTIONS_AREA.classList.remove('hidden');
+                OPTIONS_AREA.addEventListener('animationend', fadeinOptionsDone);
+            } else {
+                console.log('fading out Options');
+                OPTIONS_AREA.classList.add('fade-out');
+                OPTIONS_AREA.addEventListener('animationend', hideOptions);
+
+                CampaignMode = OPTION_CAMPAIGN.checked;
+                console.log('CampaignMode = ' + CampaignMode);
+                CompendiumAsPdf = document.querySelector('input[name="compendium"]:checked').value;
+                console.log('CompendiumAsPdf = ' + CompendiumAsPdf);
+            }
+
+            function fadeinOptionsDone() {
+                window.addEventListener('click', userclicksoutside);
+                OPTIONS_AREA.removeEventListener('animationend', fadeinOptionsDone);
+            }
+
+            function userclicksoutside(e) {
+                if (!OPTIONS_AREA.contains(e.target)) {
+                    window.removeEventListener('click', userclicksoutside);
+                    toggleOptions();
                 }
+            }
+            
+            function hideOptions() {
+                OPTIONS_AREA.classList.add('hidden');
+                OPTIONS_AREA.classList.remove('fade-out');
+                OPTIONS_AREA.removeEventListener('animationend', hideOptions);
             }
         }
 

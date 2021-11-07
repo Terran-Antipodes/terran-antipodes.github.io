@@ -2,6 +2,11 @@
 This website is an SPA intended to provide a non-commercial aid while playing the [Lord of the Rings LCG](https://www.fantasyflightgames.com/en/products/the-lord-of-the-rings-the-card-game/) from [Final Flight Game](https://www.fantasyflightgames.com/en/index/).
 
 ##Version History
+###v1.3.0
+Added ability to support option flags. 
+Record Compendium vs Companion in option flags. 
+Changed stylings and formatting of About display.
+Internal changes to code styling (use of CAPS for constants, CamelCase for globals).
 ###v1.2.5
 Added copyrights and attributions. Added About button. Standardized SideNav naming conventions. Removed unneeded stylings and classes.
 ###v1.2.4
