@@ -423,15 +423,15 @@
             '{ "phases": [ "Setup", "Resource", "Planning", "Quest", "Travel", "Encounter", "Combat", "Refresh" ] ' +
             // boxes format (in px): [left, top, right, bottom] or [initialplayerbox, subsequentplayerbox, finalplayerbox]
             // help format: [compendium_info, companion_info, action_window_info]
-            //              compendium_info:    [page number, page horiz offset, vert offset]
-            //              companion_info:     [page number]
-            //              action_window_info: [page number, vert offset]
+            //              compendium_info: [page number, pdf horiz offset, pdf offset, html jump index, html highlight index]
+            //              companion_info:  [page number]
+            //   (optional) compendium_info: [page number, pdf horiz offset, pdf offset, html jump index, html highlight index]
             // gameloop: value indicates the last step in the loop. After that step, the tracker will increment the round and loop back to this step.
             // teamloop: value indicates the last step in each player's steps. After that step, the tracker will switch to the next player and loop back to this step, or, if the player was the last player, continue to the next step.
             // teamskip: value indicates prompt and next step for all players if the fist player opts to skip.
             // playerskip: value indicates prompt. If the player opts to skip, then the tracter will switch to the next player and loop back to this step, or, if the player was the last player, continue to the next step.
             ' ,"steps": [ { "phase": 0, "name": "Extract Campaign Setup cards" } ' +
-            '            ,{ "phase": 0, "name": "Shuffle Player Decks", "help" : [[47,0,135],[209]] } ' +
+            '            ,{ "phase": 0, "name": "Shuffle Player Decks", "help" : [[47,0,135,1,1],[209]] } ' +
             '            ,{ "phase": 0, "name": "Shuffle Encounter Deck", "help" : [[47,0,130],[209]] } ' +
             '            ,{ "phase": 0, "name": "Place Heroes", "help" : [[47,0,400],[210]] } ' +
             '            ,{ "phase": 0, "name": "Perform Campaign Setup", "help" : [[47,0,700],[210]] } ' +
@@ -879,10 +879,9 @@
             GAME_HELP_TEXT.innerHTML =
                 stepText +
                 '<div class="buttonHolder">' +
-                ((compendiumInfo.length == 0) ? '' : generateButton('Compendium', 'CompendiumIsPreferred=true;game_showCompendium(' + compendiumInfo.toString() + ')', 'helpBtn')) +
-                ((compendiumInfo.length == 0) ? '' : generateButton('HTML Compendium', 'CompendiumIsPreferred=true;game_showCompendiumWebPage(' + compendiumInfo.toString() + ')', 'helpBtn')) +
+                ((compendiumInfo.length == 0) ? '' : generateButton('Compendium', 'CompendiumIsPreferred=true;game_showCompendium(' + JSON.stringify(compendiumInfo) + ')', 'helpBtn')) +
                 ((companionInfo.length == 0) ? '' : generateButton('Companion', 'CompendiumIsPreferred=false;game_showCompanion(' + companionInfo[0] + ')', 'helpBtn')) +
-                ((actionWindowInfo.length == 0) ? '' : generateButton('Action Window', 'game_showCompendium(' + actionWindowInfo[0] + ',0,' + actionWindowInfo[1] + ')', 'helpBtn')) +
+                ((actionWindowInfo.length == 0) ? '' : generateButton('Action Window', 'game_showCompendium(' + JSON.stringify(actionWindowInfo) + ')', 'helpBtn')) +
                 '</div>';
 
             if (CompendiumIsPreferred || (onlinePage = null)) {
