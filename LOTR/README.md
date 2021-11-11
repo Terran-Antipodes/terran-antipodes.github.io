@@ -2,6 +2,8 @@
 This website is an SPA intended to provide a non-commercial aid while playing the [Lord of the Rings LCG](https://www.fantasyflightgames.com/en/products/the-lord-of-the-rings-the-card-game/) from [Final Flight Game](https://www.fantasyflightgames.com/en/index/).
 
 ##Version History
+###v1.3.1
+Fixed Help close button not working.
 ###v1.3.0
 Added ability to support option flags. 
 Record Compendium vs Companion in option flags. 
