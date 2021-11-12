@@ -47,6 +47,73 @@
             border: 2px dashed blue;
         }
     </style>
+    <style>  /* Custom radio buttons and checkboxes */
+        /* Style for the label */
+        .choiceHolder {
+            display: block;
+            text-align: left;
+            position: relative;
+            padding-left: 4vmin;
+            margin: 1vmin;
+            cursor: pointer;
+            font-size: 3vmin;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        /* Hide the browser's default radio button */
+        .choiceHolder input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+
+        /* Create a custom radio button */
+        .indicator {
+            position: absolute;
+            left: 0;
+            height: 3vmin;
+            width: 3vmin;
+            background-color: #EEEEEE;
+            border-radius: 50%;
+        }
+
+        /* On mouse-over, add a grey background color */
+        .choiceHolder:hover input ~ .indicator {
+            background-color: #CCCCCC;
+        }
+
+        /* When the radio button is checked, add a blue background */
+        .choiceHolder input:checked ~ .indicator {
+            background-color: #2196F3;
+        }
+
+        /* Create the indicator (the dot/circle - hidden when not checked) */
+        .indicator:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        /* Show the indicator (dot/circle) when checked */
+        .choiceHolder input:checked ~ .indicator:after {
+            display: block;
+        }
+
+        /* Style the indicator (dot/circle) */
+        .choiceHolder .indicator:after {
+            top: 0.75vmin;
+            left: 0.75vmin;
+            width: 1.5vmin;
+            height: 1.5vmin;
+            border-radius: 50%;
+            background: white;
+        }
+    </style>
     <style> /* Background display */
         .BackgroundContainer {
             height: 100%;
@@ -128,31 +195,37 @@
 
         #back { /* The game_backToPreviousStep() link */
             top: 16vh;
-            background-color: #2196F3; /* Blue */
+            background-color: #2196F3;
             color: #2196F3;
         }
 
         #skip {
             top: 27vh;
-            background-color: #f44336; /* Red */
+            background-color: #f44336;
             color: #f44336;
         }
 
         #elim {
             top: 49vh;
-            background-color: #050505; /* Light Black */
+            background-color: #050505;
             color: #050505;
         }
 
         #vp {
             top: 60vh;
-            background-color: #BDB76B; /* Dark Khaki */
+            background-color: #BDB76B;
             color: #BDB76B;
+        }
+
+        #options {
+            top: 49vh;
+            background-color: #199fa9;
+            color: #FFC300;
         }
 
         #about {
             top: 60vh;
-            background-color: #FFC300; /* Gold */
+            background-color: #FFC300;
             color: #FFC300;
         }
     </style>
@@ -366,6 +439,25 @@
             background-color: SlateGray;
             z-index: 50;
         }
+
+        #OptionsArea {
+            position: absolute;
+            top: 15vh;
+            left: 10vw;
+            width: 80vw;
+            text-align: center;
+            font-size: 3vw;
+            padding: 2vmax;
+            color: white;
+            background-color: rgb(181, 91, 91);
+            z-index: 50;
+        }
+
+        .optionSet {
+            border: 2px solid white;
+            margin: 1vmin;
+            padding: 2vh;
+        }
     </style>
 </head>
 <body>
@@ -388,6 +480,7 @@
         <div class='hidden'><a href='#' id='vp'></a></div>
     </div>
     <div id='SideNavRight'>
+        <div onclick='showOptions()'><a href='#' id='options'>Options</a></div>
         <div onclick='showAbout()'><a href='#' id='about'>About</a></div>
     </div>
     <div id='GameModal' class='modal'>
@@ -414,6 +507,18 @@
             All displayed images, arts, fonts and The Lord of The Rings: The Card Game are copyrighted at � Fantasy Flight Games. The copyrightable portions of The Lord of the Rings: The Card Game and its expansions are � 2011 - 2020 Fantasy Flight Publishing, Inc. The Lord of the Rings, and the characters, items, events and places therein are trademarks or registered trademarks of The Saul Zaentz Company / Middle-earthEnterprises and are used, under license, by Fantasy Flight Games. Living Card Game, LCG, LCG logo and FantasyFlight Supply are trademarks and/or registered trademarks of Fantasy Flight Publishing, Inc. All Rights Reserved to their respective owners.<br />
             The Rules Compendium and Rules Companion are the intellectual property of, and used by permission by, Mathieu Martin.
         </span>
+    </div>
+    <div id='OptionsArea' class='hidden'>
+        <div class='optionSet'>Display the Compendium Rules as
+            <label class="choiceHolder">HTML
+                <input type="radio" name='compendiumAs'>
+                <span class="indicator"></span>
+            </label>
+            <label class="choiceHolder">PDF
+                <input type="radio" name='compendiumAs'>
+                <span class="indicator"></span>
+            </label>
+        </div>
     </div>
     <script>
         var version = 'v1.3.0';
@@ -563,6 +668,7 @@
         const GAME_HELP_DISPLAY = document.getElementById('gameHelpDisplay');
         const INFO_AREA = document.getElementById('InfoArea');
         const ABOUT_AREA = document.getElementById('AboutArea');
+        const OPTIONS_AREA = document.getElementById('OptionsArea')
 
         /* Define webpage globals */
         var SequenceImage;
@@ -1188,6 +1294,12 @@
                 ABOUT_AREA.classList.add('hidden');
                 ABOUT_AREA.classList.remove('fade-out');
                 ABOUT_AREA.removeEventListener('animationend', aboutFadeoutDone);
+            }
+        }
+
+        function showOptions() {
+            if (OPTIONS_AREA.classList.contains('hidden')) {
+                OPTIONS_AREA.classList.remove('hidden');
             }
         }
 
