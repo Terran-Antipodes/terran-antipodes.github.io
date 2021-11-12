@@ -219,8 +219,8 @@
 
         #options {
             top: 49vh;
-            background-color: #199fa9;
-            color: #FFC300;
+            background-color: #199fA9;
+            color: #199fA9;
         }
 
         #about {
@@ -509,16 +509,18 @@
         </span>
     </div>
     <div id='OptionsArea' class='hidden'>
+        <form name='options'>
         <div class='optionSet'>Display the Compendium Rules as
-            <label class="choiceHolder">HTML
-                <input type="radio" name='compendiumAs'>
-                <span class="indicator"></span>
+            <label class='choiceHolder' onclick='CompendiumAsHtml=true'>HTML
+                <input type='radio' name='compendiumAs'>
+                <span class='indicator'></span>
             </label>
-            <label class="choiceHolder">PDF
-                <input type="radio" name='compendiumAs'>
-                <span class="indicator"></span>
+            <label class='choiceHolder' onclick='CompendiumAsHtml=false'>PDF
+                <input type='radio' name='compendiumAs'>
+                <span class='indicator'></span>
             </label>
         </div>
+        </form>
     </div>
     <script>
         var version = 'v1.3.0';
@@ -674,6 +676,7 @@
         var SequenceImage;
         var SequenceImageSize;
         var CompendiumIsPreferred = true;
+        var CompendiumAsHtml = true;
     </script>
     <script>
         /* main code */
@@ -734,7 +737,13 @@
 
             var stateHistory = localStorage.getItem('stateHistory');
             if (stateHistory) {
-                initialState = parseInt(stateHistory.split(',')[0], 10);
+                var optionsVal =  Number(stateHistory.split(',').at(-1));
+                if ((optionsVal > 0) && (optionsVal < 256)) {
+                    CompendiumIsPreferred = ((optionsVal & 1) == 1);
+                    CompendiumAsHtml = ((optionsVal & 2) == 2);
+                }
+
+                var initialState = Number(stateHistory.split(',')[0]);
                 game_setCurrentState(initialState, true);
             }
         }
@@ -746,6 +755,7 @@
             for (var x = 1; x < 5; x++) {
                 buttons[x] = generateButton('&nbsp;' + x + '&nbsp;', 'newgame_start(' + x + ')');
             }
+
             showModal('', closeInfo, true, prompt, '', buttons);
         }
 
@@ -753,6 +763,7 @@
             localStorage.removeItem('stateHistory');
             var initialState = numPlayers * PLAYERS_EVS.cram;
             localStorage.setItem('stateHistory', initialState.toString());
+            recordOptions();
             game_advanceToStep(0, ALLPLAYERS);
         }
 
@@ -1299,8 +1310,46 @@
 
         function showOptions() {
             if (OPTIONS_AREA.classList.contains('hidden')) {
+                document.options.compendiumAs[CompendiumAsHtml ? 0 : 1].checked = true;
+                OPTIONS_AREA.classList.add('fade-in');
                 OPTIONS_AREA.classList.remove('hidden');
+                OPTIONS_AREA.addEventListener('animationend',optionsFadeinDone);
             }
+
+            function optionsFadeinDone() {
+                OPTIONS_AREA.classList.remove('fade-in');
+                OPTIONS_AREA.removeEventListener('animationend',optionsFadeinDone);
+                window.addEventListener('click', optionsUserClicked);
+            }
+
+            function optionsUserClicked(e) {
+                if (!OPTIONS_AREA.contains(e.target)) {
+                    recordOptions();
+                    window.removeEventListener('click', optionsUserClicked);
+                    OPTIONS_AREA.classList.add('fade-out');
+                    OPTIONS_AREA.addEventListener('animationend', optionsFadeoutDone);
+                }
+            }
+            
+            function optionsFadeoutDone() {
+                OPTIONS_AREA.classList.add('hidden');
+                OPTIONS_AREA.classList.remove('fade-out');
+                OPTIONS_AREA.removeEventListener('animationend', optionsFadeoutDone);
+            }
+        }
+
+        function recordOptions() {
+            stateHistory = localStorage.getItem('stateHistory');
+            var states = stateHistory.split(',');
+            var last = Number(states.pop());
+            if ((last < 0) || (last > 255)) {
+                states.push(last.toString());
+            }
+            
+            var optionsVal = (CompendiumIsPreferred ? 1 : 0) +
+                             (CompendiumAsHtml ? 2 : 0);
+            states.push(optionsVal.toString());
+            localStorage.setItem('stateHistory', states.join(','));
         }
 
         function generateButton(buttonText, onclick = null, btnClass = 'modalBtn') {
