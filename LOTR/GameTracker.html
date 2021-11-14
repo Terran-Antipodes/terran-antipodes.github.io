@@ -526,10 +526,10 @@
         </form>
     </div>
     <script>
-        var version = 'v1.3.0';
+        const VERSION = 'v1.3.0';
 
         /* define game steps */
-        var sequence = JSON.parse(
+        var Sequence = JSON.parse(
             '{ "phases": [ "Setup", "Resource", "Planning", "Quest", "Travel", "Encounter", "Combat", "Refresh" ] ' +
             // boxes format (in px): [left, top, right, bottom] or [initialplayerbox, subsequentplayerbox, finalplayerbox]
             // help format: [compendium_info, companion_info, action_window_info]
@@ -684,7 +684,7 @@
     </script>
     <script>
         /* main code */
-        INFO_AREA.innerHTML = version;
+        INFO_AREA.innerHTML = VERSION;
         loadBackground('./Images/RoundSequence.png');
 
         function loadBackground(url) {
@@ -709,35 +709,29 @@
             ABOUT_AREA.classList.add('hidden');
             OPTIONS_AREA.classList.add('hidden');
 
-            // set the background images and size them so that, when scrolling down, each image appears behind the corresponding area of the sequence.
-            var bounds = SequenceImage.getBoundingClientRect();
-            var vscale = bounds.height / SequenceImageSize[0]; // vscale: 1px of the sequence image is being rendered as ?px high onscreen
-            var offset = SEQUENCE_AREA.offsetTop
+            // set the background images.
             var images = BACKGROUND_CONTAINER.getElementsByClassName('fixed');
             for (var index = 0; index < images.length; index++) {
-                var imageTop = sequence.areas[index].voffset;
-                var imageBottom = sequence.areas[index + 1].voffset;
-                images[index].style.height = offset + (imageBottom - imageTop) * vscale + 'px';
-                var selection = modulo(Math.floor(Date.now() / 86400000), sequence.areas[index].images.length);
-                images[index].style.backgroundImage = "url('" + sequence.areas[index].images[selection] + "')";
-                images[index].style.backgroundSize = "cover";
-                offset = 0;
+                var selection = modulo(Math.floor(Date.now() / 86400000), Sequence.areas[index].images.length);
+                images[index].style.backgroundImage = "url('" + Sequence.areas[index].images[selection] + "')";
             }
+            window.onresize = adjustBackground;
+            adjustBackground();
 
             // translate the step names that define loops into step numbers
-            for (var step = 0; step < sequence.steps.length; step++) {
-                if (sequence.steps[step].gameloop) {
-                    var gameloopend = findStepNum(sequence.steps[step].gameloop);
-                    sequence.steps[step].gameloopend = gameloopend;
-                    sequence.steps[gameloopend].gameloopstart = step;
+            for (var step = 0; step < Sequence.steps.length; step++) {
+                if (Sequence.steps[step].gameloop) {
+                    var gameloopend = findStepNum(Sequence.steps[step].gameloop);
+                    Sequence.steps[step].gameloopend = gameloopend;
+                    Sequence.steps[gameloopend].gameloopstart = step;
                 }
-                if (sequence.steps[step].teamloop) {
-                    var teamloopend = findStepNum(sequence.steps[step].teamloop);
-                    sequence.steps[step].teamloopend = teamloopend;
-                    sequence.steps[teamloopend].teamloopstart = step;
+                if (Sequence.steps[step].teamloop) {
+                    var teamloopend = findStepNum(Sequence.steps[step].teamloop);
+                    Sequence.steps[step].teamloopend = teamloopend;
+                    Sequence.steps[teamloopend].teamloopstart = step;
                 }
-                if (sequence.steps[step].teamskip) {
-                    sequence.steps[step].skipto = findStepNum(sequence.steps[step].teamskip[1]);
+                if (Sequence.steps[step].teamskip) {
+                    Sequence.steps[step].skipto = findStepNum(Sequence.steps[step].teamskip[1]);
                 }
             }
 
@@ -751,6 +745,21 @@
 
                 var initialState = Number(stateHistory.split(',')[0]);
                 game_setCurrentState(initialState, true);
+            }
+        }
+
+        function adjustBackground() {
+            // size the background images so that, when scrolling down, each image appears behind the corresponding area of the sequence.
+            var bounds = SequenceImage.getBoundingClientRect();
+            var vscale = bounds.height / SequenceImageSize[0]; // vscale: 1px of the sequence image is being rendered as ?px high onscreen
+            var offset = SEQUENCE_AREA.offsetTop
+            var images = BACKGROUND_CONTAINER.getElementsByClassName('fixed');
+            for (var index = 0; index < images.length; index++) {
+                var imageTop = Sequence.areas[index].voffset;
+                var imageBottom = Sequence.areas[index + 1].voffset;
+                images[index].style.height = offset + (imageBottom - imageTop) * vscale + 'px';
+                images[index].style.backgroundSize = "cover";
+                offset = 0;
             }
         }
 
@@ -786,7 +795,7 @@
 
             var toRound = (newRound == null) ? fromRound : newRound;
             var toStepNum = newStepNum;
-            var toStep = sequence.steps[newStepNum];
+            var toStep = Sequence.steps[newStepNum];
             var toPlayer = (newPlayer == null) ? fromPlayer : newPlayer;
             var toNumPlayers = fromNumPlayers;
             var toVictoryPoints = fromVictoryPoints;
@@ -804,12 +813,12 @@
                 toVictoryPoints * VP_EVS.cram;
 
             // var fromStepNum = modulo(fromState, STEP_EVS.extract);
-            // var fromStep = sequence.steps[fromStepNum];
+            // var fromStep = Sequence.steps[fromStepNum];
             // var fromPhaseNum = fromStep.phase;
             // var toPhaseNum = toStep.phase;
             // console.log('advanceToStep -> round:' + fromRound + '->' + toRound +
             //             ' phase:' + fromPhaseNum + '->' + toPhaseNum +
-            //             ' step:' + fromStepNum + '->' + toStepNum + ' (' + sequence.steps[toStepNum].name + ')' +
+            //             ' step:' + fromStepNum + '->' + toStepNum + ' (' + Sequence.steps[toStepNum].name + ')' +
             //             ' player:' + fromPlayer + '->' + toPlayer +
             //             ' # players:' + fromNumPlayers + '->' + toNumPlayers +
             //             ' points:' + fromVictoryPoints + '->' + toVictoryPoints +
@@ -825,14 +834,14 @@
 
             // var fromState = parseInt(stateHistory.split(',')[0], 10);
             // var fromStepNum = modulo(fromState, STEP_EVS.extract);
-            // var fromStep = sequence.steps[fromStepNum];
+            // var fromStep = Sequence.steps[fromStepNum];
             // var fromRound = modulo(fromState, ROUND_EVS.extract);
             // var fromPhaseNum = fromStep.phase;
             // var fromPlayer = modulo(fromState, PLAYER_EVS.extract);
             // var fromNumPlayers = modulo(fromState, PLAYERS_EVS.extract);
             // var fromVictoryPoints = modulo(fromState, VP_EVS.extract);
             // var toStepNum = modulo(toState, STEP_EVS.extract);
-            // var toStep = sequence.steps[toStepNum];
+            // var toStep = Sequence.steps[toStepNum];
             // var toRound = modulo(toState, ROUND_EVS.extract);
             // var toPhaseNum = toStep.phase;
             // var toPlayer = modulo(toState, PLAYER_EVS.extract);
@@ -840,7 +849,7 @@
             // var toVictoryPoints = modulo(toState, VP_EVS.extract);
             // console.log('backToPreviousStep -> round:' + fromRound + '->' + toRound +
             //             ' phase:' + fromPhaseNum + '->' + toPhaseNum +
-            //             ' step:' + fromStepNum + '->' + toStepNum + ' (' + sequence.steps[toStepNum].name + ')' +
+            //             ' step:' + fromStepNum + '->' + toStepNum + ' (' + Sequence.steps[toStepNum].name + ')' +
             //             ' player:' + fromPlayer + '->' + toPlayer +
             //             ' # players:' + fromNumPlayers + '->' + toNumPlayers +
             //             ' points:' + fromVictoryPoints + '->' + toVictoryPoints +
@@ -858,14 +867,14 @@
             var previousState = parseInt(stateHistory.split(',')[0], 10);
 
             var currentStepNum = modulo(currentState, STEP_EVS.extract);
-            var currentStep = sequence.steps[currentStepNum];
+            var currentStep = Sequence.steps[currentStepNum];
             var currentPhaseNum = currentStep.phase;
             var currentPlayer = modulo(currentState, PLAYER_EVS.extract);
             var currentNumPlayers = modulo(currentState, PLAYERS_EVS.extract);
             var currentRound = modulo(currentState, ROUND_EVS.extract);
             // console.log('setCurrentState -> set current -> round:' + currentRound  +
             //              ' phase:' + currentPhaseNum +
-            //              ' step:' + currentStepNum + ' (' + sequence.steps[currentStepNum].name + ')' +
+            //              ' step:' + currentStepNum + ' (' + Sequence.steps[currentStepNum].name + ')' +
             //              ' player:' + currentPlayer +
             //              ' # players:' + currentNumPlayers +
             //              '');
@@ -961,12 +970,12 @@
 
         function game_setStandardBanners(currentState, previousState) {
             var previousStepNum = modulo(previousState, STEP_EVS.extract);
-            var previousStep = sequence.steps[previousStepNum];
+            var previousStep = Sequence.steps[previousStepNum];
             var previousPhaseNum = previousStep.phase;
 
             var currentRound = modulo(currentState, ROUND_EVS.extract);
             var currentStepNum = modulo(currentState, STEP_EVS.extract);
-            var currentStep = sequence.steps[currentStepNum];
+            var currentStep = Sequence.steps[currentStepNum];
             var currentPhaseNum = currentStep.phase;
             var currentNumPlayers = modulo(currentState, PLAYERS_EVS.extract);
             var currentVictoryPoints = modulo(currentState, VP_EVS.extract);
@@ -981,15 +990,15 @@
             // change banner: shows when the phase changes
             var isPhaseChange = (currentPhaseNum != previousPhaseNum);
             var changeBanner = (isPhaseChange)
-                ? 'End of the ' + sequence.phases[previousPhaseNum] + ' Phase<br>' +
-                'Start of the ' + sequence.phases[currentPhaseNum] + ' Phase'
+                ? 'End of the ' + Sequence.phases[previousPhaseNum] + ' Phase<br>' +
+                'Start of the ' + Sequence.phases[currentPhaseNum] + ' Phase'
                 : '';
 
             // close button: shows only for the new game state
             var showClose = false;
 
             // header: shows the current phase and stage
-            var header = sequence.phases[currentPhaseNum] + ' Phase' +
+            var header = Sequence.phases[currentPhaseNum] + ' Phase' +
                 ((currentStep.stage == null) ? '' : ': ' + currentStep.stage + ' Stage');
 
             return [banner, changeBanner, showClose, header];
@@ -1377,8 +1386,8 @@
 
         function findStepNum(searchName) {
             var step = null;
-            for (step = 0; step < sequence.steps.length; step++) {
-                if (sequence.steps[step].name == searchName) {
+            for (step = 0; step < Sequence.steps.length; step++) {
+                if (Sequence.steps[step].name == searchName) {
                     break
                 };
             };
