@@ -563,10 +563,10 @@
             '            ,{ "phase": 5, "name": "Optional Engagement", "actionwindow" : "true", "boxes" : [60,1860,490,1980], "help" : [[49,500,750,2,2],[232],[129,0,910,5,5]] } ' +
             '            ,{ "phase": 5, "name": "Engagement Checks", "actionwindow" : "true", "boxes" : [60,1980,490,2100], "help" : [[50,0,50,1,1],[233],[129,0,980,6,6]] } ' +
             '            ,{ "phase": 6, "name": "Combat Check", "teamskip" : ["No Combat?", "Ready All Cards"], "boxes" : [60,2215,490,2320] } ' +
-                         //---------------------------------------------------------------------------------------------------------------------
-            '            ,{ "phase": 6, "name": "Deal Shadow Cards", "actionwindow" : "true", "teamskip" : ["No Enemies Are Attacking Players?", "Choose Enemy and Attackers"], "teamloop" : "Deal Shadow Cards", "boxes" : [60,2320,490,2428], "help" : [[50,0,845,2,2],[237],[130,0,130,1,1]] } ' +
+            '            ,{ "phase": 6, "name": "Deal Shadow Cards", "actionwindow" : "true", "teamskip" : ["No Enemy Attacks?", "Choose Enemy and Attackers"], "teamloop" : "Deal Shadow Cards", "boxes" : [60,2320,490,2428], "help" : [[50,0,845,2,2],[237],[130,0,130,1,1]] } ' +
             '            ,{ "phase": 6, "stage": "Enemy Attack", "name": "Choose Attacking Enemy", "actionwindow" : "true", "playerskip" : "Player Is Not Under Attack?", "teamloop" : "Determine Enemy and Defender Combat Damage", "boxes" : [[60,2428,490,2675],[60,2480,490,2675]], "help" : [[50,500,150,3,3],[238],[130,0,270,2,2]] } ' +
             '            ,{ "phase": 6, "stage": "Enemy Attack", "name": "Declare Defender", "actionwindow" : "true", "boxes" : [60,2675,490,2795], "help" : [[50,500,190,4,4],[238],[130,0,410,3,3]] } ' +
+                         //---------------------------------------------------------------------------------------------------------------------
             '            ,{ "phase": 6, "stage": "Enemy Attack", "name": "Reveal & Resolve Shadow Effects", "actionwindow" : "true", "boxes" : [60,2795,490,2915], "help" : [[50,500,300,5,5],[238],[130,0,535,4,4]] } ' +
             '            ,{ "phase": 6, "stage": "Enemy Attack", "name": "Determine Enemy and Defender Combat Damage", "actionwindow" : "true", "boxes" : [60,2915,490,3035], "help" : [[50,0,340,6,6],[238],[130,0,730,5,5]] } ' +
             '            ,{ "phase": 6, "stage": "Player Attack", "name": "Choose Enemy and Attackers", "actionwindow" : "true", "playerskip" : "Player Is Not Attacking An Enemy?", "teamloop" : "Determine Attacker and Enemy Combat Damage", "boxes" : [0,3330,470,3585], "help" : [[51,0,290,1,1],[240],[131,0,85,1,1]] } ' +
@@ -1278,27 +1278,16 @@
         }
 
         function showSideNav(navElement, textContent, onclick, extend=false) {
-            navElement.removeEventListener('transitionend',navchangedone);
-            if (extend && navElement.classList.contains('simhover')) {
-                console.log('retracting nav' + navElement.textContent);
-                navElement.classList.remove('simhover');
-                navElement.addEventListener('transitionend',navchangedone);
+            navElement.innerHTML = textContent;
+            navElement.parentElement.onclick = onclick;
+            navElement.parentElement.classList.remove('hidden');
+            if (extend) {
+                navElement.classList.add('simhover');
+                window.addEventListener('click', endsimhover);
 
-                function navchangedone() {
-                    console.log('retracting done - extending nav ' + textContent);
-                    navElement.removeEventListener('transitionend',navchangedone);
-                    showNav();
-                }
-            } else {
-                showNav();
-            }
-
-            function showNav() {
-                navElement.innerHTML = textContent;
-                navElement.parentElement.onclick = onclick;
-                navElement.parentElement.classList.remove('hidden');
-                if (extend) {
-                    navElement.classList.add('simhover');
+                function endsimhover(e) {
+                    window.removeEventListener('click', endsimhover);
+                    navElement.classList.remove('simhover');
                 }
             }
         }

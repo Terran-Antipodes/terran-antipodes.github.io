@@ -6,9 +6,11 @@
 				document.getElementById('wrapper').style.display = 'block';
 				var sectionTexts = [].slice.call(document.getElementById(window.location.search.substring(1)).getElementsByTagName('span'));
 				console.log('sectionTexts='+sectionTexts+' with '+sectionTexts.length+' elements');
-				sectionTexts.forEach( textspan => {
-					textspan.classList.add('highlighted');
-				});
+				setTimeout(function() {
+					sectionTexts.forEach( textspan => {
+						textspan.classList.add('highlighted');
+					});
+				}, 1000);
 			});
 		</script>
 		<style type="text/css">
@@ -5946,7 +5948,8 @@
 				<div style="position:relative;left:002.41px;top:003.00em" class="cls_006"><span class="cls_006">A</span><span class="cls_002">: Yes. An enemy that enters play directly engaged with a</span></div>
 				<div style="position:relative;left:002.41px;top:003.00em" class="cls_002"><span class="cls_002">player has engaged that player.</span></div>
 			</div>
-			<div style="position:absolute;left:036.00px;top:629.30px" class="cls_020"><span class="cls_020">P</span><span class="cls_021">HASE </span><span class="cls_020">6:</span><span class="cls_021"> </span><span class="cls_020">C</span><span class="cls_021">OMBAT</span></div>
+			<div style="position:absolute;left:036.00px;top:629.30px" class="cls_020"><span class="cls_020" id="p050_2">P</span><span class="cls_021">HASE </span><span class="cls_020">6:</span><span class="cls_021"> </span><span class="cls_020">C</span><span class="cls_021">OMBAT</span></div>
+			<span id="s050_2">
 			<div style="position:absolute;left:036.00px;top:647.54px" class="cls_002"><span class="cls_002">In the combat phase, enemies attack first. All enemies that</span></div>
 			<div style="position:absolute;left:036.00px;top:657.98px" class="cls_002"><span class="cls_002">are engaged with the players attack each round, and the</span></div>
 			<div style="position:absolute;left:036.00px;top:668.30px" class="cls_002"><span class="cls_002">players resolve those attacks one at a time. At the beginning</span></div>
@@ -5963,14 +5966,18 @@
 
 			<div style="position:absolute;left:315.41px;top:034.48px" class="cls_002"><span class="cls_002">cards this round. An empty encounter deck only resets</span></div>
 			<div style="position:absolute;left:315.41px;top:044.80px" class="cls_002"><span class="cls_002">during the quest phase.</span></div>
+			</span>
 			<div style="position:absolute;left:315.41px;top:057.76px" class="cls_013"><span class="cls_013">Step 1: Resolving Enemy Attacks</span></div>
 			<div style="position:absolute;left:315.41px;top:074.94px" class="cls_002"><span class="cls_002">When resolving enemy attacks, the players follow these 4</span></div>
 			<div style="position:absolute;left:315.41px;top:085.38px" class="cls_002"><span class="cls_002">steps, in order. Players may play event cards and take</span></div>
 			<div style="position:absolute;left:315.41px;top:095.70px" class="cls_002"><span class="cls_002">actions at the end of each step.</span></div>
-			<div style="position:absolute;left:333.43px;top:108.78px" class="cls_002"><span class="cls_002">1. </span><span class="cls_006"> Choose an enemy</span><span class="cls_002">. The first player chooses which</span></div>
+			<span id="s050_3">
+			<div style="position:absolute;left:333.43px;top:108.78px" class="cls_002" id="p050_3"><span class="cls_002">1. </span><span class="cls_006"> Choose an enemy</span><span class="cls_002">. The first player chooses which</span></div>
 			<div style="position:absolute;left:351.43px;top:119.34px" class="cls_002"><span class="cls_002">attack (among the enemies to which he is engaged)</span></div>
 			<div style="position:absolute;left:351.43px;top:129.78px" class="cls_002"><span class="cls_002">to resolve first.</span></div>
-			<div style="position:absolute;left:333.43px;top:139.86px" class="cls_002"><span class="cls_002">2. </span><span class="cls_006"> Declare defender</span><span class="cls_002">. A character must exhaust to be</span></div>
+			</span>
+			<span id="s050_4">
+			<div style="position:absolute;left:333.43px;top:139.86px" class="cls_002" id="p050_4"><span class="cls_002">2. </span><span class="cls_006"> Declare defender</span><span class="cls_002">. A character must exhaust to be</span></div>
 			<div style="position:absolute;left:351.43px;top:150.42px" class="cls_002"><span class="cls_002">declared as a defender. Only one character can be</span></div>
 			<div style="position:absolute;left:351.43px;top:160.74px" class="cls_002"><span class="cls_002">declared as a defender against each attacking</span></div>
 			<div style="position:absolute;left:351.43px;top:171.18px" class="cls_002"><span class="cls_002">enemy. A player also has the option to let an attack</span></div>
@@ -5978,6 +5985,7 @@
 			<div style="position:absolute;left:351.43px;top:191.82px" class="cls_002"><span class="cls_002">attack. Unless a card effect specifies otherwise,</span></div>
 			<div style="position:absolute;left:351.43px;top:202.14px" class="cls_002"><span class="cls_002">players can only declare defenders against enemies</span></div>
 			<div style="position:absolute;left:351.43px;top:212.58px" class="cls_002"><span class="cls_002">with whom they are engaged.</span></div>
+			</span>
 			<div style="position:absolute;left:333.43px;top:222.66px" class="cls_002"><span class="cls_002">3. </span><span class="cls_006"> Resolve shadow effect</span><span class="cls_002">. The active player flips that</span></div>
 			<div style="position:absolute;left:351.43px;top:233.22px" class="cls_002"><span class="cls_002">enemy's shadow card faceup and resolves any</span></div>
 			<div style="position:absolute;left:351.43px;top:243.57px" class="cls_002"><span class="cls_002">shadow effect that card might have.</span></div>
@@ -13922,19 +13930,22 @@
 			<div style="position:absolute;left:0px;top:0px"><img src="images/background130.jpg" width=595 height=841></div>
 			<div style="position:absolute;left:054.00px;top:034.48px" class="cls_002"><span class="cls_002">&#10070; This is the only window where </span><A HREF="https://ringsdb.com/card/12065">Arrows from the Trees</A> </span><span class="cls_002"> can be played.</span></div>
 			<div style="position:absolute;left:036.00px;top:047.68px" class="cls_024"><span class="cls_024">5.4 Encounter phase ends</span></div>
-			<div style="position:absolute;left:036.00px;top:061.96px" class="cls_018"><span class="cls_018">VI. COMBAT PHASE</span></div>
+			<div style="position:absolute;left:036.00px;top:061.96px" class="cls_018" id="p130_1"><span class="cls_018">VI. COMBAT PHASE</span></div>
 			<div style="position:absolute;left:036.00px;top:077.82px" class="cls_024"><span class="cls_024">6.1 Combat phase begins</span></div>
 			<div style="position:absolute;left:036.00px;top:092.34px" class="cls_024"><span class="cls_024">6.2 Deal shadow cards</span></div>
 			<div style="position:absolute;left:036.00px;top:106.98px" class="cls_009"><span class="cls_009">ACTION WINDOW</span></div>
+			<span id="s130_1">
 			<div style="position:absolute;left:054.00px;top:120.30px" class="cls_002"><span class="cls_002">&#10070; Archery damage is applied in 6.1, before any action windows in the combat phase. This unfortunately means that it is not</span></div>
 			<div style="position:absolute;left:072.02px;top:130.74px" class="cls_002"><span class="cls_002">possible to use </span><A HREF="https://ringsdb.com/card/01023">Sneak Attack</A><span class="cls_002">or </span><A HREF="https://ringsdb.com/card/12138">Prince Imrahil</A> </span><span class="cls_002">as a way to put archery damage on a temporary ally.</span></div>
 			<div style="position:absolute;left:054.00px;top:141.06px" class="cls_002"><span class="cls_002">&#10070; This action window occurs even if no enemies make attacks during the combat phase.</span></div>
 			<div style="position:absolute;left:054.00px;top:151.38px" class="cls_002"><span class="cls_002">&#10070; Some of the most common actions performed here are </span><span class="cls_062">Feint</span><span class="cls_002">, </span><span class="cls_062">Thicket of Spears</span><span class="cls_002">, and </span><span class="cls_062">Haldir of Lórien</span><span class="cls_002">. It's also the only</span></div>
 			<div style="position:absolute;left:072.02px;top:161.70px" class="cls_002"><span class="cls_002">window in which you can play </span><span class="cls_062">Tireless Hunters</span><span class="cls_002">.</span></div>
+			</span>
 			<div style="position:absolute;left:036.00px;top:175.02px" class="cls_024"><span class="cls_024">6.3 &quot;Resolve enemy attacks&quot; process begins</span></div>
 			<div style="position:absolute;left:036.00px;top:189.42px" class="cls_024"><span class="cls_024">6.4a Active player resolves next enemy attack.</span></div>
-			<div style="position:absolute;left:036.00px;top:203.94px" class="cls_024"><span class="cls_024">6.4b Enemy attack initiates (active player chooses enemy)</span></div>
+			<div style="position:absolute;left:036.00px;top:203.94px" class="cls_024" id="p130_2"><span class="cls_024">6.4b Enemy attack initiates (active player chooses enemy)</span></div>
 			<div style="position:absolute;left:036.00px;top:218.58px" class="cls_009"><span class="cls_009">ACTION WINDOW</span></div>
+			<span id="s130_2">
 			<div style="position:absolute;left:054.00px;top:231.90px" class="cls_002"><span class="cls_002">&#10070; This window occurs even when an enemy makes an immediate attack against you, for example the </span><span class="cls_062">Haradrim Elite</span><span class="cls_002">. In this</span></div>
 			<div style="position:absolute;left:072.02px;top:242.37px" class="cls_002"><span class="cls_002">case, it's obvious which enemy you "choose", but regardless you can still perform an action after doing so. This means</span></div>
 			<div style="position:absolute;left:072.02px;top:252.69px" class="cls_002"><span class="cls_002">that if you have an exhausted defender, you have a chance here to ready them before the next step. So it's a great</span></div>
@@ -13943,9 +13954,11 @@
 			<div style="position:absolute;left:305.23px;top:263.01px" class="cls_062"><span class="cls_062">arya</span><span class="cls_002">, etc.</span></div>
 			<div style="position:absolute;left:054.00px;top:273.33px" class="cls_002"><span class="cls_002">&#10070; This action window is too late to play a card like </span><A HREF="https://ringsdb.com/card/01034">Feint</A> </span><span class="cls_002">on the attacking enemy, because the attack has already initiated,</span></div>
 			<div style="position:absolute;left:072.02px;top:283.77px" class="cls_002"><span class="cls_002">and </span><span class="cls_062">Feint </span><span class="cls_002">will not stop an enemy in mid-attack. This is why you want to play </span><span class="cls_062">Feint </span><span class="cls_002">in the previous action window. You could</span></div>
+			</span>
 			<div style="position:absolute;left:072.02px;top:294.09px" class="cls_002"><span class="cls_002">still play </span><span class="cls_062">Feint </span><span class="cls_002">on enemies that haven't attacked yet though.</span></div>
-			<div style="position:absolute;left:036.00px;top:307.29px" class="cls_024"><span class="cls_024">6.4.1 Declare defender</span></div>
+			<div style="position:absolute;left:036.00px;top:307.29px" class="cls_024" id="p130_3"><span class="cls_024">6.4.1 Declare defender</span></div>
 			<div style="position:absolute;left:036.00px;top:321.93px" class="cls_009"><span class="cls_009">ACTION WINDOW</span></div>
+			<span id="s130_3">
 			<div style="position:absolute;left:054.00px;top:335.25px" class="cls_002"><span class="cls_002">&#10070; After exhausting your defender you have a chance to perform an action before revealing the shadow card. This is your last</span></div>
 			<div style="position:absolute;left:072.02px;top:345.57px" class="cls_002"><span class="cls_002">chance to get a useful effect out of shadow-card discarding actions like </span><A HREF="https://ringsdb.com/card/142008">Gandalf's Staff</A><span class="cls_002">or </span><span class="cls_062">Rider of the Mark</span><span class="cls_002">, because</span></div>
 			<div style="position:absolute;left:072.02px;top:356.01px" class="cls_002"><span class="cls_002">there is no action window between revealing and resolving the shadow card.</span></div>
@@ -13953,6 +13966,7 @@
 			<div style="position:absolute;left:054.00px;top:366.33px" class="cls_002"><span class="cls_002">&#10070; If you have the ability to ready your defender (</span><span class="cls_062">Unexpected Courage</span><span class="cls_002">, </span><span class="cls_062">Boromir</span><span class="cls_002">, </span><span class="cls_062">Narya</span><span class="cls_002">, etc., it's often (but not always) wise</span></div>
 			<div style="position:absolute;left:072.02px;top:376.65px" class="cls_002"><span class="cls_002">to do so now, before revealing the shadow card. This is because the shadow card might discard your </span><A HREF="https://ringsdb.com/card/01057">Unexpected</A> </span></div>
 			<div style="position:absolute;left:072.02px;top:386.97px" class="cls_062"><span class="cls_062">Courage</span><span class="cls_002">, or simply have an effect that prevents the defender from readying for the rest of the round.</span></div>
+			</span>
 			<div style="position:absolute;left:036.00px;top:400.31px" class="cls_024"><span class="cls_024">6.4.2 Reveal and resolve shadow effect</span></div>
 			<div style="position:absolute;left:036.00px;top:414.83px" class="cls_009"><span class="cls_009">ACTION WINDOW</span></div>
 			<div style="position:absolute;left:054.00px;top:428.27px" class="cls_002"><span class="cls_002">&#10070; This is another really important action window for new players to learn. Similar to the window that allows you to adjust your</span></div>
@@ -14061,7 +14075,7 @@
 			<div style="position:absolute;left:036.00px;top:090.66px" class="cls_006"><span class="cls_006">Step 1</span><span class="cls_002">: Look at the top card of the encounter deck.</span></div>
 			<div style="position:absolute;left:351.43px;top:095.22px" class="cls_002"><span class="cls_002">effects with Eleanor and reveal another card, Surge</span></div>
 			<div style="position:absolute;left:351.43px;top:105.54px" class="cls_002"><span class="cls_002">will still trigger. Also, because</span></div>
-			<div style="position:absolute;left:0506.98px;top:105.54px" class="cls_066"><span class="cls_066"> </span><A HREF="http://hallofbeorn.com/Cards/Details/Minas-Tirith-Lampwright-EaAD">Minas Tirith</A> </div>
+			<div style="position:absolute;left:506.98px;top:105.54px" class="cls_066"><span class="cls_066"> </span><A HREF="http://hallofbeorn.com/Cards/Details/Minas-Tirith-Lampwright-EaAD">Minas Tirith</A> </div>
 			<div style="position:absolute;left:036.00px;top:115.98px" class="cls_006"><span class="cls_006">Step 2</span><span class="cls_002">: The card‘s text is now active, but it has not yet</span></div>
 			<div style="position:absolute;left:351.43px;top:115.86px" class="cls_066"><span class="cls_066">Lampwright</span><span class="cls_002">, there needs to be a step where you</span></div>
 			<div style="position:absolute;left:036.00px;top:126.54px" class="cls_002"><span class="cls_002">"entered play". In other words, triggered effects have not</span></div>
