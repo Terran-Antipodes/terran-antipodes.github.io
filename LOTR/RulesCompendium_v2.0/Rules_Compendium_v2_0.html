@@ -2,10 +2,8 @@
 	<head><meta http-equiv=Content-Type content="text/html; charset=UTF-8">
 		<script type="text/javascript">
 			addEventListener("load", function() {
-				console.log('loaded jump='+ window.location.hash + ' search='+window.location.search);
 				document.getElementById('wrapper').style.display = 'block';
 				var sectionTexts = [].slice.call(document.getElementById(window.location.search.substring(1)).getElementsByTagName('span'));
-				console.log('sectionTexts='+sectionTexts+' with '+sectionTexts.length+' elements');
 				setTimeout(function() {
 					sectionTexts.forEach( textspan => {
 						textspan.classList.add('highlighted');
@@ -5986,10 +5984,13 @@
 			<div style="position:absolute;left:351.43px;top:202.14px" class="cls_002"><span class="cls_002">players can only declare defenders against enemies</span></div>
 			<div style="position:absolute;left:351.43px;top:212.58px" class="cls_002"><span class="cls_002">with whom they are engaged.</span></div>
 			</span>
-			<div style="position:absolute;left:333.43px;top:222.66px" class="cls_002"><span class="cls_002">3. </span><span class="cls_006"> Resolve shadow effect</span><span class="cls_002">. The active player flips that</span></div>
+			<span id="s050_5">
+			<div style="position:absolute;left:333.43px;top:222.66px" class="cls_002" id="p050_5"><span class="cls_002">3. </span><span class="cls_006"> Resolve shadow effect</span><span class="cls_002">. The active player flips that</span></div>
 			<div style="position:absolute;left:351.43px;top:233.22px" class="cls_002"><span class="cls_002">enemy's shadow card faceup and resolves any</span></div>
 			<div style="position:absolute;left:351.43px;top:243.57px" class="cls_002"><span class="cls_002">shadow effect that card might have.</span></div>
-			<div style="position:absolute;left:333.43px;top:253.77px" class="cls_002"><span class="cls_002">4. </span><span class="cls_006"> Determine combat damage</span><span class="cls_002">. This is done by</span></div>
+			</span>
+			<span id="s050_6">
+			<div style="position:absolute;left:333.43px;top:253.77px" class="cls_002" id="p050_6"><span class="cls_002">4. </span><span class="cls_006"> Determine combat damage</span><span class="cls_002">. This is done by</span></div>
 			<div style="position:absolute;left:351.43px;top:264.81px" class="cls_002"><span class="cls_002">subtracting the defense strength(<img class="symbol" src="images/sym_defense.png">) of the</span></div>
 			<div style="position:absolute;left:351.43px;top:277.73px" class="cls_002"><span class="cls_002">defending character from the attack strength (<img class="symbol" src="images/sym_attack.png">) of</span></div>
 			<div style="position:absolute;left:351.43px;top:292.17px" class="cls_002"><span class="cls_002">the attacking enemy. The remaining value is the</span></div>
@@ -5999,14 +6000,15 @@
 			<div style="position:absolute;left:351.43px;top:323.13px" class="cls_002"><span class="cls_002">character</span></div>
 			<div style="position:absolute;left:351.43px;top:333.57px" class="cls_002"><span class="cls_002">character is destroyed by an attack, additional</span></div>
 			<div style="position:absolute;left:351.43px;top:343.89px" class="cls_002"><span class="cls_002">damage is not assigned to another character. If the</span></div>
-			<div style="position:absolute;left:351.43px;top:357.69px" class="cls_002"><span class="cls_002"><img class="symbol" src="images/sym_defense.png"> is equal to or higher than the <img class="symbol" src="images/sym_attack.png">, no damage is</span></div>
+			<div style="position:absolute;left:351.43px;top:354.69px" class="cls_002"><span class="cls_002"><img class="symbol" src="images/sym_defense.png"> is equal to or higher than the <img class="symbol" src="images/sym_attack.png">, no damage is</span></div>
 			<div style="position:absolute;left:351.43px;top:368.13px" class="cls_002"><span class="cls_002">dealt.</span></div>
+			</span>
 			<div style="position:absolute;left:315.41px;top:381.45px" class="cls_002"><span class="cls_002">If an attack is undefended, all damage from the attack must</span></div>
 			<div style="position:absolute;left:315.41px;top:391.77px" class="cls_002"><span class="cls_002">be assigned to a single hero controlled by the active player.</span></div>
 			<div style="position:absolute;left:315.41px;top:402.23px" class="cls_002"><span class="cls_002">Allies cannot take damage from undefended attacks. If a</span></div>
 			<div style="position:absolute;left:315.41px;top:412.55px" class="cls_002"><span class="cls_002">defending character leaves play or is removed from combat</span></div>
 			<div style="position:absolute;left:315.41px;top:422.87px" class="cls_002"><span class="cls_002">before damage is assigned, the attack is considered</span></div>
-			<div style="position:absolute;left:315.41px;top:433.67px" class="cls_002"><span class="cls_002">undefended. A character's <img class="symbol" src="images/sym_defense.png"> does not absorb damage from</span></div>
+			<div style="position:absolute;left:315.41px;top:430.67px" class="cls_002"><span class="cls_002">undefended. A character's <img class="symbol" src="images/sym_defense.png"> does not absorb damage from</span></div>
 			<div style="position:absolute;left:315.41px;top:447.11px" class="cls_002"><span class="cls_002">undefended attacks or from card effects.</span></div>
 			<div style="position:absolute;left:310.41px;top:460.11px;right:030.00px;bottom:194px;" class="srb_faq">
 				<div style="position:relative;left:002.41px;top:000.00em" class="cls_006"><span class="cls_006">FAQ (1.52): “The defending player”</span></div>
@@ -6057,19 +6059,25 @@
 			<div style="position:absolute;left:036.00px;top:181.50px" class="cls_002"><span class="cls_002">To resolve an attack against an enemy, a player follows</span></div>
 			<div style="position:absolute;left:036.00px;top:191.82px" class="cls_002"><span class="cls_002">these 3 steps, in order. Players may play event cards and</span></div>
 			<div style="position:absolute;left:036.00px;top:202.14px" class="cls_002"><span class="cls_002">take actions at the end of each step.</span></div>
-			<div style="position:absolute;left:054.00px;top:215.34px" class="cls_002"><span class="cls_002">1. </span><span class="cls_006"> Declare target of attack, and declare attackers</span><span class="cls_002">. A</span></div>
+			<span id="s051_1">
+			<div style="position:absolute;left:054.00px;top:215.34px" class="cls_002"><span class="cls_002" id="p051_1">1. </span><span class="cls_006"> Declare target of attack, and declare attackers</span><span class="cls_002">. A</span></div>
 			<div style="position:absolute;left:072.02px;top:225.90px" class="cls_002"><span class="cls_002">player does this by choosing 1 enemy with whom</span></div>
 			<div style="position:absolute;left:072.02px;top:236.25px" class="cls_002"><span class="cls_002">he is currently engaged, and exhausting any</span></div>
 			<div style="position:absolute;left:072.02px;top:246.57px" class="cls_002"><span class="cls_002">number of characters as attackers.</span></div>
-			<div style="position:absolute;left:054.00px;top:256.77px" class="cls_002"><span class="cls_002">2. </span><span class="cls_006"> Determine attack strength</span><span class="cls_002">. Add up the total attack</span></div>
+			</span>
+			<span id="s051_2">
+			<div style="position:absolute;left:054.00px;top:256.77px" class="cls_002"><span class="cls_002" id="p051_2">2. </span><span class="cls_006"> Determine attack strength</span><span class="cls_002">. Add up the total attack</span></div>
 			<div style="position:absolute;left:072.02px;top:266.81px" class="cls_002"><span class="cls_002">strength (<img class="symbol" src="images/sym_attack.png">) of the attacking characters that have</span></div>
 			<div style="position:absolute;left:072.02px;top:281.25px" class="cls_002"><span class="cls_002">been declared against that target.</span></div>
-			<div style="position:absolute;left:054.00px;top:291.33px" class="cls_002"><span class="cls_002">3. </span><span class="cls_006"> Determine combat damage</span><span class="cls_002">. This is done by</span></div>
+			</span>
+			<span id="s051_3">
+			<div style="position:absolute;left:054.00px;top:291.33px" class="cls_002"><span class="cls_002" id="p051_3">3. </span><span class="cls_006"> Determine combat damage</span><span class="cls_002">. This is done by</span></div>
 			<div style="position:absolute;left:072.02px;top:301.37px" class="cls_002"><span class="cls_002">subtracting the target enemy's defense strength (<img class="symbol" src="images/sym_defense.png"></span></div>
 			<div style="position:absolute;left:072.02px;top:315.29px" class="cls_002"><span class="cls_002">) from the combined <img class="symbol" src="images/sym_attack.png"> of all the attacking</span></div>
 			<div style="position:absolute;left:072.02px;top:329.73px" class="cls_002"><span class="cls_002">characters. The remaining value is the amount of</span></div>
 			<div style="position:absolute;left:072.02px;top:340.05px" class="cls_002"><span class="cls_002">damage that is immediately dealt to the target. If the</span></div>
 			<div style="position:absolute;left:072.02px;top:349.85px" class="cls_002"><span class="cls_002"><img class="symbol" src="images/sym_defense.png">is equal to or higher than the <img class="symbol" src="images/sym_attack.png">, no damage is</span></div>
+			</span>
 			<div style="position:absolute;left:072.02px;top:364.29px" class="cls_002"><span class="cls_002">dealt.</span></div>
 			<div style="position:absolute;left:036.00px;top:377.73px" class="cls_002"><span class="cls_002">Characters that are declared as attackers are only</span></div>
 			<div style="position:absolute;left:036.00px;top:388.05px" class="cls_002"><span class="cls_002">considered to be attacking through the resolution of the</span></div>
@@ -6096,11 +6104,13 @@
 				<div style="position:relative;left:002.41px;top:001.00em" class="cls_002"><span class="cls_002">encounter card effects also prevent players from canceling</span></div>
 				<div style="position:relative;left:002.41px;top:001.00em" class="cls_002"><span class="cls_002">shadow card effects.</span></div>
 			</div>
-			<div style="position:absolute;left:036.00px;top:645.86px" class="cls_013"><span class="cls_013">Shadow Cards Leaving Play</span></div>
+			<div style="position:absolute;left:036.00px;top:645.86px" class="cls_013"><span class="cls_013" id="p051_4">Shadow Cards Leaving Play</span></div>
+			<span id="s051_4">
 			<div style="position:absolute;left:036.00px;top:663.02px" class="cls_002"><span class="cls_002">Shadow cards remain on the enemy to which they were dealt</span></div>
 			<div style="position:absolute;left:036.00px;top:673.34px" class="cls_002"><span class="cls_002">throughout the combat phase. If that enemy leaves play,</span></div>
 			<div style="position:absolute;left:036.00px;top:683.66px" class="cls_002"><span class="cls_002">discard its shadow card from play. At the end of the combat</span></div>
 			<div style="position:absolute;left:036.00px;top:694.10px" class="cls_002"><span class="cls_002">phase, discard all shadow cards that were dealt this round.</span></div>
+			</span>
 			<div style="position:absolute;left:033.00px;top:709.10px;right:310.00px;bottom:060px;" class="srb_faq">
 				<div style="position:relative;left:002.41px;top:000.00em" class="cls_006"><span class="cls_006">FAQ (Q&A):</span></div>
 				<div style="position:relative;left:002.41px;top:000.50em" class="cls_006"><span class="cls_006">Q</span><span class="cls_002">: If an enemy does not attack or its attack is canceled, what</span></div>
@@ -6228,13 +6238,14 @@
 				<div style="position:relative;left:002.41px;top:004.50em" class="cls_002"><span class="cls_002">previously dealt shadow cards before dealing it a new</span></div>
 				<div style="position:relative;left:002.41px;top:004.50em" class="cls_002"><span class="cls_002">shadow card.</span></div>
 			</div>
-			<div style="position:absolute;left:315.41px;top:238.77px" class="cls_020"><span class="cls_020">P</span><span class="cls_021">HASE </span><span class="cls_020">7:</span><span class="cls_021"> </span><span class="cls_020">R</span><span class="cls_021">EFRESH</span></div>
+			<div style="position:absolute;left:315.41px;top:238.77px" class="cls_020" id="p052_1"><span class="cls_020">P</span><span class="cls_021">HASE </span><span class="cls_020">7:</span><span class="cls_021"> </span><span class="cls_020">R</span><span class="cls_021">EFRESH</span></div>
+			<span id="s052_1">
 			<div style="position:absolute;left:315.41px;top:257.01px" class="cls_002"><span class="cls_002">During the refresh phase, all exhausted cards ready, each</span></div>
 			<div style="position:absolute;left:315.41px;top:267.45px" class="cls_002"><span class="cls_002">player increases his threat by 1, and the first player passes</span></div>
 			<div style="position:absolute;left:315.41px;top:277.77px" class="cls_002"><span class="cls_002">the first player token to the next player clockwise on his left.</span></div>
 			<div style="position:absolute;left:315.41px;top:288.09px" class="cls_002"><span class="cls_002">That player becomes the new first player. Play then</span></div>
 			<div style="position:absolute;left:315.41px;top:298.41px" class="cls_002"><span class="cls_002">proceeds to the resource phase of the next round.</span></div>
-			
+			</span>
 			
 			<div style="position:absolute;left:218.57px;top:325.41px" class="cls_012"><span class="cls_012">Ending the Game</span></div>
 			<div style="position:absolute;left:036.00px;top:364.17px" class="cls_002"><span class="cls_002">The game ends in one of two ways, with the players either</span></div>
@@ -13774,7 +13785,7 @@
 		<div id="p10#" style="position:absolute;left:050%;margin-left:-297px;top:108077px;width:595px;height:841px;border-style:outset;overflow:hidden">
 			<div style="position:absolute;left:0px;top:0px"><img src="images/background128.jpg" width=595 height=841></div>
 			<div style="position:absolute;left:165.26px;top:032.68px" class="cls_012"><span class="cls_012">A Guide to Action Windows</span></div>
-			<div style="position:absolute;left:204.41px;top:071.32px" class="cls_008"><span class="cls_008">From Chris Stanford‘s et al. </span><A HREF="https://ringsdb.com/decklist/view/10407/a-guide-to-action-windows-1.0">article on RingsDB</A> </span></div>
+			<div style="position:absolute;left:204.41px;top:071.32px" class="cls_008"><span class="cls_008">From Chris Stanford‘s et al. </span><A HREF="https://ringsdb.com/decklist/view/10407/a-guide-to-action-windows-1.0">article on RingsDB</A> </div>
 			<div style="position:absolute;left:036.00px;top:083.10px" class="cls_058"><span class="cls_058">A</span><span class="cls_059">CTION </span><span class="cls_058">W</span><span class="cls_059">INDOWS</span></div>
 			<div style="position:absolute;left:079.10px;top:103.26px" class="cls_019"><span class="cls_019">An action ability may only be triggered during an action window. When an action window opens, the first</span></div>
 			<div style="position:absolute;left:079.10px;top:113.58px" class="cls_019"><span class="cls_019">player has the first opportunity to initiate an action, or pass. Opportunities to initiate actions then proceed in</span></div>
@@ -13799,7 +13810,7 @@
 			<div style="position:absolute;left:072.02px;top:335.01px" class="cls_002"><span class="cls_002">cannot perform a combo like </span><A HREF="https://ringsdb.com/card/08113">Heir of Mardil</A><span class="cls_002">followed immediately by </span><span class="cls_062">Captain's Wisdom</span><span class="cls_002">, because </span><span class="cls_062">Heir of Mardil</span><span class="cls_002"> must be</span></div>
 			<div style="position:absolute;left:072.02px;top:345.45px" class="cls_002"><span class="cls_002">played with other attachments during the planning phase, at which point the opportunity to trigger resource actions has</span></div>
 			<div style="position:absolute;left:072.02px;top:355.77px" class="cls_002"><span class="cls_002">passed.</span></div>
-			<div style="position:absolute;left:054.00px;top:366.09px" class="cls_002"><span class="cls_002">&#10070; Other generic actions can be performed here. One example of an action I have done here is </span><A HREF="https://ringsdb.com/card/12009">Heed the Dream</A> </span><span class="cls_002"> to search</span></div>
+			<div style="position:absolute;left:054.00px;top:366.09px" class="cls_002"><span class="cls_002">&#10070; Other generic actions can be performed here. One example of an action I have done here is </span><A HREF="https://ringsdb.com/card/12009">Heed the Dream</A> <span class="cls_002"> to search</span></div>
 			<div style="position:absolute;left:072.02px;top:376.41px" class="cls_002"><span class="cls_002">my top 5 cards for </span><span class="cls_062">Captain's Wisdom</span><span class="cls_002">, as doing this in the resource phase means I can play it right away.</span></div>
 			<div style="position:absolute;left:054.00px;top:386.85px" class="cls_002"><span class="cls_002">&#10070; If I have multiple copies of</span><span class="cls_062"> <A HREF="https://ringsdb.com/card/01023">Sneak Attack</A><span class="cls_002"> in hand along with </span><span class="cls_062">Gandalf</span><span class="cls_002">, sometimes I will use this window to play </span><span class="cls_062">Sneak</span></div>
 			<div style="position:absolute;left:072.02px;top:397.17px" class="cls_062"><span class="cls_062">Attack+Gandalf</span><span class="cls_002"> just for the card draw. He will come back to my hand at the end of the phase, so I can do it again in the</span></div>
@@ -13815,14 +13826,14 @@
 			<div style="position:absolute;left:072.02px;top:500.75px" class="cls_002"><span class="cls_002">permitted to play ally and attachment cards from his or her hand.</span></div>
 			<div style="position:absolute;left:054.00px;top:511.07px" class="cls_002"><span class="cls_002">&#10070; So while allies and attachment must be played in player order, actions can be performed in any order. To illustrate this,</span></div>
 			<div style="position:absolute;left:072.02px;top:521.39px" class="cls_002"><span class="cls_002">here are some examples of what is allowed and what isn't:</span></div>
-			<div style="position:absolute;left:090.02px;top:531.71px" class="cls_002"><span class="cls_002">1. It is player 1's turn to play allies and attachments. Player 2 plays </span><A HREF="https://ringsdb.com/card/07012">Deep Knowledge</A> </span><span class="cls_002"> and everyone draws 2 cards.</span></div>
+			<div style="position:absolute;left:090.02px;top:531.71px" class="cls_002"><span class="cls_002">1. It is player 1's turn to play allies and attachments. Player 2 plays </span><A HREF="https://ringsdb.com/card/07012">Deep Knowledge</A> <span class="cls_002"> and everyone draws 2 cards.</span></div>
 			<div style="position:absolute;left:108.02px;top:542.15px" class="cls_002"><span class="cls_002">Player 1 draws into an ally they want to play. Player 1 is allowed to play it, because it is their turn to play allies</span></div>
 			<div style="position:absolute;left:108.02px;top:552.47px" class="cls_002"><span class="cls_002">and attachments.</span></div>
 			<div style="position:absolute;left:090.02px;top:562.82px" class="cls_002"><span class="cls_002">2. It is player 2's turn to play allies and attachments. Player 2 plays </span><span class="cls_062">Gléowine</span><span class="cls_002">. Player 2 then triggers </span><span class="cls_062">Gleowine</span><span class="cls_002">,</span></div>
 			<div style="position:absolute;left:108.02px;top:572.90px" class="cls_002"><span class="cls_002">choosing player 1 to draw a card. Player 1 draws into a ally they want to play. Player 1 is </span><span class="cls_006">not</span><span class="cls_002"> allowed to play it,</span></div>
 			<div style="position:absolute;left:108.02px;top:583.58px" class="cls_002"><span class="cls_002">because it is not their turn to play allies and attachments.</span></div>
 			<div style="position:absolute;left:090.02px;top:593.90px" class="cls_002"><span class="cls_002">3. It is player 1's turn to play allies and attachments. They have a 2-cost ally they want to play, but do not have</span></div>
-			<div style="position:absolute;left:108.02px;top:604.22px" class="cls_002"><span class="cls_002">enough resources, so they pass. It is now player 2's turn to play allies and attachments. Player 2 plays </span><A HREF="https://ringsdb.com/card/01026">Steward</A> </span></div>
+			<div style="position:absolute;left:108.02px;top:604.22px" class="cls_002"><span class="cls_002">enough resources, so they pass. It is now player 2's turn to play allies and attachments. Player 2 plays </span><A HREF="https://ringsdb.com/card/01026">Steward</A> </div>
 			<div style="position:absolute;left:108.02px;top:614.54px" class="cls_062"><span class="cls_062"> </span><A HREF="https://ringsdb.com/card/01026">of Gondor</A> <span class="cls_002"> on one of player 1's heroes. Since all players can perform actions in any order, player 1 can</span></div>
 			<div style="position:absolute;left:108.02px;top:624.74px" class="cls_002"><span class="cls_002">immediately trigger</span><span class="cls_062"> <A HREF="https://ringsdb.com/card/01026">Steward of Gondor</A> </span><span class="cls_002"> to gain 2 resources, and can now afford their ally. </span><span class="cls_006">However</span><span class="cls_002">, player 1 has</span></div>
 			<div style="position:absolute;left:108.02px;top:635.30px" class="cls_002"><span class="cls_002">already passed the opportunity to play allies and attachments, and is therefore not allowed to play their ally this</span></div>
@@ -13835,8 +13846,8 @@
 			<div style="position:absolute;left:036.00px;top:718.10px" class="cls_009"><span class="cls_009">ACTION WINDOW</span></div>
 			<span id="s128_3">
 			<div style="position:absolute;left:054.00px;top:731.44px" class="cls_002"><span class="cls_002">&#10070; This action occurs before players commit characters to the quest. For that reason, one of the most common actions</span></div>
-			<div style="position:absolute;left:072.02px;top:741.88px" class="cls_002"><span class="cls_002">performed during this window is </span><A HREF="https://ringsdb.com/card/01023">Sneak Attack</A><span class="cls_002"> to bring </span><A HREF="https://ringsdb.com/card/01073">Gandalf</A> </span><span class="cls_002">into play so that he can commit to the quest.</span></div>
-			<div style="position:absolute;left:054.00px;top:752.20px" class="cls_002"><span class="cls_002">&#10070; This is also the only time at which </span><A HREF="https://ringsdb.com/card/02080">Gildor's Counsel</A> </span><span class="cls_002"> can be played.</span></div>
+			<div style="position:absolute;left:072.02px;top:741.88px" class="cls_002"><span class="cls_002">performed during this window is </span><A HREF="https://ringsdb.com/card/01023">Sneak Attack</A><span class="cls_002"> to bring </span><A HREF="https://ringsdb.com/card/01073">Gandalf</A> <span class="cls_002">into play so that he can commit to the quest.</span></div>
+			<div style="position:absolute;left:054.00px;top:752.20px" class="cls_002"><span class="cls_002">&#10070; This is also the only time at which </span><A HREF="https://ringsdb.com/card/02080">Gildor's Counsel</A> <span class="cls_002"> can be played.</span></div>
 			</span>
 			<div style="position:absolute;left:284.69px;top:794.68px" class="cls_002"><span class="cls_002">- 128 -</span></div>
 		</div>
@@ -13847,19 +13858,19 @@
 			<span id="s129_1">
 			<div style="position:absolute;left:054.00px;top:062.32px" class="cls_002"><span class="cls_002">&#10070; The action window after committing characters to the quest and before staging does not get used too often, but there are</span></div>
 			<div style="position:absolute;left:072.02px;top:072.66px" class="cls_002"><span class="cls_002">some cases where it might matter. For example, if you are 1 resource short of playing </span><span class="cls_062">Risk Some Light</span><span class="cls_002">, you could</span></div>
-			<div style="position:absolute;left:072.02px;top:083.10px" class="cls_002"><span class="cls_002">commit </span><A HREF="https://ringsdb.com/card/01002">Théodred</A><span class="cls_002">and a lore hero to the quest, give the resource too the lore hero, and then play </span><A HREF="https://ringsdb.com/card/04136">Risk Some Light</A> </span><span class="cls_002"> before</span></div>
+			<div style="position:absolute;left:072.02px;top:083.10px" class="cls_002"><span class="cls_002">commit </span><A HREF="https://ringsdb.com/card/01002">Théodred</A><span class="cls_002">and a lore hero to the quest, give the resource too the lore hero, and then play </span><A HREF="https://ringsdb.com/card/04136">Risk Some Light</A> <span class="cls_002"> before</span></div>
 			<div style="position:absolute;left:072.02px;top:093.42px" class="cls_002"><span class="cls_002">revealing any cards.</span></div>
-			<div style="position:absolute;left:054.00px;top:103.74px" class="cls_002"><span class="cls_002">&#10070; Another example could be that you just saw the top card of the encounter deck with </span><A HREF="https://ringsdb.com/card/17008">Firyal</A> </span><span class="cls_002">and it's a nasty treachery.</span></div>
+			<div style="position:absolute;left:054.00px;top:103.74px" class="cls_002"><span class="cls_002">&#10070; Another example could be that you just saw the top card of the encounter deck with </span><A HREF="https://ringsdb.com/card/17008">Firyal</A> <span class="cls_002">and it's a nasty treachery.</span></div>
 			<div style="position:absolute;left:072.02px;top:114.06px" class="cls_002"><span class="cls_002">Instead of discarding it, you could use this action window to send a resource to a spirit hero so that you will be ready to</span></div>
-			<div style="position:absolute;left:072.02px;top:124.50px" class="cls_002"><span class="cls_002">play </span><A HREF="https://ringsdb.com/card/01050">A Test of Will</A> </span><span class="cls_002">and cancel it instead.</span></div>
+			<div style="position:absolute;left:072.02px;top:124.50px" class="cls_002"><span class="cls_002">play </span><A HREF="https://ringsdb.com/card/01050">A Test of Will</A> <span class="cls_002">and cancel it instead.</span></div>
 			<div style="position:absolute;left:298.61px;top:130.38px" class="cls_064"><span class="cls_064">1</span></div>
-			<div style="position:absolute;left:054.00px;top:134.82px" class="cls_002"><span class="cls_002">&#10070; A third example is if you have </span><A HREF="https://ringsdb.com/card/04128">Elrond</A><span class="cls_002">with </span><A HREF="https://ringsdb.com/card/04107">Light of Valinor</A> </span><span class="cls_002"> and </span><span class="cls_062">Vilya </span><span class="cls_002">attached. You might not want to exhaust Elrond to</span></div>
+			<div style="position:absolute;left:054.00px;top:134.82px" class="cls_002"><span class="cls_002">&#10070; A third example is if you have </span><A HREF="https://ringsdb.com/card/04128">Elrond</A><span class="cls_002">with </span><A HREF="https://ringsdb.com/card/04107">Light of Valinor</A> <span class="cls_002"> and </span><span class="cls_062">Vilya </span><span class="cls_002">attached. You might not want to exhaust Elrond to</span></div>
 			<div style="position:absolute;left:072.02px;top:145.14px" class="cls_002"><span class="cls_002">trigger </span><span class="cls_062">Vilya </span><span class="cls_002">before committing characters because then </span><span class="cls_062">Light of Valinor </span><span class="cls_002">won't do anything -- so you can do it here instead.</span></div>
 			<div style="position:absolute;left:072.02px;top:155.46px" class="cls_002"><span class="cls_002">Of course, this means that any ally you turn up with </span><span class="cls_062">Vilya </span><span class="cls_002">won't be able to commit to the quest.</span></div>
-			<div style="position:absolute;left:054.00px;top:165.78px" class="cls_002"><span class="cls_002">&#10070; This is the only action window where </span><A HREF="https://ringsdb.com/card/12086">Battle-fury</A> </span><span class="cls_002"> can be played.</span></div>
-			<div style="position:absolute;left:054.00px;top:176.22px" class="cls_002"><span class="cls_002">&#10070; You can use this window to use readying effects like </span><A HREF="https://ringsdb.com/card/01057">Unexpected Courage</A> </span><span class="cls_002"> to ready a questing character to avoid effects</span></div>
+			<div style="position:absolute;left:054.00px;top:165.78px" class="cls_002"><span class="cls_002">&#10070; This is the only action window where </span><A HREF="https://ringsdb.com/card/12086">Battle-fury</A> <span class="cls_002"> can be played.</span></div>
+			<div style="position:absolute;left:054.00px;top:176.22px" class="cls_002"><span class="cls_002">&#10070; You can use this window to use readying effects like </span><A HREF="https://ringsdb.com/card/01057">Unexpected Courage</A> <span class="cls_002"> to ready a questing character to avoid effects</span></div>
 			<div style="position:absolute;left:072.02px;top:186.42px" class="cls_002"><span class="cls_002">like the </span><span class="cls_062">Necromancer's Reach</span><span class="cls_002">. But take care which quest you're playing against, because you might </span><span class="cls_008">not</span><span class="cls_002"> want to</span></div>
-			<div style="position:absolute;left:072.02px;top:196.86px" class="cls_002"><span class="cls_002">use </span><A HREF="https://ringsdb.com/card/01057">Unexpected Courage</A><span class="cls_002"> just yet if there are treacheries like </span><A HREF="http://hallofbeorn.com/LotR/Details/Weighed-Down-TWQ">Weighed Down</A> </span><span class="cls_002"> (suggestion courtesy of @Goggen).</span></div>
+			<div style="position:absolute;left:072.02px;top:196.86px" class="cls_002"><span class="cls_002">use </span><A HREF="https://ringsdb.com/card/01057">Unexpected Courage</A><span class="cls_002"> just yet if there are treacheries like </span><A HREF="http://hallofbeorn.com/LotR/Details/Weighed-Down-TWQ">Weighed Down</A> <span class="cls_002"> (suggestion courtesy of @Goggen).</span></div>
 			</span>
 			<div style="position:absolute;left:036.00px;top:210.06px" class="cls_024" id="p129_2"><span class="cls_024">3.3 Staging</span></div>
 			<div style="position:absolute;left:036.00px;top:224.70px" class="cls_009"><span class="cls_009">ACTION WINDOW</span></div>
@@ -13870,7 +13881,7 @@
 			<div style="position:absolute;left:072.02px;top:270.09px" class="cls_062"><span class="cls_062">Pony</span><span class="cls_002">, </span><span class="cls_062">Grappling Hook</span><span class="cls_002">, </span><span class="cls_062">Elrond's Counsel</span><span class="cls_002">, and many other</span><span class="cls_064">1</span></div>
 			<div style="position:absolute;left:300.47px;top:269.13px" class="cls_002"><span class="cls_002">s.</span></div>
 			<div style="position:absolute;left:054.00px;top:279.57px" class="cls_002"><span class="cls_002">&#10070; In addition to actions that increase your willpower, you can perform actions to decrease the staging area threat. Cards</span></div>
-			<div style="position:absolute;left:072.02px;top:289.89px" class="cls_002"><span class="cls_002">like </span><A HREF="https://ringsdb.com/card/01066">Secret Paths</A><span class="cls_002"> are an obvious way, but you can also use a card like </span><A HREF="https://ringsdb.com/card/04131">Hands Upon the Bow</A> </span><span class="cls_002"> to remove an enemy from the</span></div>
+			<div style="position:absolute;left:072.02px;top:289.89px" class="cls_002"><span class="cls_002">like </span><A HREF="https://ringsdb.com/card/01066">Secret Paths</A><span class="cls_002"> are an obvious way, but you can also use a card like </span><A HREF="https://ringsdb.com/card/04131">Hands Upon the Bow</A> <span class="cls_002"> to remove an enemy from the</span></div>
 			</span>
 			<div style="position:absolute;left:072.02px;top:300.21px" class="cls_002"><span class="cls_002">staging area (suggestion courtesy of @Goggen).</span></div>
 			<div style="position:absolute;left:036.00px;top:313.41px" class="cls_024" id="p129_3"><span class="cls_024">3.4 Quest resolution</span></div>
@@ -13879,8 +13890,8 @@
 			<div style="position:absolute;left:054.00px;top:341.37px" class="cls_002"><span class="cls_002">&#10070; There aren't many times where doing an action here makes more sense than in the action window immediately before this</span></div>
 			<div style="position:absolute;left:072.02px;top:351.81px" class="cls_002"><span class="cls_002">one. It's too late to affect the outcome of the quest. However, if you have just advanced the quest stage during 3.4, there</span></div>
 			<div style="position:absolute;left:072.02px;top:362.13px" class="cls_002"><span class="cls_002">may now be an action that you want to perform before the Travel Phase begins. This could come up in the quest Flight of</span></div>
-			<div style="position:absolute;left:072.02px;top:372.45px" class="cls_002"><span class="cls_002">the Stormcaller, where you advance to stage </span><A HREF="http://hallofbeorn.com/LotR/Details/Into-the-Storm-TGH">2A</A><A HREF="http://hallofbeorn.com/LotR/Details/Waterspout-TGH">Waterspout</A> </span><span class="cls_002">to the staging area. This action window allows you</span></div>
-			<div style="position:absolute;left:072.02px;top:382.77px" class="cls_002"><span class="cls_002">to play a card like </span><A HREF="https://ringsdb.com/card/11010">The Evening Star</A><span class="cls_002"> or </span><A HREF="https://ringsdb.com/card/17115">Heirs of Earendil</A> </span><span class="cls_002"> to get rid of the location before you are forced to travel to it.</span></div>
+			<div style="position:absolute;left:072.02px;top:372.45px" class="cls_002"><span class="cls_002">the Stormcaller, where you advance to stage </span><A HREF="http://hallofbeorn.com/LotR/Details/Into-the-Storm-TGH">2A</A><A HREF="http://hallofbeorn.com/LotR/Details/Waterspout-TGH">Waterspout</A> <span class="cls_002">to the staging area. This action window allows you</span></div>
+			<div style="position:absolute;left:072.02px;top:382.77px" class="cls_002"><span class="cls_002">to play a card like </span><A HREF="https://ringsdb.com/card/11010">The Evening Star</A><span class="cls_002"> or </span><A HREF="https://ringsdb.com/card/17115">Heirs of Earendil</A> <span class="cls_002"> to get rid of the location before you are forced to travel to it.</span></div>
 			<div style="position:absolute;left:054.00px;top:393.21px" class="cls_002"><span class="cls_002">&#10070; Personally, my main use for this action window is with </span><span class="cls_062">Bofur</span><span class="cls_002">. Sometimes, you will tie the threat in the staging area or be</span></div>
 			<div style="position:absolute;left:072.02px;top:403.43px" class="cls_002"><span class="cls_002">short by 1 willpower when resolving the quest. In these cases, using </span><span class="cls_062">Bofur</span><span class="cls_002">'s action </span><span class="cls_008">before</span><span class="cls_002"> 3.4 means you will succeed at</span></div>
 			<div style="position:absolute;left:072.02px;top:413.87px" class="cls_002"><span class="cls_002">the quest, forcing him back to your hand at the end of the</span></div>
@@ -13901,7 +13912,7 @@
 			<span id="s129_4">
 			<div style="position:absolute;left:054.00px;top:572.06px" class="cls_002"><span class="cls_002">&#10070; Note that the action window in the Travel phase is </span><span class="cls_008">after</span><span class="cls_002"> travelling. This is why a card like </span><span class="cls_062">Mariner's Compass</span><span class="cls_002">, which is</span></div>
 			<div style="position:absolute;left:072.02px;top:582.26px" class="cls_002"><span class="cls_002">meant to be used before travelling, needed to be a </span><span class="cls_006">Response</span><span class="cls_002"> rather than an </span><span class="cls_006">Action</span><span class="cls_002">.</span></div>
-			<div style="position:absolute;left:054.00px;top:592.94px" class="cls_002"><span class="cls_002">&#10070; One of the most common actions to perform in the travel phase you be one that helps you avoid travel costs, like </span><A HREF="https://ringsdb.com/card/131013">Thror's</A> </span></div>
+			<div style="position:absolute;left:054.00px;top:592.94px" class="cls_002"><span class="cls_002">&#10070; One of the most common actions to perform in the travel phase you be one that helps you avoid travel costs, like </span><A HREF="https://ringsdb.com/card/131013">Thror's</A> </div>
 			<div style="position:absolute;left:298.61px;top:598.58px" class="cls_064"><span class="cls_064">1</span></div>
 			<div style="position:absolute;left:072.02px;top:603.26px" class="cls_062"><span class="cls_062"> </span><A HREF="https://ringsdb.com/card/131013">Map</A><span class="cls_002"> or </span><span class="cls_062">Ghân-buri-Ghân</span><span class="cls_002">. Note that you could travel to a location with a positive effect during 4.2, like </span><span class="cls_062">Old Forest Road</span><span class="cls_002">,</span></div>
 			<div style="position:absolute;left:072.02px;top:613.58px" class="cls_002"><span class="cls_002">then in this action window, switch it out using</span><span class="cls_062"> Thror's Map</span><span class="cls_002"> for something with a negative travel cost. This would then let</span></div>
@@ -13928,7 +13939,7 @@
 		</div>
 		<div id="p10#" style="position:absolute;left:050%;margin-left:-297px;top:109779px;width:595px;height:841px;border-style:outset;overflow:hidden">
 			<div style="position:absolute;left:0px;top:0px"><img src="images/background130.jpg" width=595 height=841></div>
-			<div style="position:absolute;left:054.00px;top:034.48px" class="cls_002"><span class="cls_002">&#10070; This is the only window where </span><A HREF="https://ringsdb.com/card/12065">Arrows from the Trees</A> </span><span class="cls_002"> can be played.</span></div>
+			<div style="position:absolute;left:054.00px;top:034.48px" class="cls_002"><span class="cls_002">&#10070; This is the only window where </span><A HREF="https://ringsdb.com/card/12065">Arrows from the Trees</A> <span class="cls_002"> can be played.</span></div>
 			<div style="position:absolute;left:036.00px;top:047.68px" class="cls_024"><span class="cls_024">5.4 Encounter phase ends</span></div>
 			<div style="position:absolute;left:036.00px;top:061.96px" class="cls_018" id="p130_1"><span class="cls_018">VI. COMBAT PHASE</span></div>
 			<div style="position:absolute;left:036.00px;top:077.82px" class="cls_024"><span class="cls_024">6.1 Combat phase begins</span></div>
@@ -13936,7 +13947,7 @@
 			<div style="position:absolute;left:036.00px;top:106.98px" class="cls_009"><span class="cls_009">ACTION WINDOW</span></div>
 			<span id="s130_1">
 			<div style="position:absolute;left:054.00px;top:120.30px" class="cls_002"><span class="cls_002">&#10070; Archery damage is applied in 6.1, before any action windows in the combat phase. This unfortunately means that it is not</span></div>
-			<div style="position:absolute;left:072.02px;top:130.74px" class="cls_002"><span class="cls_002">possible to use </span><A HREF="https://ringsdb.com/card/01023">Sneak Attack</A><span class="cls_002">or </span><A HREF="https://ringsdb.com/card/12138">Prince Imrahil</A> </span><span class="cls_002">as a way to put archery damage on a temporary ally.</span></div>
+			<div style="position:absolute;left:072.02px;top:130.74px" class="cls_002"><span class="cls_002">possible to use </span><A HREF="https://ringsdb.com/card/01023">Sneak Attack</A><span class="cls_002">or </span><A HREF="https://ringsdb.com/card/12138">Prince Imrahil</A> <span class="cls_002">as a way to put archery damage on a temporary ally.</span></div>
 			<div style="position:absolute;left:054.00px;top:141.06px" class="cls_002"><span class="cls_002">&#10070; This action window occurs even if no enemies make attacks during the combat phase.</span></div>
 			<div style="position:absolute;left:054.00px;top:151.38px" class="cls_002"><span class="cls_002">&#10070; Some of the most common actions performed here are </span><span class="cls_062">Feint</span><span class="cls_002">, </span><span class="cls_062">Thicket of Spears</span><span class="cls_002">, and </span><span class="cls_062">Haldir of Lórien</span><span class="cls_002">. It's also the only</span></div>
 			<div style="position:absolute;left:072.02px;top:161.70px" class="cls_002"><span class="cls_002">window in which you can play </span><span class="cls_062">Tireless Hunters</span><span class="cls_002">.</span></div>
@@ -13952,7 +13963,7 @@
 			<div style="position:absolute;left:298.61px;top:263.01px" class="cls_062"><span class="cls_062"> </span><A HREF="https://ringsdb.com/card/11015">N</A> </div>
 			<div style="position:absolute;left:072.02px;top:263.01px" class="cls_002"><span class="cls_002">window to use cards like </span><span class="cls_062">Boromir</span><span class="cls_002">,</span><span class="cls_062"> Unexpected Courage</span><span class="cls_002">,</span></div>
 			<div style="position:absolute;left:305.23px;top:263.01px" class="cls_062"><span class="cls_062">arya</span><span class="cls_002">, etc.</span></div>
-			<div style="position:absolute;left:054.00px;top:273.33px" class="cls_002"><span class="cls_002">&#10070; This action window is too late to play a card like </span><A HREF="https://ringsdb.com/card/01034">Feint</A> </span><span class="cls_002">on the attacking enemy, because the attack has already initiated,</span></div>
+			<div style="position:absolute;left:054.00px;top:273.33px" class="cls_002"><span class="cls_002">&#10070; This action window is too late to play a card like </span><A HREF="https://ringsdb.com/card/01034">Feint</A> <span class="cls_002">on the attacking enemy, because the attack has already initiated,</span></div>
 			<div style="position:absolute;left:072.02px;top:283.77px" class="cls_002"><span class="cls_002">and </span><span class="cls_062">Feint </span><span class="cls_002">will not stop an enemy in mid-attack. This is why you want to play </span><span class="cls_062">Feint </span><span class="cls_002">in the previous action window. You could</span></div>
 			</span>
 			<div style="position:absolute;left:072.02px;top:294.09px" class="cls_002"><span class="cls_002">still play </span><span class="cls_062">Feint </span><span class="cls_002">on enemies that haven't attacked yet though.</span></div>
@@ -13964,15 +13975,16 @@
 			<div style="position:absolute;left:072.02px;top:356.01px" class="cls_002"><span class="cls_002">there is no action window between revealing and resolving the shadow card.</span></div>
 			<div style="position:absolute;left:298.61px;top:361.05px" class="cls_064"><span class="cls_064">1</span></div>
 			<div style="position:absolute;left:054.00px;top:366.33px" class="cls_002"><span class="cls_002">&#10070; If you have the ability to ready your defender (</span><span class="cls_062">Unexpected Courage</span><span class="cls_002">, </span><span class="cls_062">Boromir</span><span class="cls_002">, </span><span class="cls_062">Narya</span><span class="cls_002">, etc., it's often (but not always) wise</span></div>
-			<div style="position:absolute;left:072.02px;top:376.65px" class="cls_002"><span class="cls_002">to do so now, before revealing the shadow card. This is because the shadow card might discard your </span><A HREF="https://ringsdb.com/card/01057">Unexpected</A> </span></div>
+			<div style="position:absolute;left:072.02px;top:376.65px" class="cls_002"><span class="cls_002">to do so now, before revealing the shadow card. This is because the shadow card might discard your </span><A HREF="https://ringsdb.com/card/01057">Unexpected</A> </div>
 			<div style="position:absolute;left:072.02px;top:386.97px" class="cls_062"><span class="cls_062">Courage</span><span class="cls_002">, or simply have an effect that prevents the defender from readying for the rest of the round.</span></div>
 			</span>
-			<div style="position:absolute;left:036.00px;top:400.31px" class="cls_024"><span class="cls_024">6.4.2 Reveal and resolve shadow effect</span></div>
+			<div style="position:absolute;left:036.00px;top:400.31px" class="cls_024" id="p130_4"><span class="cls_024">6.4.2 Reveal and resolve shadow effect</span></div>
+			<span id="s130_4">
 			<div style="position:absolute;left:036.00px;top:414.83px" class="cls_009"><span class="cls_009">ACTION WINDOW</span></div>
 			<div style="position:absolute;left:054.00px;top:428.27px" class="cls_002"><span class="cls_002">&#10070; This is another really important action window for new players to learn. Similar to the window that allows you to adjust your</span></div>
 			<div style="position:absolute;left:072.02px;top:438.59px" class="cls_002"><span class="cls_002">willpower before the determining quest progress, this window allows you to adjust your defence value before determining</span></div>
 			<div style="position:absolute;left:072.02px;top:448.91px" class="cls_002"><span class="cls_002">the combat damage. So if you turn up a shadow card that gives +1 attack, you can counter by triggering an action</span></div>
-			<div style="position:absolute;left:072.02px;top:459.23px" class="cls_002"><span class="cls_002">like </span><A HREF="https://ringsdb.com/card/01070">Protector of Lórien</A><span class="cls_002">or </span><A HREF="https://ringsdb.com/card/01032">Blade Mastery</A> </span><span class="cls_002"> in this window.</span></div>
+			<div style="position:absolute;left:072.02px;top:459.23px" class="cls_002"><span class="cls_002">like </span><A HREF="https://ringsdb.com/card/01070">Protector of Lórien</A><span class="cls_002">or </span><A HREF="https://ringsdb.com/card/01032">Blade Mastery</A> <span class="cls_002"> in this window.</span></div>
 			<div style="position:absolute;left:054.00px;top:469.67px" class="cls_002"><span class="cls_002">&#10070; If your defender is damaged, you still have an opportunity here to perform an action to heal them before applying the</span></div>
 			<div style="position:absolute;left:298.61px;top:480.11px" class="cls_064"><span class="cls_064">1</span></div>
 			<div style="position:absolute;left:072.02px;top:479.99px" class="cls_002"><span class="cls_002">damage from combat. But be careful -- there are shadow</span></div>
@@ -13981,9 +13993,11 @@
 			<div style="position:absolute;left:054.00px;top:500.63px" class="cls_002"><span class="cls_002">&#10070; If you've revealed a nasty shadow effect that is going to wind up killing a hero, remember that it's not too late to kill the</span></div>
 			<div style="position:absolute;left:072.02px;top:511.07px" class="cls_002"><span class="cls_002">enemy with </span><A HREF="https://ringsdb.com/card/01035">Quick Strike</A><span class="cls_002"> or </span><span class="cls_062">Skyward Volley</span><span class="cls_002">, preventing its attack from resolving. Other tricky actions are possible too -- I</span></div>
 			<div style="position:absolute;left:072.02px;top:521.39px" class="cls_002"><span class="cls_002">remember playing a game with someone who, upon revealing a shadow effect that made the attack undefended,</span></div>
-			<div style="position:absolute;left:072.02px;top:531.71px" class="cls_002"><span class="cls_002">played </span><A HREF="https://ringsdb.com/card/01023">Sneak Attack</A><span class="cls_002">+</span><A HREF="https://ringsdb.com/card/06041">White Tower Watchman</A> </span><span class="cls_002"> in this window to avoid losing a hero.</span></div>
-			<div style="position:absolute;left:036.00px;top:544.91px" class="cls_024"><span class="cls_024">6.4.3 Determine combat damage</span></div>
+			<div style="position:absolute;left:072.02px;top:531.71px" class="cls_002"><span class="cls_002">played </span><A HREF="https://ringsdb.com/card/01023">Sneak Attack</A><span class="cls_002">+</span><A HREF="https://ringsdb.com/card/06041">White Tower Watchman</A> <span class="cls_002"> in this window to avoid losing a hero.</span></div>
+			</span>
+			<div style="position:absolute;left:036.00px;top:544.91px" class="cls_024" id="p130_5"><span class="cls_024">6.4.3 Determine combat damage</span></div>
 			<div style="position:absolute;left:036.00px;top:559.55px" class="cls_009"><span class="cls_009">ACTION WINDOW</span></div>
+			<span id="s130_5">
 			<div style="position:absolute;left:054.00px;top:572.90px" class="cls_002"><span class="cls_002">&#10070; Similar to the post-quest resolution action window, there aren't a whole lot of reasons you'd do an action here, where it no</span></div>
 			<div style="position:absolute;left:072.02px;top:583.34px" class="cls_002"><span class="cls_002">longer affects the combat, than in the one immediately before.</span></div>
 			<div style="position:absolute;left:054.00px;top:593.66px" class="cls_002"><span class="cls_002">&#10070; However, any time you have a </span><span class="cls_062">Warden of Healing</span><span class="cls_002"> or a </span><span class="cls_062">Self Preservation</span><span class="cls_002"> and you aren't planning on declaring attacks for</span></div>
@@ -13994,11 +14008,12 @@
 			<div style="position:absolute;left:298.61px;top:640.70px" class="cls_064"><span class="cls_064">1</span></div>
 			<div style="position:absolute;left:090.02px;top:645.38px" class="cls_032"><span class="cls_032">o</span><span class="cls_002"> If your defender received damage from combat,</span></div>
 			<div style="position:absolute;left:090.02px;top:655.70px" class="cls_032"><span class="cls_032">o</span><span class="cls_002"> and is 1 away from dying,</span></div>
-			<div style="position:absolute;left:090.02px;top:666.14px" class="cls_032"><span class="cls_032">o</span><span class="cls_002"> and has </span><A HREF="http://hallofbeorn.com/LotR/Details/The-Spider's-Web-PTMN">The Spider's Web</A> </span><span class="cls_002">attached, so they take 1 damage when they ready,</span></div>
+			<div style="position:absolute;left:090.02px;top:666.14px" class="cls_032"><span class="cls_032">o</span><span class="cls_002"> and has </span><A HREF="http://hallofbeorn.com/LotR/Details/The-Spider's-Web-PTMN">The Spider's Web</A> <span class="cls_002">attached, so they take 1 damage when they ready,</span></div>
 			<div style="position:absolute;left:090.02px;top:676.46px" class="cls_032"><span class="cls_032">o</span><span class="cls_002"> and you aren't able to declare any attacks this round, meaning there are no more action windows until the refresh</span></div>
 			<div style="position:absolute;left:108.02px;top:686.78px" class="cls_002"><span class="cls_002">phase.</span></div>
 			<div style="position:absolute;left:090.02px;top:697.10px" class="cls_032"><span class="cls_032">o</span><span class="cls_002"> Then, you can use this window to heal your character before they take damage and die at the start of the refresh</span></div>
 			<div style="position:absolute;left:108.02px;top:707.42px" class="cls_002"><span class="cls_002">phase.</span></div>
+			</span>
 			<div style="position:absolute;left:036.00px;top:720.74px" class="cls_024"><span class="cls_024">6.4.4 Enemy attack ends. If active player has more enemy attacks to resolve, return to 6.4a. Otherwise, proceed to</span></div>
 			<div style="position:absolute;left:036.00px;top:732.28px" class="cls_024"><span class="cls_024">6.5.</span></div>
 			<div style="position:absolute;left:036.00px;top:746.68px" class="cls_024"><span class="cls_024">6.5 Next player becomes active player (return to 6.4a). If all players have resolved enemy attacks, proceed to 6.6.</span></div>
@@ -14009,13 +14024,15 @@
 			<div style="position:absolute;left:0px;top:0px"><img src="images/background131.jpg" width=595 height=841></div>
 			<div style="position:absolute;left:036.00px;top:034.36px" class="cls_024"><span class="cls_024">6.7 &quot;Player Attacks&quot; begin</span></div>
 			<div style="position:absolute;left:036.00px;top:048.88px" class="cls_024"><span class="cls_024">6.8a Active player declares next attack.</span></div>
-			<div style="position:absolute;left:036.00px;top:063.40px" class="cls_024"><span class="cls_024">6.8b Player attack initiates (active player declares target of attack and attacker(s))</span></div>
+			<div style="position:absolute;left:036.00px;top:063.40px" class="cls_024" id="p131_1"><span class="cls_024">6.8b Player attack initiates (active player declares target of attack and attacker(s))</span></div>
 			<div style="position:absolute;left:036.00px;top:077.82px" class="cls_024"><span class="cls_024">6.8.1 Ranged option</span></div>
 			<div style="position:absolute;left:036.00px;top:092.46px" class="cls_009"><span class="cls_009">ACTION WINDOW</span></div>
-			<div style="position:absolute;left:054.00px;top:105.90px" class="cls_002"><span class="cls_002">&#10070; This is your opportunity to perform attack-boosting actions.</span></div>
-			<div style="position:absolute;left:298.61px;top:112.02px" class="cls_064"><span class="cls_064">1</span></div>
-			<div style="position:absolute;left:036.00px;top:119.10px" class="cls_024"><span class="cls_024">6.8.2 Determine attack STR</span></div>
+			<span id="s131_1">
+			<div style="position:absolute;left:054.00px;top:105.90px" class="cls_002"><span class="cls_002">&#10070; This is your opportunity to perform attack-boosting actions.</span></div>	
+			</span>
+			<div style="position:absolute;left:036.00px;top:119.10px" class="cls_024" id="p131_2"><span class="cls_024">6.8.2 Determine attack STR</span></div>
 			<div style="position:absolute;left:036.00px;top:133.74px" class="cls_009"><span class="cls_009">ACTION WINDOW</span></div>
+			<span id="s131_2">
 			<div style="position:absolute;left:054.00px;top:147.06px" class="cls_002"><span class="cls_002">&#10070; This action window is only used for corner cases. There are not a lot of cases that would benefit from being played after</span></div>
 			<div style="position:absolute;left:072.02px;top:157.38px" class="cls_002"><span class="cls_002">adding together your strength but before dealing the damage. It's too late to boost your attack by any more at this point.</span></div>
 			<div style="position:absolute;left:072.02px;top:167.70px" class="cls_002"><span class="cls_002">Two examples are given below.</span></div>
@@ -14029,11 +14046,14 @@
 			<div style="position:absolute;left:072.02px;top:250.53px" class="cls_002"><span class="cls_002">before 6.8.2 because either </span><span class="cls_062">Thranduil</span><span class="cls_002"> isn't exhausted—if </span><span class="cls_062">Thranduil</span><span class="cls_002"> is ready, </span><span class="cls_062">Elvenking</span><span class="cls_002"> isn‘t triggerable—or you wouldn't</span></div>
 			<div style="position:absolute;left:072.02px;top:260.97px" class="cls_002"><span class="cls_002">get the </span><span class="cls_062">Marksman</span><span class="cls_002">'s 3 attack. And the action window after 6.8.3 is already after damage is dealt.) (suggestion courtesy of</span></div>
 			<div style="position:absolute;left:072.02px;top:271.29px" class="cls_002"><span class="cls_002">@sappidus)</span></div>
-			<div style="position:absolute;left:036.00px;top:284.49px" class="cls_024"><span class="cls_024">6.8.3 Determine combat damage</span></div>
+			</span>
+			<div style="position:absolute;left:036.00px;top:284.49px" class="cls_024" id="p131_3"><span class="cls_024">6.8.3 Determine combat damage</span></div>
 			<div style="position:absolute;left:036.00px;top:299.13px" class="cls_009"><span class="cls_009">ACTION WINDOW</span></div>
-			<div style="position:absolute;left:054.00px;top:312.45px" class="cls_002"><span class="cls_002">&#10070; This is the last action window before the refresh phase, so it's often the window where I trigger cards like </span><A HREF="https://ringsdb.com/card/01060">Henamarth</A> </span></div>
+			<span id="s131_3">
+			<div style="position:absolute;left:054.00px;top:312.45px" class="cls_002"><span class="cls_002">&#10070; This is the last action window before the refresh phase, so it's often the window where I trigger cards like </span><A HREF="https://ringsdb.com/card/01060">Henamarth</A> </div>
 			<div style="position:absolute;left:298.61px;top:319.89px" class="cls_064"><span class="cls_064">1</span></div>
-			<div style="position:absolute;left:072.02px;top:322.77px" class="cls_062"><span class="cls_062"> </span><A HREF="https://ringsdb.com/card/01060">Riversong</A><span class="cls_002"> or </span><A HREF="https://ringsdb.com/card/01062">Gléowine</A> </span><span class="cls_002"> that haven't been exhausted yet.</span></div>
+			<div style="position:absolute;left:072.02px;top:322.77px" class="cls_062"><span class="cls_062"> </span><A HREF="https://ringsdb.com/card/01060">Riversong</A><span class="cls_002"> or </span><A HREF="https://ringsdb.com/card/01062">Gléowine</A> <span class="cls_002"> that haven't been exhausted yet.</span></div>
+			</span>
 			<div style="position:absolute;left:036.00px;top:336.09px" class="cls_024"><span class="cls_024">6.8.4 Player attack ends. If active player has more player attacks to resolve, return to 6.8a. Otherwise, proceed to 6.9.</span></div>
 			<div style="position:absolute;left:036.00px;top:350.49px" class="cls_024"><span class="cls_024">6.9 Next player becomes active player (return to 6.8). If all players have resolved player attacks, proceed to 6.10.</span></div>
 			<div style="position:absolute;left:036.00px;top:365.01px" class="cls_024"><span class="cls_024">6.10 &quot;Player Attacks&quot; end.</span></div>
@@ -14042,21 +14062,23 @@
 			<div style="position:absolute;left:036.00px;top:409.67px" class="cls_024"><span class="cls_024">7.1 Refresh phase begins</span></div>
 			<div style="position:absolute;left:036.00px;top:424.19px" class="cls_024"><span class="cls_024">7.2 Ready all cards</span></div>
 			<div style="position:absolute;left:036.00px;top:438.71px" class="cls_024"><span class="cls_024">7.3 Raise threat</span></div>
-			<div style="position:absolute;left:036.00px;top:453.23px" class="cls_024"><span class="cls_024">7.4 Pass first player token</span></div>
+			<div style="position:absolute;left:036.00px;top:453.23px" class="cls_024" id="p131_4"><span class="cls_024">7.4 Pass first player token</span></div>
 			<div style="position:absolute;left:036.00px;top:467.87px" class="cls_009"><span class="cls_009">ACTION WINDOW</span></div>
+			<span id="s131_4">
 			<div style="position:absolute;left:054.00px;top:481.07px" class="cls_002"><span class="cls_002">&#10070; The action window in the refresh phase comes </span><span class="cls_008">after</span><span class="cls_002"> the threat raise. This is important to keep in mind for treat reduction</span></div>
 			<div style="position:absolute;left:072.02px;top:491.51px" class="cls_002"><span class="cls_002">effects. If you are at 49 threat at the end of the combat phase, you will hit 50 threat and lose before you get a chance to</span></div>
 			<div style="position:absolute;left:072.02px;top:501.83px" class="cls_002"><span class="cls_002">use </span><span class="cls_062">Aragorn</span><span class="cls_002">'s once-per-game ability.</span></div>
 			<div style="position:absolute;left:054.00px;top:512.27px" class="cls_002"><span class="cls_002">&#10070; Allies that go away at the end of the round (</span><span class="cls_062">Gandalf</span><span class="cls_002">, </span><span class="cls_062">Ranger of Cardolan</span><span class="cls_002">, etc.) can get one last use here before they leave</span></div>
 			<div style="position:absolute;left:072.02px;top:522.59px" class="cls_002"><span class="cls_002">with cards like </span><A HREF="https://ringsdb.com/card/131014">A Very Good Tale</A><span class="cls_002">or </span><span class="cls_062">Word of Command</span><span class="cls_002">.</span></div>
 			<div style="position:absolute;left:298.61px;top:534.11px" class="cls_062"><span class="cls_062"> </span><A HREF="https://ringsdb.com/card/01026">o</A> </div>
-			<div style="position:absolute;left:054.00px;top:532.91px" class="cls_002"><span class="cls_002">&#10070; While it's common to use the action on </span><A HREF="https://ringsdb.com/card/01026">Steward of G</A> </span></div>
+			<div style="position:absolute;left:054.00px;top:532.91px" class="cls_002"><span class="cls_002">&#10070; While it's common to use the action on </span><A HREF="https://ringsdb.com/card/01026">Steward of G</A> </div>
 			<div style="position:absolute;left:302.75px;top:532.91px" class="cls_062"><span class="cls_062"> </span><A HREF="https://ringsdb.com/card/01026">ndor</A> <span class="cls_002"> in the resource phase, keep in mind that it can also be</span></div>
 			<div style="position:absolute;left:072.02px;top:543.23px" class="cls_002"><span class="cls_002">triggered here. For example, you may have a card you want to play in the refresh phase, like </span><span class="cls_062">Peace, and Thought</span><span class="cls_002">, but not</span></div>
 			<div style="position:absolute;left:072.02px;top:553.67px" class="cls_002"><span class="cls_002">enough resources to pay for it. But keep in mind that it will remain exhausted through the beginning of the next round.</span></div>
 			<div style="position:absolute;left:054.00px;top:564.02px" class="cls_002"><span class="cls_002">&#10070; Note that the next action window is in the next round, after gaining resources and drawing cards in the resource phase. So</span></div>
 			<div style="position:absolute;left:072.02px;top:574.34px" class="cls_002"><span class="cls_002">let's say you are playing with </span><span class="cls_062">Erestor</span><span class="cls_002">, and discard your hand at the end of the round. There is no action window to trigger</span></div>
-			<div style="position:absolute;left:072.02px;top:584.66px" class="cls_002"><span class="cls_002">the effect on </span><A HREF="https://ringsdb.com/card/11002">Galdor of the Havens</A> </span><span class="cls_002"> before drawing cards in the next round.</span></div>
+			<div style="position:absolute;left:072.02px;top:584.66px" class="cls_002"><span class="cls_002">the effect on </span><A HREF="https://ringsdb.com/card/11002">Galdor of the Havens</A> <span class="cls_002"> before drawing cards in the next round.</span></div>
+			</span>
 			<div style="position:absolute;left:036.00px;top:597.86px" class="cls_024"><span class="cls_024">7.5 Refresh phase ends</span></div>
 			<div style="position:absolute;left:036.00px;top:612.14px" class="cls_018"><span class="cls_018">0.1 Round ends</span></div>
 			<div style="position:absolute;left:036.00px;top:627.86px" class="cls_018"><span class="cls_018">Out-of-sequence Windows</span></div>
@@ -14098,11 +14120,11 @@
 			<div style="position:absolute;left:054.00px;top:227.34px" class="cls_002"><span class="cls_002">&#10070; </span><span class="cls_066"> Quick Ears</span><span class="cls_002">. Stop here and don‘t continue with the</span></div>
 			<div style="position:absolute;left:351.43px;top:234.42px" class="cls_002"><span class="cls_002">step 7.</span></div>
 			<div style="position:absolute;left:072.02px;top:237.69px" class="cls_002"><span class="cls_002">steps. Shuffle the card back into the encounter deck</span></div>
-			<div style="position:absolute;left:333.43px;top:244.77px" class="cls_002"><span class="cls_002">&#10070; </span><span class="cls_066"> Eleanor</span><span class="cls_002">. Same as a </span><A HREF="http://hallofbeorn.com/Cards/Details/A-Test-of-Will-Core">Test of Will</A> </span><span class="cls_002"> (only skip step 7),</span></div>
+			<div style="position:absolute;left:333.43px;top:244.77px" class="cls_002"><span class="cls_002">&#10070; </span><span class="cls_066"> Eleanor</span><span class="cls_002">. Same as a </span><A HREF="http://hallofbeorn.com/Cards/Details/A-Test-of-Will-Core">Test of Will</A> <span class="cls_002"> (only skip step 7),</span></div>
 			<div style="position:absolute;left:072.02px;top:248.01px" class="cls_002"><span class="cls_002">and reveal another card.</span></div>
 			<div style="position:absolute;left:351.43px;top:255.09px" class="cls_002"><span class="cls_002">but after you complete the steps, discard the card</span></div>
 			<div style="position:absolute;left:054.00px;top:258.45px" class="cls_002"><span class="cls_002">&#10070; </span><span class="cls_066"> Frodo (The Black Riders)</span><span class="cls_002">. Functions the same way</span></div>
-			<div style="position:absolute;left:351.43px;top:265.41px" class="cls_002"><span class="cls_002">and reveal another card. If </span><A HREF="http://hallofbeorn.com/Cards/Details/Eleanor-Core">Eleanor</A> </span><span class="cls_002"> cancelled the</span></div>
+			<div style="position:absolute;left:351.43px;top:265.41px" class="cls_002"><span class="cls_002">and reveal another card. If </span><A HREF="http://hallofbeorn.com/Cards/Details/Eleanor-Core">Eleanor</A> <span class="cls_002"> cancelled the</span></div>
 			<div style="position:absolute;left:072.02px;top:268.77px" class="cls_002"><span class="cls_002">as </span><span class="cls_066">Quick Ears</span><span class="cls_002">.</span></div>
 			<div style="position:absolute;left:351.43px;top:275.61px" class="cls_002"><span class="cls_002">&quot;</span><span class="cls_006">When Revealed</span><span class="cls_002">&quot; effects of an encounter card that</span></div>
 			<div style="position:absolute;left:054.00px;top:279.09px" class="cls_002"><span class="cls_002">&#10070; </span><span class="cls_066"> The Door is Closed</span><span class="cls_002">. This card actually uses the</span></div>
@@ -14116,7 +14138,7 @@
 			<div style="position:absolute;left:054.00px;top:330.81px" class="cls_002"><span class="cls_002">&#10070; If this is card is a surge from previous card, and</span></div>
 			<div style="position:absolute;left:315.41px;top:329.01px" class="cls_006"><span class="cls_006">Step</span></div>
 			<div style="position:absolute;left:341.55px;top:329.01px" class="cls_006"><span class="cls_006">7</span><span class="cls_002">: Resolve the "</span><span class="cls_006">When Revealed</span><span class="cls_002">" effects on the</span></div>
-			<div style="position:absolute;left:072.02px;top:341.25px" class="cls_002"><span class="cls_002">matches the type of card named by </span><A HREF="http://hallofbeorn.com/Cards/Details/Minas-Tirith-Lampwright-EaAD">Minas Tirith</A> </span></div>
+			<div style="position:absolute;left:072.02px;top:341.25px" class="cls_002"><span class="cls_002">matches the type of card named by </span><A HREF="http://hallofbeorn.com/Cards/Details/Minas-Tirith-Lampwright-EaAD">Minas Tirith</A> </div>
 			<div style="position:absolute;left:315.41px;top:339.57px" class="cls_002"><span class="cls_002">encounter card. If the card gains keywords as a result of the</span></div>
 			<div style="position:absolute;left:072.02px;top:351.57px" class="cls_066"><span class="cls_066">Lampwright</span><span class="cls_002">, discard it now and end here.</span></div>
 			<div style="position:absolute;left:315.41px;top:349.65px" class="cls_002"><span class="cls_002">"</span><span class="cls_006">When Revealed</span><span class="cls_002">" effect, those occur now as well</span></div>
@@ -14181,6 +14203,6 @@
 			<div style="position:absolute;left:072.02px;top:705.74px" class="cls_002"><span class="cls_002">cards like </span><span class="cls_066">Eleanor</span><span class="cls_002">, it needs a step where it activates</span></div>
 			<div style="position:absolute;left:284.69px;top:794.68px" class="cls_002"><span class="cls_002">- 132 -</span></div>
 		</div>
-	</span>
+		</span>
 	</body>
 </html>

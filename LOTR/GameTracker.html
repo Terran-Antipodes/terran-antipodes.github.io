@@ -566,16 +566,15 @@
             '            ,{ "phase": 6, "name": "Deal Shadow Cards", "actionwindow" : "true", "teamskip" : ["No Enemy Attacks?", "Choose Enemy and Attackers"], "teamloop" : "Deal Shadow Cards", "boxes" : [60,2320,490,2428], "help" : [[50,0,845,2,2],[237],[130,0,130,1,1]] } ' +
             '            ,{ "phase": 6, "stage": "Enemy Attack", "name": "Choose Attacking Enemy", "actionwindow" : "true", "playerskip" : "Player Is Not Under Attack?", "teamloop" : "Determine Enemy and Defender Combat Damage", "boxes" : [[60,2428,490,2675],[60,2480,490,2675]], "help" : [[50,500,150,3,3],[238],[130,0,270,2,2]] } ' +
             '            ,{ "phase": 6, "stage": "Enemy Attack", "name": "Declare Defender", "actionwindow" : "true", "boxes" : [60,2675,490,2795], "help" : [[50,500,190,4,4],[238],[130,0,410,3,3]] } ' +
-                         //---------------------------------------------------------------------------------------------------------------------
             '            ,{ "phase": 6, "stage": "Enemy Attack", "name": "Reveal & Resolve Shadow Effects", "actionwindow" : "true", "boxes" : [60,2795,490,2915], "help" : [[50,500,300,5,5],[238],[130,0,535,4,4]] } ' +
             '            ,{ "phase": 6, "stage": "Enemy Attack", "name": "Determine Enemy and Defender Combat Damage", "actionwindow" : "true", "boxes" : [60,2915,490,3035], "help" : [[50,0,340,6,6],[238],[130,0,730,5,5]] } ' +
             '            ,{ "phase": 6, "stage": "Player Attack", "name": "Choose Enemy and Attackers", "actionwindow" : "true", "playerskip" : "Player Is Not Attacking An Enemy?", "teamloop" : "Determine Attacker and Enemy Combat Damage", "boxes" : [0,3330,470,3585], "help" : [[51,0,290,1,1],[240],[131,0,85,1,1]] } ' +
             '            ,{ "phase": 6, "stage": "Player Attack", "name": "Determine Attacker Strength", "actionwindow" : "true" , "boxes" : [0,3585,470,3705], "help" : [[51,0,345,2,2],[240],[131,0,160,2,2]] } ' +
             '            ,{ "phase": 6, "stage": "Player Attack", "name": "Determine Attacker and Enemy Combat Damage", "actionwindow" : "true", "boxes" : [0,3705,470,3825], "help" : [[51,0,390,3,3],[240],[131,0,350,3,3]] } ' +
-            '            ,{ "phase": 6, "name": "Discard All Shadow Cards", "boxes" : [0,4060,470,4110], "help" : [[51,0,860,4,4],[],[131,0,510,4,4]] } ' +
+            '            ,{ "phase": 6, "name": "Discard All Shadow Cards", "boxes" : [0,4060,470,4110], "help" : [[51,0,860,4,4]] } ' +
             '            ,{ "phase": 7, "name": "Ready All Cards", "boxes" : [0,4265,470,4320], "help" : [[52,500,315,1,1],[255]] } ' +
-            '            ,{ "phase": 7, "name": "Raise Threat Levels", "boxes" : [0,4325,470,4380], "help" : [[52,500,315,2,2],[255]] } ' +
-            '            ,{ "phase": 7, "name": "Pass First Player Token", "actionwindow" : "true", "boxes" : [0,4380,470,4500], "help" : [[52,500,315,3,3],[255]] } ' +
+            '            ,{ "phase": 7, "name": "Raise Threat Levels", "boxes" : [0,4325,470,4380], "help" : [[52,500,315,1,1],[255]] } ' +
+            '            ,{ "phase": 7, "name": "Pass First Player Token", "actionwindow" : "true", "boxes" : [0,4380,470,4500], "help" : [[52,500,315,1,1],[255],[131,0,420,4,4]] } ' +
             '           ]' +
             ' ,"areas": [ { "name": "RESOURCE & PLANNING" ' +
             '              ,"voffset": 0 ' +
@@ -681,6 +680,7 @@
         var SequenceImageSize;
         var CompendiumIsPreferred = true;
         var CompendiumAsHtml = true;
+        var OutlineBox;
     </script>
     <script>
         /* main code */
@@ -716,6 +716,8 @@
                 images[index].style.backgroundImage = "url('" + Sequence.areas[index].images[selection] + "')";
             }
             window.onresize = adjustBackground;
+            window.addEventListener('resize', adjustBackground);
+            window.addEventListener('resize', showOutline);
             adjustBackground();
 
             // translate the step names that define loops into step numbers
@@ -944,27 +946,26 @@
             var sideNavInfo = [showBack, skipInfo, showElim, showVP];
 
             // repositioning of the background image
-            var box;
             switch (true) {
                 case (currentStep.boxes == null):
-                    box = null;
+                    OutlineBox = null;
                     break;
                 case (currentStep.boxes.length == 4):
-                    box = currentStep.boxes;
+                    OutlineBox = currentStep.boxes;
                     break;
                 case (isALLPLAYERS || isFirstPlayer):
-                    box = currentStep.boxes[0];
+                    OutlineBox = currentStep.boxes[0];
                     break;
                 case (isLastPlayer):
-                    box = currentStep.boxes[currentStep.boxes.length - 1];
+                    OutlineBox = currentStep.boxes[currentStep.boxes.length - 1];
                     break;
                 default:
-                    box = currentStep.boxes[1];
+                    OutlineBox = currentStep.boxes[1];
                     break;
             }
 
             sleep(250).then(() => {
-                showModal(banner, changeBanner, showClose, header, detail, buttons, sideNavInfo, box);
+                showModal(banner, changeBanner, showClose, header, detail, buttons, sideNavInfo);
             });
         }
 
@@ -1028,7 +1029,6 @@
 
         function game_showCompendium(helpInfo) {
             var address, fragment, query;
-            console.log('game_showCompendium: helpInfo='+JSON.stringify(helpInfo));
             if (CompendiumAsHtml) {
                 address = './RulesCompendium_v2.0/Rules_Compendium_v2_0.html';
                 fragment = '#p' + helpInfo[0].toString().padStart(3, '0')  + '_' + helpInfo[3];
@@ -1159,7 +1159,7 @@
             showModal(banner, changeBanner, showClose, header, detail, buttons, sideNavInfo, box);
         }
 
-        function showModal(bannerText, changeBannerText, showClose, headerText, detailText, buttons, sideNavInfo, box = null) { // display the modal dialogue
+        function showModal(bannerText, changeBannerText, showClose, headerText, detailText, buttons, sideNavInfo) { // display the modal dialogue
             // banner:
             MODAL_BANNER.innerHTML = bannerText;
             if (bannerText == '') {
@@ -1252,38 +1252,38 @@
 
             // background image and outlining box:
             // (this must be done AFTER the modal dialogue has been rendered)
-            if (box == null) {
-                GAME_OUTLINE.classList.add('hidden');
-            } else {
-                showOutline(box);
-            }
+            showOutline();
         }
 
-        function showOutline(box) {
-            var bounds = SequenceImage.getBoundingClientRect();
-            var vscale = bounds.height / SequenceImageSize[0]; // factor: 1px of the sequence image is being rendered as ?px high onscreen
-            var hscale = bounds.width / SequenceImageSize[1];  // factor: 1px of the sequence image is being rendered as ?px wide onscreen
+        function showOutline() {
+            if (OutlineBox == null) {
+                GAME_OUTLINE.classList.add('hidden');
+            } else {
+                var bounds = SequenceImage.getBoundingClientRect();
+                var vscale = bounds.height / SequenceImageSize[0]; // factor: 1px of the sequence image is being rendered as ?px high onscreen
+                var hscale = bounds.width / SequenceImageSize[1];  // factor: 1px of the sequence image is being rendered as ?px wide onscreen
 
-            var modalBottom = Math.ceil(MODAL_DIALOGUE.offsetTop + MODAL_DIALOGUE.offsetHeight);
-            var outlineOffset = Math.floor(Math.max(window.innerHeight / 20, 25)); // how many pixels from the bottom of the modal dialogue to where the current step will be shown.
-            var sequenceAreaTargetOffset = Math.max((modalBottom + outlineOffset) - SEQUENCE_AREA.offsetTop, 0); // how many pixels from the top of the sequence image display area to where we want to scroll the current step to.
+                var modalBottom = Math.ceil(MODAL_DIALOGUE.offsetTop + MODAL_DIALOGUE.offsetHeight);
+                var outlineOffset = Math.floor(Math.max(window.innerHeight / 20, 25)); // how many pixels from the bottom of the modal dialogue to where the current step will be shown.
+                var sequenceAreaTargetOffset = Math.max((modalBottom + outlineOffset) - SEQUENCE_AREA.offsetTop, 0); // how many pixels from the top of the sequence image display area to where we want to scroll the current step to.
 
-            // scroll the sequence image to show the current step under the modal dialogue
-            var sequenceImageOffsetTop = Math.max(box[1] * vscale - sequenceAreaTargetOffset * vscale, 0);
-            window.scrollTo({
-                top: sequenceImageOffsetTop,
-                left: 0,
-                behavior: 'smooth'
-            });
+                // scroll the sequence image to show the current step under the modal dialogue
+                var sequenceImageOffsetTop = Math.max(OutlineBox[1] * vscale - sequenceAreaTargetOffset * vscale, 0);
+                window.scrollTo({
+                    top: sequenceImageOffsetTop,
+                    left: 0,
+                    behavior: 'smooth'
+                });
 
-            var boxTop = box[1] * vscale; // as measured from the top of the sequence image on the current display
-            var boxHeight = (box[3] - box[1]) * vscale;
-            var boxWidth = (box[2] - box[0]) * hscale;
+                var boxTop = OutlineBox[1] * vscale; // as measured from the top of the sequence image on the current display
+                var boxHeight = (OutlineBox[3] - OutlineBox[1]) * vscale;
+                var boxWidth = (OutlineBox[2] - OutlineBox[0]) * hscale;
 
-            GAME_OUTLINE.style.top = boxTop + 'px';
-            GAME_OUTLINE.style.height = boxHeight + 'px';
-            GAME_OUTLINE.style.width = boxWidth + 'px';
-            GAME_OUTLINE.classList.remove('hidden');
+                GAME_OUTLINE.style.top = boxTop + 'px';
+                GAME_OUTLINE.style.height = boxHeight + 'px';
+                GAME_OUTLINE.style.width = boxWidth + 'px';
+                GAME_OUTLINE.classList.remove('hidden');
+            }
         }
 
         function showSideNav(navElement, textContent, onclick, extend=false) {
