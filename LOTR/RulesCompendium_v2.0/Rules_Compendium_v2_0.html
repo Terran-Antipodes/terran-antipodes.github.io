@@ -1,5 +1,16 @@
 <html>
 	<head><meta http-equiv=Content-Type content="text/html; charset=UTF-8">
+		<script type="text/javascript">
+			addEventListener("load", function() {
+				console.log('loaded jump='+ window.location.hash + ' search='+window.location.search);
+				document.getElementById('wrapper').style.display = 'block';
+				var sectionTexts = [].slice.call(document.getElementById(window.location.search.substring(1)).getElementsByTagName('span'));
+				console.log('sectionTexts='+sectionTexts+' with '+sectionTexts.length+' elements');
+				sectionTexts.forEach( textspan => {
+					textspan.classList.add('highlighted');
+				});
+			});
+		</script>
 		<style type="text/css">
 			span.cls_002{font-family:Arial,serif;font-size:9.1px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none}
 			div.cls_002{font-family:Arial,serif;font-size:9.1px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none}
@@ -132,12 +143,14 @@
 			div.cls_070{font-family:Arial,serif;font-size:9.1px;color:rgb(255,0,0);font-weight:bold;font-style:italic;text-decoration: none}
 		</style>
 		<style>
-		    div.divider {
-				width: 260.5px; 
-				border-right: 2px solid black;
-				height: 100%;
-				position: absolute;
-				left: 36.00px;
+			#wrapper {
+				display: none;
+			}
+
+			span.highlighted {
+				background-color: gold;
+				transition-delay: 1s;
+				transition: background-color 5s;
 			}
 			
 			div.srb_faq,span.srb_faq {
@@ -218,7 +231,8 @@
 		</style>
 		<script type="text/javascript" src="images/wz_jsgraphics.js"></script>
 	</head>
-	<body>
+	<body style='background-color: white'>
+		<span id='wrapper'>
 		<div id="p001" style="position:absolute;left:050%;margin-left:-297px;top:0px;width:595px;height:841px;border-style:outset;overflow:hidden">
 			<div style="position:absolute;left:055px;top:110px"><img src="images/lotr.png" width=500 height=150></div>
 			<div style="position:absolute;left:128px;top:385px"><img src="images/compendium.png" width=340 height=75></div>
@@ -5440,12 +5454,14 @@
 			<div style="position:absolute;left:215.57px;top:032.68px" class="cls_012"><span class="cls_012">Setting the Game</span></div>
 			<div style="position:absolute;left:036.00px;top:071.32px" class="cls_002"><span class="cls_002">Before playing </span><span class="cls_008">The Lord of the Rings: The Card Game</span><span class="cls_002">,</span></div>
 			<div style="position:absolute;left:036.00px;top:081.90px" class="cls_002"><span class="cls_002">follow these steps in order.</span></div>
-			<div style="position:absolute;left:036.00px;top:094.86px" class="cls_020"><span class="cls_020">1.</span><span class="cls_021"> </span><span class="cls_020">S</span><span class="cls_021">HUFFLE </span><span class="cls_020">D</span><span class="cls_021">ECKS</span></div>
+			<div style="position:absolute;left:036.00px;top:094.86px" class="cls_020" id='p047_1'><span class="cls_020">1.</span><span class="cls_021"> </span><span class="cls_020">S</span><span class="cls_021">HUFFLE </span><span class="cls_020">D</span><span class="cls_021">ECKS</span></div>
+			<span id='s047_1'>
 			<div style="position:absolute;left:036.00px;top:113.10px" class="cls_002"><span class="cls_002">As with a deck of playing cards, shuffle all player decks</span></div>
 			<div style="position:absolute;left:036.00px;top:123.54px" class="cls_002"><span class="cls_002">separately until they are randomized. Do not shuffle the hero</span></div>
 			<div style="position:absolute;left:036.00px;top:133.86px" class="cls_002"><span class="cls_002">cards into the player decks.</span></div>
 			<div style="position:absolute;left:036.00px;top:147.18px" class="cls_002"><span class="cls_002">Build the encounter deck from the encounter sets indicated</span></div>
 			<div style="position:absolute;left:036.00px;top:157.50px" class="cls_002"><span class="cls_002">on the quest cards.</span></div>
+			</span>
 			<div style="position:absolute;left:033.00px;top:172.50px;right:310.00px;bottom:632px;" class="srb_nmr">
 				<div style="position:relative;left:002.41px;top:000.00em" class="cls_002"><span class="cls_002">Follow the instructions on the "Setup" face of the Nightmare</span></div>
 				<div style="position:relative;left:002.41px;top:000.00em" class="cls_002"><span class="cls_002">Mode card. Remove all indicated cards and shuffle the</span></div>
@@ -5459,14 +5475,18 @@
 				<div style="position:relative;left:002.41px;top:000.00em" class="cls_002"><span class="cls_002">above mentioned "difficulty" indicator icon on relevant cards</span></div>
 				<div style="position:relative;left:002.41px;top:000.00em" class="cls_002"><span class="cls_002">in their encounter decks.</span></div>
 			</div>
+			<span id='s047_2'>
 			<div style="position:absolute;left:036.00px;top:277.53px" class="cls_002"><span class="cls_002">Shuffle the encounter deck. Do not shuffle the quest cards</span></div>
 			<div style="position:absolute;left:036.00px;top:287.85px" class="cls_002"><span class="cls_002">into the encounter deck.</span></div>
-			<div style="position:absolute;left:036.00px;top:300.93px" class="cls_020"><span class="cls_020">2.</span><span class="cls_021"> </span><span class="cls_020">P</span><span class="cls_021">LACE </span><span class="cls_020">H</span><span class="cls_021">EROES AND </span><span class="cls_020">S</span><span class="cls_021">ET </span><span class="cls_020">I</span><span class="cls_021">NITIAL </span><span class="cls_020">T</span><span class="cls_021">HREAT</span></div>
+			</span>
+			<div style="position:absolute;left:036.00px;top:300.93px" class="cls_020" id="p047_2"><span class="cls_020">2.</span><span class="cls_021"> </span><span class="cls_020">P</span><span class="cls_021">LACE </span><span class="cls_020">H</span><span class="cls_021">EROES AND </span><span class="cls_020">S</span><span class="cls_021">ET </span><span class="cls_020">I</span><span class="cls_021">NITIAL </span><span class="cls_020">T</span><span class="cls_021">HREAT</span></div>
 			<div style="position:absolute;left:036.00px;top:315.81px" class="cls_020"><span class="cls_020">L</span><span class="cls_021">EVELS</span></div>
+			<span id='s047_3'><span id='s047_5'>
 			<div style="position:absolute;left:036.00px;top:334.17px" class="cls_002"><span class="cls_002">Each player places his heroes in front of him, adds up the</span></div>
 			<div style="position:absolute;left:036.00px;top:344.49px" class="cls_002"><span class="cls_002">threat cost of the heroes he controls, and sets his threat</span></div>
 			<div style="position:absolute;left:036.00px;top:354.81px" class="cls_002"><span class="cls_002">tracker at the same value. This value is that player's starting</span></div>
 			<div style="position:absolute;left:036.00px;top:365.25px" class="cls_002"><span class="cls_002">threat level for the game.</span></div>
+			</span>
 			<div style="position:absolute;left:036.00px;top:378.57px" class="cls_002"><span class="cls_002">Each player may choose one contract to put into play along</span></div>
 			<div style="position:absolute;left:036.00px;top:388.89px" class="cls_002"><span class="cls_002">with his heroes with the "A" side faceup.</span></div>
 			<div style="position:absolute;left:036.00px;top:401.99px" class="cls_002"><span class="cls_002">If a player card with </span><span class="cls_006">Setup</span><span class="cls_002"> instructions is in a player‘s deck</span></div>
@@ -5474,7 +5494,9 @@
 			<div style="position:absolute;left:036.00px;top:422.99px" class="cls_002"><span class="cls_002">that card and follows its instructions.</span></div>
 			<div style="position:absolute;left:036.00px;top:436.07px" class="cls_002"><span class="cls_002">If a Hero with </span><span class="cls_006">Setup</span><span class="cls_002"> instructions is in play at the beginning of</span></div>
 			<div style="position:absolute;left:036.00px;top:446.63px" class="cls_002"><span class="cls_002">a game, that player follows its instructions.</span></div>
-			<div style="position:absolute;left:033.00px;top:461.63px;right:310.00px;bottom:196px;" class="srb_cmr">
+			</span>
+			<div style="position:absolute;left:033.00px;top:461.63px;right:310.00px;bottom:196px;" class="srb_cmr" id="p047_3">
+				<span id="s047_4">
 				<div style="position:relative;left:002.41px;top:000.00em" class="cls_002"><span class="cls_002">The players must record the names of their heroes in the</span></div>
 				<div style="position:relative;left:002.41px;top:000.00em" class="cls_002"><span class="cls_002">Campaign Log at the beginning of the first scenario. If a</span></div>
 				<div style="position:relative;left:002.41px;top:000.00em" class="cls_002"><span class="cls_002">player changed heroes between two scenarios or if one of</span></div>
@@ -5492,6 +5514,7 @@
 				<div style="position:relative;left:002.41px;top:001.00em" class="cls_002"><span class="cls_002">beginning of a game, search the encounter deck for that card</span></div>
 				<div style="position:relative;left:002.41px;top:001.00em" class="cls_002"><span class="cls_002">and follow its instructions before resolving the Setup</span></div>
 				<div style="position:relative;left:002.41px;top:001.00em" class="cls_002"><span class="cls_002">instructions on the quest.</span></div>
+				</span>
 			</div>
 			<div style="position:absolute;left:033.00px;top:646.50px;right:310.00px;bottom:082px;" class="srb_lse_top">
 				<div style="position:relative;left:002.41px;top:000.00em" class="cls_002"><span class="cls_002">When setting up any scenario in </span><span class="cls_008">The Black Riders</span><span class="cls_002">, </span><span class="cls_008">The Road</span></div>
@@ -5526,31 +5549,41 @@
 			<div style="position:absolute;left:310.41px;top:211.62px;right:030.00px;bottom:614x;" class="srb_emr">
 				<div style="position:relative;left:002.41px;top:000.00em" class="cls_002"><span class="cls_002">Add one resource to each hero's resource pool.</span></div>
 			</div>
-			<div style="position:absolute;left:315.41px;top:228.18px" class="cls_020"><span class="cls_020">3.</span><span class="cls_021"> </span><span class="cls_020">S</span><span class="cls_021">ETUP </span><span class="cls_020">T</span><span class="cls_021">OKEN </span><span class="cls_020">B</span><span class="cls_021">ANK</span></div>
+			<div style="position:absolute;left:315.41px;top:228.18px" class="cls_020" id="p047_4"><span class="cls_020">3.</span><span class="cls_021"> </span><span class="cls_020">S</span><span class="cls_021">ETUP </span><span class="cls_020">T</span><span class="cls_021">OKEN </span><span class="cls_020">B</span><span class="cls_021">ANK</span></div>
+			<span id="s047_6">
 			<div style="position:absolute;left:315.41px;top:246.45px" class="cls_002"><span class="cls_002">Place the damage tokens, progress tokens, and resource</span></div>
 			<div style="position:absolute;left:315.41px;top:256.89px" class="cls_002"><span class="cls_002">tokens in a pile next to the encounter deck. All players take</span></div>
 			<div style="position:absolute;left:315.41px;top:267.21px" class="cls_002"><span class="cls_002">tokens from this bank as needed throughout the game.</span></div>
-			<div style="position:absolute;left:315.41px;top:280.17px" class="cls_020"><span class="cls_020">4.</span><span class="cls_021"> </span><span class="cls_020">D</span><span class="cls_021">ETERMINE </span><span class="cls_020">F</span><span class="cls_021">IRST </span><span class="cls_020">P</span><span class="cls_021">LAYER</span></div>
+			</span>
+			<div style="position:absolute;left:315.41px;top:280.17px" class="cls_020" id="p047_5"><span class="cls_020">4.</span><span class="cls_021"> </span><span class="cls_020">D</span><span class="cls_021">ETERMINE </span><span class="cls_020">F</span><span class="cls_021">IRST </span><span class="cls_020">P</span><span class="cls_021">LAYER</span></div>
+			<span id="s047_7">
 			<div style="position:absolute;left:315.41px;top:298.53px" class="cls_002"><span class="cls_002">The players determine a first player based on a majority</span></div>
 			<div style="position:absolute;left:315.41px;top:308.85px" class="cls_002"><span class="cls_002">group decision. If this proves impossible, determine a first</span></div>
 			<div style="position:absolute;left:315.41px;top:319.17px" class="cls_002"><span class="cls_002">player at random. Once determined, the first player takes the</span></div>
 			<div style="position:absolute;left:315.41px;top:329.61px" class="cls_002"><span class="cls_002">first player token and places it in front of him as reference.</span></div>
-			<div style="position:absolute;left:315.41px;top:342.57px" class="cls_020"><span class="cls_020">5.</span><span class="cls_021"> </span><span class="cls_020">D</span><span class="cls_021">RAW </span><span class="cls_020">S</span><span class="cls_021">ETUP </span><span class="cls_020">H</span><span class="cls_021">AND</span></div>
+			</span>
+			<div style="position:absolute;left:315.41px;top:342.57px" class="cls_020" id="p047_6"><span class="cls_020">5.</span><span class="cls_021"> </span><span class="cls_020">D</span><span class="cls_021">RAW </span><span class="cls_020">S</span><span class="cls_021">ETUP </span><span class="cls_020">H</span><span class="cls_021">AND</span></div>
+			<span id="s047_8">
 			<div style="position:absolute;left:315.41px;top:360.81px" class="cls_002"><span class="cls_002">Each player draws 6 cards from the top of his player deck. If</span></div>
 			<div style="position:absolute;left:315.41px;top:371.25px" class="cls_002"><span class="cls_002">a player does not wish to keep his starting hand, he may</span></div>
 			<div style="position:absolute;left:315.41px;top:381.57px" class="cls_002"><span class="cls_002">take a single mulligan, by shuffling these 6 cards back into</span></div>
 			<div style="position:absolute;left:315.41px;top:391.89px" class="cls_002"><span class="cls_002">his deck and drawing 6 new cards. A player who takes a</span></div>
 			<div style="position:absolute;left:315.41px;top:402.23px" class="cls_002"><span class="cls_002">mulligan must keep his second hand.</span></div>
-			<div style="position:absolute;left:315.41px;top:415.31px" class="cls_020"><span class="cls_020">6.</span><span class="cls_021"> </span><span class="cls_020">S</span><span class="cls_021">ET </span><span class="cls_020">Q</span><span class="cls_021">UEST </span><span class="cls_020">C</span><span class="cls_021">ARDS</span></div>
+			</span>
+			<div style="position:absolute;left:315.41px;top:415.31px" class="cls_020" id="p047_7"><span class="cls_020">6.</span><span class="cls_021"> </span><span class="cls_020">S</span><span class="cls_021">ET </span><span class="cls_020">Q</span><span class="cls_021">UEST </span><span class="cls_020">C</span><span class="cls_021">ARDS</span></div>
+			<span id="s047_9">
 			<div style="position:absolute;left:315.41px;top:433.55px" class="cls_002"><span class="cls_002">Arrange the quest cards in sequential order, based off the</span></div>
 			<div style="position:absolute;left:315.41px;top:443.87px" class="cls_002"><span class="cls_002">numbers on the back of each card. Stage 1A should be on</span></div>
 			<div style="position:absolute;left:315.41px;top:454.31px" class="cls_002"><span class="cls_002">top, with the numbers increasing in sequence moving down</span></div>
 			<div style="position:absolute;left:315.41px;top:464.63px" class="cls_002"><span class="cls_002">the stack. Place the quest deck near the encounter deck, in</span></div>
 			<div style="position:absolute;left:315.41px;top:474.95px" class="cls_002"><span class="cls_002">the center of the play area.</span></div>
-			<div style="position:absolute;left:315.41px;top:487.91px" class="cls_020"><span class="cls_020">7.</span><span class="cls_021"> </span><span class="cls_020">F</span><span class="cls_021">OLLOW </span><span class="cls_020">S</span><span class="cls_021">CENARIO </span><span class="cls_020">S</span><span class="cls_021">ETUP </span><span class="cls_020">I</span><span class="cls_021">NSTRUCTION</span></div>
+			</span>
+			<div style="position:absolute;left:315.41px;top:487.91px" class="cls_020" id="p047_8"><span class="cls_020">7.</span><span class="cls_021"> </span><span class="cls_020">F</span><span class="cls_021">OLLOW </span><span class="cls_020">S</span><span class="cls_021">CENARIO </span><span class="cls_020">S</span><span class="cls_021">ETUP </span><span class="cls_020">I</span><span class="cls_021">NSTRUCTION</span></div>
+			<span id="s047_10">
 			<div style="position:absolute;left:315.41px;top:506.27px" class="cls_002"><span class="cls_002">The back of the first quest card sometimes provides setup</span></div>
 			<div style="position:absolute;left:315.41px;top:516.59px" class="cls_002"><span class="cls_002">instructions for a scenario. Follow these instructions before</span></div>
 			<div style="position:absolute;left:315.41px;top:526.91px" class="cls_002"><span class="cls_002">flipping the quest card.</span></div>
+			</span>
 			<div style="position:absolute;left:310.41px;top:541.91px;right:030.00px;bottom:271px;" class="srb_nmr">
 				<div style="position:relative;left:002.41px;top:000.00em" class="cls_002"><span class="cls_002">Flip the Nightmare Mode card from the "Setup" face to the</span></div>
 				<div style="position:relative;left:002.41px;top:000.00em" class="cls_002"><span class="cls_002">"Nightmare Mode" face and follow any additional instruction.</span></div>
@@ -5604,20 +5637,25 @@
 				<div style="position:relative;left:007.92px;top:005.00em" class="cls_002"><span class="srb_emr"><span class="cls_002">Easy Mode special rules.</span></span></div>
 				<div style="position:relative;left:007.92px;top:006.00em" class="cls_002"><span class="srb_nmr"><span class="cls_002">Nightmare Mode special rules.</span></span></div>
 			</div>
-			<div style="position:absolute;left:036.00px;top:382.41px" class="cls_020"><span class="cls_020">P</span><span class="cls_021">HASE </span><span class="cls_020">1:</span><span class="cls_021"> </span><span class="cls_020">R</span><span class="cls_021">ESOURCE</span></div>
+			<div style="position:absolute;left:036.00px;top:382.41px" class="cls_020" id="p048_1"><span class="cls_020">P</span><span class="cls_021">HASE </span><span class="cls_020">1:</span><span class="cls_021"> </span><span class="cls_020">R</span><span class="cls_021">ESOURCE</span></div>
+			<span id="s048_1">
 			<div style="position:absolute;left:036.00px;top:400.67px" class="cls_002"><span class="cls_002">Each player simultaneously adds 1 resource token to each of</span></div>
 			<div style="position:absolute;left:036.00px;top:411.11px" class="cls_002"><span class="cls_002">his heroes' resource pools. A resource pool is a collection of</span></div>
 			<div style="position:absolute;left:036.00px;top:421.43px" class="cls_002"><span class="cls_002">resource tokens stored near a hero card. These tokens</span></div>
 			<div style="position:absolute;left:036.00px;top:431.75px" class="cls_002"><span class="cls_002">belong to that hero's pool, and can be used to pay for cards</span></div>
 			<div style="position:absolute;left:036.00px;top:442.07px" class="cls_002"><span class="cls_002">that belong to that hero's sphere of influence. Each hero has</span></div>
 			<div style="position:absolute;left:036.00px;top:452.51px" class="cls_002"><span class="cls_002">1 resource pool.</span></div>
+			</span>
+			<span id="s048_2">
 			<div style="position:absolute;left:036.00px;top:465.83px" class="cls_002"><span class="cls_002">After collecting resources, each player draws 1 card from his</span></div>
 			<div style="position:absolute;left:036.00px;top:476.15px" class="cls_002"><span class="cls_002">player deck and adds it to his hand.</span></div>
 			<div style="position:absolute;left:036.00px;top:489.47px" class="cls_002"><span class="cls_002">When a player is instructed to draw one or more cards, he</span></div>
 			<div style="position:absolute;left:036.00px;top:499.91px" class="cls_002"><span class="cls_002">always draws those cards from the top of his own player</span></div>
 			<div style="position:absolute;left:036.00px;top:510.23px" class="cls_002"><span class="cls_002">deck. If a player has no cards remaining in his player deck,</span></div>
 			<div style="position:absolute;left:036.00px;top:520.55px" class="cls_002"><span class="cls_002">he does not draw.</span></div>
-			<div style="position:absolute;left:036.00px;top:533.51px" class="cls_020"><span class="cls_020">P</span><span class="cls_021">HASE </span><span class="cls_020">2:</span><span class="cls_021"> </span><span class="cls_020">P</span><span class="cls_021">LANNING</span></div>
+			</span>
+			<div style="position:absolute;left:036.00px;top:533.51px" class="cls_020" id="p048_2"><span class="cls_020">P</span><span class="cls_021">HASE </span><span class="cls_020">2:</span><span class="cls_021"> </span><span class="cls_020">P</span><span class="cls_021">LANNING</span></div>
+			<span id="s048_3">
 			<div style="position:absolute;left:036.00px;top:551.87px" class="cls_002"><span class="cls_002">This is the only phase in which a player can play ally and</span></div>
 			<div style="position:absolute;left:036.00px;top:562.22px" class="cls_002"><span class="cls_002">attachment cards from his hand. The first player plays any</span></div>
 			<div style="position:absolute;left:036.00px;top:572.54px" class="cls_002"><span class="cls_002">and all ally and attachment cards he wishes to play first. The</span></div>
@@ -5629,6 +5667,7 @@
 			<div style="position:absolute;left:036.00px;top:640.70px" class="cls_002"><span class="cls_002">he places it faceup and ready in his play area. Attachment</span></div>
 			<div style="position:absolute;left:036.00px;top:651.02px" class="cls_002"><span class="cls_002">cards should be placed partially overlapping, either above or</span></div>
 			<div style="position:absolute;left:036.00px;top:661.34px" class="cls_002"><span class="cls_002">below, the card to which they are attached.</span></div>
+			</span>
 			<div style="position:absolute;left:036.00px;top:674.42px" class="cls_020"><span class="cls_020">P</span><span class="cls_021">HASE </span><span class="cls_020">3:</span><span class="cls_021"> </span><span class="cls_020">Q</span><span class="cls_021">UEST</span></div>
 			<div style="position:absolute;left:036.00px;top:692.66px" class="cls_002"><span class="cls_002">In the quest phase, the players attempt to make progress on</span></div>
 			<div style="position:absolute;left:036.00px;top:702.98px" class="cls_002"><span class="cls_002">the current stage of their quest. This phase is broken into</span></div>
@@ -5637,13 +5676,15 @@
 			<div style="position:absolute;left:036.00px;top:734.08px" class="cls_002"><span class="cls_002">play event cards at the beginning and ending of each step.</span></div>
 			<div class="divider" style="top:072.18px;height:714.27px"></div>
 
-			<div style="position:absolute;left:315.41px;top:074.10px" class="cls_013"><span class="cls_013">Step 1: Commit Characters</span></div>
+			<div style="position:absolute;left:315.41px;top:074.10px" class="cls_013" id="p048_3"><span class="cls_013">Step 1: Commit Characters</span></div>
+			<span id="s048_4">
 			<div style="position:absolute;left:315.41px;top:091.26px" class="cls_002"><span class="cls_002">Each player may commit characters to the current quest</span></div>
 			<div style="position:absolute;left:315.41px;top:101.70px" class="cls_002"><span class="cls_002">card. Characters are exhausted when they commit to a</span></div>
 			<div style="position:absolute;left:315.41px;top:112.02px" class="cls_002"><span class="cls_002">quest. Players commit characters to the quest as a team,</span></div>
 			<div style="position:absolute;left:315.41px;top:122.34px" class="cls_002"><span class="cls_002">starting with the first player, and then proceeding clockwise</span></div>
 			<div style="position:absolute;left:315.41px;top:132.66px" class="cls_002"><span class="cls_002">around the table. Each player may commit as many of his</span></div>
 			<div style="position:absolute;left:315.41px;top:142.98px" class="cls_002"><span class="cls_002">characters to the quest as he would like.</span></div>
+			</span>
 			<div style="position:absolute;left:310.41px;top:157.98px;right:030.00px;bottom:558px;" class="srb_faq">
 				<div style="position:relative;left:002.41px;top:000.00em" class="cls_006"><span class="cls_006">FAQ (Q&A):</span></div>
 				<div style="position:relative;left:002.41px;top:000.50em" class="cls_006"><span class="cls_006">Q</span><span class="cls_002">: Does a player commit his characters to a quest at once,</span></div>
@@ -5657,7 +5698,8 @@
 				<div style="position:relative;left:002.41px;top:001.00em" class="cls_002"><span class="cls_002">to those characters committing), the next player has the</span></div>
 				<div style="position:relative;left:002.41px;top:001.00em" class="cls_002"><span class="cls_002">opportunity to commit his characters to the quest.</span></div>
 			</div>
-			<div style="position:absolute;left:315.41px;top:284.85px" class="cls_013"><span class="cls_013">Step 2: Staging</span></div>
+			<div style="position:absolute;left:315.41px;top:284.85px" class="cls_013" id="p048_4"><span class="cls_013">Step 2: Staging</span></div>
+			<span id="s048_5">
 			<div style="position:absolute;left:315.41px;top:302.01px" class="cls_002"><span class="cls_002">After each player has had the opportunity to commit</span></div>
 			<div style="position:absolute;left:315.41px;top:312.21px" class="cls_002"><span class="cls_002">characters to the quest, the encounter deck reveals </span><span class="cls_006">one</span></div>
 			<div style="position:absolute;left:315.41px;top:322.53px" class="cls_006"><span class="cls_006">card per player</span><span class="cls_002">. This is known in the game as staging.</span></div>
@@ -5669,6 +5711,7 @@
 			<div style="position:absolute;left:315.41px;top:384.81px" class="cls_002"><span class="cls_002">placed in the discard pile. If the encounter deck is ever</span></div>
 			<div style="position:absolute;left:315.41px;top:395.25px" class="cls_002"><span class="cls_002">empty during the quest phase, the encounter discard pile is</span></div>
 			<div style="position:absolute;left:315.41px;top:405.59px" class="cls_002"><span class="cls_002">shuffled and reset back into the encounter deck.</span></div>
+			</span>
 			<div style="position:absolute;left:310.41px;top:420.59px;right:030.00px;bottom:225px;" class="srb_faq">
 				<div style="position:relative;left:002.41px;top:000.00em" class="cls_006"><span class="cls_006">FAQ (Q&A):</span></div>
 				<div style="position:relative;left:002.41px;top:000.50em" class="cls_006"><span class="cls_006">Q</span><span class="cls_002">: When I reveal the last card of the encounter deck, do I</span></div>
@@ -5688,10 +5731,12 @@
 				<div style="position:relative;left:002.41px;top:002.00em" class="cls_002"><span class="cls_002">the beginning of the staging step, and does not change if a</span></div>
 				<div style="position:relative;left:002.41px;top:002.00em" class="cls_002"><span class="cls_002">player is eliminated during staging.</span></div>
 			</div>
-			<div style="position:absolute;left:315.41px;top:617.06px" class="cls_013"><span class="cls_013">Step 3: Resolution</span></div>
+			<div style="position:absolute;left:315.41px;top:617.06px" class="cls_013" id="p048_5"><span class="cls_013">Step 3: Resolution</span></div>
+			<span id="s048_6">
 			<div style="position:absolute;left:315.41px;top:634.22px" class="cls_002"><span class="cls_002">Finally, the players compare the combined willpower strength</span></div>
 			<div style="position:absolute;left:315.41px;top:648.02px" class="cls_002"><span class="cls_002">(<img class="symbol" src="images/sym_willpower.png">) of all committed characters against the combined threat</span></div>
 			<div style="position:absolute;left:315.41px;top:661.94px" class="cls_002"><span class="cls_002">strength (<img class="symbol" src="images/sym_threat.png">) of all cards in the staging area.</span></div>
+			</span>
 			<div style="position:absolute;left:310.41px;top:676.94px;right:030.00px;bottom:099px;" class="srb_faq">
 				<div style="position:relative;left:002.41px;top:000.00em" class="cls_006"><span class="cls_006">FAQ (Q&A):</span></div>
 				<div style="position:relative;left:002.41px;top:000.50em" class="cls_006"><span class="cls_006">Q</span><span class="cls_002">: If the players do not commit any characters to a quest,</span></div>
@@ -5709,11 +5754,11 @@
 			<div style="position:absolute;left:036.00px;top:048.40px" class="cls_002"><span class="cls_002">an active location (see page 49), progress tokens are placed</span></div>
 			<div style="position:absolute;left:036.00px;top:058.72px" class="cls_002"><span class="cls_002">on that location until it is explored, and the remainder are</span></div>
 			<div style="position:absolute;left:036.00px;top:069.04px" class="cls_002"><span class="cls_002">then placed on the current quest.</span></div>
-			<div style="position:absolute;left:036.00px;top:082.98px" class="cls_002"><span class="cls_002">If the <img class="symbol" src="images/sym_threat.png"> is higher, the players have unsuccessfully quested,</span></div>
+			<div style="position:absolute;left:036.00px;top:080.98px" class="cls_002"><span class="cls_002">If the <img class="symbol" src="images/sym_threat.png"> is higher, the players have unsuccessfully quested,</span></div>
 			<div style="position:absolute;left:036.00px;top:096.42px" class="cls_002"><span class="cls_002">and they are driven back by the encounter deck. Each player</span></div>
-			<div style="position:absolute;left:036.00px;top:110.22px" class="cls_002"><span class="cls_002">must raise his threat dial by the amount by which the <img class="symbol" src="images/sym_threat.png"> was</span></div>
-			<div style="position:absolute;left:036.00px;top:124.14px" class="cls_002"><span class="cls_002">higher than the combined <img class="symbol" src="images/sym_willpower.png"> of all committed characters.</span></div>
-			<div style="position:absolute;left:036.00px;top:13.06px" class="cls_002"><span class="cls_002">If the combined committed <img class="symbol" src="images/sym_willpower.png"> score is equal to the</span></div>
+			<div style="position:absolute;left:036.00px;top:107.22px" class="cls_002"><span class="cls_002">must raise his threat dial by the amount by which the <img class="symbol" src="images/sym_threat.png"> was</span></div>
+			<div style="position:absolute;left:036.00px;top:121.14px" class="cls_002"><span class="cls_002">higher than the combined <img class="symbol" src="images/sym_willpower.png"> of all committed characters.</span></div>
+			<div style="position:absolute;left:036.00px;top:135.06px" class="cls_002"><span class="cls_002">If the combined committed <img class="symbol" src="images/sym_willpower.png"> score is equal to the</span></div>
 			<div style="position:absolute;left:036.00px;top:150.86px" class="cls_002"><span class="cls_002">combined <img class="symbol" src="images/sym_threat.png"> score in the staging area: no progress tokens</span></div>
 			<div style="position:absolute;left:036.00px;top:165.30px" class="cls_002"><span class="cls_002">are placed, and the players do not increase their threat dials.</span></div>
 			<div style="position:absolute;left:036.00px;top:178.74px" class="cls_002"><span class="cls_002">Characters committed to a quest are considered committed</span></div>
@@ -5776,7 +5821,8 @@
 				<div style="position:relative;left:002.41;top:000.00em" class="cls_002"><span class="cls_002">and resolve any ‗when revealed‘ effects on the next stage,</span></div>
 				<div style="position:relative;left:002.41;top:000.00em" class="cls_002"><span class="cls_002">then resolve the </span><span class="cls_006">Response</span><span class="cls_002"> effect on the active location.</span></div>
 			</div>
-			<div style="position:absolute;left:315.41px;top:070.38px" class="cls_020"><span class="cls_020">P</span><span class="cls_021">HASE </span><span class="cls_020">4:</span><span class="cls_021"> </span><span class="cls_020">T</span><span class="cls_021">RAVEL</span></div>
+			<div style="position:absolute;left:315.41px;top:070.38px" class="cls_020" id="p049_1"><span class="cls_020">P</span><span class="cls_021">HASE </span><span class="cls_020">4:</span><span class="cls_021"> </span><span class="cls_020">T</span><span class="cls_021">RAVEL</span></div>
+			<span id="s049_1">
 			<div style="position:absolute;left:315.41px;top:088.74px" class="cls_002"><span class="cls_002">During the travel phase, the players may travel as a group to</span></div>
 			<div style="position:absolute;left:315.41px;top:099.06px" class="cls_002"><span class="cls_002">any one location in the staging area by moving it from the</span></div>
 			<div style="position:absolute;left:315.41px;top:109.50px" class="cls_002"><span class="cls_002">staging area and placing it alongside the current quest card,</span></div>
@@ -5798,6 +5844,7 @@
 			<div style="position:absolute;left:315.41px;top:288.21px" class="cls_002"><span class="cls_002">before traveling elsewhere. Some locations have a travel</span></div>
 			<div style="position:absolute;left:315.41px;top:298.53px" class="cls_002"><span class="cls_002">effect, which is an additional cost that must be paid when the</span></div>
 			<div style="position:absolute;left:315.41px;top:308.85px" class="cls_002"><span class="cls_002">players travel there.</span></div>
+			</span>
 			<div style="position:absolute;left:315.41px;top:321.81px" class="cls_013"><span class="cls_013">Travel Phase Advanced Concepts</span></div>
 			<div style="position:absolute;left:310.41px;top:336.81px;right:030.00px;bottom:281px;" class="srb_faq">
 				<div style="position:relative;left:002.41px;top:000.00em" class="cls_006"><span class="cls_006">FAQ (1.18): Explored Locations Leaving Play</span></div>
@@ -5820,16 +5867,18 @@
 				<div style="position:relative;left:002.41px;top:003.00em" class="cls_002"><span class="cls_002">location, the players may divide that progress among both</span></div>
 				<div style="position:relative;left:002.41px;top:003.00em" class="cls_002"><span class="cls_002">active locations however they choose.</span></div>
 			</div>
-			<div style="position:absolute;left:315.41px;top:561.62px" class="cls_020"><span class="cls_020">P</span><span class="cls_021">HASE </span><span class="cls_020">5:</span><span class="cls_021"> </span><span class="cls_020">E</span><span class="cls_021">NGAGEMENT</span></div>
+			<div style="position:absolute;left:315.41px;top:561.62px" class="cls_020" id="p049_2"><span class="cls_020">P</span><span class="cls_021">HASE </span><span class="cls_020">5:</span><span class="cls_021"> </span><span class="cls_020">E</span><span class="cls_021">NGAGEMENT</span></div>
 			<div style="position:absolute;left:315.41px;top:579.86px" class="cls_002"><span class="cls_002">The encounter phase consists of two steps: player</span></div>
 			<div style="position:absolute;left:315.41px;top:590.30px" class="cls_002"><span class="cls_002">engagement, and engagement checks.</span></div>
 			<div style="position:absolute;left:315.41px;top:603.26px" class="cls_013"><span class="cls_013">Step 1: Player Engagement</span></div>
+			<span id="s049_2">
 			<div style="position:absolute;left:315.41px;top:620.42px" class="cls_002"><span class="cls_002">First, each player has the option to engage one enemy in the</span></div>
 			<div style="position:absolute;left:315.41px;top:630.74px" class="cls_002"><span class="cls_002">staging area. This is done by moving the enemy from the</span></div>
 			<div style="position:absolute;left:315.41px;top:641.06px" class="cls_002"><span class="cls_002">staging area and placing it in front of the engaging player.</span></div>
 			<div style="position:absolute;left:315.41px;top:654.50px" class="cls_002"><span class="cls_002">Each player has one chance to optionally engage one enemy</span></div>
 			<div style="position:absolute;left:315.41px;top:664.82px" class="cls_002"><span class="cls_002">during this step, and an enemy's engagement cost has no</span></div>
 			<div style="position:absolute;left:315.41px;top:675.14px" class="cls_002"><span class="cls_002">bearing on this procedure.</span></div>
+			</span>
 			<div style="position:absolute;left:310.41px;top:690.14px;right:030.00px;bottom:077px;" class="srb_faq">
 				<div style="position:RELATIVE;left:002.41px;top:000.00em" class="cls_006"><span class="cls_006">FAQ (Q&A):</span></div>
 				<div style="position:RELATIVE;left:002.41px;top:000.50em" class="cls_006"><span class="cls_006">Q</span><span class="cls_002">: In what order is players' optional engagement handled?</span></div>
@@ -5841,7 +5890,8 @@
 			<div style="position:absolute;left:287.21px;top:794.68px" class="cls_002"><span class="cls_002">- 49 -</span></div>
 		</div>
 		<div id="p050" style="position:absolute;left:050%;margin-left:-297px;top:41699px;width:595px;height:841px;border-style:outset;overflow:hidden">
-			<div style="position:absolute;left:036.00px;top:034.12px" class="cls_013"><span class="cls_013">Step 2: Engagement Checks</span></div>
+			<div style="position:absolute;left:036.00px;top:034.12px" class="cls_013" id="p050_1"><span class="cls_013">Step 2: Engagement Checks</span></div>
+			<span id="s050_1">
 			<div style="position:absolute;left:036.00px;top:051.28px" class="cls_002"><span class="cls_002">Second, the players must make a series of engagement</span></div>
 			<div style="position:absolute;left:036.00px;top:061.60px" class="cls_002"><span class="cls_002">checks, to see if any of the enemies remaining in the staging</span></div>
 			<div style="position:absolute;left:036.00px;top:071.94px" class="cls_002"><span class="cls_002">area engage them. The first player compares his threat level</span></div>
@@ -5871,6 +5921,7 @@
 			<div style="position:absolute;left:036.00px;top:326.37px" class="cls_002"><span class="cls_002">enemies do not attack players, they merely engage players.</span></div>
 			<div style="position:absolute;left:036.00px;top:336.81px" class="cls_002"><span class="cls_002">Enemies attack the players with whom they are engaged</span></div>
 			<div style="position:absolute;left:036.00px;top:347.13px" class="cls_002"><span class="cls_002">during the combat phase.</span></div>
+			</span>
 			<div style="position:absolute;left:036.00px;top:360.09px" class="cls_013"><span class="cls_013">Engagement Phase Advanced Concepts</span></div>
 			<div style="position:absolute;left:033.00px;top:375.09px;right:310.00px;bottom:213px;" class="srb_faq">
 				<div style="position:relative;left:002.41px;top:000.00em" class="cls_006"><span class="cls_006">FAQ (1.49): Engaging Enemies </span><span class="cls_007">vs</span><span class="cls_006"> Being Engaged</span></div>
@@ -10648,7 +10699,6 @@
 			<div style="position:absolute;left:287.21px;top:794.68px" class="cls_002"><span class="cls_002">- 96 -</span></div>
 		</div>
 		<div id="p097" style="position:absolute;left:050%;margin-left:-297px;top:81696px;width:595px;height:841px;border-style:outset;overflow:hidden">
-			<div style="position:absolute;left:0px;top:0px"><img src="images/background097.jpg" width=595 height=841></div>
 			<div style="position:absolute;left:036.00px;top:034.48px" class="cls_002"><span class="cls_002">to the "C" side of the next stage, resolving its effects, and</span></div>
 			<div style="position:absolute;left:036.00px;top:044.80px" class="cls_002"><span class="cls_002">then advancing to the "D" side.</span></div>
 			<div style="position:absolute;left:036.00px;top:058.12px" class="cls_002"><span class="cls_002">While the Orcs are at a different quest stage than the</span></div>
@@ -11486,7 +11536,6 @@
 			<div style="position:absolute;left:284.69px;top:794.68px" class="cls_002"><span class="cls_002">- 105 -</span></div>
 		</div>
 		<div id="p10#" style="position:absolute;left:050%;margin-left:-297px;top:89355px;width:595px;height:841px;border-style:outset;overflow:hidden">
-			<div style="position:absolute;left:0px;top:0px"><img src="images/background106.jpg" width=595 height=841></div>
 			<div style="position:absolute;left:036.00px;top:034.36px" class="cls_008"><span class="cls_008">A: A card is in a victory display if it is in the victory display of</span></div>
 			<div style="position:absolute;left:036.00px;top:044.68px" class="cls_008"><span class="cls_008">any group.</span></div>
 			<div style="position:absolute;left:036.00px;top:064.48px" class="cls_027"><span class="cls_027">T</span><span class="cls_020">HE </span><span class="cls_027">H</span><span class="cls_020">UNT FOR THE </span><span class="cls_027">D</span><span class="cls_020">READNAUGHT</span></div>
@@ -13732,11 +13781,12 @@
 			<div style="position:absolute;left:036.00px;top:212.82px" class="cls_002"><span class="cls_002">I have included below the full round sequence chart, where each action window is in </span><span class="cls_009">red text</span><span class="cls_002">. Along with each window, I have</span></div>
 			<div style="position:absolute;left:036.00px;top:223.14px" class="cls_002"><span class="cls_002">included some general gameplay tips as well as some common cards that get used during that window.</span></div>
 			<div style="position:absolute;left:036.00px;top:236.25px" class="cls_018"><span class="cls_018">0.0 Round Begins</span></div>
-			<div style="position:absolute;left:036.00px;top:251.85px" class="cls_018"><span class="cls_018">I. RESOURCE PHASE</span></div>
+			<div style="position:absolute;left:036.00px;top:251.85px" class="cls_018" id="p128_1"><span class="cls_018">I. RESOURCE PHASE</span></div>
 			<div style="position:absolute;left:036.00px;top:267.69px" class="cls_024"><span class="cls_024">1.1 Resource phase begins</span></div>
 			<div style="position:absolute;left:036.00px;top:282.21px" class="cls_024"><span class="cls_024">1.2 Gain resources</span></div>
 			<div style="position:absolute;left:036.00px;top:296.73px" class="cls_024"><span class="cls_024">1.3 Draw cards</span></div>
 			<div style="position:absolute;left:036.00px;top:311.37px" class="cls_009"><span class="cls_009">ACTION WINDOW</span></div>
+			<span id="s128_1">
 			<div style="position:absolute;left:054.00px;top:324.69px" class="cls_002"><span class="cls_002">&#10070; This is the only window in which you can play </span><span class="cls_062">Captain's Wisdom</span><span class="cls_002">, since it's specifically a resource action. Therefore, you</span></div>
 			<div style="position:absolute;left:072.02px;top:335.01px" class="cls_002"><span class="cls_002">cannot perform a combo like </span><A HREF="https://ringsdb.com/card/08113">Heir of Mardil</A><span class="cls_002">followed immediately by </span><span class="cls_062">Captain's Wisdom</span><span class="cls_002">, because </span><span class="cls_062">Heir of Mardil</span><span class="cls_002"> must be</span></div>
 			<div style="position:absolute;left:072.02px;top:345.45px" class="cls_002"><span class="cls_002">played with other attachments during the planning phase, at which point the opportunity to trigger resource actions has</span></div>
@@ -13746,10 +13796,12 @@
 			<div style="position:absolute;left:054.00px;top:386.85px" class="cls_002"><span class="cls_002">&#10070; If I have multiple copies of</span><span class="cls_062"> <A HREF="https://ringsdb.com/card/01023">Sneak Attack</A><span class="cls_002"> in hand along with </span><span class="cls_062">Gandalf</span><span class="cls_002">, sometimes I will use this window to play </span><span class="cls_062">Sneak</span></div>
 			<div style="position:absolute;left:072.02px;top:397.17px" class="cls_062"><span class="cls_062">Attack+Gandalf</span><span class="cls_002"> just for the card draw. He will come back to my hand at the end of the phase, so I can do it again in the</span></div>
 			<div style="position:absolute;left:072.02px;top:407.51px" class="cls_002"><span class="cls_002">Planning Phase.</span></div>
-			<div style="position:absolute;left:036.00px;top:420.71px" class="cls_024"><span class="cls_024">1.4 Resource phase ends</span></div>
+			</span>
+			<div style="position:absolute;left:036.00px;top:420.71px" class="cls_024" id="p128_2"><span class="cls_024">1.4 Resource phase ends</span></div>
 			<div style="position:absolute;left:036.00px;top:434.99px" class="cls_018"><span class="cls_018">II. PLANNING PHASE</span></div>
 			<div style="position:absolute;left:036.00px;top:450.95px" class="cls_024"><span class="cls_024">2.1 Planning phase begins</span></div>
 			<div style="position:absolute;left:036.00px;top:465.35px" class="cls_024"><span class="cls_024">2.2 </span><span class="cls_063">Special action window</span></div>
+			<span id="s128_2">
 			<div style="position:absolute;left:054.00px;top:479.99px" class="cls_002"><span class="cls_002">&#10070; This is an action window in which any player may trigger an action as usual.</span></div>
 			<div style="position:absolute;left:054.00px;top:490.31px" class="cls_002"><span class="cls_002">&#10070; This is also a special action window in which the active player (in addition to triggering standard action abilities) is</span></div>
 			<div style="position:absolute;left:072.02px;top:500.75px" class="cls_002"><span class="cls_002">permitted to play ally and attachment cards from his or her hand.</span></div>
@@ -13767,20 +13819,24 @@
 			<div style="position:absolute;left:108.02px;top:624.74px" class="cls_002"><span class="cls_002">immediately trigger</span><span class="cls_062"> <A HREF="https://ringsdb.com/card/01026">Steward of Gondor</A> </span><span class="cls_002"> to gain 2 resources, and can now afford their ally. </span><span class="cls_006">However</span><span class="cls_002">, player 1 has</span></div>
 			<div style="position:absolute;left:108.02px;top:635.30px" class="cls_002"><span class="cls_002">already passed the opportunity to play allies and attachments, and is therefore not allowed to play their ally this</span></div>
 			<div style="position:absolute;left:108.02px;top:645.62px" class="cls_002"><span class="cls_002">turn.</span></div>
+			</span>
 			<div style="position:absolute;left:036.00px;top:658.82px" class="cls_024"><span class="cls_024">2.3 Next player (in player order) becomes active player (loop back to 2.2, or proceed to 2.4)</span></div>
 			<div style="position:absolute;left:036.00px;top:673.34px" class="cls_024"><span class="cls_024">2.4 Planning phase ends</span></div>
-			<div style="position:absolute;left:036.00px;top:687.62px" class="cls_018"><span class="cls_018">III. QUEST PHASE</span></div>
+			<div style="position:absolute;left:036.00px;top:687.62px" class="cls_018" id="p128_3"><span class="cls_018">III. QUEST PHASE</span></div>
 			<div style="position:absolute;left:036.00px;top:703.46px" class="cls_024"><span class="cls_024">3.1 Quest phase begins</span></div>
 			<div style="position:absolute;left:036.00px;top:718.10px" class="cls_009"><span class="cls_009">ACTION WINDOW</span></div>
+			<span id="s128_3">
 			<div style="position:absolute;left:054.00px;top:731.44px" class="cls_002"><span class="cls_002">&#10070; This action occurs before players commit characters to the quest. For that reason, one of the most common actions</span></div>
 			<div style="position:absolute;left:072.02px;top:741.88px" class="cls_002"><span class="cls_002">performed during this window is </span><A HREF="https://ringsdb.com/card/01023">Sneak Attack</A><span class="cls_002"> to bring </span><A HREF="https://ringsdb.com/card/01073">Gandalf</A> </span><span class="cls_002">into play so that he can commit to the quest.</span></div>
 			<div style="position:absolute;left:054.00px;top:752.20px" class="cls_002"><span class="cls_002">&#10070; This is also the only time at which </span><A HREF="https://ringsdb.com/card/02080">Gildor's Counsel</A> </span><span class="cls_002"> can be played.</span></div>
+			</span>
 			<div style="position:absolute;left:284.69px;top:794.68px" class="cls_002"><span class="cls_002">- 128 -</span></div>
 		</div>
 		<div id="p10#" style="position:absolute;left:050%;margin-left:-297px;top:108928px;width:595px;height:841px;border-style:outset;overflow:hidden">
 			<div style="position:absolute;left:0px;top:0px"><img src="images/background129.jpg" width=595 height=841></div>
-			<div style="position:absolute;left:036.00px;top:034.36px" class="cls_024"><span class="cls_024">3.2 Commit characters</span></div>
+			<div style="position:absolute;left:036.00px;top:034.36px" class="cls_024" id="p129_1"><span class="cls_024">3.2 Commit characters</span></div>
 			<div style="position:absolute;left:036.00px;top:049.00px" class="cls_009"><span class="cls_009">ACTION WINDOW</span></div>
+			<span id="s129_1">
 			<div style="position:absolute;left:054.00px;top:062.32px" class="cls_002"><span class="cls_002">&#10070; The action window after committing characters to the quest and before staging does not get used too often, but there are</span></div>
 			<div style="position:absolute;left:072.02px;top:072.66px" class="cls_002"><span class="cls_002">some cases where it might matter. For example, if you are 1 resource short of playing </span><span class="cls_062">Risk Some Light</span><span class="cls_002">, you could</span></div>
 			<div style="position:absolute;left:072.02px;top:083.10px" class="cls_002"><span class="cls_002">commit </span><A HREF="https://ringsdb.com/card/01002">Théodred</A><span class="cls_002">and a lore hero to the quest, give the resource too the lore hero, and then play </span><A HREF="https://ringsdb.com/card/04136">Risk Some Light</A> </span><span class="cls_002"> before</span></div>
@@ -13796,8 +13852,10 @@
 			<div style="position:absolute;left:054.00px;top:176.22px" class="cls_002"><span class="cls_002">&#10070; You can use this window to use readying effects like </span><A HREF="https://ringsdb.com/card/01057">Unexpected Courage</A> </span><span class="cls_002"> to ready a questing character to avoid effects</span></div>
 			<div style="position:absolute;left:072.02px;top:186.42px" class="cls_002"><span class="cls_002">like the </span><span class="cls_062">Necromancer's Reach</span><span class="cls_002">. But take care which quest you're playing against, because you might </span><span class="cls_008">not</span><span class="cls_002"> want to</span></div>
 			<div style="position:absolute;left:072.02px;top:196.86px" class="cls_002"><span class="cls_002">use </span><A HREF="https://ringsdb.com/card/01057">Unexpected Courage</A><span class="cls_002"> just yet if there are treacheries like </span><A HREF="http://hallofbeorn.com/LotR/Details/Weighed-Down-TWQ">Weighed Down</A> </span><span class="cls_002"> (suggestion courtesy of @Goggen).</span></div>
-			<div style="position:absolute;left:036.00px;top:210.06px" class="cls_024"><span class="cls_024">3.3 Staging</span></div>
+			</span>
+			<div style="position:absolute;left:036.00px;top:210.06px" class="cls_024" id="p129_2"><span class="cls_024">3.3 Staging</span></div>
 			<div style="position:absolute;left:036.00px;top:224.70px" class="cls_009"><span class="cls_009">ACTION WINDOW</span></div>
+			<span id="s129_2">
 			<div style="position:absolute;left:054.00px;top:238.17px" class="cls_002"><span class="cls_002">&#10070; This is one of the most important action windows for new players to learn. it allows you to adjust your total</span></div>
 			<div style="position:absolute;left:072.02px;top:248.37px" class="cls_002"><span class="cls_002">willpower </span><span class="cls_008">after</span><span class="cls_002"> revealing all the cards in the staging step but </span><span class="cls_008">before</span><span class="cls_002"> determining how much progress you will make. Some</span></div>
 			<div style="position:absolute;left:072.02px;top:258.81px" class="cls_002"><span class="cls_002">examples of cards that can make good use of this action window are </span><span class="cls_062">Éowyn</span><span class="cls_002">,</span><span class="cls_062"> Protector of Lórien</span><span class="cls_002">, </span><span class="cls_062">Nenya</span><span class="cls_002">, </span><span class="cls_062">Bofur</span><span class="cls_002">, </span><span class="cls_062">Hobbit</span></div>
@@ -13805,9 +13863,11 @@
 			<div style="position:absolute;left:300.47px;top:269.13px" class="cls_002"><span class="cls_002">s.</span></div>
 			<div style="position:absolute;left:054.00px;top:279.57px" class="cls_002"><span class="cls_002">&#10070; In addition to actions that increase your willpower, you can perform actions to decrease the staging area threat. Cards</span></div>
 			<div style="position:absolute;left:072.02px;top:289.89px" class="cls_002"><span class="cls_002">like </span><A HREF="https://ringsdb.com/card/01066">Secret Paths</A><span class="cls_002"> are an obvious way, but you can also use a card like </span><A HREF="https://ringsdb.com/card/04131">Hands Upon the Bow</A> </span><span class="cls_002"> to remove an enemy from the</span></div>
+			</span>
 			<div style="position:absolute;left:072.02px;top:300.21px" class="cls_002"><span class="cls_002">staging area (suggestion courtesy of @Goggen).</span></div>
-			<div style="position:absolute;left:036.00px;top:313.41px" class="cls_024"><span class="cls_024">3.4 Quest resolution</span></div>
+			<div style="position:absolute;left:036.00px;top:313.41px" class="cls_024" id="p129_3"><span class="cls_024">3.4 Quest resolution</span></div>
 			<div style="position:absolute;left:036.00px;top:328.05px" class="cls_009"><span class="cls_009">ACTION WINDOW</span></div>
+			<span id="s129_3">
 			<div style="position:absolute;left:054.00px;top:341.37px" class="cls_002"><span class="cls_002">&#10070; There aren't many times where doing an action here makes more sense than in the action window immediately before this</span></div>
 			<div style="position:absolute;left:072.02px;top:351.81px" class="cls_002"><span class="cls_002">one. It's too late to affect the outcome of the quest. However, if you have just advanced the quest stage during 3.4, there</span></div>
 			<div style="position:absolute;left:072.02px;top:362.13px" class="cls_002"><span class="cls_002">may now be an action that you want to perform before the Travel Phase begins. This could come up in the quest Flight of</span></div>
@@ -13824,11 +13884,13 @@
 			<div style="position:absolute;left:054.00px;top:465.47px" class="cls_002"><span class="cls_002">&#10070; </span><span class="cls_062"> Lothíriel </span><span class="cls_002">opens up the use of the action window between 3.4 and 3.5. With allies coming into play (specifically </span><span class="cls_007">Rohan</span></div>
 			<div style="position:absolute;left:072.02px;top:475.91px" class="cls_002"><span class="cls_002">allies) that will be questing can trigger their action before leaving play. Allies such as </span><span class="cls_062">Damrod</span><span class="cls_002"> and </span><span class="cls_062">Westfold Horse-Breaker</span></div>
 			<div style="position:absolute;left:072.02px;top:486.35px" class="cls_002"><span class="cls_002">can quest and then trigger abilities (suggestion courtesy of @Jtothemac).</span></div>
+			</span>
 			<div style="position:absolute;left:036.00px;top:499.55px" class="cls_024"><span class="cls_024">3.5 Quest phase ends</span></div>
-			<div style="position:absolute;left:036.00px;top:513.83px" class="cls_018"><span class="cls_018">IV. TRAVEL PHASE</span></div>
+			<div style="position:absolute;left:036.00px;top:513.83px" class="cls_018" id="p129_4"><span class="cls_018">IV. TRAVEL PHASE</span></div>
 			<div style="position:absolute;left:036.00px;top:529.67px" class="cls_024"><span class="cls_024">4.1 Travel phase begins</span></div>
 			<div style="position:absolute;left:036.00px;top:544.19px" class="cls_024"><span class="cls_024">4.2 Travel opportunity</span></div>
 			<div style="position:absolute;left:036.00px;top:558.83px" class="cls_009"><span class="cls_009">ACTION WINDOW</span></div>
+			<span id="s129_4">
 			<div style="position:absolute;left:054.00px;top:572.06px" class="cls_002"><span class="cls_002">&#10070; Note that the action window in the Travel phase is </span><span class="cls_008">after</span><span class="cls_002"> travelling. This is why a card like </span><span class="cls_062">Mariner's Compass</span><span class="cls_002">, which is</span></div>
 			<div style="position:absolute;left:072.02px;top:582.26px" class="cls_002"><span class="cls_002">meant to be used before travelling, needed to be a </span><span class="cls_006">Response</span><span class="cls_002"> rather than an </span><span class="cls_006">Action</span><span class="cls_002">.</span></div>
 			<div style="position:absolute;left:054.00px;top:592.94px" class="cls_002"><span class="cls_002">&#10070; One of the most common actions to perform in the travel phase you be one that helps you avoid travel costs, like </span><A HREF="https://ringsdb.com/card/131013">Thror's</A> </span></div>
@@ -13836,18 +13898,23 @@
 			<div style="position:absolute;left:072.02px;top:603.26px" class="cls_062"><span class="cls_062"> </span><A HREF="https://ringsdb.com/card/131013">Map</A><span class="cls_002"> or </span><span class="cls_062">Ghân-buri-Ghân</span><span class="cls_002">. Note that you could travel to a location with a positive effect during 4.2, like </span><span class="cls_062">Old Forest Road</span><span class="cls_002">,</span></div>
 			<div style="position:absolute;left:072.02px;top:613.58px" class="cls_002"><span class="cls_002">then in this action window, switch it out using</span><span class="cls_062"> Thror's Map</span><span class="cls_002"> for something with a negative travel cost. This would then let</span></div>
 			<div style="position:absolute;left:072.02px;top:623.90px" class="cls_002"><span class="cls_002">you travel to the positive location again in the future (suggestion courtesy of @sappidus).</span></div>
+			</span>
 			<div style="position:absolute;left:036.00px;top:637.22px" class="cls_024"><span class="cls_024">4.3 Travel phase ends</span></div>
-			<div style="position:absolute;left:036.00px;top:651.38px" class="cls_018"><span class="cls_018">V. ENCOUNTER PHASE</span></div>
+			<div style="position:absolute;left:036.00px;top:651.38px" class="cls_018" id="p129_5"><span class="cls_018">V. ENCOUNTER PHASE</span></div>
 			<div style="position:absolute;left:036.00px;top:667.34px" class="cls_024"><span class="cls_024">5.1 Encounter phase begins</span></div>
 			<div style="position:absolute;left:036.00px;top:681.86px" class="cls_024"><span class="cls_024">5.2 Optional engagement</span></div>
 			<div style="position:absolute;left:036.00px;top:696.38px" class="cls_009"><span class="cls_009">ACTION WINDOW</span></div>
+			<span id="s129_5">
 			<div style="position:absolute;left:054.00px;top:709.82px" class="cls_002"><span class="cls_002">&#10070; Between the optional and the forced engagements is another opportunity to perform actions. This is the point at which a</span></div>
 			<div style="position:absolute;left:298.61px;top:714.74px" class="cls_064"><span class="cls_064">1</span></div>
-			<div style="position:absolute;left:072.02px;top:720.14px" class="cls_002"><span class="cls_002">card like </span><span class="cls_062">The Hammer-stroke</span><span class="cls_002">, </span><span class="cls_062">Noiseless Movement</span><span class="cls_002">, </span><span class="cls_062">Advance Warning</span><span class="cls_002">, or </span><A HREF="https://ringsdb.com/card/19009">Grey Cloak</A> </span><span class="cls_002"> would be used.</span></div>
-			<div style="position:absolute;left:036.00px;top:733.36px" class="cls_024"><span class="cls_024">5.3 Engagement checks</span></div>
+			<div style="position:absolute;left:072.02px;top:720.14px" class="cls_002"><span class="cls_002">card like </span><span class="cls_062">The Hammer-stroke</span><span class="cls_002">, </span><span class="cls_062">Noiseless Movement</span><span class="cls_002">, </span><span class="cls_062">Advance Warning</span><span class="cls_002">, or <A HREF="https://ringsdb.com/card/19009">Grey Cloak</A> </span><span class="cls_002"> would be used.</span></div>
+			</span>
+			<div style="position:absolute;left:036.00px;top:733.36px" class="cls_024" id="p129_6"><span class="cls_024">5.3 Engagement checks</span></div>
 			<div style="position:absolute;left:036.00px;top:748.00px" class="cls_009"><span class="cls_009">ACTION WINDOW</span></div>
+			<span id="s129_6">
 			<div style="position:absolute;left:054.00px;top:761.32px" class="cls_002"><span class="cls_002">&#10070; This is the last action window before the combat phase, and is therefore your last chance to perform healing actions</span></div>
 			<div style="position:absolute;left:072.02px;top:771.64px" class="cls_002"><span class="cls_002">before archery damage is applied.</span></div>
+			</span>
 			<div style="position:absolute;left:298.61px;top:772.36px" class="cls_064"><span class="cls_064">1</span></div>
 			<div style="position:absolute;left:284.69px;top:794.68px" class="cls_002"><span class="cls_002">- 129 -</span></div>
 		</div>
@@ -14100,5 +14167,6 @@
 			<div style="position:absolute;left:072.02px;top:705.74px" class="cls_002"><span class="cls_002">cards like </span><span class="cls_066">Eleanor</span><span class="cls_002">, it needs a step where it activates</span></div>
 			<div style="position:absolute;left:284.69px;top:794.68px" class="cls_002"><span class="cls_002">- 132 -</span></div>
 		</div>
+	</span>
 	</body>
 </html>

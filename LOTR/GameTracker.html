@@ -161,35 +161,38 @@
             font-size: 3vh;
             text-align: center; /* Centres text horizontally in the anchor element */
             line-height: 3vh;
-            transition: 0.3s; /* Add transition on hover */
             padding: 2vh;
         }
 
         #SideNavLeft a {
             border-radius: 0 5px 5px 0; /* Rounded corners on the top right and bottom right side */
             left: -15vw; /* Position them outside of the screen */
+            transition: 0.3s; /* Add transition on hover */
         }
 
-        #SideNavLeft a:hover {
+        #SideNavLeft a:hover,#SideNavLeft a.simhover {
             left: 0; /* On mouse-over, make the elements appear as they should */
             color: white; /* White text color */
             opacity: 1;
+            transition: 0.3s; /* Add transition on hover */
         }
 
         #SideNavRight a {
             border-radius: 5px 0 0 5px; /* Rounded corners on the top left and bottom left side */
             right: -15vw; /* Position them outside of the screen */
+            transition: 0.3s; /* Add transition on hover */
         }
 
-        #SideNavRight a:hover {
+        #SideNavRight a:hover,#SideNavRight a.simhover {
             right: 0; /* On mouse-over, make the elements appear as they should */
             color: white; /* White text color */
             opacity: 1;
+            transition: 0.3s; /* Add transition on hover */
         }
 
         #newGame { /* The newgame_verify() link */
             top: 5vh;
-            background-color: #04AA6D; /* Green */
+            background-color: #04AA6D;
             color: #04AA6D;
         }
 
@@ -501,14 +504,14 @@
         </div>
     </div>
     <div id='InfoArea'></div>
-    <div id='AboutArea' class='hidden'>
+    <div id='AboutArea'>
         <span style='vertical-align:middle'>
             The GameTracker webpage is property of Clive Pottinger. Email any comments or concerns to terran.antipodes@gmail.com<br />
             All displayed images, arts, fonts and The Lord of The Rings: The Card Game are copyrighted at � Fantasy Flight Games. The copyrightable portions of The Lord of the Rings: The Card Game and its expansions are � 2011 - 2020 Fantasy Flight Publishing, Inc. The Lord of the Rings, and the characters, items, events and places therein are trademarks or registered trademarks of The Saul Zaentz Company / Middle-earthEnterprises and are used, under license, by Fantasy Flight Games. Living Card Game, LCG, LCG logo and FantasyFlight Supply are trademarks and/or registered trademarks of Fantasy Flight Publishing, Inc. All Rights Reserved to their respective owners.<br />
             The Rules Compendium and Rules Companion are the intellectual property of, and used by permission by, Mathieu Martin.
         </span>
     </div>
-    <div id='OptionsArea' class='hidden'>
+    <div id='OptionsArea'>
         <form name='options'>
         <div class='optionSet'>Display the Compendium Rules as
             <label class='choiceHolder' onclick='CompendiumAsHtml=true'>HTML
@@ -530,48 +533,49 @@
             '{ "phases": [ "Setup", "Resource", "Planning", "Quest", "Travel", "Encounter", "Combat", "Refresh" ] ' +
             // boxes format (in px): [left, top, right, bottom] or [initialplayerbox, subsequentplayerbox, finalplayerbox]
             // help format: [compendium_info, companion_info, action_window_info]
-            //              compendium_info: [page number, pdf horiz offset, pdf offset, html jump index, html highlight index]
-            //              companion_info:  [page number]
-            //   (optional) compendium_info: [page number, pdf horiz offset, pdf offset, html jump index, html highlight index]
+            //              compendium_info:    [page number, pdf horiz offset, pdf offset, html jump index, html highlight index]
+            //              companion_info:     [page number]
+            //   (optional) action_window_info: [page number, pdf horiz offset, pdf offset, html jump index, html highlight index]
             // gameloop: value indicates the last step in the loop. After that step, the tracker will increment the round and loop back to this step.
             // teamloop: value indicates the last step in each player's steps. After that step, the tracker will switch to the next player and loop back to this step, or, if the player was the last player, continue to the next step.
-            // teamskip: value indicates prompt and next step for all players if the fist player opts to skip.
+            // teamskip: value indicates prompt and next step for all players if the first player opts to skip.
             // playerskip: value indicates prompt. If the player opts to skip, then the tracter will switch to the next player and loop back to this step, or, if the player was the last player, continue to the next step.
             ' ,"steps": [ { "phase": 0, "name": "Extract Campaign Setup cards" } ' +
             '            ,{ "phase": 0, "name": "Shuffle Player Decks", "help" : [[47,0,135,1,1],[209]] } ' +
-            '            ,{ "phase": 0, "name": "Shuffle Encounter Deck", "help" : [[47,0,130],[209]] } ' +
-            '            ,{ "phase": 0, "name": "Place Heroes", "help" : [[47,0,400],[210]] } ' +
-            '            ,{ "phase": 0, "name": "Perform Campaign Setup", "help" : [[47,0,700],[210]] } ' +
-            '            ,{ "phase": 0, "name": "Set Threat Levels", "help" : [[47,0,400],[210]] } ' +
-            '            ,{ "phase": 0, "name": "Create Token Banks", "help" : [[47,500,305],[211]] } ' +
-            '            ,{ "phase": 0, "name": "Determine First Player", "help" : [[47,500,380],[212]] } ' +
-            '            ,{ "phase": 0, "name": "Draw Starting Hand", "help" : [[47,500,455],[213]] } ' +
-            '            ,{ "phase": 0, "name": "Place Quest Cards", "help" : [[47,500,555],[214]] } ' +
-            '            ,{ "phase": 0, "name": "Perform Scenario Setup", "help" : [[47,500,650],[215]] } ' +
-            '            ,{ "phase": 1, "name": "Gather Resources", "gameloop" : "Pass First Player Token", "boxes" : [60,75,490,190], "help" : [[48,0,510],[217]] }' +
-            '            ,{ "phase": 1, "name": "Draw a Card", "actionwindow" : "true", "boxes" : [60,190,490,310], "help" : [[48,0,620],[217],[128,400]] } ' +
-            '            ,{ "phase": 2, "name": "Special Action Window", "teamloop" : "Special Action Window", "boxes" : [[60,465,490,685],[60,525,490,685],[60,525,490,740]], "help" : [[48,0,710],[218],[128,600]] } ' +
-            '            ,{ "phase": 3, "name": "Quest Action Window", "boxes" : [60,840,490,960], "help" : [[],[218],[128,920]] } ' +
-            '            ,{ "phase": 3, "name": "Commit Characters", "actionwindow" : "true", "boxes" : [60,960,490,1080], "help" : [[48,500,100],[220],[129,50]] } ' +
-            '            ,{ "phase": 3, "name": "Staging", "teamloop" : "Staging", "boxes" : [60,1080,490,1135], "help" : [[48,500,380],[221]] } ' +
-            '            ,{ "phase": 3, "name": "Staging Action Window", "boxes" : [60,1135,490,1195], "help" : [[48,500,380],[221],[129,280]] } ' +
-            '            ,{ "phase": 3, "name": "Quest Resolution", "actionwindow" : "true", "boxes" : [60,1195,490,1315], "help" : [[48,500,825],[222],[129,420]] } ' +
-            '            ,{ "phase": 4, "name": "Travel Opportunity", "actionwindow" : "true", "boxes" : [60,1530,490,1645], "help" : [[49,500,100],[227],[129,725]] } ' +
-            '            ,{ "phase": 5, "name": "Optional Engagement", "actionwindow" : "true", "boxes" : [60,1860,490,1980], "help" : [[49,500,750],[232],[129,910]] } ' +
-            '            ,{ "phase": 5, "name": "Engagement Checks", "actionwindow" : "true", "boxes" : [60,1980,490,2100], "help" : [[50,0,50],[233],[129,980]] } ' +
+            '            ,{ "phase": 0, "name": "Shuffle Encounter Deck", "help" : [[47,0,130,1,2],[209]] } ' +
+            '            ,{ "phase": 0, "name": "Place Heroes", "help" : [[47,0,400,2,3],[210]] } ' +
+            '            ,{ "phase": 0, "name": "Perform Campaign Setup", "help" : [[47,0,700,3,4],[210]] } ' +
+            '            ,{ "phase": 0, "name": "Set Threat Levels", "help" : [[47,0,400,2,5],[210]] } ' +
+            '            ,{ "phase": 0, "name": "Create Token Banks", "help" : [[47,500,305,4,6],[211]] } ' +
+            '            ,{ "phase": 0, "name": "Determine First Player", "help" : [[47,500,380,5,7],[212]] } ' +
+            '            ,{ "phase": 0, "name": "Draw Starting Hand", "help" : [[47,500,455,6,8],[213]] } ' +
+            '            ,{ "phase": 0, "name": "Place Quest Cards", "help" : [[47,500,555,7,9],[214]] } ' +
+            '            ,{ "phase": 0, "name": "Perform Scenario Setup", "help" : [[47,500,650,8,10],[215]] } ' +
+            '            ,{ "phase": 1, "name": "Gather Resources", "gameloop" : "Pass First Player Token", "boxes" : [60,75,490,190], "help" : [[48,0,510,1,1],[217]] }' +
+            '            ,{ "phase": 1, "name": "Draw a Card", "actionwindow" : "true", "boxes" : [60,190,490,310], "help" : [[48,0,620,1,2],[217],[128,0,400,1,1]] } ' +
+            '            ,{ "phase": 2, "name": "Special Action Window", "teamloop" : "Special Action Window", "boxes" : [[60,465,490,685],[60,525,490,685],[60,525,490,740]], "help" : [[48,0,710,2,3],[218],[128,0,600,2,2]] } ' +            
+            '            ,{ "phase": 3, "name": "Quest Action Window", "boxes" : [60,840,490,960], "help" : [[],[],[128,0,920,3,3]] } ' +
+            '            ,{ "phase": 3, "name": "Commit Characters", "actionwindow" : "true", "boxes" : [60,960,490,1080], "help" : [[48,500,100,3,4],[220],[129,0,50,1,1]] } ' +
+            '            ,{ "phase": 3, "name": "Staging", "teamloop" : "Staging", "boxes" : [60,1080,490,1135], "help" : [[48,500,380,4,5],[221]] } ' +
+            '            ,{ "phase": 3, "name": "Staging Action Window", "boxes" : [60,1135,490,1195], "help" : [[],[],[129,0,280,2,2]] } ' +
+            '            ,{ "phase": 3, "name": "Quest Resolution", "actionwindow" : "true", "boxes" : [60,1195,490,1315], "help" : [[48,500,825,5,6],[222],[129,0,420,3,3]] } ' +
+            '            ,{ "phase": 4, "name": "Travel Opportunity", "actionwindow" : "true", "boxes" : [60,1530,490,1645], "help" : [[49,500,100,1,1],[227],[129,0,725,4,4]] } ' +
+            '            ,{ "phase": 5, "name": "Optional Engagement", "actionwindow" : "true", "boxes" : [60,1860,490,1980], "help" : [[49,500,750,2,2],[232],[129,0,910,5,5]] } ' +
+            '            ,{ "phase": 5, "name": "Engagement Checks", "actionwindow" : "true", "boxes" : [60,1980,490,2100], "help" : [[50,0,50,1,1],[233],[129,0,980,6,6]] } ' +
             '            ,{ "phase": 6, "name": "Combat Check", "teamskip" : ["No Combat?", "Ready All Cards"], "boxes" : [60,2215,490,2320] } ' +
-            '            ,{ "phase": 6, "name": "Deal Shadow Cards", "actionwindow" : "true", "teamskip" : ["No Enemies Are Attacking Players?", "Choose Enemy and Attackers"], "teamloop" : "Deal Shadow Cards", "boxes" : [60,2320,490,2428], "help" : [[50,0,845],[237],[130,130]] } ' +
-            '            ,{ "phase": 6, "stage": "Enemy Attack", "name": "Choose Attacking Enemy", "actionwindow" : "true", "playerskip" : "Player Is Not Under Attack?", "teamloop" : "Determine Enemy and Defender Combat Damage", "boxes" : [[60,2428,490,2675],[60,2480,490,2675]], "help" : [[50,500,150],[238],[130,270]] } ' +
-            '            ,{ "phase": 6, "stage": "Enemy Attack", "name": "Declare Defender", "actionwindow" : "true", "boxes" : [60,2675,490,2795], "help" : [[50,500,190],[238],[130,410]] } ' +
-            '            ,{ "phase": 6, "stage": "Enemy Attack", "name": "Reveal & Resolve Shadow Effects", "actionwindow" : "true", "boxes" : [60,2795,490,2915], "help" : [[50,500,300],[238],[130,535]] } ' +
-            '            ,{ "phase": 6, "stage": "Enemy Attack", "name": "Determine Enemy and Defender Combat Damage", "actionwindow" : "true", "boxes" : [60,2915,490,3035], "help" : [[50,0,340],[238],[130,730]] } ' +
-            '            ,{ "phase": 6, "stage": "Player Attack", "name": "Choose Enemy and Attackers", "actionwindow" : "true", "playerskip" : "Player Is Not Attacking An Enemy?", "teamloop" : "Determine Attacker and Enemy Combat Damage", "boxes" : [0,3330,470,3585], "help" : [[51,0,290],[240],[131,85]] } ' +
-            '            ,{ "phase": 6, "stage": "Player Attack", "name": "Determine Attacker Strength", "actionwindow" : "true" , "boxes" : [0,3585,470,3705], "help" : [[51,0,345],[240],[131,160]] } ' +
-            '            ,{ "phase": 6, "stage": "Player Attack", "name": "Determine Attacker and Enemy Combat Damage", "actionwindow" : "true", "boxes" : [0,3705,470,3825], "help" : [[51,0,390],[240],[131,350]] } ' +
-            '            ,{ "phase": 6, "name": "Discard All Shadow Cards", "boxes" : [0,4060,470,4110], "help" : [[51,0,860],[],[131,510]] } ' +
-            '            ,{ "phase": 7, "name": "Ready All Cards", "boxes" : [0,4265,470,4320], "help" : [[52,500,315],[255],[]] } ' +
-            '            ,{ "phase": 7, "name": "Raise Threat Levels", "boxes" : [0,4325,470,4380], "help" : [[52,500,315],[255],[]] } ' +
-            '            ,{ "phase": 7, "name": "Pass First Player Token", "actionwindow" : "true", "boxes" : [0,4380,470,4500], "help" : [[52,500,315],[255],[]] } ' +
+                         //---------------------------------------------------------------------------------------------------------------------
+            '            ,{ "phase": 6, "name": "Deal Shadow Cards", "actionwindow" : "true", "teamskip" : ["No Enemies Are Attacking Players?", "Choose Enemy and Attackers"], "teamloop" : "Deal Shadow Cards", "boxes" : [60,2320,490,2428], "help" : [[50,0,845,2,2],[237],[130,0,130,1,1]] } ' +
+            '            ,{ "phase": 6, "stage": "Enemy Attack", "name": "Choose Attacking Enemy", "actionwindow" : "true", "playerskip" : "Player Is Not Under Attack?", "teamloop" : "Determine Enemy and Defender Combat Damage", "boxes" : [[60,2428,490,2675],[60,2480,490,2675]], "help" : [[50,500,150,3,3],[238],[130,0,270,2,2]] } ' +
+            '            ,{ "phase": 6, "stage": "Enemy Attack", "name": "Declare Defender", "actionwindow" : "true", "boxes" : [60,2675,490,2795], "help" : [[50,500,190,4,4],[238],[130,0,410,3,3]] } ' +
+            '            ,{ "phase": 6, "stage": "Enemy Attack", "name": "Reveal & Resolve Shadow Effects", "actionwindow" : "true", "boxes" : [60,2795,490,2915], "help" : [[50,500,300,5,5],[238],[130,0,535,4,4]] } ' +
+            '            ,{ "phase": 6, "stage": "Enemy Attack", "name": "Determine Enemy and Defender Combat Damage", "actionwindow" : "true", "boxes" : [60,2915,490,3035], "help" : [[50,0,340,6,6],[238],[130,0,730,5,5]] } ' +
+            '            ,{ "phase": 6, "stage": "Player Attack", "name": "Choose Enemy and Attackers", "actionwindow" : "true", "playerskip" : "Player Is Not Attacking An Enemy?", "teamloop" : "Determine Attacker and Enemy Combat Damage", "boxes" : [0,3330,470,3585], "help" : [[51,0,290,1,1],[240],[131,0,85,1,1]] } ' +
+            '            ,{ "phase": 6, "stage": "Player Attack", "name": "Determine Attacker Strength", "actionwindow" : "true" , "boxes" : [0,3585,470,3705], "help" : [[51,0,345,2,2],[240],[131,0,160,2,2]] } ' +
+            '            ,{ "phase": 6, "stage": "Player Attack", "name": "Determine Attacker and Enemy Combat Damage", "actionwindow" : "true", "boxes" : [0,3705,470,3825], "help" : [[51,0,390,3,3],[240],[131,0,350,3,3]] } ' +
+            '            ,{ "phase": 6, "name": "Discard All Shadow Cards", "boxes" : [0,4060,470,4110], "help" : [[51,0,860,4,4],[],[131,0,510,4,4]] } ' +
+            '            ,{ "phase": 7, "name": "Ready All Cards", "boxes" : [0,4265,470,4320], "help" : [[52,500,315,1,1],[255]] } ' +
+            '            ,{ "phase": 7, "name": "Raise Threat Levels", "boxes" : [0,4325,470,4380], "help" : [[52,500,315,2,2],[255]] } ' +
+            '            ,{ "phase": 7, "name": "Pass First Player Token", "actionwindow" : "true", "boxes" : [0,4380,470,4500], "help" : [[52,500,315,3,3],[255]] } ' +
             '           ]' +
             ' ,"areas": [ { "name": "RESOURCE & PLANNING" ' +
             '              ,"voffset": 0 ' +
@@ -702,6 +706,8 @@
             MODAL_CHANGE_BANNER.innerHTML = '';
             GAME_HELP.classList.add('hidden');
             GAME_OUTLINE.classList.add('hidden');
+            ABOUT_AREA.classList.add('hidden');
+            OPTIONS_AREA.classList.add('hidden');
 
             // set the background images and size them so that, when scrolling down, each image appears behind the corresponding area of the sequence.
             var bounds = SequenceImage.getBoundingClientRect();
@@ -905,7 +911,7 @@
             }
 
             // SideNav: back
-            var showBack = (currentPhaseNum > 0);
+            var showBack = (currentStepNum > 0);
 
             // SideNav: skip
             var skipInfo = null;
@@ -1001,22 +1007,29 @@
                 ((actionWindowInfo.length == 0) ? '' : generateButton('Action Window', 'game_showCompendium(' + JSON.stringify(actionWindowInfo) + ')', 'helpBtn')) +
                 '</div>';
 
-            if (CompendiumIsPreferred || (onlinePage = null)) {
-                game_showCompendium(compendiumInfo[0], compendiumInfo[1], compendiumInfo[2]);
+            if ((compendiumInfo.length == 0) && (companionInfo.length == 0)) {
+                game_showCompendium(actionWindowInfo);
+            }
+            else if (CompendiumIsPreferred && (compendiumInfo.length > 0)) {
+                game_showCompendium(compendiumInfo);
             } else {
                 game_showCompanion(companionInfo[0]);
             }
         }
 
-        function game_showCompendium(pageNum, hOffset, vOffset) {
-            var pdfOptions = '#page=' + pageNum + '&zoom=100,' + hOffset + ',' + vOffset + '&pagemode=none&view=FitH';
-            GAME_HELP_DISPLAY.innerHTML = "<object data='./Images/RulesCompendium_v2.0.pdf" + pdfOptions + " type='application/pdf'></object>";
-            GAME_HELP.classList.remove('hidden');
-        }
-
-        function game_showCompendiumWebPage(pageNum, hOffset, vOffset) {
-            var htmlOptions = '#' + pageNum + '_' + vOffset + '&pagemode=none&view=FitH';
-            GAME_HELP_DISPLAY.innerHTML = "<object data='./RulesCompendium_v2.0/Rules_Compendium_v2_0.html'></object>";
+        function game_showCompendium(helpInfo) {
+            var address, fragment, query;
+            console.log('game_showCompendium: helpInfo='+JSON.stringify(helpInfo));
+            if (CompendiumAsHtml) {
+                address = './RulesCompendium_v2.0/Rules_Compendium_v2_0.html';
+                fragment = '#p' + helpInfo[0].toString().padStart(3, '0')  + '_' + helpInfo[3];
+                query = '?s' + helpInfo[0].toString().padStart(3, '0') + '_' + helpInfo[4];
+            } else {
+                address = './Images/RulesCompendium_v2.0.pdf';
+                fragment = '#page=' + helpInfo[0] + '&zoom=100,' + helpInfo[1] + ',' + helpInfo[2] + '&pagemode=none&view=FitH';
+                query = '';
+            }
+            GAME_HELP_DISPLAY.innerHTML = "<object data='" + address + query + fragment + "' type='application/pdf'></object>";
             GAME_HELP.classList.remove('hidden');
         }
 
@@ -1168,8 +1181,8 @@
             // close button:
             if (showClose) { // make the close <span> appear
                 MODAL_CLOSE.style.display = 'block';
-                MODAL_CLOSE.onclick = function () { // When the user clicks on <span> (x), close the modal dialogue
-                    hideModal();
+                MODAL_CLOSE.onclick = function () { // When the user clicks on <span> (x), close the modal dialogue                    
+                    MODAL_DIALOGUE.style.display = 'none'; // hide the modal dialogue
                     if (localStorage.getItem('stateHistory')) {
                         latestsState = parseInt(localStorage.getItem('stateHistory').split(',')[0], 10);
                         game_setCurrentState(latestsState);
@@ -1209,7 +1222,7 @@
                 var skiptext = skipInfo[0];
                 var skipToStepNum = skipInfo[1];
                 var skipToPlayer = skipInfo[2];
-                showSideNav(NAV_SKIP, skiptext, function () { game_advanceToStep(skipToStepNum, skipToPlayer); });
+                showSideNav(NAV_SKIP, skiptext, function () { game_advanceToStep(skipToStepNum, skipToPlayer); }, true);
             }
 
             // SideNavs: eliminate player:
@@ -1235,10 +1248,6 @@
             } else {
                 showOutline(box);
             }
-        }
-
-        function hideModal() { // hide the modal dialogue
-            MODAL_DIALOGUE.style.display = 'none';
         }
 
         function showOutline(box) {
@@ -1268,15 +1277,35 @@
             GAME_OUTLINE.classList.remove('hidden');
         }
 
-        function showSideNav(navElement, textContent, onclick) {
-            navElement.innerHTML = textContent;
-            navElement.parentElement.onclick = onclick;
-            navElement.parentElement.classList.remove('hidden');
+        function showSideNav(navElement, textContent, onclick, extend=false) {
+            navElement.removeEventListener('transitionend',navchangedone);
+            if (extend && navElement.classList.contains('simhover')) {
+                console.log('retracting nav' + navElement.textContent);
+                navElement.classList.remove('simhover');
+                navElement.addEventListener('transitionend',navchangedone);
+
+                function navchangedone() {
+                    console.log('retracting done - extending nav ' + textContent);
+                    navElement.removeEventListener('transitionend',navchangedone);
+                    showNav();
+                }
+            } else {
+                showNav();
+            }
+
+            function showNav() {
+                navElement.innerHTML = textContent;
+                navElement.parentElement.onclick = onclick;
+                navElement.parentElement.classList.remove('hidden');
+                if (extend) {
+                    navElement.classList.add('simhover');
+                }
+            }
         }
 
         function hideSideNav(navElement) {
-            navElement.innerHTML = '';
             navElement.parentElement.classList.add('hidden');
+            navElement.innerHTML = '';
         }
 
         function showAbout() {            
