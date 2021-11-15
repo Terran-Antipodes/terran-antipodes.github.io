@@ -3,12 +3,14 @@
 		<script type="text/javascript">
 			addEventListener("load", function() {
 				document.getElementById('wrapper').style.display = 'block';
-				var sectionTexts = [].slice.call(document.getElementById(window.location.search.substring(1)).getElementsByTagName('span'));
-				setTimeout(function() {
-					sectionTexts.forEach( textspan => {
-						textspan.classList.add('highlighted');
-					});
-				}, 1000);
+				if (window.location.search.startsWith('?s')) {
+					var sectionTexts = [].slice.call(document.getElementById(window.location.search.substring(1)).getElementsByTagName('span'));
+					setTimeout(function() {
+						sectionTexts.forEach( textspan => {
+							textspan.classList.add('highlighted');
+						});
+					}, 1000);
+				}
 			});
 		</script>
 		<style type="text/css">
@@ -153,6 +155,14 @@
 				transition: background-color 5s;
 			}
 			
+			div.divider { 
+				width: 260.5px;  
+				border-right: 2px solid #B2B2B2; 
+				height: 100%; 
+				position: absolute; 
+				left: 36.00px; 
+			}
+			
 			div.srb_faq,span.srb_faq {
 				border: 2px dashed grey;
 			}
@@ -229,7 +239,6 @@
 				transform: rotate(90deg);
 			}
 		</style>
-		<script type="text/javascript" src="images/wz_jsgraphics.js"></script>
 	</head>
 	<body style='background-color: white'>
 		<span id='wrapper'>
@@ -7205,26 +7214,25 @@
 			<div style="position:absolute;left:287.21px;top:794.68px" class="cls_002"><span class="cls_002">- 59 -</span></div>
 		</div>
 		<div id="p060" style="position:absolute;left:050%;margin-left:-297px;top:50209px;width:595px;height:841px;border-style:outset;overflow:hidden">
-			<div style="position:absolute;left:0px;top:0px"><img src="images/background060.jpg" width=595 height=841></div>
-			<div style="position:absolute;left:054.00px;top:034.48px" class="cls_002"><span class="cls_002">&#10070; A card‘s controller is the player who currently</span></div>
+			<div style="position:absolute;left:054.00px;top:032.48px" class="cls_002"><span class="cls_002">&#10070; A card‘s controller is the player who currently</span></div>
 			<div style="position:absolute;left:072.02px;top:044.80px" class="cls_002"><span class="cls_002">controls the card. Some abilities may cause cards</span></div>
 			<div style="position:absolute;left:072.02px;top:055.12px" class="cls_002"><span class="cls_002">to change control during a game.</span></div>
-			<div style="position:absolute;left:054.00px;top:065.56px" class="cls_002"><span class="cls_002">&#10070; A player controls the cards in his or her out-of-play</span></div>
+			<div style="position:absolute;left:054.00px;top:063.56px" class="cls_002"><span class="cls_002">&#10070; A player controls the cards in his or her out-of-play</span></div>
 			<div style="position:absolute;left:072.02px;top:075.90px" class="cls_002"><span class="cls_002">game areas (such as the hand, the deck, and the</span></div>
 			<div style="position:absolute;left:072.02px;top:086.22px" class="cls_002"><span class="cls_002">discard pile).</span></div>
-			<div style="position:absolute;left:054.00px;top:096.54px" class="cls_002"><span class="cls_002">&#10070; If a card that has changed control leaves play, after</span></div>
+			<div style="position:absolute;left:054.00px;top:094.54px" class="cls_002"><span class="cls_002">&#10070; If a card that has changed control leaves play, after</span></div>
 			<div style="position:absolute;left:072.02px;top:106.98px" class="cls_002"><span class="cls_002">the resolution of the game occurrence that drives it</span></div>
 			<div style="position:absolute;left:072.02px;top:117.30px" class="cls_002"><span class="cls_002">from play, the card is physically placed in its</span></div>
 			<div style="position:absolute;left:072.02px;top:127.62px" class="cls_002"><span class="cls_002">owner‘s equivalent out of play area (hand, deck, or</span></div>
 			<div style="position:absolute;left:072.02px;top:137.94px" class="cls_002"><span class="cls_002">discard pile). Other card abilities cannot interact</span></div>
 			<div style="position:absolute;left:072.02px;top:148.38px" class="cls_002"><span class="cls_002">with this secondary physical placement.</span></div>
-			<div style="position:absolute;left:054.00px;top:158.70px" class="cls_002"><span class="cls_002">&#10070; When a character changes control while it is in play,</span></div>
+			<div style="position:absolute;left:054.00px;top:156.70px" class="cls_002"><span class="cls_002">&#10070; When a character changes control while it is in play,</span></div>
 			<div style="position:absolute;left:072.02px;top:169.02px" class="cls_002"><span class="cls_002">it remains in the same state it was in before (i.e.,</span></div>
 			<div style="position:absolute;left:072.02px;top:179.34px" class="cls_002"><span class="cls_002">readied or exhausted, damaged or not, etc.) and is</span></div>
 			<div style="position:absolute;left:072.02px;top:189.78px" class="cls_002"><span class="cls_002">moved to its new controller‘s play area.</span></div>
-			<div style="position:absolute;left:054.00px;top:200.10px" class="cls_002"><span class="cls_002">&#10070; Attachments on a card that changes control also</span></div>
+			<div style="position:absolute;left:054.00px;top:198.10px" class="cls_002"><span class="cls_002">&#10070; Attachments on a card that changes control also</span></div>
 			<div style="position:absolute;left:072.02px;top:210.42px" class="cls_002"><span class="cls_002">change control to the same new controller.</span></div>
-			<div style="position:absolute;left:054.00px;top:220.74px" class="cls_002"><span class="cls_002">&#10070; Unless a duration is specified, a control change</span></div>
+			<div style="position:absolute;left:054.00px;top:218.74px" class="cls_002"><span class="cls_002">&#10070; Unless a duration is specified, a control change</span></div>
 			<div style="position:absolute;left:072.02px;top:231.18px" class="cls_002"><span class="cls_002">persists as long as the card remains in play.</span></div>
 			<div style="position:absolute;left:036.00px;top:247.05px" class="cls_017"><span class="cls_017">Planning Phase</span></div>
 			<div style="position:absolute;left:036.00px;top:269.61px" class="cls_002"><span class="cls_002">The steps of this phase and how to play cards are described</span></div>
@@ -7240,26 +7248,26 @@
 			<div style="position:absolute;left:036.00px;top:396.81px" class="cls_002"><span class="cls_002">prohibitions regarding the potential of playing that card. A</span></div>
 			<div style="position:absolute;left:036.00px;top:407.27px" class="cls_002"><span class="cls_002">card that is put into play enters play in its controller‘s play</span></div>
 			<div style="position:absolute;left:036.00px;top:417.59px" class="cls_002"><span class="cls_002">area.</span></div>
-			<div style="position:absolute;left:054.00px;top:430.91px" class="cls_002"><span class="cls_002">&#10070; A card that is put into play is not considered to have</span></div>
+			<div style="position:absolute;left:054.00px;top:428.91px" class="cls_002"><span class="cls_002">&#10070; A card that is put into play is not considered to have</span></div>
 			<div style="position:absolute;left:072.02px;top:441.23px" class="cls_002"><span class="cls_002">been played.</span></div>
-			<div style="position:absolute;left:054.00px;top:451.67px" class="cls_002"><span class="cls_002">&#10070; In order to play a card, its cost (after modifiers)</span></div>
+			<div style="position:absolute;left:054.00px;top:449.67px" class="cls_002"><span class="cls_002">&#10070; In order to play a card, its cost (after modifiers)</span></div>
 			<div style="position:absolute;left:072.02px;top:461.99px" class="cls_002"><span class="cls_002">must be paid.</span></div>
-			<div style="position:absolute;left:054.00px;top:472.31px" class="cls_002"><span class="cls_002">&#10070; When a card is put into play, its resource cost is</span></div>
+			<div style="position:absolute;left:054.00px;top:470.31px" class="cls_002"><span class="cls_002">&#10070; When a card is put into play, its resource cost is</span></div>
 			<div style="position:absolute;left:072.02px;top:482.63px" class="cls_002"><span class="cls_002">ignored.</span></div>
-			<div style="position:absolute;left:054.00px;top:493.07px" class="cls_002"><span class="cls_002">&#10070; Unless otherwise instructed by the put into play</span></div>
+			<div style="position:absolute;left:054.00px;top:491.07px" class="cls_002"><span class="cls_002">&#10070; Unless otherwise instructed by the put into play</span></div>
 			<div style="position:absolute;left:072.02px;top:503.39px" class="cls_002"><span class="cls_002">effect, cards that enter play in this manner must do</span></div>
 			<div style="position:absolute;left:072.02px;top:513.71px" class="cls_002"><span class="cls_002">so in a play area or state that matches the rules of</span></div>
 			<div style="position:absolute;left:072.02px;top:524.03px" class="cls_002"><span class="cls_002">playing the card.</span></div>
-			<div style="position:absolute;left:054.00px;top:534.47px" class="cls_002"><span class="cls_002">&#10070; When an event card is played, place it on the table,</span></div>
+			<div style="position:absolute;left:054.00px;top:532.47px" class="cls_002"><span class="cls_002">&#10070; When an event card is played, place it on the table,</span></div>
 			<div style="position:absolute;left:072.02px;top:544.79px" class="cls_002"><span class="cls_002">resolve its ability, and place the card in its owner‘s</span></div>
 			<div style="position:absolute;left:072.02px;top:555.11px" class="cls_002"><span class="cls_002">discard pile.</span></div>
 			<div style="position:absolute;left:036.00px;top:570.98px" class="cls_017"><span class="cls_017">Play Restrictions and Permissions</span></div>
 			<div style="position:absolute;left:036.00px;top:593.54px" class="cls_002"><span class="cls_002">Many cards or abilities contain specific instructions pertaining</span></div>
 			<div style="position:absolute;left:036.00px;top:603.98px" class="cls_002"><span class="cls_002">to when or how they may or may not be used, or to specific</span></div>
 			<div style="position:absolute;left:036.00px;top:614.30px" class="cls_002"><span class="cls_002">conditions that must be true in order to use them.</span></div>
-			<div style="position:absolute;left:054.00px;top:627.62px" class="cls_002"><span class="cls_002">&#10070; In order to use an ability or play a card, all of its play</span></div>
+			<div style="position:absolute;left:054.00px;top:625.62px" class="cls_002"><span class="cls_002">&#10070; In order to use an ability or play a card, all of its play</span></div>
 			<div style="position:absolute;left:072.02px;top:637.94px" class="cls_002"><span class="cls_002">restrictions must be observed.</span></div>
-			<div style="position:absolute;left:054.00px;top:648.38px" class="cls_002"><span class="cls_002">&#10070; A permission is an optional play restriction, which</span></div>
+			<div style="position:absolute;left:054.00px;top:646.38px" class="cls_002"><span class="cls_002">&#10070; A permission is an optional play restriction, which</span></div>
 			<div style="position:absolute;left:072.02px;top:658.70px" class="cls_002"><span class="cls_002">allows a player to play a card or use an ability</span></div>
 			<div style="position:absolute;left:072.02px;top:669.02px" class="cls_002"><span class="cls_002">outside the timing or specifications generally</span></div>
 			<div style="position:absolute;left:072.02px;top:679.34px" class="cls_002"><span class="cls_002">provided by the game rules.</span></div>
@@ -7269,21 +7277,23 @@
 			<div style="position:absolute;left:036.00px;top:741.52px" class="cls_002"><span class="cls_002">and event cards shuffled into a deck from which a player</span></div>
 			<div style="position:absolute;left:036.00px;top:751.84px" class="cls_002"><span class="cls_002">draws his or her cards throughout the game.</span></div>
 			<div style="position:absolute;left:036.00px;top:765.04px" class="cls_006"><span class="cls_006">See also</span><span class="cls_002">: Deckbuilding, Running Out of Cards</span></div>
+			<div class="divider" style="top:034.48px;height:750.27px"></div>
+
 			<div style="position:absolute;left:315.41px;top:034.00px" class="cls_017"><span class="cls_017">Player Elimination</span></div>
 			<div style="position:absolute;left:315.41px;top:056.56px" class="cls_002"><span class="cls_002">A player is eliminated from the game if all of his or her</span></div>
 			<div style="position:absolute;left:315.41px;top:066.88px" class="cls_002"><span class="cls_002">heroes are killed, if his or her threat level reaches 50, of if a</span></div>
 			<div style="position:absolute;left:315.41px;top:077.34px" class="cls_002"><span class="cls_002">card effect forces his or her elimination.</span></div>
-			<div style="position:absolute;left:333.43px;top:090.66px" class="cls_002"><span class="cls_002">&#10070; When a player is eliminated, that player‘s hand, all</span></div>
+			<div style="position:absolute;left:333.43px;top:088.66px" class="cls_002"><span class="cls_002">&#10070; When a player is eliminated, that player‘s hand, all</span></div>
 			<div style="position:absolute;left:351.43px;top:100.98px" class="cls_002"><span class="cls_002">of the cards he or she controls, and his or her deck</span></div>
 			<div style="position:absolute;left:351.43px;top:111.30px" class="cls_002"><span class="cls_002">are placed in their owners‘ discard piles. Any</span></div>
 			<div style="position:absolute;left:351.43px;top:121.74px" class="cls_002"><span class="cls_002">enemies engaged with that player are returned to</span></div>
 			<div style="position:absolute;left:351.43px;top:132.06px" class="cls_002"><span class="cls_002">the staging area, retaining any damage tokens that</span></div>
 			<div style="position:absolute;left:351.43px;top:142.38px" class="cls_002"><span class="cls_002">are on them.</span></div>
-			<div style="position:absolute;left:333.43px;top:152.70px" class="cls_002"><span class="cls_002">&#10070; When a player is eliminated, the remaining players</span></div>
+			<div style="position:absolute;left:333.43px;top:150.70px" class="cls_002"><span class="cls_002">&#10070; When a player is eliminated, the remaining players</span></div>
 			<div style="position:absolute;left:351.43px;top:163.14px" class="cls_002"><span class="cls_002">continue to play the game, revealing one less</span></div>
 			<div style="position:absolute;left:351.43px;top:173.46px" class="cls_002"><span class="cls_002">encounter card during the quest phase now that</span></div>
 			<div style="position:absolute;left:351.43px;top:183.78px" class="cls_002"><span class="cls_002">there is one less player in the game.</span></div>
-			<div style="position:absolute;left:333.43px;top:194.10px" class="cls_002"><span class="cls_002">&#10070; If all players are eliminated, the game ends in a loss</span></div>
+			<div style="position:absolute;left:333.43px;top:192.10px" class="cls_002"><span class="cls_002">&#10070; If all players are eliminated, the game ends in a loss</span></div>
 			<div style="position:absolute;left:351.43px;top:204.54px" class="cls_002"><span class="cls_002">for the players.</span></div>
 			<div style="position:absolute;left:315.41px;top:220.38px" class="cls_017"><span class="cls_017">Playing a Card</span></div>
 			<div style="position:absolute;left:315.41px;top:242.73px" class="cls_006"><span class="cls_006">See</span><span class="cls_002">: Initiating Abilities/ Playing Cards</span></div>
@@ -7299,16 +7309,15 @@
 			<div style="position:absolute;left:315.41px;top:405.23px" class="cls_017"><span class="cls_017">Qualifiers</span></div>
 			<div style="position:absolute;left:315.41px;top:427.79px" class="cls_002"><span class="cls_002">If card text includes a qualifier followed by multiple terms, the</span></div>
 			<div style="position:absolute;left:315.41px;top:438.11px" class="cls_002"><span class="cls_002">qualifier applies to each item in the list, if it is applicable. </span><span class="cls_008">For</span></div>
-			<div style="position:absolute;left:315.41px;top:448.43px" class="cls_008"><span class="cls_008">example, in the phrase</span></div>
-			<div style="position:absolute;left:434.81px;top:448.43px" class="cls_008"><span class="cls_008">―each ready character and</span></div>
-			<div style="position:absolute;left:315.41px;top:458.75px" class="cls_008"><span class="cls_008">attachment‖ the word &quot;ready‖ applies to both ―character&quot; and</span></div>
+			<div style="position:absolute;left:315.41px;top:448.43px" class="cls_008"><span class="cls_008">example, in the phrase &quot;each ready character and</span></div>
+			<div style="position:absolute;left:315.41px;top:458.75px" class="cls_008"><span class="cls_008">attachment&quot; the word &quot;ready&quot; applies to both &quot;character&quot; and</span></div>
 			<div style="position:absolute;left:315.41px;top:469.07px" class="cls_008"><span class="cls_008">&quot;attachment.&quot;</span></div>
 			<div style="position:absolute;left:315.41px;top:485.03px" class="cls_017"><span class="cls_017">Quest Advancement</span></div>
 			<div style="position:absolute;left:315.41px;top:507.71px" class="cls_002"><span class="cls_002">Players immediately advance to the next stage of a quest as</span></div>
 			<div style="position:absolute;left:315.41px;top:518.03px" class="cls_002"><span class="cls_002">soon as they place a number of progress tokens equal to or</span></div>
 			<div style="position:absolute;left:315.41px;top:528.35px" class="cls_002"><span class="cls_002">greater than the number of quest points the current quest</span></div>
 			<div style="position:absolute;left:315.41px;top:538.67px" class="cls_002"><span class="cls_002">card has.</span></div>
-			<div style="position:absolute;left:333.43px;top:552.11px" class="cls_002"><span class="cls_002">&#10070; Additional progress tokens earned against the quest</span></div>
+			<div style="position:absolute;left:333.43px;top:550.11px" class="cls_002"><span class="cls_002">&#10070; Additional progress tokens earned against the quest</span></div>
 			<div style="position:absolute;left:351.43px;top:562.46px" class="cls_002"><span class="cls_002">do not carry over to the next stage.</span></div>
 			<div style="position:absolute;left:315.41px;top:578.30px" class="cls_017"><span class="cls_017">Quest Cards / Quest Deck</span></div>
 			<div style="position:absolute;left:315.41px;top:600.86px" class="cls_002"><span class="cls_002">Each quest card represents one of the various stages of the</span></div>
@@ -7327,7 +7336,6 @@
 			<div style="position:absolute;left:287.21px;top:794.68px" class="cls_002"><span class="cls_002">- 60 -</span></div>
 		</div>
 		<div id="p061" style="position:absolute;left:050%;margin-left:-297px;top:51060px;width:595px;height:841px;border-style:outset;overflow:hidden">
-			<div style="position:absolute;left:0px;top:0px"><img src="images/background061.jpg" width=595 height=841></div>
 			<div style="position:absolute;left:036.00px;top:034.48px" class="cls_002"><span class="cls_002">A character can declare ranged attacks against these targets</span></div>
 			<div style="position:absolute;left:036.00px;top:044.80px" class="cls_002"><span class="cls_002">while its owner is declaring attacks, or it can participate in</span></div>
 			<div style="position:absolute;left:036.00px;top:055.12px" class="cls_002"><span class="cls_002">attacks that are declared by other players. In either case, the</span></div>
@@ -7336,7 +7344,7 @@
 			<div style="position:absolute;left:036.00px;top:091.74px" class="cls_017"><span class="cls_017">Ready</span></div>
 			<div style="position:absolute;left:036.00px;top:114.30px" class="cls_002"><span class="cls_002">Cards enter play in a ready state, positioned so that their</span></div>
 			<div style="position:absolute;left:036.00px;top:124.74px" class="cls_002"><span class="cls_002">controller can read their text from left to right.</span></div>
-			<div style="position:absolute;left:054.00px;top:138.06px" class="cls_002"><span class="cls_002">&#10070; If a player is instructed to ready an exhausted card,</span></div>
+			<div style="position:absolute;left:054.00px;top:136.06px" class="cls_002"><span class="cls_002">&#10070; If a player is instructed to ready an exhausted card,</span></div>
 			<div style="position:absolute;left:072.02px;top:148.38px" class="cls_002"><span class="cls_002">the card is returned to this ready state.</span></div>
 			<div style="position:absolute;left:036.00px;top:161.46px" class="cls_006"><span class="cls_006">See also</span><span class="cls_002">: Exhausted</span></div>
 			<div style="position:absolute;left:036.00px;top:177.66px" class="cls_017"><span class="cls_017">Refresh Phase</span></div>
@@ -7358,7 +7366,7 @@
 			<div style="position:absolute;left:036.00px;top:393.93px" class="cls_002"><span class="cls_002">original triggering condition have resolved and it is time to</span></div>
 			<div style="position:absolute;left:036.00px;top:404.27px" class="cls_002"><span class="cls_002">resolve the triggering condition itself, the replacement effect</span></div>
 			<div style="position:absolute;left:036.00px;top:414.71px" class="cls_002"><span class="cls_002">resolves instead.</span></div>
-			<div style="position:absolute;left:054.00px;top:428.03px" class="cls_002"><span class="cls_002">&#10070; If multiple replacement effects are initiated against</span></div>
+			<div style="position:absolute;left:054.00px;top:426.03px" class="cls_002"><span class="cls_002">&#10070; If multiple replacement effects are initiated against</span></div>
 			<div style="position:absolute;left:072.02px;top:438.35px" class="cls_002"><span class="cls_002">the same triggering condition, the most recent</span></div>
 			<div style="position:absolute;left:072.02px;top:448.67px" class="cls_002"><span class="cls_002">replacement effect is the one that is used for the</span></div>
 			<div style="position:absolute;left:072.02px;top:459.11px" class="cls_002"><span class="cls_002">resolution of the triggering condition.</span></div>
@@ -7376,29 +7384,30 @@
 			<div style="position:absolute;left:036.00px;top:624.74px" class="cls_002"><span class="cls_002">by spending resource tokens from the resource pool of a</span></div>
 			<div style="position:absolute;left:036.00px;top:635.18px" class="cls_002"><span class="cls_002">hero who has a resource icon that matches that card‘s</span></div>
 			<div style="position:absolute;left:036.00px;top:645.50px" class="cls_002"><span class="cls_002">sphere of influence.</span></div>
-			<div style="position:absolute;left:054.00px;top:658.82px" class="cls_002"><span class="cls_002">&#10070; If a card is 0 cost and belongs to a sphere of</span></div>
+			<div style="position:absolute;left:054.00px;top:656.82px" class="cls_002"><span class="cls_002">&#10070; If a card is 0 cost and belongs to a sphere of</span></div>
 			<div style="position:absolute;left:072.02px;top:669.14px" class="cls_002"><span class="cls_002">influence, a resource match is still required to play</span></div>
 			<div style="position:absolute;left:072.02px;top:679.58px" class="cls_002"><span class="cls_002">that card.</span></div>
-			<div style="position:absolute;left:054.00px;top:689.90px" class="cls_002"><span class="cls_002">&#10070; Neutral cards do not require a resource match to</span></div>
+			<div style="position:absolute;left:054.00px;top:687.90px" class="cls_002"><span class="cls_002">&#10070; Neutral cards do not require a resource match to</span></div>
 			<div style="position:absolute;left:072.02px;top:700.22px" class="cls_002"><span class="cls_002">play.</span></div>
 			<div style="position:absolute;left:036.00px;top:713.30px" class="cls_006"><span class="cls_006">See also</span><span class="cls_002">: Sphere of Influence</span></div>
 			<div style="position:absolute;left:036.00px;top:729.52px" class="cls_017"><span class="cls_017">Resource Phase</span></div>
 			<div style="position:absolute;left:036.00px;top:752.08px" class="cls_002"><span class="cls_002">The steps of this phase and how to collect resources are</span></div>
 			<div style="position:absolute;left:036.00px;top:762.40px" class="cls_002"><span class="cls_002">described in timing entries 1.1-1.4 on page 68.</span></div>
+			<div class="divider" style="top:034.48px;height:750.27px"></div>
+
 			<div style="position:absolute;left:315.41px;top:034.00px" class="cls_017"><span class="cls_017">Response</span></div>
-			<div style="position:absolute;left:315.41px;top:056.56px" class="cls_002"><span class="cls_002">Response abilities are labeled by the word</span></div>
-			<div style="position:absolute;left:0512.58px;top:056.56px" class="cls_002"><span class="cls_002">&quot;Response&quot;</span></div>
+			<div style="position:absolute;left:315.41px;top:056.56px" class="cls_002"><span class="cls_002">Response abilities are labeled by the word &quot;Response&quot;</span></div>
 			<div style="position:absolute;left:315.41px;top:066.88px" class="cls_002"><span class="cls_002">followed by ability text. Unlike action abilities, which are</span></div>
 			<div style="position:absolute;left:315.41px;top:077.34px" class="cls_002"><span class="cls_002">resolved during action windows, response abilities may be</span></div>
 			<div style="position:absolute;left:315.41px;top:087.66px" class="cls_002"><span class="cls_002">executed after the specified triggering condition occurs, as</span></div>
 			<div style="position:absolute;left:315.41px;top:097.98px" class="cls_002"><span class="cls_002">described in the response‘s ability text.</span></div>
-			<div style="position:absolute;left:333.43px;top:111.30px" class="cls_002"><span class="cls_002">&#10070; It is possible for multiple responses to be executed</span></div>
+			<div style="position:absolute;left:333.43px;top:109.30px" class="cls_002"><span class="cls_002">&#10070; It is possible for multiple responses to be executed</span></div>
 			<div style="position:absolute;left:351.43px;top:121.74px" class="cls_002"><span class="cls_002">from the same triggering condition.</span></div>
-			<div style="position:absolute;left:333.43px;top:132.06px" class="cls_002"><span class="cls_002">&#10070; When two or more response abilities share the</span></div>
+			<div style="position:absolute;left:333.43px;top:130.06px" class="cls_002"><span class="cls_002">&#10070; When two or more response abilities share the</span></div>
 			<div style="position:absolute;left:351.43px;top:142.38px" class="cls_002"><span class="cls_002">same trigger, resolve all response effects that use</span></div>
 			<div style="position:absolute;left:351.43px;top:152.70px" class="cls_002"><span class="cls_002">the word &quot;when&quot; before resolving response effects</span></div>
 			<div style="position:absolute;left:351.43px;top:163.14px" class="cls_002"><span class="cls_002">that use the word &quot;after.&quot;</span></div>
-			<div style="position:absolute;left:333.43px;top:173.46px" class="cls_002"><span class="cls_002">&#10070; A response ability is always used immediately after</span></div>
+			<div style="position:absolute;left:333.43px;top:171.46px" class="cls_002"><span class="cls_002">&#10070; A response ability is always used immediately after</span></div>
 			<div style="position:absolute;left:351.43px;top:183.78px" class="cls_002"><span class="cls_002">its triggering condition has occurred and has been</span></div>
 			<div style="position:absolute;left:351.43px;top:194.10px" class="cls_002"><span class="cls_002">resolved. The first player always has the first</span></div>
 			<div style="position:absolute;left:351.43px;top:204.54px" class="cls_002"><span class="cls_002">opportunity to use an ability in response to a given</span></div>
@@ -7406,7 +7415,7 @@
 			<div style="position:absolute;left:351.43px;top:225.18px" class="cls_002"><span class="cls_002">so forth. Response opportunities for that triggering</span></div>
 			<div style="position:absolute;left:351.43px;top:235.53px" class="cls_002"><span class="cls_002">condition alternate between players in this manner</span></div>
 			<div style="position:absolute;left:351.43px;top:245.97px" class="cls_002"><span class="cls_002">until all players have passed consecutively.</span></div>
-			<div style="position:absolute;left:333.43px;top:256.29px" class="cls_002"><span class="cls_002">&#10070; Once the opportunity to react to a triggering</span></div>
+			<div style="position:absolute;left:333.43px;top:254.29px" class="cls_002"><span class="cls_002">&#10070; Once the opportunity to react to a triggering</span></div>
 			<div style="position:absolute;left:351.43px;top:266.61px" class="cls_002"><span class="cls_002">condition has been passed by all players, further</span></div>
 			<div style="position:absolute;left:351.43px;top:276.93px" class="cls_002"><span class="cls_002">responses to that specific triggering condition</span></div>
 			<div style="position:absolute;left:351.43px;top:287.25px" class="cls_002"><span class="cls_002">cannot be used.</span></div>
@@ -7448,7 +7457,6 @@
 			<div style="position:absolute;left:287.21px;top:794.68px" class="cls_002"><span class="cls_002">- 61 -</span></div>
 		</div>
 		<div id="p062" style="position:absolute;left:050%;margin-left:-297px;top:51911px;width:595px;height:841px;border-style:outset;overflow:hidden">
-			<div style="position:absolute;left:0px;top:0px"><img src="images/background062.jpg" width=595 height=841></div>
 			<div style="position:absolute;left:038.52px;top:034.48px" class="cls_002"><span class="cls_002">If the players win the game, use this process to determine</span></div>
 			<div style="position:absolute;left:036.00px;top:044.80px" class="cls_002"><span class="cls_002">their group‘s score for the game.</span></div>
 			<div style="position:absolute;left:071.42px;top:058.12px" class="cls_002"><span class="cls_002">1. Add together three undesirable elements: the</span></div>
@@ -7470,7 +7478,7 @@
 			<div style="position:absolute;left:036.00px;top:256.53px" class="cls_002"><span class="cls_002">requirements being searched for, the player may add that</span></div>
 			<div style="position:absolute;left:036.00px;top:266.97px" class="cls_002"><span class="cls_002">card to the game area indicated by the instructions on the</span></div>
 			<div style="position:absolute;left:036.00px;top:277.29px" class="cls_002"><span class="cls_002">search effect.</span></div>
-			<div style="position:absolute;left:054.00px;top:290.61px" class="cls_002"><span class="cls_002">&#10070; Cards in the process of being searched are not</span></div>
+			<div style="position:absolute;left:054.00px;top:288.61px" class="cls_002"><span class="cls_002">&#10070; Cards in the process of being searched are not</span></div>
 			<div style="position:absolute;left:072.02px;top:300.93px" class="cls_002"><span class="cls_002">considered to leave the searched area.</span></div>
 			<div style="position:absolute;left:036.00px;top:316.77px" class="cls_017"><span class="cls_017">Self-referential Abilities</span></div>
 			<div style="position:absolute;left:036.00px;top:339.45px" class="cls_002"><span class="cls_002">Self-referential abilities refer only to the card on which the</span></div>
@@ -7520,6 +7528,8 @@
 			<div style="position:absolute;left:350.83px;top:109.98px" class="cls_002"><span class="cls_002">of the first quest card typically provides setup</span></div>
 			<div style="position:absolute;left:350.83px;top:120.30px" class="cls_002"><span class="cls_002">instructions for a scenario. Follow these instructions</span></div>
 			<div style="position:absolute;left:350.83px;top:130.62px" class="cls_002"><span class="cls_002">before flipping the quest card.</span></div>
+			<div class="divider" style="top:034.48px;height:750.27px"></div>
+
 			<div style="position:absolute;left:315.41px;top:143.94px" class="cls_002"><span class="cls_002">After completing these steps, players begin the game</span></div>
 			<div style="position:absolute;left:315.41px;top:154.38px" class="cls_002"><span class="cls_002">starting with the first game round.</span></div>
 			<div style="position:absolute;left:315.41px;top:170.22px" class="cls_017"><span class="cls_017">Shadow Effects</span></div>
@@ -7533,6 +7543,7 @@
 			<div style="position:absolute;left:315.41px;top:290.13px" class="cls_017"><span class="cls_017">Spheres of Influence</span></div>
 			<div style="position:absolute;left:315.41px;top:312.69px" class="cls_002"><span class="cls_002">There are four different spheres of influence, as depicted in</span></div>
 			<div style="position:absolute;left:315.41px;top:323.01px" class="cls_002"><span class="cls_002">the diagram below.</span></div>
+			<div style="position:absolute;left:325.41px;top:343.01px"><img src="images/pg062_spheres.png" width=220 height=180></div>
 			<div style="position:absolute;left:315.41px;top:529.91px" class="cls_002"><span class="cls_002">If a player card has a sphere of influence icon, then it</span></div>
 			<div style="position:absolute;left:315.41px;top:540.23px" class="cls_002"><span class="cls_002">belongs to that sphere of influence.</span></div>
 			<div style="position:absolute;left:315.41px;top:553.43px" class="cls_006"><span class="cls_006">See also</span><span class="cls_002">: Resource Match</span></div>
@@ -7553,18 +7564,17 @@
 			<div style="position:absolute;left:287.21px;top:794.68px" class="cls_002"><span class="cls_002">- 62 -</span></div>
 		</div>
 		<div id="p063" style="position:absolute;left:050%;margin-left:-297px;top:52762px;width:595px;height:841px;border-style:outset;overflow:hidden">
-			<div style="position:absolute;left:0px;top:0px"><img src="images/background063.jpg" width=595 height=841></div>
 			<div style="position:absolute;left:036.00px;top:034.00px" class="cls_017"><span class="cls_017">Staging Area</span></div>
 			<div style="position:absolute;left:036.00px;top:056.56px" class="cls_002"><span class="cls_002">The staging area is a unique element of the game‘s playing</span></div>
 			<div style="position:absolute;left:036.00px;top:066.88px" class="cls_002"><span class="cls_002">field. It represents the potential dangers the players might</span></div>
 			<div style="position:absolute;left:036.00px;top:077.34px" class="cls_002"><span class="cls_002">face as they progress on their quest.</span></div>
-			<div style="position:absolute;left:054.00px;top:090.66px" class="cls_002"><span class="cls_002">&#10070; When an enemy, location, or objective is revealed,</span></div>
+			<div style="position:absolute;left:054.00px;top:088.66px" class="cls_002"><span class="cls_002">&#10070; When an enemy, location, or objective is revealed,</span></div>
 			<div style="position:absolute;left:072.02px;top:100.98px" class="cls_002"><span class="cls_002">it is added to the staging area.</span></div>
-			<div style="position:absolute;left:054.00px;top:111.30px" class="cls_002"><span class="cls_002">&#10070; While a location is in the staging area, the players</span></div>
+			<div style="position:absolute;left:054.00px;top:109.30px" class="cls_002"><span class="cls_002">&#10070; While a location is in the staging area, the players</span></div>
 			<div style="position:absolute;left:072.02px;top:121.74px" class="cls_002"><span class="cls_002">are not at that location. Each location in the staging</span></div>
 			<div style="position:absolute;left:072.02px;top:132.06px" class="cls_002"><span class="cls_002">area contributes its threat strength to the total threat</span></div>
 			<div style="position:absolute;left:072.02px;top:142.38px" class="cls_002"><span class="cls_002">strength in the staging area.</span></div>
-			<div style="position:absolute;left:054.00px;top:152.70px" class="cls_002"><span class="cls_002">&#10070; While an enemy is in the staging area, it is not</span></div>
+			<div style="position:absolute;left:054.00px;top:151.70px" class="cls_002"><span class="cls_002">&#10070; While an enemy is in the staging area, it is not</span></div>
 			<div style="position:absolute;left:072.02px;top:163.14px" class="cls_002"><span class="cls_002">engaged with a player. Each enemy in the staging</span></div>
 			<div style="position:absolute;left:072.02px;top:173.46px" class="cls_002"><span class="cls_002">area contributes its threat strength to the total threat</span></div>
 			<div style="position:absolute;left:072.02px;top:183.78px" class="cls_002"><span class="cls_002">strength in the staging area.</span></div>
@@ -7582,7 +7592,7 @@
 			<div style="position:absolute;left:036.00px;top:339.21px" class="cls_002"><span class="cls_002">Some effects use the word &quot;switch.&quot; In order to resolve such</span></div>
 			<div style="position:absolute;left:036.00px;top:349.53px" class="cls_002"><span class="cls_002">an effect, switched items must exist on each side of the</span></div>
 			<div style="position:absolute;left:036.00px;top:359.85px" class="cls_002"><span class="cls_002">switch.</span></div>
-			<div style="position:absolute;left:054.00px;top:373.17px" class="cls_002"><span class="cls_002">&#10070; When switching values, a value of &quot;0&quot; may be</span></div>
+			<div style="position:absolute;left:054.00px;top:371.17px" class="cls_002"><span class="cls_002">&#10070; When switching values, a value of &quot;0&quot; may be</span></div>
 			<div style="position:absolute;left:072.02px;top:383.61px" class="cls_002"><span class="cls_002">switched, but a null entry for the pertinent value field</span></div>
 			<div style="position:absolute;left:072.02px;top:393.93px" class="cls_002"><span class="cls_002">cannot be switched.</span></div>
 			<div style="position:absolute;left:036.00px;top:409.79px" class="cls_017"><span class="cls_017">Table Talk</span></div>
@@ -7597,10 +7607,10 @@
 			<div style="position:absolute;left:036.00px;top:532.91px" class="cls_002"><span class="cls_002">preceding the word &quot;then&quot; must be successfully resolved (or</span></div>
 			<div style="position:absolute;left:036.00px;top:543.23px" class="cls_002"><span class="cls_002">be true) in full before the remainder of the effect described</span></div>
 			<div style="position:absolute;left:036.00px;top:553.67px" class="cls_002"><span class="cls_002">after the word &quot;then&quot; can be resolved.</span></div>
-			<div style="position:absolute;left:054.00px;top:567.02px" class="cls_002"><span class="cls_002">&#10070; If the pre-then aspect of an effect does successfully</span></div>
+			<div style="position:absolute;left:054.00px;top:565.02px" class="cls_002"><span class="cls_002">&#10070; If the pre-then aspect of an effect does successfully</span></div>
 			<div style="position:absolute;left:072.02px;top:577.34px" class="cls_002"><span class="cls_002">resolve, the resolution of the post-then aspect of the</span></div>
 			<div style="position:absolute;left:072.02px;top:587.66px" class="cls_002"><span class="cls_002">effect must also attempt to resolve.</span></div>
-			<div style="position:absolute;left:054.00px;top:597.98px" class="cls_002"><span class="cls_002">&#10070; If the pre-then aspect of an effect does not</span></div>
+			<div style="position:absolute;left:054.00px;top:595.98px" class="cls_002"><span class="cls_002">&#10070; If the pre-then aspect of an effect does not</span></div>
 			<div style="position:absolute;left:072.02px;top:608.42px" class="cls_002"><span class="cls_002">successfully resolve in full, the post-then aspect</span></div>
 			<div style="position:absolute;left:072.02px;top:618.74px" class="cls_002"><span class="cls_002">does not attempt to resolve.</span></div>
 			<div style="position:absolute;left:036.00px;top:631.82px" class="cls_006"><span class="cls_006">See also</span><span class="cls_002">: Response, Triggered Ability</span></div>
@@ -7608,12 +7618,13 @@
 			<div style="position:absolute;left:036.00px;top:670.58px" class="cls_002"><span class="cls_002">Threat represents the level of risk a player has taken on</span></div>
 			<div style="position:absolute;left:036.00px;top:680.90px" class="cls_002"><span class="cls_002">during a scenario. The threat dial is used to track a player‘s</span></div>
 			<div style="position:absolute;left:036.00px;top:691.22px" class="cls_002"><span class="cls_002">threat level throughout the game.</span></div>
-			<div style="position:absolute;left:054.00px;top:704.54px" class="cls_002"><span class="cls_002">&#10070; A player‘s threat cannot be reduced below 0.</span></div>
+			<div style="position:absolute;left:054.00px;top:702.54px" class="cls_002"><span class="cls_002">&#10070; A player‘s threat cannot be reduced below 0.</span></div>
 			<div style="position:absolute;left:036.00px;top:720.50px" class="cls_017"><span class="cls_017">Threat Elimination Level</span></div>
 			<div style="position:absolute;left:036.00px;top:743.08px" class="cls_002"><span class="cls_002">The threat elimination level is the threat level at which a</span></div>
 			<div style="position:absolute;left:036.00px;top:753.40px" class="cls_002"><span class="cls_002">player is eliminated from the game.</span></div>
-			<div style="position:absolute;left:315.41px;top:034.48px" class="cls_002"><span class="cls_002">If a player‘s threat level reaches</span></div>
-			<div style="position:absolute;left:477.10px;top:034.48px" class="cls_002"><span class="cls_002">50, that player is</span></div>
+			<div class="divider" style="top:034.48px;height:750.27px"></div>
+
+			<div style="position:absolute;left:315.41px;top:034.48px" class="cls_002"><span class="cls_002">If a player‘s threat level reaches 50, that player is</span></div>
 			<div style="position:absolute;left:315.41px;top:044.80px" class="cls_002"><span class="cls_002">immediately eliminated from the game.</span></div>
 			<div style="position:absolute;left:315.41px;top:060.64px" class="cls_017"><span class="cls_017">Timing of Ability Resolution</span></div>
 			<div style="position:absolute;left:315.41px;top:083.34px" class="cls_002"><span class="cls_002">When multiple triggered abilities share the same trigger, they</span></div>
@@ -7624,26 +7635,25 @@
 			<div style="position:absolute;left:315.41px;top:147.06px" class="cls_002"><span class="cls_002">When determining the order of effect resolution among</span></div>
 			<div style="position:absolute;left:315.41px;top:157.38px" class="cls_002"><span class="cls_002">abilities within those categories, abilities that use the word</span></div>
 			<div style="position:absolute;left:315.41px;top:167.70px" class="cls_002"><span class="cls_002">&quot;when‖ are resolved before abilities that use the word ―after.&quot;</span></div>
-			<div style="position:absolute;left:333.43px;top:181.14px" class="cls_002"><span class="cls_002">&#10070; If two or more effects would occur simultaneously,</span></div>
+			<div style="position:absolute;left:333.43px;top:179.14px" class="cls_002"><span class="cls_002">&#10070; If two or more effects would occur simultaneously,</span></div>
 			<div style="position:absolute;left:351.43px;top:191.46px" class="cls_002"><span class="cls_002">the first player decides the order in which the effects</span></div>
 			<div style="position:absolute;left:351.43px;top:201.78px" class="cls_002"><span class="cls_002">resolve.</span></div>
-			<div style="position:absolute;left:333.43px;top:212.10px" class="cls_002"><span class="cls_002">&#10070; Cancel abilities interrupt this timing structure and</span></div>
+			<div style="position:absolute;left:333.43px;top:210.10px" class="cls_002"><span class="cls_002">&#10070; Cancel abilities interrupt this timing structure and</span></div>
 			<div style="position:absolute;left:351.43px;top:222.54px" class="cls_002"><span class="cls_002">may only be played immediately whenever their</span></div>
 			<div style="position:absolute;left:351.43px;top:232.86px" class="cls_002"><span class="cls_002">trigger condition would be met.</span></div>
 			<div style="position:absolute;left:315.41px;top:245.97px" class="cls_006"><span class="cls_006">See also</span><span class="cls_002">: Cancel</span></div>
 			<div style="position:absolute;left:315.41px;top:262.05px" class="cls_017"><span class="cls_017">To</span></div>
-			<div style="position:absolute;left:315.41px;top:284.61px" class="cls_002"><span class="cls_002">Many card abilities are presented in a</span></div>
-			<div style="position:absolute;left:490.48px;top:284.61px" class="cls_002"><span class="cls_002">&quot;do X to do Y&quot;</span></div>
+			<div style="position:absolute;left:315.41px;top:284.61px" class="cls_002"><span class="cls_002">Many card abilities are presented in a &quot;do X to do Y&quot;</span></div>
 			<div style="position:absolute;left:315.41px;top:295.05px" class="cls_002"><span class="cls_002">construct. In such a construct, the &quot;do X&quot; aspect</span></div>
-			<div style="position:absolute;left:315.41px;top:308.37px" class="cls_002"><span class="cls_002">(preceding the word &quot;to‖) is considered a cost, and the ―do Y&quot;</span></div>
+			<div style="position:absolute;left:315.41px;top:308.37px" class="cls_002"><span class="cls_002">(preceding the word &quot;to&quot;) is considered a cost, and the &quot;do Y&quot;</span></div>
 			<div style="position:absolute;left:315.41px;top:318.69px" class="cls_002"><span class="cls_002">aspect (following the word &quot;to&quot;) is considered an effect.</span></div>
-			<div style="position:absolute;left:333.43px;top:332.01px" class="cls_002"><span class="cls_002">&#10070; If an ability‘s cost is not paid, its effect cannot be</span></div>
+			<div style="position:absolute;left:333.43px;top:330.01px" class="cls_002"><span class="cls_002">&#10070; If an ability‘s cost is not paid, its effect cannot be</span></div>
 			<div style="position:absolute;left:351.43px;top:342.45px" class="cls_002"><span class="cls_002">resolved.</span></div>
 			<div style="position:absolute;left:315.41px;top:355.53px" class="cls_006"><span class="cls_006">See also</span><span class="cls_002">: Cost</span></div>
 			<div style="position:absolute;left:315.41px;top:371.61px" class="cls_017"><span class="cls_017">Traits</span></div>
 			<div style="position:absolute;left:315.41px;top:394.17px" class="cls_002"><span class="cls_002">Most cards have one or more traits listed at the top of the</span></div>
 			<div style="position:absolute;left:315.41px;top:404.51px" class="cls_002"><span class="cls_002">text box and printed in </span><span class="cls_007">Bold Italics</span><span class="cls_002">.</span></div>
-			<div style="position:absolute;left:333.43px;top:417.95px" class="cls_002"><span class="cls_002">&#10070; Traits have no inherent effects on the game.</span></div>
+			<div style="position:absolute;left:333.43px;top:415.95px" class="cls_002"><span class="cls_002">&#10070; Traits have no inherent effects on the game.</span></div>
 			<div style="position:absolute;left:351.43px;top:428.27px" class="cls_002"><span class="cls_002">Instead, some card abilities reference cards that</span></div>
 			<div style="position:absolute;left:351.43px;top:438.59px" class="cls_002"><span class="cls_002">possess or lack specific traits.</span></div>
 			<div style="position:absolute;left:315.41px;top:454.55px" class="cls_017"><span class="cls_017">Travel</span></div>
@@ -7665,20 +7675,19 @@
 			<div style="position:absolute;left:315.41px;top:682.34px" class="cls_017"><span class="cls_017">Triggered Ability</span></div>
 			<div style="position:absolute;left:315.41px;top:704.90px" class="cls_002"><span class="cls_002">A bold timing command, followed by a colon and the rest of</span></div>
 			<div style="position:absolute;left:315.41px;top:715.34px" class="cls_002"><span class="cls_002">the ability, is indicative of a triggered ability.</span></div>
-			<div style="position:absolute;left:333.43px;top:728.68px" class="cls_002"><span class="cls_002">&#10070; Action, response, forced, and when revealed</span></div>
+			<div style="position:absolute;left:333.43px;top:726.68px" class="cls_002"><span class="cls_002">&#10070; Action, response, forced, and when revealed</span></div>
 			<div style="position:absolute;left:351.43px;top:739.00px" class="cls_002"><span class="cls_002">abilities are triggered abilities.</span></div>
-			<div style="position:absolute;left:333.43px;top:749.32px" class="cls_002"><span class="cls_002">&#10070; A triggered ability on a player card can only be</span></div>
+			<div style="position:absolute;left:333.43px;top:747.32px" class="cls_002"><span class="cls_002">&#10070; A triggered ability on a player card can only be</span></div>
 			<div style="position:absolute;left:351.43px;top:759.64px" class="cls_002"><span class="cls_002">initiated if its effect has the potential to change the</span></div>
 			<div style="position:absolute;left:351.43px;top:770.08px" class="cls_002"><span class="cls_002">game state on its own. This potential is assessed</span></div>
 			<div style="position:absolute;left:287.21px;top:794.68px" class="cls_002"><span class="cls_002">- 63 -</span></div>
 		</div>
 		<div id="p064" style="position:absolute;left:050%;margin-left:-297px;top:53613px;width:595px;height:841px;border-style:outset;overflow:hidden">
-			<div style="position:absolute;left:0px;top:0px"><img src="images/background064.jpg" width=595 height=841></div>
 			<div style="position:absolute;left:072.02px;top:034.48px" class="cls_002"><span class="cls_002">without taking into account the consequences of the</span></div>
 			<div style="position:absolute;left:072.02px;top:044.80px" class="cls_002"><span class="cls_002">cost payment or future responses to the effect.</span></div>
-			<div style="position:absolute;left:054.00px;top:055.12px" class="cls_002"><span class="cls_002">&#10070; Unless prefaced by the word forced, all action and</span></div>
+			<div style="position:absolute;left:055.00px;top:053.12px" class="cls_002"><span class="cls_002">&#10070; Unless prefaced by the word forced, all action and</span></div>
 			<div style="position:absolute;left:072.02px;top:065.56px" class="cls_002"><span class="cls_002">response abilities are optional.</span></div>
-			<div style="position:absolute;left:054.00px;top:075.90px" class="cls_002"><span class="cls_002">&#10070; Forced abilities and when revealed abilities are</span></div>
+			<div style="position:absolute;left:054.00px;top:073.90px" class="cls_002"><span class="cls_002">&#10070; Forced abilities and when revealed abilities are</span></div>
 			<div style="position:absolute;left:072.02px;top:086.22px" class="cls_002"><span class="cls_002">triggered automatically by the game at the ability‘s</span></div>
 			<div style="position:absolute;left:072.02px;top:096.54px" class="cls_002"><span class="cls_002">appropriate timing point.</span></div>
 			<div style="position:absolute;left:036.00px;top:109.74px" class="cls_006"><span class="cls_006">See also</span><span class="cls_002">: Triggering Condition</span></div>
@@ -7688,8 +7697,8 @@
 			<div style="position:absolute;left:036.00px;top:169.14px" class="cls_002"><span class="cls_002">element of the ability that references such an occurrence,</span></div>
 			<div style="position:absolute;left:036.00px;top:179.46px" class="cls_002"><span class="cls_002">indicating the timing point at which the ability may be used.</span></div>
 			<div style="position:absolute;left:036.00px;top:189.78px" class="cls_002"><span class="cls_002">The description of an ability‘s triggering condition usually</span></div>
-			<div style="position:absolute;left:036.00px;top:200.10px" class="cls_002"><span class="cls_002">follows the word &quot;when‖ or ―after.&quot;</span></div>
-			<div style="position:absolute;left:054.00px;top:213.54px" class="cls_002"><span class="cls_002">&#10070; If a single game occurrence creates multiple</span></div>
+			<div style="position:absolute;left:036.00px;top:200.10px" class="cls_002"><span class="cls_002">follows the word &quot;when&quot; or &quot;after.&quot;</span></div>
+			<div style="position:absolute;left:052.00px;top:213.54px" class="cls_002"><span class="cls_002">&#10070; If a single game occurrence creates multiple</span></div>
 			<div style="position:absolute;left:072.02px;top:223.86px" class="cls_002"><span class="cls_002">triggering conditions (such as a single attack</span></div>
 			<div style="position:absolute;left:072.02px;top:234.18px" class="cls_002"><span class="cls_002">causing a character to both take damage and be</span></div>
 			<div style="position:absolute;left:072.02px;top:244.53px" class="cls_002"><span class="cls_002">defeated), those triggering conditions are handled</span></div>
@@ -7700,12 +7709,12 @@
 			<div style="position:absolute;left:036.00px;top:304.77px" class="cls_017"><span class="cls_017">Type, Types</span></div>
 			<div style="position:absolute;left:036.00px;top:327.21px" class="cls_006"><span class="cls_006">See</span><span class="cls_002">: Cardtypes</span></div>
 			<div style="position:absolute;left:036.00px;top:343.29px" class="cls_017"><span class="cls_017">Unique Cards</span></div>
-			<div style="position:absolute;left:036.00px;top:369.33px" class="cls_002"><span class="cls_002">The <img class="symbol" src="images/sym_unique.jpg"> symbol before a card‘s title indicates the card is</span></div>
+			<div style="position:absolute;left:036.00px;top:366.33px" class="cls_002"><span class="cls_002">The <img class="symbol" src="images/sym_unique.jpg"> symbol before a card‘s title indicates the card is</span></div>
 			<div style="position:absolute;left:036.00px;top:379.77px" class="cls_002"><span class="cls_002">&quot;unique.&quot; The players as a group may have only one copy of</span></div>
 			<div style="position:absolute;left:036.00px;top:390.09px" class="cls_002"><span class="cls_002">each unique card, by title, in play.</span></div>
-			<div style="position:absolute;left:054.00px;top:403.43px" class="cls_002"><span class="cls_002">&#10070; A player cannot play or put into play a unique card if</span></div>
+			<div style="position:absolute;left:054.00px;top:402.43px" class="cls_002"><span class="cls_002">&#10070; A player cannot play or put into play a unique card if</span></div>
 			<div style="position:absolute;left:072.02px;top:413.87px" class="cls_002"><span class="cls_002">a copy of that card is already in play.</span></div>
-			<div style="position:absolute;left:054.00px;top:424.19px" class="cls_002"><span class="cls_002">&#10070; If a unique version of a character enters play from</span></div>
+			<div style="position:absolute;left:054.00px;top:422.19px" class="cls_002"><span class="cls_002">&#10070; If a unique version of a character enters play from</span></div>
 			<div style="position:absolute;left:072.02px;top:434.51px" class="cls_002"><span class="cls_002">the encounter deck and there is already a copy of</span></div>
 			<div style="position:absolute;left:072.02px;top:444.83px" class="cls_002"><span class="cls_002">that character under a player‘s control, that player</span></div>
 			<div style="position:absolute;left:072.02px;top:455.27px" class="cls_002"><span class="cls_002">must discard the version he or she controls.</span></div>
@@ -7714,6 +7723,8 @@
 			<div style="position:absolute;left:036.00px;top:506.99px" class="cls_002"><span class="cls_002">Victory is a keyword ability. When an enemy or location with</span></div>
 			<div style="position:absolute;left:036.00px;top:517.43px" class="cls_002"><span class="cls_002">the victory keyword is defeated or explored, it is placed in the</span></div>
 			<div style="position:absolute;left:036.00px;top:527.75px" class="cls_002"><span class="cls_002">victory display instead of the encounter discard pile.</span></div>
+			<div class="divider" style="top:034.48px;height:750.27px"></div>
+			
 			<div style="position:absolute;left:315.41px;top:034.48px" class="cls_002"><span class="cls_002">The victory keyword appears on the lower right portion of a</span></div>
 			<div style="position:absolute;left:315.41px;top:044.80px" class="cls_002"><span class="cls_002">card and is not considered to be part of the card‘s text box.</span></div>
 			<div style="position:absolute;left:315.41px;top:055.12px" class="cls_002"><span class="cls_002">Card effects that blank a card‘s text box do not blank the</span></div>
@@ -7722,8 +7733,7 @@
 			<div style="position:absolute;left:315.41px;top:089.22px" class="cls_002"><span class="cls_002">are applied to the group‘s score.</span></div>
 			<div style="position:absolute;left:315.41px;top:102.30px" class="cls_006"><span class="cls_006">See also</span><span class="cls_002">: Scoring</span></div>
 			<div style="position:absolute;left:315.41px;top:118.50px" class="cls_017"><span class="cls_017">When</span></div>
-			<div style="position:absolute;left:315.41px;top:141.06px" class="cls_002"><span class="cls_002">The word</span></div>
-			<div style="position:absolute;left:363.00px;top:141.06px" class="cls_002"><span class="cls_002">&quot;when&quot; refers to a game occurrence that is</span></div>
+			<div style="position:absolute;left:315.41px;top:141.06px" class="cls_002"><span class="cls_002">The word &quot;when&quot; refers to a game occurrence that is</span></div>
 			<div style="position:absolute;left:315.41px;top:151.38px" class="cls_002"><span class="cls_002">underway but not yet concluded. Some response abilities</span></div>
 			<div style="position:absolute;left:315.41px;top:161.70px" class="cls_002"><span class="cls_002">use the word &quot;when&quot; to specify the timing of their triggering</span></div>
 			<div style="position:absolute;left:315.41px;top:172.14px" class="cls_002"><span class="cls_002">condition.</span></div>
@@ -7732,7 +7742,7 @@
 			<div style="position:absolute;left:315.41px;top:223.86px" class="cls_002"><span class="cls_002">Each character has a willpower strength. This value indicates</span></div>
 			<div style="position:absolute;left:315.41px;top:234.18px" class="cls_002"><span class="cls_002">the contribution the character makes towards successfully</span></div>
 			<div style="position:absolute;left:315.41px;top:244.65px" class="cls_002"><span class="cls_002">questing while it is committed to a quest.</span></div>
-			<div style="position:absolute;left:333.43px;top:261.45px" class="cls_002"><span class="cls_002">&#10070; Willpower strength is denoted by the <img class="symbol" src="images/sym_willpower.png"> symbol.</span></div>
+			<div style="position:absolute;left:333.43px;top:258.45px" class="cls_002"><span class="cls_002">&#10070; Willpower strength is denoted by the <img class="symbol" src="images/sym_willpower.png"> symbol.</span></div>
 			<div style="position:absolute;left:315.41px;top:274.65px" class="cls_006"><span class="cls_006">See also</span><span class="cls_002">: Quest Phase</span></div>
 			<div style="position:absolute;left:315.41px;top:290.73px" class="cls_017"><span class="cls_017">Winning the Game</span></div>
 			<div style="position:absolute;left:315.41px;top:313.29px" class="cls_002"><span class="cls_002">If at least one player survives through the completion of the</span></div>
@@ -10049,7 +10059,7 @@
 			<div style="position:absolute;left:315.41px;top:034.48px" class="cls_002"><span class="cls_002">area. Facedown cards that have been reanimated are called</span></div>
 			<div style="position:absolute;left:315.41px;top:044.44px" class="cls_002"><span class="cls_002">&quot;Reanimated Dead&quot; and act as if they are</span><span class="cls_041"> </span><span class="cls_007">Undead</span><span class="cls_041"> </span><span class="cls_002">enemy</span></div>
 			<div style="position:absolute;left:315.41px;top:059.08px" class="cls_002"><span class="cls_002">cards with 0 engagement cost, 2</span></div>
-			<div style="position:absolute;left:0517.30px;top:059.08px" class="cls_002"><span class="cls_002">, and 2 hit</span></div>
+			<div style="position:absolute;left:517.30px;top:059.08px" class="cls_002"><span class="cls_002">, and 2 hit</span></div>
 			<div style="position:absolute;left:496.89px;top:059.08px" class="cls_002"><span class="cls_002">2</span></div>
 			<div style="position:absolute;left:470.73px;top:059.08px" class="cls_002"><span class="cls_002">2</span></div>
 			<div style="position:absolute;left:464.86px;top:059.08px" class="cls_002"><span class="cls_002">,</span></div>
@@ -10334,7 +10344,6 @@
 			<div style="position:absolute;left:287.21px;top:794.68px" class="cls_002"><span class="cls_002">- 92 -</span></div>
 		</div>
 		<div id="p093" style="position:absolute;left:050%;margin-left:-297px;top:78292px;width:595px;height:841px;border-style:outset;overflow:hidden">
-			<div style="position:absolute;left:0px;top:0px"><img src="images/background093.jpg" width=595 height=841></div>
 			<div style="position:absolute;left:036.00px;top:034.48px" class="cls_002"><span class="cls_002">players would, first advancing to the &quot;C&quot; side of the next</span></div>
 			<div style="position:absolute;left:036.00px;top:044.80px" class="cls_002"><span class="cls_002">stage, resolving its effects, and then advancing to the &quot;D&quot;</span></div>
 			<div style="position:absolute;left:036.00px;top:055.12px" class="cls_002"><span class="cls_002">side.</span></div>
@@ -10355,8 +10364,8 @@
 			<div style="position:absolute;left:315.41px;top:054.88px" class="cls_006"><span class="cls_006">longer immune to player card effects, can leave the</span></div>
 			<div style="position:absolute;left:315.41px;top:065.32px" class="cls_006"><span class="cls_006">Stormcaller‟s area, and are considered to be in the</span></div>
 			<div style="position:absolute;left:315.41px;top:079.14px" class="cls_006"><span class="cls_006">staging area</span><span class="cls_002"> (and thus do contribute their</span></div>
-			<div style="position:absolute;left:0525.82px;top:079.14px" class="cls_002"><span class="cls_002">to</span></div>
-			<div style="position:absolute;left:0546.94px;top:079.14px" class="cls_002"><span class="cls_002">the</span></div>
+			<div style="position:absolute;left:525.82px;top:079.14px" class="cls_002"><span class="cls_002">to</span></div>
+			<div style="position:absolute;left:546.94px;top:079.14px" class="cls_002"><span class="cls_002">the</span></div>
 			<div style="position:absolute;left:315.41px;top:093.30px" class="cls_002"><span class="cls_002">total</span></div>
 			<div style="position:absolute;left:349.51px;top:093.30px" class="cls_002"><span class="cls_002">in the staging area). Thus, by catching up to the</span></div>
 			<div style="position:absolute;left:315.41px;top:103.74px" class="cls_002"><span class="cls_002">same quest stage as the Stormcaller, the players can travel</span></div>
@@ -10399,7 +10408,7 @@
 			<div style="position:absolute;left:418.77px;top:246.33px" class="cls_002"><span class="cls_002">with</span></div>
 			<div style="position:absolute;left:450.90px;top:246.33px" class="cls_002"><span class="cls_002">that</span></div>
 			<div style="position:absolute;left:482.08px;top:246.33px" class="cls_002"><span class="cls_002">location,</span></div>
-			<div style="position:absolute;left:0531.72px;top:246.33px" class="cls_002"><span class="cls_002">freeing</span></div>
+			<div style="position:absolute;left:531.72px;top:246.33px" class="cls_002"><span class="cls_002">freeing</span></div>
 			<div style="position:absolute;left:315.41px;top:256.53px" class="cls_002"><span class="cls_002">the </span><span class="cls_008">Stormcaller</span><span class="cls_002"> from the creature‘s grasp!</span></div>
 			<div style="position:absolute;left:315.41px;top:272.61px" class="cls_020"><span class="cls_020">R</span><span class="cls_021">ULINGS</span></div>
 			<div style="position:absolute;left:315.41px;top:293.49px" class="cls_034"><span class="cls_034">The Stormcaller & The Thing in the</span></div>
@@ -11415,7 +11424,7 @@
 			<div style="position:absolute;left:315.41px;top:576.38px" class="cls_051"><span class="cls_051">must work together in order to defeat the scenario card.</span></div>
 			<div style="position:absolute;left:315.41px;top:590.18px" class="cls_052"><span class="cls_052">Setting Up Epic Multiplayer Mode</span></div>
 			<div style="position:absolute;left:315.41px;top:604.10px" class="cls_051"><span class="cls_051">The </span><span class="cls_052">Setup</span><span class="cls_051"> instructions on the epic multiplayer mode</span></div>
-			<div style="position:absolute;left:0510.47px;top:615.14px" class="cls_051"><span class="cls_051">3 separate</span></div>
+			<div style="position:absolute;left:510.47px;top:615.14px" class="cls_051"><span class="cls_051">3 separate</span></div>
 			<div style="position:absolute;left:315.41px;top:615.14px" class="cls_051"><span class="cls_051">setup card instruct the players to create</span></div>
 			<div style="position:absolute;left:315.41px;top:626.06px" class="cls_051"><span class="cls_051">staging areas with 3 different quest decks. To do this,</span></div>
 			<div style="position:absolute;left:315.41px;top:636.98px" class="cls_051"><span class="cls_051">take the quest card from a single copy of </span><span class="cls_050">The Siege of</span></div>
@@ -11757,7 +11766,7 @@
 			<div style="position:absolute;left:333.43px;top:571.82px" class="cls_002"><span class="cls_002">&#10070; The deck must be exactly 35 encounter cards (not</span></div>
 			<div style="position:absolute;left:054.00px;top:578.90px" class="cls_002"><span class="cls_002">&#10070; 70 encounter cards (14 encounter sets of 5 cards</span></div>
 			<div style="position:absolute;left:351.43px;top:582.14px" class="cls_002"><span class="cls_002">counting the double-sided Rhosgobel</span></div>
-			<div style="position:absolute;left:0516.11px;top:582.14px" class="cls_002"><span class="cls_002">/ Rider of</span></div>
+			<div style="position:absolute;left:516.11px;top:582.14px" class="cls_002"><span class="cls_002">/ Rider of</span></div>
 			<div style="position:absolute;left:072.02px;top:589.22px" class="cls_002"><span class="cls_002">each)</span></div>
 			<div style="position:absolute;left:351.43px;top:592.46px" class="cls_002"><span class="cls_002">Mirkwood card).</span></div>
 			<div style="position:absolute;left:036.00px;top:602.30px" class="cls_006"><span class="cls_006">Note</span><span class="cls_002">: The encounter cards in </span><span class="cls_008">The Wizard's Quest</span><span class="cls_002"> are fully</span></div>
@@ -11964,7 +11973,7 @@
 			<div style="position:absolute;left:315.41px;top:443.27px" class="cls_002"><span class="cls_002">resource phase. However, this version of Bilbo Baggins has</span></div>
 			<div style="position:absolute;left:315.41px;top:453.59px" class="cls_002"><span class="cls_002">the text: "cannot gain resources from non-treasure cards."</span></div>
 			<div style="position:absolute;left:315.41px;top:467.75px" class="cls_002"><span class="cls_002">Therefore, managing a limited number of</span></div>
-			<div style="position:absolute;left:0519.82px;top:467.75px" class="cls_002"><span class="cls_002">resources</span></div>
+			<div style="position:absolute;left:519.82px;top:467.75px" class="cls_002"><span class="cls_002">resources</span></div>
 			<div style="position:absolute;left:315.41px;top:478.07px" class="cls_002"><span class="cls_002">becomes an important part of each scenario. In addition to</span></div>
 			<div style="position:absolute;left:036.00px;top:484.31px" class="cls_002"><span class="cls_002">Any treasure card that meets the abo</span></div>
 			<div style="position:absolute;left:260.71px;top:484.31px" class="cls_002"><span class="cls_002">n be</span></div>
@@ -12133,7 +12142,7 @@
 			<div style="position:absolute;left:315.41px;top:117.30px" class="cls_002"><span class="cls_002">grab! Pinch, nab!, 1x The Goblins' Caves</span></div>
 			<div style="position:absolute;left:036.00px;top:136.26px" class="cls_027"><span class="cls_027">F</span><span class="cls_020">LIES AND </span><span class="cls_027">S</span><span class="cls_020">PIDERS</span></div>
 			<div style="position:absolute;left:333.43px;top:158.94px" class="cls_024"><span class="cls_024"> </span><span class="cls_002"> Players cannot affect other players</span></div>
-			<div style="position:absolute;left:0518.49px;top:159.90px" class="cls_002"><span class="cls_002">(or cards</span></div>
+			<div style="position:absolute;left:518.49px;top:159.90px" class="cls_002"><span class="cls_002">(or cards</span></div>
 			<div style="position:absolute;left:351.43px;top:170.34px" class="cls_002"><span class="cls_002">controlled by players) that do not share a common</span></div>
 			<div style="position:absolute;left:351.43px;top:180.66px" class="cls_002"><span class="cls_002">staging area. This means that you cannot lower a</span></div>
 			<div style="position:absolute;left:036.00px;top:186.66px" class="cls_020"><span class="cls_020">K</span><span class="cls_021">EYWORDS</span></div>
@@ -13496,7 +13505,7 @@
 			<div style="position:absolute;left:117.62px;top:065.44px" class="cls_002"><span class="cls_002">Dwarf character from your hand, exhaust</span></div>
 			<div style="position:absolute;left:386.47px;top:068.92px" class="cls_002"><span class="cls_002">to give attached hero a</span></div>
 			<div style="position:absolute;left:495.58px;top:068.92px" class="cls_002"><span class="cls_002">,</span></div>
-			<div style="position:absolute;left:0513.10px;top:068.92px" class="cls_002"><span class="cls_002">,</span></div>
+			<div style="position:absolute;left:513.10px;top:068.92px" class="cls_002"><span class="cls_002">,</span></div>
 			<div style="position:absolute;left:0530.74px;top:068.92px" class="cls_002"><span class="cls_002">, or</span></div>
 			<div style="position:absolute;left:117.62px;top:075.90px" class="cls_002"><span class="cls_002">Legacy of Durin to draw 1 card.‖</span></div>
 			<div style="position:absolute;left:386.47px;top:079.38px" class="cls_002"><span class="cls_002">icon until the end of the Phase."</span></div>
@@ -13597,7 +13606,7 @@
 			<div style="position:absolute;left:117.62px;top:130.14px" class="cls_008"><span class="cls_008">pool (and not Beorn) are not affected by</span></div>
 			<div style="position:absolute;left:386.47px;top:134.10px" class="cls_002"><span class="cls_002">"then", Sam's bonus to</span></div>
 			<div style="position:absolute;left:496.54px;top:134.10px" class="cls_002"><span class="cls_002">,</span></div>
-			<div style="position:absolute;left:0518.50px;top:134.10px" class="cls_002"><span class="cls_002">and</span></div>
+			<div style="position:absolute;left:518.50px;top:134.10px" class="cls_002"><span class="cls_002">and</span></div>
 			<div style="position:absolute;left:0552.94px;top:134.10px" class="cls_002"><span class="cls_002">is</span></div>
 			<div style="position:absolute;left:117.62px;top:140.58px" class="cls_008"><span class="cls_008">his immunity to player card effects.</span></div>
 			<div style="position:absolute;left:386.47px;top:144.54px" class="cls_002"><span class="cls_002">not dependent on him readying. His</span></div>
