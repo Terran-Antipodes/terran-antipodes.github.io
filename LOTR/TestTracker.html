@@ -1115,7 +1115,7 @@
                 fragment = '#page=' + helpInfo[0] + '&zoom=100,' + helpInfo[1] + ',' + helpInfo[2] + '&pagemode=none&view=FitH';
                 query = '';
             }
-            GAME_HELP_DISPLAY.innerHTML = "<object data='" + address + query + fragment + "' type='application/pdf'></object>";
+            GAME_HELP_DISPLAY.innerHTML = "<iframe src='" + address + query + fragment + "' ></iframe>";
             GAME_HELP.classList.remove('hidden');
         }
 

@@ -2,6 +2,27 @@
 This website is an SPA intended to provide a non-commercial aid while playing the [Lord of the Rings LCG](https://www.fantasyflightgames.com/en/products/the-lord-of-the-rings-the-card-game/) from [Final Flight Game](https://www.fantasyflightgames.com/en/index/).
 
 ##Version History
+###v1.4.0
+Revised help system
+ - i3: Added HTML display of the Rules Compendium.
+Nav Bars
+ - Tweaks to nav-bar font sizing and colours.
+ - Added Options.
+ - Fixed fade-in and fade-out of About.
+ - Added auto-display of 'skip' nav bars.
+ - i9: Fixed Back causing error in Setup Phase.
+ - i10:Back functions right back to first step in Setup Phase.
+Options
+ - Compendium preferred over Companion.
+ - Compendium as HTML or PDF.
+Appearance
+ - Adjust images on resize.
+ - Adjust outline box on resize.
+Internal
+- Removed ununsed Round.png image.
+- Changed references to Rules to Help for clarity.
+- Standardized coding standard on CAPS for constants, CamelCase for globals.
+- Change declaration of constants and globals.
 ###v1.3.1
 Fixed Help close button not working.
 ###v1.3.0
