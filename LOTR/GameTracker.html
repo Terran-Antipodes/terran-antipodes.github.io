@@ -594,7 +594,7 @@
         </form>
     </div>
     <script>
-        var version = 'v1.3.1';
+        var VERSION = 'v1.4.0';
 
         /* define game steps */
         var Sequence = JSON.parse(
@@ -1433,7 +1433,7 @@
         }
 
         function recordOptions() {
-            stateHistory = localStorage.getItem('stateHistory');
+            stateHistory = localStorage.getItem('stateHistory') ?? '0';
             var states = stateHistory.split(',');
             var last = Number(states.pop());
             if ((last < 0) || (last > 255)) {
