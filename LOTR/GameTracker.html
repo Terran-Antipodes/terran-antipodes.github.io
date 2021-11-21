@@ -114,6 +114,73 @@
             transform: rotate(45deg);
         }
     </style>
+    <style>  /* Custom radio buttons and checkboxes */
+        /* Style for the label */
+        .choiceHolder {
+            display: block;
+            text-align: left;
+            position: relative;
+            padding-left: 4vmin;
+            margin: 1vmin;
+            cursor: pointer;
+            font-size: 3vmin;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        /* Hide the browser's default radio button */
+        .choiceHolder input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+
+        /* Create a custom radio button */
+        .indicator {
+            position: absolute;
+            left: 0;
+            height: 3vmin;
+            width: 3vmin;
+            background-color: #EEEEEE;
+            border-radius: 50%;
+        }
+
+        /* On mouse-over, add a grey background color */
+        .choiceHolder:hover input ~ .indicator {
+            background-color: #CCCCCC;
+        }
+
+        /* When the radio button is checked, add a blue background */
+        .choiceHolder input:checked ~ .indicator {
+            background-color: #2196F3;
+        }
+
+        /* Create the indicator (the dot/circle - hidden when not checked) */
+        .indicator:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        /* Show the indicator (dot/circle) when checked */
+        .choiceHolder input:checked ~ .indicator:after {
+            display: block;
+        }
+
+        /* Style the indicator (dot/circle) */
+        .choiceHolder .indicator:after {
+            top: 0.75vmin;
+            left: 0.75vmin;
+            width: 1.5vmin;
+            height: 1.5vmin;
+            border-radius: 50%;
+            background: white;
+        }
+    </style>
     <style> /* Background display */
         .BackgroundContainer {
             height: 100%;
@@ -158,50 +225,53 @@
             z-index: 20;
 
             text-decoration: none; /* Remove underline */
-            font-size: 3vmin;
+            font-size: 3vh;
             text-align: center; /* Centres text horizontally in the anchor element */
             line-height: 3vh;
-            transition: 0.3s; /* Add transition on hover */
             padding: 2vh;
         }
 
         #SideNavLeft a {
             border-radius: 0 5px 5px 0; /* Rounded corners on the top right and bottom right side */
             left: -15vw; /* Position them outside of the screen */
+            transition: 0.3s; /* Add transition on hover */
         }
 
-        #SideNavLeft a:hover {
+        #SideNavLeft a:hover,#SideNavLeft a.simhover {
             left: 0; /* On mouse-over, make the elements appear as they should */
             color: white; /* White text color */
             opacity: 1;
+            transition: 0.3s; /* Add transition on hover */
         }
 
         #SideNavRight a {
             border-radius: 5px 0 0 5px; /* Rounded corners on the top left and bottom left side */
             right: -15vw; /* Position them outside of the screen */
+            transition: 0.3s; /* Add transition on hover */
         }
 
-        #SideNavRight a:hover {
+        #SideNavRight a:hover,#SideNavRight a.simhover {
             right: 0; /* On mouse-over, make the elements appear as they should */
             color: white; /* White text color */
             opacity: 1;
+            transition: 0.3s; /* Add transition on hover */
         }
 
         #newGame { /* The newgame_verify() link */
             top: 5vh;
-            background-color: #04AA6D; /* Green */
+            background-color: #04AA6D;
             color: #04AA6D;
         }
 
         #back { /* The game_backToPreviousStep() link */
             top: 16vh;
-            background-color: #2196F3; 
+            background-color: #2196F3;
             color: #2196F3;
         }
 
         #skip {
             top: 27vh;
-            background-color: #f44336; 
+            background-color: #f44336;
             color: #f44336;
         }
 
@@ -213,23 +283,23 @@
 
         #vp {
             top: 60vh;
-            background-color: #BDB76B; 
+            background-color: #BDB76B;
             color: #BDB76B;
         }
 
         #options {
             top: 49vh;
-            background-color: #FFC300; 
-            color: #FFC300;
+            background-color: #199fA9;
+            color: #199fA9;
         }
 
         #about {
             top: 60vh;
-            background-color: #C8FF00; 
-            color: #C8FF00;
+            background-color: #FFC300;
+            color: #FFC300;
         }
     </style>
-    <style> /* Modal */
+    <style> /* Modal Dialogue */
         /* (adapted from https://cssdeck.com/labs/css3-sleek-black-modal) */
         .modal {
             /* basic */
@@ -372,17 +442,17 @@
             100% { opacity: 0; }
         }
     </style>
-    <style> /* Rules */
-        .rules {
+    <style> /* Help */
+        .help {
             position: fixed; /* Stay in place */
-            z-index: 11; /* Sit on top of Modal */
+            z-index: 11; /* Sit on top of modal dialogue */
             left: 5vw;
             width: 90vw;
             top: 2vw;
             background: #909497;
         }
 
-        #gameRulesHeader {
+        #gameHelpHeader {
             margin-top: 7vh 0 10vh;
             color: #FFD700;
             font-size: 5vh;
@@ -390,12 +460,12 @@
             text-shadow: 0 0px 5px rgba(0,0,0,.25), 0 -1px 1px #000;
         }
 
-        .rules object {
+        .help object {
             width: 90vw;
             height: 70vh;
         }
 
-        .rulesBtn {
+        .helpBtn {
             background: DarkTurquoise;
             display: block;
             padding: 2% 2%;
@@ -420,49 +490,44 @@
     </style>
     <style>
         #InfoArea {
-            font-size: 1vw;
             position: fixed;
             bottom: 0px;
             float: left;
+            font-size: 1vw;
             z-index: 50;
         }
 
-        #RightsArea {
-            font-size: 2vw;
-            text-align: center;
+        #AboutArea {
             position: absolute;
             padding: 2vh 2vw;
             top: 15vh;
             left: 10vw;
             width: 80vw;
+            text-align: center;
+            font-size: 2vw;
+            padding: 2vmax;
             color: white;
             background-color: SlateGray;
             z-index: 50;
         }
 
         #OptionsArea {
-            font-size: 2vw;
             position: absolute;
             top: 15vh;
-            left: 20vw;
-            width: 60vw;
+            left: 10vw;
+            width: 80vw;
+            text-align: center;
+            font-size: 3vw;
+            padding: 2vmax;
             color: white;
-            background-color: SlateGray;
+            background-color: rgb(181, 91, 91);
             z-index: 50;
         }
 
         .optionSet {
-            text-align: left;
-            left: 20%;
-            right: 20%;
-            margin: 5vh 5vw;
-            padding: 2vh 2vw;
-            border: 2px solid peachpuff;
-        }
-
-        .optionSet p {
-            font-weight: bold;
-            margin: 1vh 1vw;
+            border: 2px solid white;
+            margin: 1vmin;
+            padding: 2vh;
         }
     </style>
 </head>
@@ -486,8 +551,8 @@
         <div class='hidden'><a href='#' id='vp'></a></div>
     </div>
     <div id='SideNavRight'>
-        <div class='hidden' onclick='toggleOptions()'><a href='#' id='options'>Options</a></div>
-        <div onclick='toggleAbout()'><a href='#' id='about'>About</a></div>
+        <div onclick='showOptions()'><a href='#' id='options'>Options</a></div>
+        <div onclick='showAbout()'><a href='#' id='about'>About</a></div>
     </div>
     <div id='GameModal' class='modal'>
         <div class='modal-content'>
@@ -498,92 +563,86 @@
             <p>detail: step information goes here</p>
             <div class='modalButtonsArea buttonHolder'></div>
         </div>
-        <div id='GameRules' class='rules'>
-            <div id='gameRulesHeader'>
-                <span class='closeBtn' onclick='GameRules.classList.add("hidden")'>&times;</span>
+        <div id='GameHelp' class='help'>
+            <div id='gameHelpHeader'>
+                <span class='closeBtn' onclick='GameHelp.classList.add("hidden")'>&times;</span>
                 <p>step name goes here</p>
             </div>
-            <div id='RulesDisplay'></div>
+            <div id='gameHelpDisplay'></div>
         </div>
     </div>
     <div id='InfoArea'></div>
-    <div id='OptionsArea'>
-        <div class='optionSet'>
-            <label class='optionContainer'>Playing a campaign
-                <input id='optionCampaign' type='checkbox' onchange='recordOptions'>
-                <span class='chkbox'></span>
-            </label>
-        </div>
-        <div class='optionSet'>
-            <p>Display the Compendium as:</p>
-            <label class='optionContainer'>a PDF
-                <input id='optionCompendium' type='radio' name='compendium' onchange='recordOptions' value='0'>
-                <span class='radbtn'></span>
-            </label>
-            
-            <label class='optionContainer'>HTML (recommended for mobile devices)
-                <input id='optionCompendium' type='radio' name='compendium' onchange='recordOptions' value='1'>
-                <span class='radbtn'></span>
-            </label>
-        </div>
-    </div>
-    <div id='RightsArea'>
+    <div id='AboutArea'>
         <span style='vertical-align:middle'>
             The GameTracker webpage is property of Clive Pottinger. Email any comments or concerns to terran.antipodes@gmail.com<br />
             All displayed images, arts, fonts and The Lord of The Rings: The Card Game are copyrighted at � Fantasy Flight Games. The copyrightable portions of The Lord of the Rings: The Card Game and its expansions are � 2011 - 2020 Fantasy Flight Publishing, Inc. The Lord of the Rings, and the characters, items, events and places therein are trademarks or registered trademarks of The Saul Zaentz Company / Middle-earthEnterprises and are used, under license, by Fantasy Flight Games. Living Card Game, LCG, LCG logo and FantasyFlight Supply are trademarks and/or registered trademarks of Fantasy Flight Publishing, Inc. All Rights Reserved to their respective owners.<br />
             The Rules Compendium and Rules Companion are the intellectual property of, and used by permission by, Mathieu Martin.
         </span>
     </div>
+    <div id='OptionsArea'>
+        <form name='options'>
+        <div class='optionSet'>Display the Compendium Rules as
+            <label class='choiceHolder' onclick='CompendiumAsHtml=true'>HTML
+                <input type='radio' name='compendiumAs'>
+                <span class='indicator'></span>
+            </label>
+            <label class='choiceHolder' onclick='CompendiumAsHtml=false'>PDF
+                <input type='radio' name='compendiumAs'>
+                <span class='indicator'></span>
+            </label>
+        </div>
+        </form>
+    </div>
     <script>
         var version = 'v1.3.1';
 
         /* define game steps */
-        var sequence = JSON.parse(
+        var Sequence = JSON.parse(
             '{ "phases": [ "Setup", "Resource", "Planning", "Quest", "Travel", "Encounter", "Combat", "Refresh" ] ' +
             // boxes format (in px): [left, top, right, bottom] or [initialplayerbox, subsequentplayerbox, finalplayerbox]
             // help format: [compendium_info, companion_info, action_window_info]
-            //              compendium_info:    [page number, page horiz offset, vert offset]
+            //              compendium_info:    [page number, pdf horiz offset, pdf offset, html jump index, html highlight index]
             //              companion_info:     [page number]
-            //              action_window_info: [page number, vert offset]
+            //   (optional) action_window_info: [page number, pdf horiz offset, pdf offset, html jump index, html highlight index]
             // gameloop: value indicates the last step in the loop. After that step, the tracker will increment the round and loop back to this step.
             // teamloop: value indicates the last step in each player's steps. After that step, the tracker will switch to the next player and loop back to this step, or, if the player was the last player, continue to the next step.
-            // teamskip: value indicates prompt and next step for all players if the fist player opts to skip.
+            // teamskip: value indicates prompt and next step for all players if the first player opts to skip.
             // playerskip: value indicates prompt. If the player opts to skip, then the tracter will switch to the next player and loop back to this step, or, if the player was the last player, continue to the next step.
             ' ,"steps": [ { "phase": 0, "name": "Extract Campaign Setup cards" } ' +
-            '            ,{ "phase": 0, "name": "Shuffle Player Decks", "help" : [[47,0,135],[209]] } ' +
-            '            ,{ "phase": 0, "name": "Shuffle Encounter Deck", "help" : [[47,0,130],[209]] } ' +
-            '            ,{ "phase": 0, "name": "Place Heroes", "help" : [[47,0,400],[210]] } ' +
-            '            ,{ "phase": 0, "name": "Perform Campaign Setup", "help" : [[47,0,700],[210]] } ' +
-            '            ,{ "phase": 0, "name": "Set Threat Levels", "help" : [[47,0,400],[210]] } ' +
-            '            ,{ "phase": 0, "name": "Create Token Banks", "help" : [[47,500,305],[211]] } ' +
-            '            ,{ "phase": 0, "name": "Determine First Player", "help" : [[47,500,380],[212]] } ' +
-            '            ,{ "phase": 0, "name": "Draw Starting Hand", "help" : [[47,500,455],[213]] } ' +
-            '            ,{ "phase": 0, "name": "Place Quest Cards", "help" : [[47,500,555],[214]] } ' +
-            '            ,{ "phase": 0, "name": "Perform Scenario Setup", "help" : [[47,500,650],[215]] } ' +
-            '            ,{ "phase": 1, "name": "Gather Resources", "gameloop" : "Pass First Player Token", "boxes" : [60,75,490,190], "help" : [[48,0,510],[217]] }' +
-            '            ,{ "phase": 1, "name": "Draw a Card", "actionwindow" : "true", "boxes" : [60,190,490,310], "help" : [[48,0,620],[217],[128,400]] } ' +
-            '            ,{ "phase": 2, "name": "Special Action Window", "teamloop" : "Special Action Window", "boxes" : [[60,465,490,685],[60,525,490,685],[60,525,490,740]], "help" : [[48,0,710],[218],[128,600]] } ' +
-            '            ,{ "phase": 3, "name": "Quest Action Window", "boxes" : [60,840,490,960], "help" : [[],[218],[128,920]] } ' +
-            '            ,{ "phase": 3, "name": "Commit Characters", "actionwindow" : "true", "boxes" : [60,960,490,1080], "help" : [[48,500,100],[220],[129,50]] } ' +
-            '            ,{ "phase": 3, "name": "Staging", "teamloop" : "Staging", "boxes" : [60,1080,490,1135], "help" : [[48,500,380],[221]] } ' +
-            '            ,{ "phase": 3, "name": "Staging Action Window", "boxes" : [60,1135,490,1195], "help" : [[48,500,380],[221],[129,280]] } ' +
-            '            ,{ "phase": 3, "name": "Quest Resolution", "actionwindow" : "true", "boxes" : [60,1195,490,1315], "help" : [[48,500,825],[222],[129,420]] } ' +
-            '            ,{ "phase": 4, "name": "Travel Opportunity", "actionwindow" : "true", "boxes" : [60,1530,490,1645], "help" : [[49,500,100],[227],[129,725]] } ' +
-            '            ,{ "phase": 5, "name": "Optional Engagement", "actionwindow" : "true", "boxes" : [60,1860,490,1980], "help" : [[49,500,750],[232],[129,910]] } ' +
-            '            ,{ "phase": 5, "name": "Engagement Checks", "actionwindow" : "true", "boxes" : [60,1980,490,2100], "help" : [[50,0,50],[233],[129,980]] } ' +
+            '            ,{ "phase": 0, "name": "Shuffle Player Decks", "help" : [[47,0,135,1,1],[209]] } ' +
+            '            ,{ "phase": 0, "name": "Shuffle Encounter Deck", "help" : [[47,0,130,1,2],[209]] } ' +
+            '            ,{ "phase": 0, "name": "Place Heroes", "help" : [[47,0,400,2,3],[210]] } ' +
+            '            ,{ "phase": 0, "name": "Perform Campaign Setup", "help" : [[47,0,700,3,4],[210]] } ' +
+            '            ,{ "phase": 0, "name": "Set Threat Levels", "help" : [[47,0,400,2,5],[210]] } ' +
+            '            ,{ "phase": 0, "name": "Create Token Banks", "help" : [[47,500,305,4,6],[211]] } ' +
+            '            ,{ "phase": 0, "name": "Determine First Player", "help" : [[47,500,380,5,7],[212]] } ' +
+            '            ,{ "phase": 0, "name": "Draw Starting Hand", "help" : [[47,500,455,6,8],[213]] } ' +
+            '            ,{ "phase": 0, "name": "Place Quest Cards", "help" : [[47,500,555,7,9],[214]] } ' +
+            '            ,{ "phase": 0, "name": "Perform Scenario Setup", "help" : [[47,500,650,8,10],[215]] } ' +
+            '            ,{ "phase": 1, "name": "Gather Resources", "gameloop" : "Pass First Player Token", "boxes" : [60,75,490,190], "help" : [[48,0,510,1,1],[217]] }' +
+            '            ,{ "phase": 1, "name": "Draw a Card", "actionwindow" : "true", "boxes" : [60,190,490,310], "help" : [[48,0,620,1,2],[217],[128,0,400,1,1]] } ' +
+            '            ,{ "phase": 2, "name": "Special Action Window", "teamloop" : "Special Action Window", "boxes" : [[60,465,490,685],[60,525,490,685],[60,525,490,740]], "help" : [[48,0,710,2,3],[218],[128,0,600,2,2]] } ' +            
+            '            ,{ "phase": 3, "name": "Quest Action Window", "boxes" : [60,840,490,960], "help" : [[],[],[128,0,920,3,3]] } ' +
+            '            ,{ "phase": 3, "name": "Commit Characters", "actionwindow" : "true", "boxes" : [60,960,490,1080], "help" : [[48,500,100,3,4],[220],[129,0,50,1,1]] } ' +
+            '            ,{ "phase": 3, "name": "Staging", "teamloop" : "Staging", "boxes" : [60,1080,490,1135], "help" : [[48,500,380,4,5],[221]] } ' +
+            '            ,{ "phase": 3, "name": "Staging Action Window", "boxes" : [60,1135,490,1195], "help" : [[],[],[129,0,280,2,2]] } ' +
+            '            ,{ "phase": 3, "name": "Quest Resolution", "actionwindow" : "true", "boxes" : [60,1195,490,1315], "help" : [[48,500,825,5,6],[222],[129,0,420,3,3]] } ' +
+            '            ,{ "phase": 4, "name": "Travel Opportunity", "actionwindow" : "true", "boxes" : [60,1530,490,1645], "help" : [[49,500,100,1,1],[227],[129,0,725,4,4]] } ' +
+            '            ,{ "phase": 5, "name": "Optional Engagement", "actionwindow" : "true", "boxes" : [60,1860,490,1980], "help" : [[49,500,750,2,2],[232],[129,0,910,5,5]] } ' +
+            '            ,{ "phase": 5, "name": "Engagement Checks", "actionwindow" : "true", "boxes" : [60,1980,490,2100], "help" : [[50,0,50,1,1],[233],[129,0,980,6,6]] } ' +
             '            ,{ "phase": 6, "name": "Combat Check", "teamskip" : ["No Combat?", "Ready All Cards"], "boxes" : [60,2215,490,2320] } ' +
-            '            ,{ "phase": 6, "name": "Deal Shadow Cards", "actionwindow" : "true", "teamskip" : ["No Enemies Are Attacking Players?", "Choose Enemy and Attackers"], "teamloop" : "Deal Shadow Cards", "boxes" : [60,2320,490,2428], "help" : [[50,0,845],[237],[130,130]] } ' +
-            '            ,{ "phase": 6, "stage": "Enemy Attack", "name": "Choose Attacking Enemy", "actionwindow" : "true", "playerskip" : "Player Is Not Under Attack?", "teamloop" : "Determine Enemy and Defender Combat Damage", "boxes" : [[60,2428,490,2675],[60,2480,490,2675]], "help" : [[50,500,150],[238],[130,270]] } ' +
-            '            ,{ "phase": 6, "stage": "Enemy Attack", "name": "Declare Defender", "actionwindow" : "true", "boxes" : [60,2675,490,2795], "help" : [[50,500,190],[238],[130,410]] } ' +
-            '            ,{ "phase": 6, "stage": "Enemy Attack", "name": "Reveal & Resolve Shadow Effects", "actionwindow" : "true", "boxes" : [60,2795,490,2915], "help" : [[50,500,300],[238],[130,535]] } ' +
-            '            ,{ "phase": 6, "stage": "Enemy Attack", "name": "Determine Enemy and Defender Combat Damage", "actionwindow" : "true", "boxes" : [60,2915,490,3035], "help" : [[50,0,340],[238],[130,730]] } ' +
-            '            ,{ "phase": 6, "stage": "Player Attack", "name": "Choose Enemy and Attackers", "actionwindow" : "true", "playerskip" : "Player Is Not Attacking An Enemy?", "teamloop" : "Determine Attacker and Enemy Combat Damage", "boxes" : [0,3330,470,3585], "help" : [[51,0,290],[240],[131,85]] } ' +
-            '            ,{ "phase": 6, "stage": "Player Attack", "name": "Determine Attacker Strength", "actionwindow" : "true" , "boxes" : [0,3585,470,3705], "help" : [[51,0,345],[240],[131,160]] } ' +
-            '            ,{ "phase": 6, "stage": "Player Attack", "name": "Determine Attacker and Enemy Combat Damage", "actionwindow" : "true", "boxes" : [0,3705,470,3825], "help" : [[51,0,390],[240],[131,350]] } ' +
-            '            ,{ "phase": 6, "name": "Discard All Shadow Cards", "boxes" : [0,4060,470,4110], "help" : [[51,0,860],[],[131,510]] } ' +
-            '            ,{ "phase": 7, "name": "Ready All Cards", "boxes" : [0,4265,470,4320], "help" : [[52,500,315],[255],[]] } ' +
-            '            ,{ "phase": 7, "name": "Raise Threat Levels", "boxes" : [0,4325,470,4380], "help" : [[52,500,315],[255],[]] } ' +
-            '            ,{ "phase": 7, "name": "Pass First Player Token", "actionwindow" : "true", "boxes" : [0,4380,470,4500], "help" : [[52,500,315],[255],[]] } ' +
+            '            ,{ "phase": 6, "name": "Deal Shadow Cards", "actionwindow" : "true", "teamskip" : ["No Enemy Attacks?", "Choose Enemy and Attackers"], "teamloop" : "Deal Shadow Cards", "boxes" : [60,2320,490,2428], "help" : [[50,0,845,2,2],[237],[130,0,130,1,1]] } ' +
+            '            ,{ "phase": 6, "stage": "Enemy Attack", "name": "Choose Attacking Enemy", "actionwindow" : "true", "playerskip" : "Player Is Not Under Attack?", "teamloop" : "Determine Enemy and Defender Combat Damage", "boxes" : [[60,2428,490,2675],[60,2480,490,2675]], "help" : [[50,500,150,3,3],[238],[130,0,270,2,2]] } ' +
+            '            ,{ "phase": 6, "stage": "Enemy Attack", "name": "Declare Defender", "actionwindow" : "true", "boxes" : [60,2675,490,2795], "help" : [[50,500,190,4,4],[238],[130,0,410,3,3]] } ' +
+            '            ,{ "phase": 6, "stage": "Enemy Attack", "name": "Reveal & Resolve Shadow Effects", "actionwindow" : "true", "boxes" : [60,2795,490,2915], "help" : [[50,500,300,5,5],[238],[130,0,535,4,4]] } ' +
+            '            ,{ "phase": 6, "stage": "Enemy Attack", "name": "Determine Enemy and Defender Combat Damage", "actionwindow" : "true", "boxes" : [60,2915,490,3035], "help" : [[50,0,340,6,6],[238],[130,0,730,5,5]] } ' +
+            '            ,{ "phase": 6, "stage": "Player Attack", "name": "Choose Enemy and Attackers", "actionwindow" : "true", "playerskip" : "Player Is Not Attacking An Enemy?", "teamloop" : "Determine Attacker and Enemy Combat Damage", "boxes" : [0,3330,470,3585], "help" : [[51,0,290,1,1],[240],[131,0,85,1,1]] } ' +
+            '            ,{ "phase": 6, "stage": "Player Attack", "name": "Determine Attacker Strength", "actionwindow" : "true" , "boxes" : [0,3585,470,3705], "help" : [[51,0,345,2,2],[240],[131,0,160,2,2]] } ' +
+            '            ,{ "phase": 6, "stage": "Player Attack", "name": "Determine Attacker and Enemy Combat Damage", "actionwindow" : "true", "boxes" : [0,3705,470,3825], "help" : [[51,0,390,3,3],[240],[131,0,350,3,3]] } ' +
+            '            ,{ "phase": 6, "name": "Discard All Shadow Cards", "boxes" : [0,4060,470,4110], "help" : [[51,0,860,4,4]] } ' +
+            '            ,{ "phase": 7, "name": "Ready All Cards", "boxes" : [0,4265,470,4320], "help" : [[52,500,315,1,1],[255]] } ' +
+            '            ,{ "phase": 7, "name": "Raise Threat Levels", "boxes" : [0,4325,470,4380], "help" : [[52,500,315,1,1],[255]] } ' +
+            '            ,{ "phase": 7, "name": "Pass First Player Token", "actionwindow" : "true", "boxes" : [0,4380,470,4500], "help" : [[52,500,315,1,1],[255],[131,0,420,4,4]] } ' +
             '           ]' +
             ' ,"areas": [ { "name": "RESOURCE & PLANNING" ' +
             '              ,"voffset": 0 ' +
@@ -655,47 +714,45 @@
         const ALLPLAYERS = 0; // player number used when a step is performed by all players
 
         /* define state encoding values (see https://clivesyabb.com/2021/10/01/encoding-multiple-values-in-a-single-number/) */
-        const PLAYER_EV  = { cram:  2057566, extract:  5 };
-        const PLAYERS_EV = { cram:  -734845, extract:  7 };
-        const STEP_EV    = { cram:  1422785, extract: 47 };
-        const ROUND_EV   = { cram: -2135210, extract: 53 };
-        const VP_EV      = { cram:  -610295, extract: 59 };
+        const PLAYER_EVS = { cram: 2057566, extract: 5 };
+        const PLAYERS_EVS = { cram: -734845, extract: 7 };
+        const STEP_EVS = { cram: 1422785, extract: 47 };
+        const ROUND_EVS = { cram: -2135210, extract: 53 };
+        const VP_EVS = { cram: -610295, extract: 59 };
 
         /* define webpage constants */
         const BACKGROUND_CONTAINER = document.getElementsByClassName('BackgroundContainer')[0];
-        const SEQUENCE_AREA        = document.getElementById('SequenceArea');
-        const NAV_BACK             = document.getElementById('back');
-        const NAV_SKIP             = document.getElementById('skip');
-        const NAV_ELIM             = document.getElementById('elim');
-        const NAV_VP               = document.getElementById('vp');
-        const MODAL                = document.getElementById('GameModal');
-        const MODAL_BANNER         = MODAL.getElementsByClassName('modalBanner')[0];
-        const MODAL_CHANGE_BANNER  = MODAL.getElementsByClassName('modalChangeBanner')[0];
-        const MODAL_HEADER         = MODAL.getElementsByTagName('h1')[0];
-        const MODAL_DETAIL         = MODAL.getElementsByTagName('p')[0];
-        const MODAL_CLOSE          = document.getElementById('modalClose');
-        const MODAL_BUTTONS_AREA   = MODAL.getElementsByClassName('modalButtonsArea')[0];
-        const GAME_OUTLINE         = document.getElementById('gameOutline');
-        const GAME_RULES           = document.getElementById('GameRules');
-        const GAME_RULES_HEADER    = document.getElementById('gameRulesHeader');
-        const GAME_RULES_TEXT      = GAME_RULES_HEADER.getElementsByTagName('p')[0];
-        const GAME_RULES_DISPLAY   = document.getElementById('RulesDisplay');
-        const INFO_AREA            = document.getElementById('InfoArea');
-        const OPTIONS_AREA         = document.getElementById('OptionsArea');
-        const OPTION_CAMPAIGN      = document.getElementById('optionCampaign');
-        const OPTION_COMPENDIUM    = document.getElementById('optionCompendium');
-        const RIGHTS_AREA          = document.getElementById('RightsArea');
+        const SEQUENCE_AREA = document.getElementById('SequenceArea');
+        const NAV_BACK = document.getElementById('back');
+        const NAV_SKIP = document.getElementById('skip');
+        const NAV_ELIM = document.getElementById('elim');
+        const NAV_VP = document.getElementById('vp');
+        const MODAL_DIALOGUE = document.getElementById('GameModal');
+        const MODAL_BANNER = MODAL_DIALOGUE.getElementsByClassName('modalBanner')[0];
+        const MODAL_CHANGE_BANNER = MODAL_DIALOGUE.getElementsByClassName('modalChangeBanner')[0];
+        const MODAL_HEADER = MODAL_DIALOGUE.getElementsByTagName('h1')[0];
+        const MODAL_DETAIL = MODAL_DIALOGUE.getElementsByTagName('p')[0];
+        const MODAL_CLOSE = document.getElementById('modalClose');
+        const MODAL_BUTTONS_AREA = MODAL_DIALOGUE.getElementsByClassName('modalButtonsArea')[0];
+        const GAME_OUTLINE = document.getElementById('gameOutline');
+        const GAME_HELP = document.getElementById('GameHelp');
+        const GAME_HELP_HEADER = document.getElementById('gameHelpHeader');
+        const GAME_HELP_TEXT = GAME_HELP_HEADER.getElementsByTagName('p')[0];
+        const GAME_HELP_DISPLAY = document.getElementById('gameHelpDisplay');
+        const INFO_AREA = document.getElementById('InfoArea');
+        const ABOUT_AREA = document.getElementById('AboutArea');
+        const OPTIONS_AREA = document.getElementById('OptionsArea')
 
-        /* define webpage globals */
+        /* Define webpage globals */
         var SequenceImage;
         var SequenceImageSize;
         var CompendiumIsPreferred = true;
-        // var CampaignMode = false;
-        // var CompendiumAsPdf = true;
+        var CompendiumAsHtml = true;
+        var OutlineBox;
     </script>
     <script>
         /* main code */
-        INFO_AREA.innerHTML = version;
+        INFO_AREA.innerHTML = VERSION;
         loadBackground('./Images/RoundSequence.png');
 
         function loadBackground(url) {
@@ -705,9 +762,6 @@
                 // once the background is loaded, then the rest of the page can be set up.
                 SEQUENCE_AREA.appendChild(img);
                 SequenceImage = SEQUENCE_AREA.getElementsByTagName('img')[0];
-                setImages();
-                window.onresize = setImages;
-
                 initialize();
             });
             img.src = url;
@@ -718,91 +772,100 @@
             MODAL_BANNER.classList.add('hidden');
             MODAL_CHANGE_BANNER.classList.add('hidden');
             MODAL_CHANGE_BANNER.innerHTML = '';
-            GAME_RULES.classList.add('hidden');
+            GAME_HELP.classList.add('hidden');
             GAME_OUTLINE.classList.add('hidden');
+            ABOUT_AREA.classList.add('hidden');
             OPTIONS_AREA.classList.add('hidden');
-            RIGHTS_AREA.classList.add('hidden');
+
+            // set the background images.
+            var images = BACKGROUND_CONTAINER.getElementsByClassName('fixed');
+            for (var index = 0; index < images.length; index++) {
+                var selection = modulo(Math.floor(Date.now() / 86400000), Sequence.areas[index].images.length);
+                images[index].style.backgroundImage = "url('" + Sequence.areas[index].images[selection] + "')";
+            }
+            window.onresize = adjustBackground;
+            window.addEventListener('resize', adjustBackground);
+            window.addEventListener('resize', showOutline);
+            adjustBackground();
 
             // translate the step names that define loops into step numbers
-            for (var step = 0; step < sequence.steps.length; step++) {
-                if (sequence.steps[step].gameloop) {
-                    var gameloopend = findStepNum(sequence.steps[step].gameloop);
-                    sequence.steps[step].gameloopend = gameloopend;
-                    sequence.steps[gameloopend].gameloopstart = step;
+            for (var step = 0; step < Sequence.steps.length; step++) {
+                if (Sequence.steps[step].gameloop) {
+                    var gameloopend = findStepNum(Sequence.steps[step].gameloop);
+                    Sequence.steps[step].gameloopend = gameloopend;
+                    Sequence.steps[gameloopend].gameloopstart = step;
                 }
-                if (sequence.steps[step].teamloop) {
-                    var teamloopend = findStepNum(sequence.steps[step].teamloop);
-                    sequence.steps[step].teamloopend = teamloopend;
-                    sequence.steps[teamloopend].teamloopstart = step;
+                if (Sequence.steps[step].teamloop) {
+                    var teamloopend = findStepNum(Sequence.steps[step].teamloop);
+                    Sequence.steps[step].teamloopend = teamloopend;
+                    Sequence.steps[teamloopend].teamloopstart = step;
                 }
-                if (sequence.steps[step].teamskip) {
-                    sequence.steps[step].skipto = findStepNum(sequence.steps[step].teamskip[1]);
+                if (Sequence.steps[step].teamskip) {
+                    Sequence.steps[step].skipto = findStepNum(Sequence.steps[step].teamskip[1]);
                 }
             }
 
             var stateHistory = localStorage.getItem('stateHistory');
             if (stateHistory) {
-                var options = parseInt(stateHistory.split(',').at(-1), 10);
-                CompendiumIsPreferred = ((options & 1) == 1);
-                // CampaignMode = ((options & 2) == 2);
-                // CompendiumAsPdf = ((options & 4) == 4);
+                var optionsVal =  Number(stateHistory.split(',').at(-1));
+                if ((optionsVal > 0) && (optionsVal < 256)) {
+                    CompendiumIsPreferred = ((optionsVal & 1) == 1);
+                    CompendiumAsHtml = ((optionsVal & 2) == 2);
+                }
 
-                initialState = parseInt(stateHistory.split(',')[0], 10);
+                var initialState = Number(stateHistory.split(',')[0]);
                 game_setCurrentState(initialState, true);
             }
         }
 
-        function setImages() {        
-            // set the background images and size them so that, when scrolling down, each image appears behind the corresponding area of the sequence.
+        function adjustBackground() {
+            // size the background images so that, when scrolling down, each image appears behind the corresponding area of the sequence.
             var bounds = SequenceImage.getBoundingClientRect();
             var vscale = bounds.height / SequenceImageSize[0]; // vscale: 1px of the sequence image is being rendered as ?px high onscreen
             var offset = SEQUENCE_AREA.offsetTop
             var images = BACKGROUND_CONTAINER.getElementsByClassName('fixed');
             for (var index = 0; index < images.length; index++) {
-                var imageTop = sequence.areas[index].voffset;
-                var imageBottom = sequence.areas[index + 1].voffset;
+                var imageTop = Sequence.areas[index].voffset;
+                var imageBottom = Sequence.areas[index + 1].voffset;
                 images[index].style.height = offset + (imageBottom - imageTop) * vscale + 'px';
-                var selection = modulo(Math.floor(Date.now() / 86400000), sequence.areas[index].images.length);
-                images[index].style.backgroundImage = "url('" + sequence.areas[index].images[selection] + "')";
                 images[index].style.backgroundSize = "cover";
                 offset = 0;
             }
         }
 
-        function newgame_verify() { // Open modal to verify a new game is starting
+        function newgame_verify() { // Open modal dialogue to verify a new game is starting
             var closeInfo = '(press &times; to return without starting a new game)';
             var prompt = 'How many players in the new game?';
             var buttons = [];
             for (var x = 1; x < 5; x++) {
                 buttons[x] = generateButton('&nbsp;' + x + '&nbsp;', 'newgame_start(' + x + ')');
             }
+
             showModal('', closeInfo, true, prompt, '', buttons);
         }
 
         function newgame_start(numPlayers) { // Resets the page for a new game
             localStorage.removeItem('stateHistory');
-            var initialState = numPlayers * PLAYERS_EV.cram;
-            var options = CompendiumIsPreferred = ((options & 1) == 1);
-                          // CampaignMode = ((options & 2) == 2);
-                          // CompendiumAsPdf = ((options & 4) == 4);
-            localStorage.setItem('stateHistory', initialState.toString()) + ',' + options.toString();
+            var initialState = numPlayers * PLAYERS_EVS.cram;
+            localStorage.setItem('stateHistory', initialState.toString());
+            recordOptions();
             game_advanceToStep(0, ALLPLAYERS);
         }
 
-        function game_advanceToStep(newStepNum, newPlayer = null, newRound = null) { // shows the modal information for a step in the game
+        function game_advanceToStep(newStepNum, newPlayer = null, newRound = null) { // shows the modal dialogue information for a step in the game
             // At this point we have not yet changed our state to be in the new step.
             // We are gathering information about the current state we are moving from and the new state we are move to.
             var stateHistory = localStorage.getItem('stateHistory');
             var fromState = parseInt(stateHistory.split(',')[0], 10);
 
-            var fromRound = modulo(fromState, ROUND_EV.extract);
-            var fromPlayer = modulo(fromState, PLAYER_EV.extract);
-            var fromNumPlayers = modulo(fromState, PLAYERS_EV.extract);
-            var fromVictoryPoints = modulo(fromState, VP_EV.extract);
+            var fromRound = modulo(fromState, ROUND_EVS.extract);
+            var fromPlayer = modulo(fromState, PLAYER_EVS.extract);
+            var fromNumPlayers = modulo(fromState, PLAYERS_EVS.extract);
+            var fromVictoryPoints = modulo(fromState, VP_EVS.extract);
 
             var toRound = (newRound == null) ? fromRound : newRound;
             var toStepNum = newStepNum;
-            var toStep = sequence.steps[newStepNum];
+            var toStep = Sequence.steps[newStepNum];
             var toPlayer = (newPlayer == null) ? fromPlayer : newPlayer;
             var toNumPlayers = fromNumPlayers;
             var toVictoryPoints = fromVictoryPoints;
@@ -813,19 +876,19 @@
             }
 
             var newState =
-                toRound * ROUND_EV.cram +
-                toStepNum * STEP_EV.cram +
-                toPlayer * PLAYER_EV.cram +
-                toNumPlayers * PLAYERS_EV.cram +
-                toVictoryPoints * VP_EV.cram;
+                toRound * ROUND_EVS.cram +
+                toStepNum * STEP_EVS.cram +
+                toPlayer * PLAYER_EVS.cram +
+                toNumPlayers * PLAYERS_EVS.cram +
+                toVictoryPoints * VP_EVS.cram;
 
-            // var fromStepNum = modulo(fromState, STEP_EV.extract);
-            // var fromStep = sequence.steps[fromStepNum];
+            // var fromStepNum = modulo(fromState, STEP_EVS.extract);
+            // var fromStep = Sequence.steps[fromStepNum];
             // var fromPhaseNum = fromStep.phase;
             // var toPhaseNum = toStep.phase;
             // console.log('advanceToStep -> round:' + fromRound + '->' + toRound +
             //             ' phase:' + fromPhaseNum + '->' + toPhaseNum +
-            //             ' step:' + fromStepNum + '->' + toStepNum + ' (' + sequence.steps[toStepNum].name + ')' +
+            //             ' step:' + fromStepNum + '->' + toStepNum + ' (' + Sequence.steps[toStepNum].name + ')' +
             //             ' player:' + fromPlayer + '->' + toPlayer +
             //             ' # players:' + fromNumPlayers + '->' + toNumPlayers +
             //             ' points:' + fromVictoryPoints + '->' + toVictoryPoints +
@@ -840,23 +903,23 @@
             localStorage.setItem('stateHistory', stateHistory.slice(stateHistory.split(',', 3).join(',').length + 1)); // removes the first two states from the history
 
             // var fromState = parseInt(stateHistory.split(',')[0], 10);
-            // var fromStepNum = modulo(fromState, STEP_EV.extract);
-            // var fromStep = sequence.steps[fromStepNum];
-            // var fromRound = modulo(fromState, ROUND_EV.extract);
+            // var fromStepNum = modulo(fromState, STEP_EVS.extract);
+            // var fromStep = Sequence.steps[fromStepNum];
+            // var fromRound = modulo(fromState, ROUND_EVS.extract);
             // var fromPhaseNum = fromStep.phase;
-            // var fromPlayer = modulo(fromState, PLAYER_EV.extract);
-            // var fromNumPlayers = modulo(fromState, PLAYERS_EV.extract);
-            // var fromVictoryPoints = modulo(fromState, VP_EV.extract);
-            // var toStepNum = modulo(toState, STEP_EV.extract);
-            // var toStep = sequence.steps[toStepNum];
-            // var toRound = modulo(toState, ROUND_EV.extract);
+            // var fromPlayer = modulo(fromState, PLAYER_EVS.extract);
+            // var fromNumPlayers = modulo(fromState, PLAYERS_EVS.extract);
+            // var fromVictoryPoints = modulo(fromState, VP_EVS.extract);
+            // var toStepNum = modulo(toState, STEP_EVS.extract);
+            // var toStep = Sequence.steps[toStepNum];
+            // var toRound = modulo(toState, ROUND_EVS.extract);
             // var toPhaseNum = toStep.phase;
-            // var toPlayer = modulo(toState, PLAYER_EV.extract);
-            // var toNumPlayers = modulo(toState, PLAYERS_EV.extract);
-            // var toVictoryPoints = modulo(toState, VP_EV.extract);
+            // var toPlayer = modulo(toState, PLAYER_EVS.extract);
+            // var toNumPlayers = modulo(toState, PLAYERS_EVS.extract);
+            // var toVictoryPoints = modulo(toState, VP_EVS.extract);
             // console.log('backToPreviousStep -> round:' + fromRound + '->' + toRound +
             //             ' phase:' + fromPhaseNum + '->' + toPhaseNum +
-            //             ' step:' + fromStepNum + '->' + toStepNum + ' (' + sequence.steps[toStepNum].name + ')' +
+            //             ' step:' + fromStepNum + '->' + toStepNum + ' (' + Sequence.steps[toStepNum].name + ')' +
             //             ' player:' + fromPlayer + '->' + toPlayer +
             //             ' # players:' + fromNumPlayers + '->' + toNumPlayers +
             //             ' points:' + fromVictoryPoints + '->' + toVictoryPoints +
@@ -873,15 +936,15 @@
 
             var previousState = parseInt(stateHistory.split(',')[0], 10);
 
-            var currentStepNum = modulo(currentState, STEP_EV.extract);
-            var currentStep = sequence.steps[currentStepNum];
+            var currentStepNum = modulo(currentState, STEP_EVS.extract);
+            var currentStep = Sequence.steps[currentStepNum];
             var currentPhaseNum = currentStep.phase;
-            var currentPlayer = modulo(currentState, PLAYER_EV.extract);
-            var currentNumPlayers = modulo(currentState, PLAYERS_EV.extract);
-            var currentRound = modulo(currentState, ROUND_EV.extract);
+            var currentPlayer = modulo(currentState, PLAYER_EVS.extract);
+            var currentNumPlayers = modulo(currentState, PLAYERS_EVS.extract);
+            var currentRound = modulo(currentState, ROUND_EVS.extract);
             // console.log('setCurrentState -> set current -> round:' + currentRound  +
             //              ' phase:' + currentPhaseNum +
-            //              ' step:' + currentStepNum + ' (' + sequence.steps[currentStepNum].name + ')' +
+            //              ' step:' + currentStepNum + ' (' + Sequence.steps[currentStepNum].name + ')' +
             //              ' player:' + currentPlayer +
             //              ' # players:' + currentNumPlayers +
             //              '');
@@ -892,7 +955,7 @@
             var showClose = bannerInfo[2];
             var header = bannerInfo[3];
 
-            var isAllPlayers = (currentPlayer == ALLPLAYERS);
+            var isALLPLAYERS = (currentPlayer == ALLPLAYERS);
             var isFirstPlayer = (currentPlayer == 1);
             var isLastPlayer = (currentPlayer == currentNumPlayers);
 
@@ -915,7 +978,7 @@
             var hasActionWindow = currentStep.actionwindow;
             var detail = ((currentStep.name.includes('Action Window')) ? '<span style="color:SpringGreen">' + currentStep.name + '<step>' : currentStep.name) +
                 (hasActionWindow ? '<br>&amp;<br><span style="color:SpringGreen">Action Window</span>' : '');
-            if (!isAllPlayers) { // are we inside a loop?
+            if (!isALLPLAYERS) { // are we inside a loop?
                 detail = (isFirstPlayer ? 'First Player' : 'Player ' + currentPlayer) + ': ' + detail;
             }
 
@@ -927,12 +990,12 @@
             }
 
             // SideNav: back
-            var showBack = (currentPhaseNum > 0);
+            var showBack = (currentStepNum > 0);
 
             // SideNav: skip
             var skipInfo = null;
             switch (true) {
-                case ((currentStep.teamskip != null) && (isAllPlayers || isFirstPlayer)):
+                case ((currentStep.teamskip != null) && (isALLPLAYERS || isFirstPlayer)):
                     skipInfo = [currentStep.teamskip[0], currentStep.skipto, ALLPLAYERS];
                     break;
                 case (currentStep.playerskip != null):
@@ -951,41 +1014,40 @@
             var sideNavInfo = [showBack, skipInfo, showElim, showVP];
 
             // repositioning of the background image
-            var box;
             switch (true) {
                 case (currentStep.boxes == null):
-                    box = null;
+                    OutlineBox = null;
                     break;
                 case (currentStep.boxes.length == 4):
-                    box = currentStep.boxes;
+                    OutlineBox = currentStep.boxes;
                     break;
-                case (isAllPlayers || isFirstPlayer):
-                    box = currentStep.boxes[0];
+                case (isALLPLAYERS || isFirstPlayer):
+                    OutlineBox = currentStep.boxes[0];
                     break;
                 case (isLastPlayer):
-                    box = currentStep.boxes[currentStep.boxes.length - 1];
+                    OutlineBox = currentStep.boxes[currentStep.boxes.length - 1];
                     break;
                 default:
-                    box = currentStep.boxes[1];
+                    OutlineBox = currentStep.boxes[1];
                     break;
             }
 
             sleep(250).then(() => {
-                showModal(banner, changeBanner, showClose, header, detail, buttons, sideNavInfo, box);
+                showModal(banner, changeBanner, showClose, header, detail, buttons, sideNavInfo);
             });
         }
 
         function game_setStandardBanners(currentState, previousState) {
-            var previousStepNum = modulo(previousState, STEP_EV.extract);
-            var previousStep = sequence.steps[previousStepNum];
+            var previousStepNum = modulo(previousState, STEP_EVS.extract);
+            var previousStep = Sequence.steps[previousStepNum];
             var previousPhaseNum = previousStep.phase;
 
-            var currentRound = modulo(currentState, ROUND_EV.extract);
-            var currentStepNum = modulo(currentState, STEP_EV.extract);
-            var currentStep = sequence.steps[currentStepNum];
+            var currentRound = modulo(currentState, ROUND_EVS.extract);
+            var currentStepNum = modulo(currentState, STEP_EVS.extract);
+            var currentStep = Sequence.steps[currentStepNum];
             var currentPhaseNum = currentStep.phase;
-            var currentNumPlayers = modulo(currentState, PLAYERS_EV.extract);
-            var currentVictoryPoints = modulo(currentState, VP_EV.extract);
+            var currentNumPlayers = modulo(currentState, PLAYERS_EVS.extract);
+            var currentVictoryPoints = modulo(currentState, VP_EVS.extract);
 
             // banner: shows the current round
             var banner = (currentRound == 0)
@@ -997,15 +1059,15 @@
             // change banner: shows when the phase changes
             var isPhaseChange = (currentPhaseNum != previousPhaseNum);
             var changeBanner = (isPhaseChange)
-                ? 'End of the ' + sequence.phases[previousPhaseNum] + ' Phase<br>' +
-                'Start of the ' + sequence.phases[currentPhaseNum] + ' Phase'
+                ? 'End of the ' + Sequence.phases[previousPhaseNum] + ' Phase<br>' +
+                'Start of the ' + Sequence.phases[currentPhaseNum] + ' Phase'
                 : '';
 
             // close button: shows only for the new game state
             var showClose = false;
 
             // header: shows the current phase and stage
-            var header = sequence.phases[currentPhaseNum] + ' Phase' +
+            var header = Sequence.phases[currentPhaseNum] + ' Phase' +
                 ((currentStep.stage == null) ? '' : ': ' + currentStep.stage + ' Stage');
 
             return [banner, changeBanner, showClose, header];
@@ -1015,30 +1077,42 @@
             var compendiumInfo = helpLocations[0];
             var companionInfo = (helpLocations.length < 2) ? [] : helpLocations[1];
             var actionWindowInfo = (helpLocations.length < 3) ? [] : helpLocations[2];
-            GAME_RULES_TEXT.innerHTML =
+            GAME_HELP_TEXT.innerHTML =
                 stepText +
                 '<div class="buttonHolder">' +
-                ((compendiumInfo.length == 0) ? '' : generateButton('Compendium', 'CompendiumIsPreferred=true;game_showCompendium(' + compendiumInfo.toString() + ')', 'rulesBtn')) +
-                ((companionInfo.length == 0) ? '' : generateButton('Companion', 'CompendiumIsPreferred=false;game_showCompanion(' + companionInfo[0] + ')', 'rulesBtn')) +
-                ((actionWindowInfo.length == 0) ? '' : generateButton('Action Window', 'game_showCompendium(' + actionWindowInfo[0] + ',0,' + actionWindowInfo[1] + ')', 'rulesBtn')) +
+                ((compendiumInfo.length == 0) ? '' : generateButton('Compendium', 'CompendiumIsPreferred=true;game_showCompendium(' + JSON.stringify(compendiumInfo) + ')', 'helpBtn')) +
+                ((companionInfo.length == 0) ? '' : generateButton('Companion', 'CompendiumIsPreferred=false;game_showCompanion(' + companionInfo[0] + ')', 'helpBtn')) +
+                ((actionWindowInfo.length == 0) ? '' : generateButton('Action Window', 'game_showCompendium(' + JSON.stringify(actionWindowInfo) + ')', 'helpBtn')) +
                 '</div>';
 
-            if (CompendiumIsPreferred || (onlinePage = null)) {
-                game_showCompendium(compendiumInfo[0], compendiumInfo[1], compendiumInfo[2]);
+            if ((compendiumInfo.length == 0) && (companionInfo.length == 0)) {
+                game_showCompendium(actionWindowInfo);
+            }
+            else if (CompendiumIsPreferred && (compendiumInfo.length > 0)) {
+                game_showCompendium(compendiumInfo);
             } else {
                 game_showCompanion(companionInfo[0]);
             }
         }
 
-        function game_showCompendium(pageNum, hOffset, vOffset) {
-            var pdfOptions = '#page=' + pageNum + '&zoom=100,' + hOffset + ',' + vOffset + '&pagemode=none&view=FitH';
-            GAME_RULES_DISPLAY.innerHTML = "<object data='./Images/RulesCompendium_v2.0.pdf" + pdfOptions + " type='application/pdf'></object>";
-            GAME_RULES.classList.remove('hidden');
+        function game_showCompendium(helpInfo) {
+            var address, fragment, query;
+            if (CompendiumAsHtml) {
+                address = './RulesCompendium_v2.0/Rules_Compendium_v2_0.html';
+                fragment = '#p' + helpInfo[0].toString().padStart(3, '0')  + '_' + helpInfo[3];
+                query = '?s' + helpInfo[0].toString().padStart(3, '0') + '_' + helpInfo[4];
+            } else {
+                address = './Images/RulesCompendium_v2.0.pdf';
+                fragment = '#page=' + helpInfo[0] + '&zoom=100,' + helpInfo[1] + ',' + helpInfo[2] + '&pagemode=none&view=FitH';
+                query = '';
+            }
+            GAME_HELP_DISPLAY.innerHTML = "<object data='" + address + query + fragment + "' type='application/pdf'></object>";
+            GAME_HELP.classList.remove('hidden');
         }
 
         function game_showCompanion(pageNum) {
-            GAME_RULES_DISPLAY.innerHTML = "<object data='https://lotr-lcg-quest-companion.gamersdungeon.net/#Rule" + pageNum + "' type='text/html'></object>";
-            GAME_RULES.classList.remove('hidden');
+            GAME_HELP_DISPLAY.innerHTML = "<object data='https://lotr-lcg-quest-companion.gamersdungeon.net/#Rule" + pageNum + "' type='text/html'></object>";
+            GAME_HELP.classList.remove('hidden');
         }
 
         function game_verifyElimPlayer() {
@@ -1047,11 +1121,11 @@
 
             var previousState = parseInt(stateHistory.split(',')[1], 10);
 
-            var currentRound = modulo(currentState, ROUND_EV.extract);
-            var currentStepNum = modulo(currentState, STEP_EV.extract);
-            var currentPlayer = modulo(currentState, PLAYER_EV.extract);
-            var currentNumPlayers = modulo(currentState, PLAYERS_EV.extract);
-            var currentVictoryPoints = modulo(currentState, VP_EV.extract);
+            var currentRound = modulo(currentState, ROUND_EVS.extract);
+            var currentStepNum = modulo(currentState, STEP_EVS.extract);
+            var currentPlayer = modulo(currentState, PLAYER_EVS.extract);
+            var currentNumPlayers = modulo(currentState, PLAYERS_EVS.extract);
+            var currentVictoryPoints = modulo(currentState, VP_EVS.extract);
 
             var bannerInfo = game_setStandardBanners(currentState, previousState);
             var banner = bannerInfo[0];
@@ -1065,11 +1139,11 @@
             // buttons
             var buttons = [];
             var newState =
-                currentRound * ROUND_EV.cram +
-                currentStepNum * STEP_EV.cram +
-                currentPlayer * PLAYER_EV.cram +
-                (currentNumPlayers - 1) * PLAYERS_EV.cram +
-                currentVictoryPoints * VP_EV.cram;
+                currentRound * ROUND_EVS.cram +
+                currentStepNum * STEP_EVS.cram +
+                currentPlayer * PLAYER_EVS.cram +
+                (currentNumPlayers - 1) * PLAYERS_EVS.cram +
+                currentVictoryPoints * VP_EVS.cram;
             buttons.push(generateButton('Yes', 'game_setCurrentState(' + newState + ')'));
             buttons.push(generateButton('No', 'game_setCurrentState(' + currentState + ',"true")'));
 
@@ -1103,11 +1177,11 @@
 
             var previousState = parseInt(stateHistory.split(',')[1], 10);
 
-            // var newRound = modulo(newState, ROUND_EV.extract);
-            // var newStepNum = modulo(newState, STEP_EV.extract);
-            // var newPlayer = modulo(newState, PLAYER_EV.extract);
-            // var newNumPlayers = modulo(newState, PLAYERS_EV.extract);
-            var newVictoryPoints = modulo(newState, VP_EV.extract);
+            // var newRound = modulo(newState, ROUND_EVS.extract);
+            // var newStepNum = modulo(newState, STEP_EVS.extract);
+            // var newPlayer = modulo(newState, PLAYER_EVS.extract);
+            // var newNumPlayers = modulo(newState, PLAYERS_EVS.extract);
+            var newVictoryPoints = modulo(newState, VP_EVS.extract);
 
             var bannerInfo = game_setStandardBanners(newState, previousState);
             var banner = bannerInfo[0];
@@ -1121,16 +1195,16 @@
             // buttons
             var buttons = [];
             if (newVictoryPoints > 4) {
-                buttons.push(generateButton('-5', 'game_changeVP(' + (newState - 5 * VP_EV.cram) + ')', 'modalBtn small'));
+                buttons.push(generateButton('-5', 'game_changeVP(' + (newState - 5 * VP_EVS.cram) + ')', 'modalBtn small'));
             }
             if (newVictoryPoints > 0) {
-                buttons.push(generateButton('-1', 'game_changeVP(' + (newState - VP_EV.cram) + ')', 'modalBtn small'));
+                buttons.push(generateButton('-1', 'game_changeVP(' + (newState - VP_EVS.cram) + ')', 'modalBtn small'));
             }
             if (newState != currentState) {
                 buttons.push(generateButton('Done', 'game_setCurrentState(' + newState + ')', 'modalBtn small'));
             }
-            buttons.push(generateButton('+1', 'game_changeVP(' + (newState + VP_EV.cram) + ')', 'modalBtn small'));
-            buttons.push(generateButton('+5', 'game_changeVP(' + (newState + 5 * VP_EV.cram) + ')', 'modalBtn small'));
+            buttons.push(generateButton('+1', 'game_changeVP(' + (newState + VP_EVS.cram) + ')', 'modalBtn small'));
+            buttons.push(generateButton('+5', 'game_changeVP(' + (newState + 5 * VP_EVS.cram) + ')', 'modalBtn small'));
             buttons.push(generateButton('Cancel', 'game_setCurrentState(' + currentState + ',"true")', 'modalBtn small'));
 
             // SideNav: back
@@ -1153,7 +1227,7 @@
             showModal(banner, changeBanner, showClose, header, detail, buttons, sideNavInfo, box);
         }
 
-        function showModal(bannerText, changeBannerText, showClose, headerText, detailText, buttons, sideNavInfo, box = null) { // display the modal
+        function showModal(bannerText, changeBannerText, showClose, headerText, detailText, buttons, sideNavInfo) { // display the modal dialogue
             // banner:
             MODAL_BANNER.innerHTML = bannerText;
             if (bannerText == '') {
@@ -1167,7 +1241,7 @@
                 MODAL_CHANGE_BANNER.classList.remove('fade-in', 'fade-out');
                 if (changeBannerText == '') {
                     MODAL_CHANGE_BANNER.classList.add('fade-out');
-                    MODAL_CHANGE_BANNER.addEventListener('animationend', clearmodalChangeBanner);
+                    MODAL_CHANGE_BANNER.addEventListener('animationend', clearModalChangeBanner);
                 } else {
                     MODAL_CHANGE_BANNER.classList.add('hidden');
                     MODAL_CHANGE_BANNER.innerHTML = changeBannerText;
@@ -1175,23 +1249,23 @@
                     MODAL_CHANGE_BANNER.classList.remove('hidden');
                 }
             }
-            function clearmodalChangeBanner() {
+            function clearModalChangeBanner() {
                 MODAL_CHANGE_BANNER.classList.add('hidden');
                 MODAL_CHANGE_BANNER.innerHTML = '';
-                MODAL_CHANGE_BANNER.removeEventListener('animationend', clearmodalChangeBanner);
+                MODAL_CHANGE_BANNER.removeEventListener('animationend', clearModalChangeBanner);
             }
 
             // close button:
-            if (showClose) { // make the modal close <span> appear
+            if (showClose) { // make the close <span> appear
                 MODAL_CLOSE.style.display = 'block';
-                MODAL_CLOSE.onclick = function () { // When the user clicks on <span> (x), close the modal
-                    hideModal();
+                MODAL_CLOSE.onclick = function () { // When the user clicks on <span> (x), close the modal dialogue                    
+                    MODAL_DIALOGUE.style.display = 'none'; // hide the modal dialogue
                     if (localStorage.getItem('stateHistory')) {
                         latestsState = parseInt(localStorage.getItem('stateHistory').split(',')[0], 10);
                         game_setCurrentState(latestsState);
                     }
                 }
-            } else { // hide the modal close <span>
+            } else { // hide the close <span>
                 MODAL_CLOSE.style.display = 'none';
             }
 
@@ -1225,7 +1299,7 @@
                 var skiptext = skipInfo[0];
                 var skipToStepNum = skipInfo[1];
                 var skipToPlayer = skipInfo[2];
-                showSideNav(NAV_SKIP, skiptext, function () { game_advanceToStep(skipToStepNum, skipToPlayer); });
+                showSideNav(NAV_SKIP, skiptext, function () { game_advanceToStep(skipToStepNum, skipToPlayer); }, true);
             }
 
             // SideNavs: eliminate player:
@@ -1242,124 +1316,134 @@
                 hideSideNav(NAV_VP);
             }
 
-            MODAL.style.display = 'block';  // make the modal appear
+            MODAL_DIALOGUE.style.display = 'block';  // make the modal dialogue appear
 
             // background image and outlining box:
-            // (this must be done AFTER the modal box has been rendered)
-            if (box == null) {
+            // (this must be done AFTER the modal dialogue has been rendered)
+            showOutline();
+        }
+
+        function showOutline() {
+            if (OutlineBox == null) {
                 GAME_OUTLINE.classList.add('hidden');
             } else {
-                showOutline(box);
+                var bounds = SequenceImage.getBoundingClientRect();
+                var vscale = bounds.height / SequenceImageSize[0]; // factor: 1px of the sequence image is being rendered as ?px high onscreen
+                var hscale = bounds.width / SequenceImageSize[1];  // factor: 1px of the sequence image is being rendered as ?px wide onscreen
+
+                var modalBottom = Math.ceil(MODAL_DIALOGUE.offsetTop + MODAL_DIALOGUE.offsetHeight);
+                var outlineOffset = Math.floor(Math.max(window.innerHeight / 20, 25)); // how many pixels from the bottom of the modal dialogue to where the current step will be shown.
+                var sequenceAreaTargetOffset = Math.max((modalBottom + outlineOffset) - SEQUENCE_AREA.offsetTop, 0); // how many pixels from the top of the sequence image display area to where we want to scroll the current step to.
+
+                // scroll the sequence image to show the current step under the modal dialogue
+                var sequenceImageOffsetTop = Math.max(OutlineBox[1] * vscale - sequenceAreaTargetOffset * vscale, 0);
+                window.scrollTo({
+                    top: sequenceImageOffsetTop,
+                    left: 0,
+                    behavior: 'smooth'
+                });
+
+                var boxTop = OutlineBox[1] * vscale; // as measured from the top of the sequence image on the current display
+                var boxHeight = (OutlineBox[3] - OutlineBox[1]) * vscale;
+                var boxWidth = (OutlineBox[2] - OutlineBox[0]) * hscale;
+
+                GAME_OUTLINE.style.top = boxTop + 'px';
+                GAME_OUTLINE.style.height = boxHeight + 'px';
+                GAME_OUTLINE.style.width = boxWidth + 'px';
+                GAME_OUTLINE.classList.remove('hidden');
             }
         }
 
-        function hideModal() { // hide the modal
-            MODAL.style.display = 'none';
-        }
-
-        function showOutline(box) {
-            var bounds = SequenceImage.getBoundingClientRect();
-            var vscale = bounds.height / SequenceImageSize[0]; // factor: 1px of the sequence image is being rendered as ?px high onscreen
-            var hscale = bounds.width / SequenceImageSize[1];  // factor: 1px of the sequence image is being rendered as ?px wide onscreen
-
-            var modalBottom = Math.ceil(MODAL.offsetTop + MODAL.offsetHeight);
-            var outlineOffset = Math.floor(Math.max(window.innerHeight / 20, 25)); // how many pixels from the bottom of the modal to where the current step will be shown.
-            var sequenceAreaTargetOffset = Math.max((modalBottom + outlineOffset) - SEQUENCE_AREA.offsetTop, 0); // how many pixels from the top of the sequence image display area to where we want to scroll the current step to.
-
-            // scroll the sequence image to show the current step under the modal
-            var sequenceImageOffsetTop = Math.max(box[1] * vscale - sequenceAreaTargetOffset * vscale, 0);
-            window.scrollTo({
-                top: sequenceImageOffsetTop,
-                left: 0,
-                behavior: 'smooth'
-            });
-
-            var boxTop = box[1] * vscale; // as measured from the top of the sequence image on the current display
-            var boxHeight = (box[3] - box[1]) * vscale;
-            var boxWidth = (box[2] - box[0]) * hscale;
-
-            GAME_OUTLINE.style.top = boxTop + 'px';
-            GAME_OUTLINE.style.height = boxHeight + 'px';
-            GAME_OUTLINE.style.width = boxWidth + 'px';
-            GAME_OUTLINE.classList.remove('hidden');
-        }
-
-        function showSideNav(navElement, textContent, onclick) {
+        function showSideNav(navElement, textContent, onclick, extend=false) {
             navElement.innerHTML = textContent;
             navElement.parentElement.onclick = onclick;
             navElement.parentElement.classList.remove('hidden');
+            if (extend) {
+                navElement.classList.add('simhover');
+                window.addEventListener('click', endsimhover);
+
+                function endsimhover(e) {
+                    window.removeEventListener('click', endsimhover);
+                    navElement.classList.remove('simhover');
+                }
+            }
         }
 
         function hideSideNav(navElement) {
-            navElement.innerHTML = '';
             navElement.parentElement.classList.add('hidden');
+            navElement.innerHTML = '';
         }
 
-        function toggleAbout() {
-            if (RIGHTS_AREA.classList.contains('hidden')) {
+        function showAbout() {            
+            if (ABOUT_AREA.classList.contains('hidden')) {
                 INFO_AREA.style.color = 'white';
-                RIGHTS_AREA.classList.add('fade-in');
-                RIGHTS_AREA.classList.remove('hidden');
-                RIGHTS_AREA.addEventListener('animationend', fadeinRightsDone);
-            } else {
+                ABOUT_AREA.classList.add('fade-in');
+                ABOUT_AREA.classList.remove('hidden');
+                ABOUT_AREA.addEventListener('animationend',aboutFadeinDone);
+            }    
+
+            function aboutFadeinDone() {
+                ABOUT_AREA.classList.remove('fade-in');
+                ABOUT_AREA.removeEventListener('animationend',aboutFadeinDone);
+                window.addEventListener('click', aboutUserClicked);
+            }
+
+            function aboutUserClicked(e) {
+                window.removeEventListener('click', aboutUserClicked);
+                ABOUT_AREA.classList.add('fade-out');
+                ABOUT_AREA.addEventListener('animationend', aboutFadeoutDone);
+            }
+            
+            function aboutFadeoutDone() {
                 INFO_AREA.style.color = 'black';
-                RIGHTS_AREA.classList.remove('fade-in');
-                RIGHTS_AREA.classList.add('fade-out');
-                RIGHTS_AREA.addEventListener('animationend', hideRights);
-            }
-
-            function fadeinRightsDone() {                
-                window.addEventListener('click', userclicksanywhere);
-                RIGHTS_AREA.removeEventListener('animationend', fadeinRightsDone);
-            }
-
-            function userclicksanywhere(e) {
-                window.removeEventListener('click', userclicksanywhere);
-                toggleAbout();
-            }
-
-            function hideRights() {
-                RIGHTS_AREA.classList.add('hidden');
-                RIGHTS_AREA.classList.remove('fade-out');
-                RIGHTS_AREA.removeEventListener('animationend', hideRights);
+                ABOUT_AREA.classList.add('hidden');
+                ABOUT_AREA.classList.remove('fade-out');
+                ABOUT_AREA.removeEventListener('animationend', aboutFadeoutDone);
             }
         }
 
-        function toggleOptions() {
-            OPTION_CAMPAIGN.checked = CampaignMode;
-
+        function showOptions() {
             if (OPTIONS_AREA.classList.contains('hidden')) {
+                document.options.compendiumAs[CompendiumAsHtml ? 0 : 1].checked = true;
                 OPTIONS_AREA.classList.add('fade-in');
                 OPTIONS_AREA.classList.remove('hidden');
-                OPTIONS_AREA.addEventListener('animationend', fadeinOptionsDone);
-            } else {
-                console.log('fading out Options');
-                OPTIONS_AREA.classList.add('fade-out');
-                OPTIONS_AREA.addEventListener('animationend', hideOptions);
-
-                CampaignMode = OPTION_CAMPAIGN.checked;
-                console.log('CampaignMode = ' + CampaignMode);
-                CompendiumAsPdf = document.querySelector('input[name="compendium"]:checked').value;
-                console.log('CompendiumAsPdf = ' + CompendiumAsPdf);
+                OPTIONS_AREA.addEventListener('animationend',optionsFadeinDone);
             }
 
-            function fadeinOptionsDone() {
-                window.addEventListener('click', userclicksoutside);
-                OPTIONS_AREA.removeEventListener('animationend', fadeinOptionsDone);
+            function optionsFadeinDone() {
+                OPTIONS_AREA.classList.remove('fade-in');
+                OPTIONS_AREA.removeEventListener('animationend',optionsFadeinDone);
+                window.addEventListener('click', optionsUserClicked);
             }
 
-            function userclicksoutside(e) {
+            function optionsUserClicked(e) {
                 if (!OPTIONS_AREA.contains(e.target)) {
-                    window.removeEventListener('click', userclicksoutside);
-                    toggleOptions();
+                    recordOptions();
+                    window.removeEventListener('click', optionsUserClicked);
+                    OPTIONS_AREA.classList.add('fade-out');
+                    OPTIONS_AREA.addEventListener('animationend', optionsFadeoutDone);
                 }
             }
             
-            function hideOptions() {
+            function optionsFadeoutDone() {
                 OPTIONS_AREA.classList.add('hidden');
                 OPTIONS_AREA.classList.remove('fade-out');
-                OPTIONS_AREA.removeEventListener('animationend', hideOptions);
+                OPTIONS_AREA.removeEventListener('animationend', optionsFadeoutDone);
             }
+        }
+
+        function recordOptions() {
+            stateHistory = localStorage.getItem('stateHistory');
+            var states = stateHistory.split(',');
+            var last = Number(states.pop());
+            if ((last < 0) || (last > 255)) {
+                states.push(last.toString());
+            }
+            
+            var optionsVal = (CompendiumIsPreferred ? 1 : 0) +
+                             (CompendiumAsHtml ? 2 : 0);
+            states.push(optionsVal.toString());
+            localStorage.setItem('stateHistory', states.join(','));
         }
 
         function generateButton(buttonText, onclick = null, btnClass = 'modalBtn') {
@@ -1370,8 +1454,8 @@
 
         function findStepNum(searchName) {
             var step = null;
-            for (step = 0; step < sequence.steps.length; step++) {
-                if (sequence.steps[step].name == searchName) {
+            for (step = 0; step < Sequence.steps.length; step++) {
+                if (Sequence.steps[step].name == searchName) {
                     break
                 };
             };
