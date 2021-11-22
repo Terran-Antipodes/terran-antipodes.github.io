@@ -469,7 +469,7 @@
             text-shadow: 0 0px 5px rgba(0,0,0,.25), 0 -1px 1px #000;
         }
 
-        .help object {
+        .help iframe {
             width: 90vw;
             height: 70vh;
         }
@@ -603,7 +603,7 @@
         </form>
     </div>
     <script>
-        var VERSION = 'v1.4.0';
+        var VERSION = 'v1.4.1';
 
         /* define game steps */
         var Sequence = JSON.parse(
@@ -1115,7 +1115,7 @@
                 fragment = '#page=' + helpInfo[0] + '&zoom=100,' + helpInfo[1] + ',' + helpInfo[2] + '&pagemode=none&view=FitH';
                 query = '';
             }
-            GAME_HELP_DISPLAY.innerHTML = "<object data='" + address + query + fragment + "' type='application/pdf'></object>";
+            GAME_HELP_DISPLAY.innerHTML = "<iframe src='" + address + query + fragment + "' ></iframe>";
             GAME_HELP.classList.remove('hidden');
         }
 
