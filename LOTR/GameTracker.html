@@ -757,6 +757,7 @@
         const INFO_AREA = document.getElementById('InfoArea');
         const ABOUT_AREA = document.getElementById('AboutArea');
         const OPTIONS_AREA = document.getElementById('OptionsArea')
+        const IS_MOBILE = navigator.userAgentData.mobile;
 
         /* Define webpage globals */
         var SequenceImage;
@@ -1092,13 +1093,14 @@
             var compendiumInfo = helpLocations[0];
             var companionInfo = (helpLocations.length < 2) ? [] : helpLocations[1];
             var actionWindowInfo = (helpLocations.length < 3) ? [] : helpLocations[2];
+            var subText = IS_MOBILE ? '' : '<p id="helpSubText"><br>Hold Alt while pressing a button to open help in a new tab</p>';
             GAME_HELP_TEXT.innerHTML =
                 stepText +
                 '<div class="buttonHolder">' +
                 ((compendiumInfo.length == 0) ? '' : generateButton('Compendium', 'CompendiumIsPreferred=true;game_showCompendium(' + JSON.stringify(compendiumInfo) + ',event)', 'helpBtn')) +
                 ((companionInfo.length == 0) ? '' : generateButton('Companion', 'CompendiumIsPreferred=false;game_showCompanion(' + companionInfo[0] + ',event)', 'helpBtn')) +
                 ((actionWindowInfo.length == 0) ? '' : generateButton('Action Window', 'game_showCompendium(' + JSON.stringify(actionWindowInfo) + ',event)', 'helpBtn')) +
-                '</div><p id="helpSubText"><br>Hold Alt while pressing a button to open help in a new tab</p>';
+                '</div>' + subText;
 
             if ((compendiumInfo.length == 0) && (companionInfo.length == 0)) {
                 game_showCompendium(actionWindowInfo);
@@ -1109,7 +1111,9 @@
                 game_showCompanion(companionInfo[0]);
             }
 
-            setTimeout(function() { document.getElementById('helpSubText').style.opacity = '0'; }, 5000);
+            if (!IS_MOBILE) {
+                setTimeout(function() { document.getElementById('helpSubText').style.opacity = '0'; }, 5000);
+            }
         }
 
         function game_showCompendium(helpInfo, event=null) {
