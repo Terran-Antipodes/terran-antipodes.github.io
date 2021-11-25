@@ -114,7 +114,7 @@
             transform: rotate(45deg);
         }
     </style>
-    <style>  /* Custom radio buttons and checkboxes */
+    <style> /* Custom radio buttons and checkboxes */
         /* Style for the label */
         .choiceHolder {
             display: block;
@@ -495,6 +495,12 @@
             background: -moz-linear-gradient(top, #bfd255 0%, #8eb92a 50%, #72aa00 51%, #9ecb2d 100%);
             background: -o-linear-gradient(top, #bfd255 0%, #8eb92a 50%, #72aa00 51%, #9ecb2d 100%);
             background: linear-gradient(to bottom, #bfd255 0%, #8eb92a 50%, #72aa00 51%, #9ecb2d 100%);
+        }
+
+        #helpSubText {
+            font-size: 2vw;
+            opacity: 1;
+            transition: all 5s;
         }
     </style>
     <style>
@@ -1089,10 +1095,10 @@
             GAME_HELP_TEXT.innerHTML =
                 stepText +
                 '<div class="buttonHolder">' +
-                ((compendiumInfo.length == 0) ? '' : generateButton('Compendium', 'CompendiumIsPreferred=true;game_showCompendium(' + JSON.stringify(compendiumInfo) + ')', 'helpBtn')) +
-                ((companionInfo.length == 0) ? '' : generateButton('Companion', 'CompendiumIsPreferred=false;game_showCompanion(' + companionInfo[0] + ')', 'helpBtn')) +
-                ((actionWindowInfo.length == 0) ? '' : generateButton('Action Window', 'game_showCompendium(' + JSON.stringify(actionWindowInfo) + ')', 'helpBtn')) +
-                '</div>';
+                ((compendiumInfo.length == 0) ? '' : generateButton('Compendium', 'CompendiumIsPreferred=true;game_showCompendium(' + JSON.stringify(compendiumInfo) + ',event)', 'helpBtn')) +
+                ((companionInfo.length == 0) ? '' : generateButton('Companion', 'CompendiumIsPreferred=false;game_showCompanion(' + companionInfo[0] + ',event)', 'helpBtn')) +
+                ((actionWindowInfo.length == 0) ? '' : generateButton('Action Window', 'game_showCompendium(' + JSON.stringify(actionWindowInfo) + ',event)', 'helpBtn')) +
+                '</div><p id="helpSubText"><br>Hold Alt while pressing a button to open help in a new tab</p>';
 
             if ((compendiumInfo.length == 0) && (companionInfo.length == 0)) {
                 game_showCompendium(actionWindowInfo);
@@ -1102,9 +1108,11 @@
             } else {
                 game_showCompanion(companionInfo[0]);
             }
+
+            setTimeout(function() { document.getElementById('helpSubText').style.opacity = '0'; }, 5000);
         }
 
-        function game_showCompendium(helpInfo) {
+        function game_showCompendium(helpInfo, event=null) {
             var address, fragment, query;
             if (CompendiumAsHtml) {
                 address = './RulesCompendium_v2.0/Rules_Compendium_v2_0.html';
@@ -1117,11 +1125,21 @@
             }
             GAME_HELP_DISPLAY.innerHTML = "<iframe src='" + address + query + fragment + "' ></iframe>";
             GAME_HELP.classList.remove('hidden');
+
+            if (event?.altKey) {
+                window.open(address + query + fragment, 'Rules Compendium');
+            }
         }
 
-        function game_showCompanion(pageNum) {
-            GAME_HELP_DISPLAY.innerHTML = "<object data='https://lotr-lcg-quest-companion.gamersdungeon.net/#Rule" + pageNum + "' type='text/html'></object>";
+        function game_showCompanion(pageNum, event=null) {
+            var address = 'https://lotr-lcg-quest-companion.gamersdungeon.net/#Rule';
+
+            GAME_HELP_DISPLAY.innerHTML = "<object data='" + address + pageNum + "' type='text/html'></object>";
             GAME_HELP.classList.remove('hidden');
+
+            if (event?.altKey) {
+                window.open(address + pageNum, 'Quest Companion');
+            }
         }
 
         function game_verifyElimPlayer() {
