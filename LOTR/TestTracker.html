@@ -469,7 +469,7 @@
             text-shadow: 0 0px 5px rgba(0,0,0,.25), 0 -1px 1px #000;
         }
 
-        .help object,.help iframe {
+        .help iframe {
             width: 90vw;
             height: 70vh;
         }
@@ -603,7 +603,7 @@
         </form>
     </div>
     <script>
-        var VERSION = 'v1.4.0';
+        var VERSION = 'v1.4.1';
 
         /* define game steps */
         var Sequence = JSON.parse(
@@ -1089,9 +1089,9 @@
             GAME_HELP_TEXT.innerHTML =
                 stepText +
                 '<div class="buttonHolder">' +
-                ((compendiumInfo.length == 0) ? '' : generateButton('Compendium', 'CompendiumIsPreferred=true;game_showCompendium(' + JSON.stringify(compendiumInfo) + ')', 'helpBtn')) +
-                ((companionInfo.length == 0) ? '' : generateButton('Companion', 'CompendiumIsPreferred=false;game_showCompanion(' + companionInfo[0] + ')', 'helpBtn')) +
-                ((actionWindowInfo.length == 0) ? '' : generateButton('Action Window', 'game_showCompendium(' + JSON.stringify(actionWindowInfo) + ')', 'helpBtn')) +
+                ((compendiumInfo.length == 0) ? '' : generateButton('Compendium', 'CompendiumIsPreferred=true;game_showCompendium(' + JSON.stringify(compendiumInfo) + ',event)', 'helpBtn')) +
+                ((companionInfo.length == 0) ? '' : generateButton('Companion', 'CompendiumIsPreferred=false;game_showCompanion(' + companionInfo[0] + ',event)', 'helpBtn')) +
+                ((actionWindowInfo.length == 0) ? '' : generateButton('Action Window', 'game_showCompendium(' + JSON.stringify(actionWindowInfo) + ',event)', 'helpBtn')) +
                 '</div>';
 
             if ((compendiumInfo.length == 0) && (companionInfo.length == 0)) {
@@ -1104,7 +1104,7 @@
             }
         }
 
-        function game_showCompendium(helpInfo) {
+        function game_showCompendium(helpInfo, event=null) {
             var address, fragment, query;
             if (CompendiumAsHtml) {
                 address = './RulesCompendium_v2.0/Rules_Compendium_v2_0.html';
@@ -1117,11 +1117,21 @@
             }
             GAME_HELP_DISPLAY.innerHTML = "<iframe src='" + address + query + fragment + "' ></iframe>";
             GAME_HELP.classList.remove('hidden');
+
+            if (event?.altKey) {
+                window.open(address + query + fragment, 'Rules Compendium');
+            }
         }
 
-        function game_showCompanion(pageNum) {
-            GAME_HELP_DISPLAY.innerHTML = "<object data='https://lotr-lcg-quest-companion.gamersdungeon.net/#Rule" + pageNum + "' type='text/html'></object>";
+        function game_showCompanion(pageNum, event=null) {
+            var address = 'https://lotr-lcg-quest-companion.gamersdungeon.net/#Rule';
+
+            GAME_HELP_DISPLAY.innerHTML = "<object data='" + address + pageNum + "' type='text/html'></object>";
             GAME_HELP.classList.remove('hidden');
+
+            if (event?.altKey) {
+                window.open(address + pageNum, 'Quest Companion');
+            }
         }
 
         function game_verifyElimPlayer() {
