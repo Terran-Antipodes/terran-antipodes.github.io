@@ -2,6 +2,8 @@
 This website is an SPA intended to provide a non-commercial aid while playing the [Lord of the Rings LCG](https://www.fantasyflightgames.com/en/products/the-lord-of-the-rings-the-card-game/) from [Final Flight Game](https://www.fantasyflightgames.com/en/index/).
 
 ##Version History
+###v1.5.0
+Compendium and Companion can be opened in new tabs.
 ###v1.4.1
 i3: Compendium PDF does not display in Chrome on certain devices
  - Switched from object to iframe for display area.
