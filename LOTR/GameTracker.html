@@ -46,8 +46,75 @@
         .bordered {
             border: 2px dashed blue;
         }
+        
+        .optionContainer {
+            display: block;
+            position: relative;
+            padding-left: 4vw;
+            margin-bottom: 1vh;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        /* Hide the browser's default radio buttons and checkboxes */
+        .optionContainer input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+
+        /* show this radio button or checkbox instead */
+        .radbtn,.chkbox {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 2.5vw;
+            width: 2.5vw;
+            background-color: #EEEEEE;
+            border-radius: 50%;
+        }
+
+        /* On mouse-over, add a grey background color */
+        .optionContainer:hover input ~ .radbtn,.optionContainer:hover input ~ .chkbox {
+            background-color: #CCCCCC;
+        }
+
+        /* When the button is selected, add a blue background */
+        .optionContainer input:checked ~ .radbtn,.optionContainer input:checked ~ .chkbox {
+            background-color: #2196F3;
+        }
+
+        /* Create the indicator (hidden when not checked) */
+        .radbtn:after,.chkbox:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        /* Show the indicator when selected */
+        .optionContainer input:checked ~ .radbtn:after,.optionContainer input:checked ~ .chkbox:after {
+            display: block;
+        }
+
+        /* Style the indicator */
+        .optionContainer .radbtn:after,.optionContainer .chkbox:after {
+            left: 9px;
+            top: 3px;
+            width: 2px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2.5px 2.5px 0;
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+        }
     </style>
-    <style>  /* Custom radio buttons and checkboxes */
+    <style> /* Custom radio buttons and checkboxes */
         /* Style for the label */
         .choiceHolder {
             display: block;
@@ -170,11 +237,20 @@
             transition: 0.3s; /* Add transition on hover */
         }
 
+        #SideNavLeft a span,#SideNavRight a span {
+            opacity: 0; /* Hide nav text in case it spills over into view */
+        }
+
         #SideNavLeft a:hover,#SideNavLeft a.simhover {
             left: 0; /* On mouse-over, make the elements appear as they should */
             color: white; /* White text color */
             opacity: 1;
             transition: 0.3s; /* Add transition on hover */
+        }
+
+        #SideNavLeft a:hover span,#SideNavLeft a.simhover span {
+            opacity: 1; /* Show nav text on hover */
+            transition: 0.3s;
         }
 
         #SideNavRight a {
@@ -291,7 +367,7 @@
             font-weight: bold;
             text-shadow: 0 0 10px #000;
             border-top: 1px solid rgb(200,250,100);
-            font-size: 4vh;
+            font-size: 4vmin;
             -webkit-box-shadow: rgba(255,255,255,.3) 0 2px 1px,rgba(0,0,0,.3) 0 -2px 1px, rgba(0,0,0,0.5) 0px 3px 10px, rgba(0,50,0,.75) 0 0 40px inset;
             -moz-box-shadow: rgba(255,255,255,.3) 0 2px 1px,rgba(0,0,0,.3) 0 -2px 1px, rgba(0,0,0,0.5) 0px 3px 10px, rgba(0,50,0,.75) 0 0 40px inset;
             box-shadow: rgba(255,255,255,.3) 0 2px 1px,rgba(0,0,0,.3) 0 -2px 1px, rgba(0,0,0,0.5) 0px 3px 10px, rgba(0,50,0,.75) 0 0 40px inset;
@@ -393,7 +469,7 @@
             text-shadow: 0 0px 5px rgba(0,0,0,.25), 0 -1px 1px #000;
         }
 
-        .help object {
+        .help iframe {
             width: 90vw;
             height: 70vh;
         }
@@ -420,6 +496,12 @@
             background: -o-linear-gradient(top, #bfd255 0%, #8eb92a 50%, #72aa00 51%, #9ecb2d 100%);
             background: linear-gradient(to bottom, #bfd255 0%, #8eb92a 50%, #72aa00 51%, #9ecb2d 100%);
         }
+
+        #helpSubText {
+            font-size: 2vw;
+            opacity: 1;
+            transition: all 5s;
+        }
     </style>
     <style>
         #InfoArea {
@@ -432,6 +514,7 @@
 
         #AboutArea {
             position: absolute;
+            padding: 2vh 2vw;
             top: 15vh;
             left: 10vw;
             width: 80vw;
@@ -526,7 +609,7 @@
         </form>
     </div>
     <script>
-        const VERSION = 'v1.3.0';
+        var VERSION = 'v1.5.0';
 
         /* define game steps */
         var Sequence = JSON.parse(
@@ -586,7 +669,7 @@
             '                         ] ' +
             '             } ' +
             '            ,{ "name": "QUEST & TRAVEL" ' +
-            '              ,"voffset": 777 ' +
+            '              ,"voffset": 762 ' +
             '              ,"images": [ "https://images-cdn.fantasyflightgames.com/filer_public/c8/03/c80313c8-af07-43f8-af92-d6fb8cda51c2/kn22_preview.jpg" ' +
             '                          ,"https://images-cdn.fantasyflightgames.com/filer_public/03/89/0389ccb0-5fc0-4027-bc00-5bbc4d26882e/mec86_preview1.jpg" ' +
             '                          ,"https://images-cdn.fantasyflightgames.com/filer_public/b7/1f/b71f7ce7-d492-46ec-878f-6d245f99e077/mec56-preview2.jpg" ' +
@@ -597,7 +680,7 @@
             '                         ] ' +
             '             } ' +
             '            ,{ "name": "ENCOUNTER" ' +
-            '              ,"voffset": 1740 ' +
+            '              ,"voffset": 1730 ' +
             '              ,"images": [ "https://images-cdn.fantasyflightgames.com/filer_public/cf/62/cf622e9b-9e77-40c2-98be-5a8c27a8f745/mec01_step_01.jpg" ' +
             '                          ,"https://images-cdn.fantasyflightgames.com/filer_public/47/df/47df5db1-b712-489e-9dd3-67f71becbb73/mec01_step_02.jpg" ' +
             '                          ,"https://images-cdn.fantasyflightgames.com/filer_public/3c/84/3c849cf3-e3b0-48ec-bd5f-312178c7974f/jme03-04_preview2.jpg" ' +
@@ -609,7 +692,7 @@
             '                         ] ' +
             '             } ' +
             '            ,{ "name": "ENEMY ATTACK" ' +
-            '              ,"voffset": 2195 ' +
+            '              ,"voffset": 2180 ' +
             '              ,"images": [ "https://images-cdn.fantasyflightgames.com/filer_public/00/6e/006e18e0-cd00-4083-9ce6-42ead3f90f05/jme01_preview_1.jpg" ' +
             '                          ,"https://images-cdn.fantasyflightgames.com/filer_public/10/3d/103d50a4-2789-4e99-91d0-5cb1e8e20f46/umen43_wicked-hobbits-art.jpg" ' +
             '                          ,"https://images-cdn.fantasyflightgames.com/filer_public/3e/c5/3ec56810-9135-4d9e-ad9b-63b041398aad/umen36_preview.png" ' +
@@ -619,7 +702,7 @@
             '                         ] ' +
             '             } ' +
             '            ,{ "name": "PLAYER ATTACK" ' +
-            '              ,"voffset": 3281 ' +
+            '              ,"voffset": 3266 ' +
             '              ,"images": [ "https://images-cdn.fantasyflightgames.com/filer_public/6b/ab/6baba999-f2ff-492f-abd1-ad9893f1556e/mec_fellowship_2017_art_battle.png" ' +
             '                          ,"https://images-cdn.fantasyflightgames.com/filer_public/ed/cc/edcc9c29-9bfa-4e25-b6ae-8e339893005a/fellowship2015_preview1.jpg" ' +
             '                          ,"https://images-cdn.fantasyflightgames.com/filer_public/4e/5a/4e5a5a48-7678-45d2-bce0-a5c10bab1546/mec_fellowship_2017_art_siege.png" ' +
@@ -627,7 +710,7 @@
             '                         ] ' +
             '             } ' +
             '            ,{ "name": "REFRESH" ' +
-            '              ,"voffset": 4145 ' +
+            '              ,"voffset": 4130 ' +
             '              ,"images": [ "https://images-cdn.fantasyflightgames.com/filer_public/bd/7c/bd7cf918-9c0f-4010-aff9-417431615ce7/mec01_step_00.jpg" ' +
             '                          ,"https://images-cdn.fantasyflightgames.com/filer_public/8f/66/8f66dc61-addd-4d8a-9a07-42f070536499/mec08_preview.jpg" ' +
             '                          ,"https://images-cdn.fantasyflightgames.com/filer_public/28/53/28531b9e-a3f6-4c50-a1ec-39899ac073cb/mec17_preview.jpg" ' +
@@ -674,6 +757,7 @@
         const INFO_AREA = document.getElementById('InfoArea');
         const ABOUT_AREA = document.getElementById('AboutArea');
         const OPTIONS_AREA = document.getElementById('OptionsArea')
+        const IS_MOBILE = navigator.userAgentData.mobile;
 
         /* Define webpage globals */
         var SequenceImage;
@@ -1009,13 +1093,14 @@
             var compendiumInfo = helpLocations[0];
             var companionInfo = (helpLocations.length < 2) ? [] : helpLocations[1];
             var actionWindowInfo = (helpLocations.length < 3) ? [] : helpLocations[2];
+            var subText = IS_MOBILE ? '' : '<p id="helpSubText"><br>Hold Alt while pressing a button to open help in a new tab</p>';
             GAME_HELP_TEXT.innerHTML =
                 stepText +
                 '<div class="buttonHolder">' +
-                ((compendiumInfo.length == 0) ? '' : generateButton('Compendium', 'CompendiumIsPreferred=true;game_showCompendium(' + JSON.stringify(compendiumInfo) + ')', 'helpBtn')) +
-                ((companionInfo.length == 0) ? '' : generateButton('Companion', 'CompendiumIsPreferred=false;game_showCompanion(' + companionInfo[0] + ')', 'helpBtn')) +
-                ((actionWindowInfo.length == 0) ? '' : generateButton('Action Window', 'game_showCompendium(' + JSON.stringify(actionWindowInfo) + ')', 'helpBtn')) +
-                '</div>';
+                ((compendiumInfo.length == 0) ? '' : generateButton('Compendium', 'CompendiumIsPreferred=true;game_showCompendium(' + JSON.stringify(compendiumInfo) + ',event)', 'helpBtn')) +
+                ((companionInfo.length == 0) ? '' : generateButton('Companion', 'CompendiumIsPreferred=false;game_showCompanion(' + companionInfo[0] + ',event)', 'helpBtn')) +
+                ((actionWindowInfo.length == 0) ? '' : generateButton('Action Window', 'game_showCompendium(' + JSON.stringify(actionWindowInfo) + ',event)', 'helpBtn')) +
+                '</div>' + subText;
 
             if ((compendiumInfo.length == 0) && (companionInfo.length == 0)) {
                 game_showCompendium(actionWindowInfo);
@@ -1025,9 +1110,13 @@
             } else {
                 game_showCompanion(companionInfo[0]);
             }
+
+            if (!IS_MOBILE) {
+                setTimeout(function() { document.getElementById('helpSubText').style.opacity = '0'; }, 5000);
+            }
         }
 
-        function game_showCompendium(helpInfo) {
+        function game_showCompendium(helpInfo, event=null) {
             var address, fragment, query;
             if (CompendiumAsHtml) {
                 address = './RulesCompendium_v2.0/Rules_Compendium_v2_0.html';
@@ -1038,13 +1127,23 @@
                 fragment = '#page=' + helpInfo[0] + '&zoom=100,' + helpInfo[1] + ',' + helpInfo[2] + '&pagemode=none&view=FitH';
                 query = '';
             }
-            GAME_HELP_DISPLAY.innerHTML = "<object data='" + address + query + fragment + "' type='application/pdf'></object>";
+            GAME_HELP_DISPLAY.innerHTML = "<iframe src='" + address + query + fragment + "' ></iframe>";
             GAME_HELP.classList.remove('hidden');
+
+            if (event?.altKey) {
+                window.open(address + query + fragment, 'Rules Compendium');
+            }
         }
 
-        function game_showCompanion(pageNum) {
-            GAME_HELP_DISPLAY.innerHTML = "<object data='https://lotr-lcg-quest-companion.gamersdungeon.net/#Rule" + pageNum + "' type='text/html'></object>";
+        function game_showCompanion(pageNum, event=null) {
+            var address = 'https://lotr-lcg-quest-companion.gamersdungeon.net/#Rule';
+
+            GAME_HELP_DISPLAY.innerHTML = "<object data='" + address + pageNum + "' type='text/html'></object>";
             GAME_HELP.classList.remove('hidden');
+
+            if (event?.altKey) {
+                window.open(address + pageNum, 'Quest Companion');
+            }
         }
 
         function game_verifyElimPlayer() {
@@ -1213,9 +1312,9 @@
 
             // SideNavs:
             var showBack = (sideNavInfo == null) ? false : sideNavInfo[0];
-            var skipInfo = (sideNavInfo == null) ? null : sideNavInfo[1];
+            var skipInfo = (sideNavInfo == null) ? null  : sideNavInfo[1];
             var showElim = (sideNavInfo == null) ? false : sideNavInfo[2]
-            var showVP = (sideNavInfo == null) ? false : sideNavInfo[3];
+            var showVP   = (sideNavInfo == null) ? false : sideNavInfo[3];
 
             // SideNavs: back:
             if (showBack) {
@@ -1287,7 +1386,7 @@
         }
 
         function showSideNav(navElement, textContent, onclick, extend=false) {
-            navElement.innerHTML = textContent;
+            navElement.innerHTML = '<span>' + textContent + '</span>';
             navElement.parentElement.onclick = onclick;
             navElement.parentElement.classList.remove('hidden');
             if (extend) {
@@ -1365,7 +1464,7 @@
         }
 
         function recordOptions() {
-            stateHistory = localStorage.getItem('stateHistory');
+            stateHistory = localStorage.getItem('stateHistory') ?? '0';
             var states = stateHistory.split(',');
             var last = Number(states.pop());
             if ((last < 0) || (last > 255)) {
