@@ -3,10 +3,17 @@
 		<script type="text/javascript">
 			addEventListener("load", function() {
 				document.getElementById('wrapper').style.display = 'block';
-				if (window.location.search.startsWith('?s')) {
-					var sectionTexts = [].slice.call(document.getElementById(window.location.search.substring(1)).getElementsByTagName('span'));
+
+				var urlParams = new URLSearchParams(window.location.search);
+				var section = urlParams.get('section');	
+				var containingWidth = urlParams.get('cwidth');
+
+				var scale = ((containingWidth == null) ? document.body.offsetWidth : containingWidth) / 600;
+				document.getElementById('wrapper').style.transform = 'scale(' + scale + ')';
+				if (section != null) {
+					var sectionTexts = document.getElementById(section).getElementsByTagName('span');
 					setTimeout(function() {
-						sectionTexts.forEach( textspan => {
+						Array.from(sectionTexts).forEach( textspan => {
 							textspan.classList.add('highlighted');
 						});
 					}, 1000);
@@ -266,12 +273,12 @@
 	<body style='background-color: white'>
 		<span id='wrapper'>
 		<div id="p001" style="position:absolute;left:050%;margin-left:-297px;top:0px;width:595px;height:841px;border-style:outset;overflow:hidden">
-			<div style="position:absolute;left:055px;top:110px"><img src="images/lotr.png" width=500 height=150></div>
-			<div style="position:absolute;left:128px;top:385px"><img src="images/compendium.png" width=340 height=75></div>
-			<div style="position:absolute;left:270px;top:565px"><img src="images/ffg.jpg" width=60 height=60></div>
+			<div style="position:absolute;left:055px;top:110px"><img src="images/lotr.png" width='500' height='150'></div>
+			<div style="position:absolute;left:128px;top:385px"><img src="images/compendium.png" width='340' height='75'></div>
+			<div style="position:absolute;left:270px;top:565px"><img src="images/ffg.jpg" width='60' height='60'></div>
 		</div>
 		<div id="p002" style="position:absolute;left:050%;margin-left:-297px;top:851px;width:595px;height:841px;border-style:outset;overflow:hidden">
-			<div style="position:absolute;left:12px;top:22px"><img src="images/ffg.jpg" width=60 height=60></div>
+			<div style="position:absolute;left:12px;top:22px"><img src="images/ffg.jpg" width='60' height='60'></div>
 			<div style="position:absolute;left:077.66px;top:034.24px" class="cls_006"><span class="cls_006">All the content of this document, images, arts, fonts and </span><span class="cls_007">The Lord of The Rings: The Card Game</span><span class="cls_006"> are copyrighted</span></div>
 			<div style="position:absolute;left:085.58px;top:044.56px" class="cls_006"><span class="cls_006">at © Fantasy Flight Games. The copyrightable portions of </span><span class="cls_007">The Lord of the Rings: The Card Game</span><span class="cls_006"> and its</span></div>
 			<div style="position:absolute;left:085.58px;top:054.88px" class="cls_006"><span class="cls_006">expansions are © 2011 - 2020 Fantasy Flight Publishing, Inc. The Lord of the Rings, and the characters, items,</span></div>

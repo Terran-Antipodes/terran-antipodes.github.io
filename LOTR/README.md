@@ -2,6 +2,12 @@
 This website is an SPA intended to provide a non-commercial aid while playing the [Lord of the Rings LCG](https://www.fantasyflightgames.com/en/products/the-lord-of-the-rings-the-card-game/) from [Final Flight Game](https://www.fantasyflightgames.com/en/index/).
 
 ##Version History
+###v1.6.0
+Added support for tooltips.
+Tooltip for help buttons.
+Tooltip for close button for new game.
+Fixed sizing of frame used to display help.
+Help display scales to fit containing frame.
 ###v1.5.1
 Additional conversion changes to the HTML Compendium.
 ###v1.5.0
