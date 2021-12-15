@@ -2,6 +2,13 @@
 This website is an SPA intended to provide a non-commercial aid while playing the [Lord of the Rings LCG](https://www.fantasyflightgames.com/en/products/the-lord-of-the-rings-the-card-game/) from [Final Flight Game](https://www.fantasyflightgames.com/en/index/).
 
 ##Version History
+###v1.7.0
+Added Campaign mode.
+Skip campaign-only steps in regular mode.
+ - i11: Fixed bug that lost states when using 'back'.
+Fixed bug that prevented display of round and points.
+Changed display of final step for single-player.
+Reformatted document.
 ###v1.6.0
 Added support for tooltips.
 Tooltip for help buttons.
