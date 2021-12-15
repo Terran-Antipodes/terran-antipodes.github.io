@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
 <html>
+
 <head>
     <style> /* General styling */
         html {
@@ -15,7 +16,8 @@
             visibility: hidden;
         }
 
-        .closeBtn { /* Styling for the close button (the red x) */
+        /* Styling for the close button (the red x) */
+        .closeBtn {
             background: red;
             display: block;
             padding: 2% 3%;
@@ -25,10 +27,10 @@
             color: white;
             font-size: 4vh;
             font-weight: bold;
-            border-top: 1px solid rgb(250,150,100);
-            -webkit-box-shadow: rgba(255,255,255,.3) 0 2px 1px,rgba(0,0,0,.3) 0 -2px 1px, rgba(0,0,0,0.5) 0px 3px 10px, rgba(100,0,0,.75) 0 0 40px inset;
-            -moz-box-shadow: rgba(255,255,255,.3) 0 2px 1px,rgba(0,0,0,.3) 0 -2px 1px, rgba(0,0,0,0.5) 0px 3px 10px, rgba(100,0,0,.75) 0 0 40px inset;
-            box-shadow: rgba(255,255,255,.3) 0 2px 1px,rgba(0,0,0,.3) 0 -2px 1px, rgba(0,0,0,0.5) 0px 3px 10px, rgba(100,0,0,.75) 0 0 40px inset;
+            border-top: 1px solid rgb(250, 150, 100);
+            -webkit-box-shadow: rgba(255, 255, 255, .3) 0 2px 1px, rgba(0, 0, 0, .3) 0 -2px 1px, rgba(0, 0, 0, 0.5) 0px 3px 10px, rgba(100, 0, 0, .75) 0 0 40px inset;
+            -moz-box-shadow: rgba(255, 255, 255, .3) 0 2px 1px, rgba(0, 0, 0, .3) 0 -2px 1px, rgba(0, 0, 0, 0.5) 0px 3px 10px, rgba(100, 0, 0, .75) 0 0 40px inset;
+            box-shadow: rgba(255, 255, 255, .3) 0 2px 1px, rgba(0, 0, 0, .3) 0 -2px 1px, rgba(0, 0, 0, 0.5) 0px 3px 10px, rgba(100, 0, 0, .75) 0 0 40px inset;
             text-shadow: 0 0 10px #000;
             background: #f3c5bd;
             background: -webkit-linear-gradient(top, #f3c5bd 0%, #e86c57 50%, #ea2803 51%, #ff6600 100%);
@@ -38,7 +40,8 @@
             opacity: 1;
         }
 
-        .buttonHolder { /* centres buttons within their div */
+            /* centres buttons within their div */
+        .buttonHolder {
             display: flex;
             justify-content: center;
         }
@@ -46,7 +49,7 @@
         .bordered {
             border: 2px dashed blue;
         }
-        
+
         .optionContainer {
             display: block;
             position: relative;
@@ -69,7 +72,8 @@
         }
 
         /* show this radio button or checkbox instead */
-        .radbtn,.chkbox {
+        .radbtn,
+        .chkbox {
             position: absolute;
             top: 0;
             left: 0;
@@ -80,29 +84,34 @@
         }
 
         /* On mouse-over, add a grey background color */
-        .optionContainer:hover input ~ .radbtn,.optionContainer:hover input ~ .chkbox {
+        .optionContainer:hover input ~ .radbtn,
+        .optionContainer:hover input ~ .chkbox {
             background-color: #CCCCCC;
         }
 
         /* When the button is selected, add a blue background */
-        .optionContainer input:checked ~ .radbtn,.optionContainer input:checked ~ .chkbox {
+        .optionContainer input:checked ~ .radbtn,
+        .optionContainer input:checked ~ .chkbox {
             background-color: #2196F3;
         }
 
         /* Create the indicator (hidden when not checked) */
-        .radbtn:after,.chkbox:after {
+        .radbtn:after,
+        .chkbox:after {
             content: "";
             position: absolute;
             display: none;
         }
 
         /* Show the indicator when selected */
-        .optionContainer input:checked ~ .radbtn:after,.optionContainer input:checked ~ .chkbox:after {
+        .optionContainer input:checked ~ .radbtn:after,
+        .optionContainer input:checked ~ .chkbox:after {
             display: block;
         }
 
         /* Style the indicator */
-        .optionContainer .radbtn:after,.optionContainer .chkbox:after {
+        .optionContainer .radbtn:after,
+        .optionContainer .chkbox:after {
             left: 9px;
             top: 3px;
             width: 2px;
@@ -113,29 +122,29 @@
             -ms-transform: rotate(45deg);
             transform: rotate(45deg);
         }
-        
+
         .tooltipContainer .tooltiptext {
-             visibility: hidden;
-             opacity: 0;
-             background-color: black;
-             color: #fff;
-             font-size: 2vh;
-             text-align: center;
-             padding: 5px 0;
-             border-radius: 6px;
-             position: absolute;
-             z-index: 1;
-         }
- 
-         /* Show the tooltip text when you mouse over the tooltip container */
-         .tooltipContainer:hover .tooltiptext {
-           visibility: visible;
-           position: fixed;
-           opacity: 1;
-           transition: all 5s;
-         }
+            visibility: hidden;
+            opacity: 0;
+            background-color: black;
+            color: #fff;
+            font-size: 2vh;
+            text-align: center;
+            padding: 5px 0;
+            border-radius: 6px;
+            position: absolute;
+            z-index: 1;
+        }
+
+        /* Show the tooltip text when you mouse over the tooltip container */
+        .tooltipContainer:hover .tooltiptext {
+            visibility: visible;
+            position: fixed;
+            opacity: 1;
+            transition: all 5s;
+        }
     </style>
-    <style> /* Custom radio buttons and checkboxes */
+    <style> /*Custom radio buttons and checkboxes */
         /* Style for the label */
         .choiceHolder {
             display: block;
@@ -171,12 +180,12 @@
         }
 
         /* On mouse-over, add a grey background color */
-        .choiceHolder:hover input ~ .indicator {
+        .choiceHolder:hover input~.indicator {
             background-color: #CCCCCC;
         }
 
         /* When the radio button is checked, add a blue background */
-        .choiceHolder input:checked ~ .indicator {
+        .choiceHolder input:checked~.indicator {
             background-color: #2196F3;
         }
 
@@ -188,7 +197,7 @@
         }
 
         /* Show the indicator (dot/circle) when checked */
-        .choiceHolder input:checked ~ .indicator:after {
+        .choiceHolder input:checked~.indicator:after {
             display: block;
         }
 
@@ -233,67 +242,88 @@
             position: absolute;
             width: 50%;
         }
-      
+
         #gameOutline {
             position: relative;
             z-index: 2;
         }
     </style>
     <style> /* Style the SideNavs to be sliding buttons */     
-        #SideNavLeft a,#SideNavRight a {
-            position: fixed; /* Position them relative to the viewport - not affected by scrolling */
+        #SideNavLeft a,
+        #SideNavRight a {
+            position: fixed;
+            /* Position them relative to the viewport - not affected by scrolling */
             width: 15vw;
             z-index: 20;
-
-            text-decoration: none; /* Remove underline */
+            /* Remove underline */
+            text-decoration: none;
             font-size: 3vh;
-            text-align: center; /* Centres text horizontally in the anchor element */
+            /* Centres text horizontally in the anchor element */
+            text-align: center;
             line-height: 3vh;
             padding: 2vh;
         }
 
         #SideNavLeft a {
-            border-radius: 0 5px 5px 0; /* Rounded corners on the top right and bottom right side */
-            left: -15vw; /* Position them outside of the screen */
-            transition: 0.3s; /* Add transition on hover */
+            /* Rounded corners on the top right and bottom right side */
+            border-radius: 0 5px 5px 0;
+            /* Position them outside of the screen */
+            left: -15vw;
+            /* Add transition on hover */
+            transition: 0.3s;
         }
 
-        #SideNavLeft a span,#SideNavRight a span {
-            opacity: 0; /* Hide nav text in case it spills over into view */
+        #SideNavLeft a span,
+        #SideNavRight a span {
+            /* Hide nav text in case it spills over into view */
+            opacity: 0;
         }
 
-        #SideNavLeft a:hover,#SideNavLeft a.simhover {
-            left: 0; /* On mouse-over, make the elements appear as they should */
-            color: white; /* White text color */
+        #SideNavLeft a:hover,
+        #SideNavLeft a.simhover {
+            /* On mouse-over, make the elements appear as they should */
+            left: 0;
+            color: white;
             opacity: 1;
-            transition: 0.3s; /* Add transition on hover */
+            /* Add transition on hover */
+            transition: 0.3s;
         }
 
-        #SideNavLeft a:hover span,#SideNavLeft a.simhover span {
-            opacity: 1; /* Show nav text on hover */
+        #SideNavLeft a:hover span,
+        #SideNavLeft a.simhover span {
+            /* Show nav text on hover */
+            opacity: 1;
             transition: 0.3s;
         }
 
         #SideNavRight a {
-            border-radius: 5px 0 0 5px; /* Rounded corners on the top left and bottom left side */
-            right: -15vw; /* Position them outside of the screen */
-            transition: 0.3s; /* Add transition on hover */
+            /* Rounded corners on the top left and bottom left side */
+            border-radius: 5px 0 0 5px;
+            /* Position them outside of the screen */
+            right: -15vw;
+            /* Add transition on hover */
+            transition: 0.3s;
         }
 
-        #SideNavRight a:hover,#SideNavRight a.simhover {
-            right: 0; /* On mouse-over, make the elements appear as they should */
-            color: white; /* White text color */
+        /* On mouse-over, make the elements appear as they should */
+        #SideNavRight a:hover,
+        #SideNavRight a.simhover {
+            right: 0;
+            color: white;
             opacity: 1;
-            transition: 0.3s; /* Add transition on hover */
+            /* Add transition on hover */
+            transition: 0.3s;
         }
 
-        #newGame { /* The newgame_verify() link */
+        /* The newgame_setup() link */
+        #newGame {
             top: 5vh;
             background-color: #04AA6D;
             color: #04AA6D;
         }
 
-        #back { /* The game_backToPreviousStep() link */
+        /* The game_backToPreviousStep() link */
+        #back {
             top: 16vh;
             background-color: #2196F3;
             color: #2196F3;
@@ -332,9 +362,10 @@
     <style> /* Modal Dialogue */
         /* (adapted from https://cssdeck.com/labs/css3-sleek-black-modal) */
         .modal {
-            /* basic */
-            display: none; /* Hidden by default */
-            position: fixed; /* Stay in place */
+            /* Hidden by default */
+            display: none;
+            /* Stay in place */
+            position: fixed;
             left: 20vw;
             top: 2vw;
             width: 60vw;
@@ -343,13 +374,11 @@
             margin: 0 auto;
             padding: 5px;
             text-align: center;
-            /* border-radius */
             border-radius: 12px;
             color: white;
-            /* box-shadow */
-            -webkit-box-shadow: rgba(0,0,0,0.5) 0px 3px 10px, rgba(0,0,0,.75) 0 0 70px inset;
-            -moz-box-shadow: rgba(0,0,0,0.5) 0px 3px 10px, rgba(0,0,0,.75) 0 0 70px inset;
-            box-shadow: rgba(0,0,0,0.5) 0px 3px 10px, rgba(0,0,0,.75) 0 0 70px inset;
+            -webkit-box-shadow: rgba(0, 0, 0, 0.5) 0px 3px 10px, rgba(0, 0, 0, .75) 0 0 70px inset;
+            -moz-box-shadow: rgba(0, 0, 0, 0.5) 0px 3px 10px, rgba(0, 0, 0, .75) 0 0 70px inset;
+            box-shadow: rgba(0, 0, 0, 0.5) 0px 3px 10px, rgba(0, 0, 0, .75) 0 0 70px inset;
             background: rgba(125, 126, 125, 0.85);
             background: -moz-linear-gradient(top, rgba(125, 126, 125, 0.85), rgba(14, 14, 14, 0.85));
             background: -webkit-linear-gradient(top, rgba(125, 126, 125, 0.85), rgba(14, 14, 14, 0.85));
@@ -365,7 +394,7 @@
             font-size: 6vh;
             letter-spacing: -1px;
             margin-bottom: 1vh;
-            text-shadow: 0 -1px 1px #000, 0 0px 3px rgba(0,0,0,.25);
+            text-shadow: 0 -1px 1px #000, 0 0px 3px rgba(0, 0, 0, .25);
         }
 
         .modal-content p {
@@ -373,7 +402,7 @@
             color: #FFD700;
             font-size: 5vh;
             text-align: center;
-            text-shadow: 0 0px 5px rgba(0,0,0,.25), 0 -1px 1px #000;
+            text-shadow: 0 0px 5px rgba(0, 0, 0, .25), 0 -1px 1px #000;
         }
 
         .modalBtn {
@@ -387,11 +416,11 @@
             margin: 5px 5px 5px 5px;
             font-weight: bold;
             text-shadow: 0 0 10px #000;
-            border-top: 1px solid rgb(200,250,100);
+            border-top: 1px solid rgb(200, 250, 100);
             font-size: 4vmin;
-            -webkit-box-shadow: rgba(255,255,255,.3) 0 2px 1px,rgba(0,0,0,.3) 0 -2px 1px, rgba(0,0,0,0.5) 0px 3px 10px, rgba(0,50,0,.75) 0 0 40px inset;
-            -moz-box-shadow: rgba(255,255,255,.3) 0 2px 1px,rgba(0,0,0,.3) 0 -2px 1px, rgba(0,0,0,0.5) 0px 3px 10px, rgba(0,50,0,.75) 0 0 40px inset;
-            box-shadow: rgba(255,255,255,.3) 0 2px 1px,rgba(0,0,0,.3) 0 -2px 1px, rgba(0,0,0,0.5) 0px 3px 10px, rgba(0,50,0,.75) 0 0 40px inset;
+            -webkit-box-shadow: rgba(255, 255, 255, .3) 0 2px 1px, rgba(0, 0, 0, .3) 0 -2px 1px, rgba(0, 0, 0, 0.5) 0px 3px 10px, rgba(0, 50, 0, .75) 0 0 40px inset;
+            -moz-box-shadow: rgba(255, 255, 255, .3) 0 2px 1px, rgba(0, 0, 0, .3) 0 -2px 1px, rgba(0, 0, 0, 0.5) 0px 3px 10px, rgba(0, 50, 0, .75) 0 0 40px inset;
+            box-shadow: rgba(255, 255, 255, .3) 0 2px 1px, rgba(0, 0, 0, .3) 0 -2px 1px, rgba(0, 0, 0, 0.5) 0px 3px 10px, rgba(0, 50, 0, .75) 0 0 40px inset;
             background: #bfd255;
             background: -webkit-linear-gradient(top, #bfd255 0%, #8eb92a 50%, #72aa00 51%, #9ecb2d 100%);
             background: -moz-linear-gradient(top, #bfd255 0%, #8eb92a 50%, #72aa00 51%, #9ecb2d 100%);
@@ -403,12 +432,13 @@
             font-size: 2vw;
         }
 
-        a:active { /* ??? */
+        a:active {
             position: relative;
             top: 3px;
         }
 
-        .fade-in { /* Used to fade in the banner when changing to a new phase */
+        /* Used to fade in the banner when changing to a new phase */
+        .fade-in {
             animation: fadeIn ease 2s;
             -webkit-animation: fadeIn ease 2s;
             -moz-animation: fadeIn ease 2s;
@@ -440,7 +470,8 @@
             100% { opacity: 1; }
         }
 
-        .fade-out { /* Used to fade out the banner when moving to a new step */
+        /* Used to fade out the banner when moving to a new step */
+        .fade-out {
             animation: fadeOut ease 2s;
             -webkit-animation: fadeOut ease 2s;
             -moz-animation: fadeOut ease 28s;
@@ -474,8 +505,8 @@
     </style>
     <style> /* Help */
         .help {
-            position: fixed; /* Stay in place */
-            z-index: 11; /* Sit on top of modal dialogue */
+            position: fixed;
+            z-index: 11;
             left: 5vw;
             width: 90vw;
             top: 2vh;
@@ -488,7 +519,7 @@
             color: #FFD700;
             font-size: 5vh;
             text-align: center;
-            text-shadow: 0 0px 5px rgba(0,0,0,.25), 0 -1px 1px #000;
+            text-shadow: 0 0px 5px rgba(0, 0, 0, .25), 0 -1px 1px #000;
         }
 
         .help iframe {
@@ -511,11 +542,11 @@
             margin: 1px 1px 1px 1px;
             font-weight: bold;
             text-shadow: 0 0 10px #000;
-            border-top: 1px solid rgb(200,250,100);
+            border-top: 1px solid rgb(200, 250, 100);
             font-size: 2vh;
-            -webkit-box-shadow: rgba(255,255,255,.3) 0 2px 1px,rgba(0,0,0,.3) 0 -2px 1px, rgba(0,0,0,0.5) 0px 3px 5px, rgba(0,50,0,.75) 0 0 20px inset;
-            -moz-box-shadow: rgba(255,255,255,.3) 0 2px 1px,rgba(0,0,0,.3) 0 -2px 1px, rgba(0,0,0,0.5) 0px 3px 5px, rgba(0,50,0,.75) 0 0 20px inset;
-            box-shadow: rgba(255,255,255,.3) 0 2px 1px,rgba(0,0,0,.3) 0 -2px 1px, rgba(0,0,0,0.5) 0px 3px 5px, rgba(0,50,0,.75) 0 0 2 inset;
+            -webkit-box-shadow: rgba(255, 255, 255, .3) 0 2px 1px, rgba(0, 0, 0, .3) 0 -2px 1px, rgba(0, 0, 0, 0.5) 0px 3px 5px, rgba(0, 50, 0, .75) 0 0 20px inset;
+            -moz-box-shadow: rgba(255, 255, 255, .3) 0 2px 1px, rgba(0, 0, 0, .3) 0 -2px 1px, rgba(0, 0, 0, 0.5) 0px 3px 5px, rgba(0, 50, 0, .75) 0 0 20px inset;
+            box-shadow: rgba(255, 255, 255, .3) 0 2px 1px, rgba(0, 0, 0, .3) 0 -2px 1px, rgba(0, 0, 0, 0.5) 0px 3px 5px, rgba(0, 50, 0, .75) 0 0 2 inset;
             background: #bfd255;
             background: -webkit-linear-gradient(top, #bfd255 0%, #8eb92a 50%, #72aa00 51%, #9ecb2d 100%);
             background: -moz-linear-gradient(top, #bfd255 0%, #8eb92a 50%, #72aa00 51%, #9ecb2d 100%);
@@ -523,7 +554,7 @@
             background: linear-gradient(to bottom, #bfd255 0%, #8eb92a 50%, #72aa00 51%, #9ecb2d 100%);
         }
     </style>
-    <style>
+    <style> /* Miscellaneous */
         #InfoArea {
             position: fixed;
             bottom: 0px;
@@ -566,76 +597,82 @@
         }
     </style>
 </head>
+
 <body>
-    <div class="BackgroundContainer">
-        <div class="fixed bg_1"></div>
-        <div class="fixed bg_2"></div>
-        <div class="fixed bg_3"></div>
-        <div class="fixed bg_4"></div>
-        <div class="fixed bg_5"></div>
-        <div class="fixed bg_6"></div>
-    </div>
-    <div id="SequenceArea">
-        <div id='gameOutline' class='bordered'></div>
-    </div>
-    <div id='SideNavLeft'>
-        <div onclick='newgame_verify()'><a href='#' id='newGame'>New Game</a></div>
-        <div class='hidden'><a href='#' id='back'></a></div>
-        <div class='hidden'><a href='#' id='skip'></a></div>
-        <div class='hidden'><a href='#' id='elim'></a></div>
-        <div class='hidden'><a href='#' id='vp'></a></div>
-    </div>
-    <div id='SideNavRight'>
-        <div onclick='showOptions()'><a href='#' id='options'>Options</a></div>
-        <div onclick='showAbout()'><a href='#' id='about'>About</a></div>
-    </div>
-    <div id='GameModal' class='modal'>
-        <div class='modal-content'>
-            <div class='modalBanner'>banner: round information goes here</div>
-            <div class='modalChangeBanner'>banner: phase change information goes here</div>
-            <span id='modalClose' class='closeBtn tooltipContainer'>&times;</span>
-            <h1>header: phase information goes here</h1>
-            <p>detail: step information goes here</p>
-            <div class='modalButtonsArea buttonHolder'></div>
+    <div title='TrackerDisplay'>
+        <div class="BackgroundContainer">
+            <div class="fixed bg_1"></div>
+            <div class="fixed bg_2"></div>
+            <div class="fixed bg_3"></div>
+            <div class="fixed bg_4"></div>
+            <div class="fixed bg_5"></div>
+            <div class="fixed bg_6"></div>
         </div>
-        <div id='GameHelp' class='help'>
-            <div id='gameHelpHeader'>
-                <span class='closeBtn tooltipContainer' onclick='game_hideHelp()'>&times;</span>
-                <p>step name goes here</p>
+        <div id="SequenceArea">
+            <div id='gameOutline' class='bordered'></div>
+        </div>
+        <div id='SideNavLeft'>
+            <div class='hidden'><a href='#' id='newGame'></a></div>
+            <div class='hidden'><a href='#' id='back'></a></div>
+            <div class='hidden'><a href='#' id='skip'></a></div>
+            <div class='hidden'><a href='#' id='elim'></a></div>
+            <div class='hidden'><a href='#' id='vp'></a></div>
+        </div>
+        <div id='SideNavRight'>
+            <div onclick='showOptions()'><a href='#' id='options'>Options</a></div>
+            <div onclick='showAbout()'><a href='#' id='about'>About</a></div>
+        </div>
+        <div id='GameModal' class='modal'>
+            <div class='modal-content'>
+                <div class='modalBanner'>banner: round information goes here</div>
+                <div class='modalChangeBanner'>banner: phase change information goes here</div>
+                <span id='modalClose' class='closeBtn tooltipContainer'>&times;</span>
+                <h1>header: phase information goes here</h1>
+                <p>detail: step information goes here</p>
+                <div class='modalButtonsArea buttonHolder'></div>
             </div>
-            <div id='gameHelpDisplay'></div>
+            <div id='GameHelp' class='help'>
+                <div id='gameHelpHeader'>
+                    <span class='closeBtn tooltipContainer' onclick='game_hideHelp()'>&times;</span>
+                    <p>step name goes here</p>
+                </div>
+                <div id='gameHelpDisplay'></div>
+            </div>
+        </div>
+        <div id='InfoArea'></div>
+        <div id='AboutArea'>
+            <span style='vertical-align:middle'>
+                The GameTracker webpage is property of Clive Pottinger. Email any comments or concerns to terran.antipodes@gmail.com<br />
+                All displayed images, arts, fonts and The Lord of The Rings: The Card Game are copyrighted at � Fantasy Flight Games. 
+                The copyrightable portions of The Lord of the Rings: The Card Game and its expansions are � 2011 - 2020 Fantasy Flight Publishing, Inc. 
+                The Lord of the Rings, and the characters, items, events and places therein are trademarks or registered trademarks of The Saul Zaentz Company / Middle-earth Enterprises and are used, under license, by Fantasy Flight Games. Living Card Game, LCG, LCG logo and Fantasy Flight Supply are trademarks and/or registered trademarks of Fantasy Flight Publishing, Inc. 
+                All Rights Reserved to their respective owners.<br />
+                The Rules Compendium and Rules Companion are the intellectual property of, and used by permission by, Mathieu Martin.
+            </span>
+        </div>
+        <div id='OptionsArea'>
+            <form name='options'>
+                <div class='optionSet'>Display the Compendium Rules as
+                    <label class='choiceHolder'>HTML
+                        <input type='radio' name='compendiumAs'>
+                        <span class='indicator'></span>
+                    </label>
+                    <label class='choiceHolder'>PDF
+                        <input type='radio' name='compendiumAs'>
+                        <span class='indicator'></span>
+                    </label>
+                </div>
+                <div class='optionSet'>
+                    <label class='choiceHolder'>Show tooltips
+                        <input type='checkbox' name='showToolTips'>
+                        <span class='indicator'></span>
+                    </label>
+                </div>
+            </form>
         </div>
     </div>
-    <div id='InfoArea'></div>
-    <div id='AboutArea'>
-        <span style='vertical-align:middle'>
-            The GameTracker webpage is property of Clive Pottinger. Email any comments or concerns to terran.antipodes@gmail.com<br />
-            All displayed images, arts, fonts and The Lord of The Rings: The Card Game are copyrighted at � Fantasy Flight Games. The copyrightable portions of The Lord of the Rings: The Card Game and its expansions are � 2011 - 2020 Fantasy Flight Publishing, Inc. The Lord of the Rings, and the characters, items, events and places therein are trademarks or registered trademarks of The Saul Zaentz Company / Middle-earthEnterprises and are used, under license, by Fantasy Flight Games. Living Card Game, LCG, LCG logo and FantasyFlight Supply are trademarks and/or registered trademarks of Fantasy Flight Publishing, Inc. All Rights Reserved to their respective owners.<br />
-            The Rules Compendium and Rules Companion are the intellectual property of, and used by permission by, Mathieu Martin.
-        </span>
-    </div>
-    <div id='OptionsArea'>
-        <form name='options'>
-        <div class='optionSet'>Display the Compendium Rules as
-            <label class='choiceHolder'>HTML
-                <input type='radio' name='compendiumAs'>
-                <span class='indicator'></span>
-            </label>
-            <label class='choiceHolder'>PDF
-                <input type='radio' name='compendiumAs'>
-                <span class='indicator'></span>
-            </label>
-        </div>
-        <div class='optionSet'>
-            <label class='choiceHolder'>Show tooltips
-                <input type='checkbox' name='showToolTips'>
-                <span class='indicator'></span>
-            </label>
-        </div>
-        </form>
-    </div>
-    <script>
-        var VERSION = 'v1.6.0';
+    <script> /*Set up */
+        var VERSION = 'v1.7.0';
 
         /* define game steps */
         var Sequence = JSON.parse(
@@ -649,11 +686,11 @@
             // teamloop: value indicates the last step in each player's steps. After that step, the tracker will switch to the next player and loop back to this step, or, if the player was the last player, continue to the next step.
             // teamskip: value indicates prompt and next step for all players if the first player opts to skip.
             // playerskip: value indicates prompt. If the player opts to skip, then the tracter will switch to the next player and loop back to this step, or, if the player was the last player, continue to the next step.
-            ' ,"steps": [ { "phase": 0, "name": "Extract Campaign Setup cards" } ' +
+            ' ,"steps": [ { "phase": 0, "name": "Extract Campaign Setup cards", "type": "campaign" } ' +
             '            ,{ "phase": 0, "name": "Shuffle Player Decks", "help" : [[47,0,135,1,1],[209]] } ' +
             '            ,{ "phase": 0, "name": "Shuffle Encounter Deck", "help" : [[47,0,130,1,2],[209]] } ' +
             '            ,{ "phase": 0, "name": "Place Heroes", "help" : [[47,0,400,2,3],[210]] } ' +
-            '            ,{ "phase": 0, "name": "Perform Campaign Setup", "help" : [[47,0,700,3,4],[210]] } ' +
+            '            ,{ "phase": 0, "name": "Perform Campaign Setup", "help" : [[47,0,700,3,4],[210]], "type": "campaign" } ' +
             '            ,{ "phase": 0, "name": "Set Threat Levels", "help" : [[47,0,400,2,5],[210]] } ' +
             '            ,{ "phase": 0, "name": "Create Token Banks", "help" : [[47,500,305,4,6],[211]] } ' +
             '            ,{ "phase": 0, "name": "Determine First Player", "help" : [[47,500,380,5,7],[212]] } ' +
@@ -662,7 +699,7 @@
             '            ,{ "phase": 0, "name": "Perform Scenario Setup", "help" : [[47,500,650,8,10],[215]] } ' +
             '            ,{ "phase": 1, "name": "Gather Resources", "gameloop" : "Pass First Player Token", "boxes" : [60,75,490,190], "help" : [[48,0,510,1,1],[217]] }' +
             '            ,{ "phase": 1, "name": "Draw a Card", "actionwindow" : "true", "boxes" : [60,190,490,310], "help" : [[48,0,620,1,2],[217],[128,0,400,1,1]] } ' +
-            '            ,{ "phase": 2, "name": "Special Action Window", "teamloop" : "Special Action Window", "boxes" : [[60,465,490,685],[60,525,490,685],[60,525,490,740]], "help" : [[48,0,710,2,3],[218],[128,0,600,2,2]] } ' +            
+            '            ,{ "phase": 2, "name": "Special Action Window", "teamloop" : "Special Action Window", "boxes" : [[60,465,490,685],[60,525,490,685],[60,525,490,740]], "help" : [[48,0,710,2,3],[218],[128,0,600,2,2]] } ' +
             '            ,{ "phase": 3, "name": "Quest Action Window", "boxes" : [60,840,490,960], "help" : [[],[],[128,0,920,3,3]] } ' +
             '            ,{ "phase": 3, "name": "Commit Characters", "actionwindow" : "true", "boxes" : [60,960,490,1080], "help" : [[48,500,100,3,4],[220],[129,0,50,1,1]] } ' +
             '            ,{ "phase": 3, "name": "Staging", "teamloop" : "Staging", "boxes" : [60,1080,490,1135], "help" : [[48,500,380,4,5],[221]] } ' +
@@ -764,6 +801,7 @@
         /* define webpage constants */
         const BACKGROUND_CONTAINER = document.getElementsByClassName('BackgroundContainer')[0];
         const SEQUENCE_AREA = document.getElementById('SequenceArea');
+        const NAV_NEW = document.getElementById('newGame');
         const NAV_BACK = document.getElementById('back');
         const NAV_SKIP = document.getElementById('skip');
         const NAV_ELIM = document.getElementById('elim');
@@ -790,11 +828,11 @@
         var SequenceImageSize;
         var CompendiumIsPreferred = true;
         var CompendiumAsHtml = true;
+        var IsCampaign = false;
         var ShowToolTips = true;
         var OutlineBox;
     </script>
-    <script>
-        /* main code */
+    <script> /* main code */
         INFO_AREA.innerHTML = VERSION;
         loadBackground('./Images/RoundSequence.png');
 
@@ -811,7 +849,6 @@
         }
 
         function initialize() {
-            NAV_BACK.parentElement.classList.add('hidden');
             MODAL_BANNER.classList.add('hidden');
             MODAL_CHANGE_BANNER.classList.add('hidden');
             MODAL_CHANGE_BANNER.innerHTML = '';
@@ -849,12 +886,14 @@
             }
 
             var stateHistory = localStorage.getItem('stateHistory');
+            showSideNav(NAV_NEW, 'New Game', function () { newgame_setup('a'); }, (stateHistory == null));
             if (stateHistory) {
-                var optionsVal =  Number(stateHistory.split(',').at(-1));
+                var optionsVal = Number(stateHistory.split(',').at(-1));
                 if ((optionsVal > 0) && (optionsVal < 256)) {
                     CompendiumIsPreferred = ((optionsVal & 1) == 1);
                     CompendiumAsHtml = ((optionsVal & 2) == 2);
                     ShowToolTips = ((optionsVal & 4) == 4);
+                    IsCampaign = ((optionsVal & 8) == 8);
                 }
 
                 var initialState = Number(stateHistory.split(',')[0]);
@@ -877,12 +916,24 @@
             }
         }
 
-        function newgame_verify() { // Open modal dialogue to verify a new game is starting
+        function newgame_setup(token) { // Open modal dialogue to get information about (or to cancel) a new game
+            IsCampaign = (token == 'c');
             var closeTip = '(press to return without starting a new game)';
-            var prompt = 'How many players in the new game?';
             var buttons = [];
-            for (var x = 1; x < 5; x++) {
-                buttons[x] = generateButton('&nbsp;' + x + '&nbsp;', 'newgame_start(' + x + ')');
+            switch (token) {
+                case 'a':
+                    var prompt = 'Is this new game part of a campaign?'
+                    buttons = [generateButton('Regular', 'newgame_setup("r")'),
+                    generateButton('Campaign', 'newgame_setup("c")')
+                    ];
+                    break;
+                case 'c':
+                case 'r':
+                    var prompt = 'How many players in the new ' + (IsCampaign ? 'campaign' : 'game') + '?';
+                    for (var x = 1; x < 5; x++) {
+                        buttons[x] = generateButton('&nbsp;' + x + '&nbsp;', 'newgame_start(' + x + ')');
+                    }
+                    break;
             }
 
             showModal('', '', closeTip, prompt, '', buttons);
@@ -906,6 +957,12 @@
             var fromPlayer = modulo(fromState, PLAYER_EVS.extract);
             var fromNumPlayers = modulo(fromState, PLAYERS_EVS.extract);
             var fromVictoryPoints = modulo(fromState, VP_EVS.extract);
+
+            if (Sequence.steps[newStepNum].type != null) {
+                while ((Sequence.steps[newStepNum].type == 'campaign') && !IsCampaign) {
+                    newStepNum++;
+                }
+            }
 
             var toRound = (newRound == null) ? fromRound : newRound;
             var toStepNum = newStepNum;
@@ -944,7 +1001,7 @@
         function game_backToPreviousStep() {
             var stateHistory = localStorage.getItem('stateHistory');
             var toState = parseInt(stateHistory.split(',')[1], 10); // go back 2 states in the history because we have already added the current state to the history
-            localStorage.setItem('stateHistory', stateHistory.slice(stateHistory.split(',', 3).join(',').length + 1)); // removes the first two states from the history
+            localStorage.setItem('stateHistory', stateHistory.slice(stateHistory.split(',', 2).join(',').length + 1)); // removes the first two states from the history
 
             // var fromState = parseInt(stateHistory.split(',')[0], 10);
             // var fromStepNum = modulo(fromState, STEP_EVS.extract);
@@ -963,7 +1020,7 @@
             // var toVictoryPoints = modulo(toState, VP_EVS.extract);
             // console.log('backToPreviousStep -> round:' + fromRound + '->' + toRound +
             //             ' phase:' + fromPhaseNum + '->' + toPhaseNum +
-            //             ' step:' + fromStepNum + '->' + toStepNum + ' (' + Sequence.steps[toStepNum].name + ')' +
+            //             ' step:' + fromStepNum + ' (' + Sequence.steps[fromStepNum].name + ') ->' + toStepNum + ' (' + Sequence.steps[toStepNum].name + ')' +
             //             ' player:' + fromPlayer + '->' + toPlayer +
             //             ' # players:' + fromNumPlayers + '->' + toNumPlayers +
             //             ' points:' + fromVictoryPoints + '->' + toVictoryPoints +
@@ -1016,13 +1073,30 @@
                     nextPlayer = ALLPLAYERS;
                     nextRound = currentRound + 1;
                     break;
+                case ((currentRound == 0) && (Sequence.steps[nextStepNum].gameloopend != null)):
+                    nextPlayer = ALLPLAYERS;
+                    nextRound = currentRound + 1;
+                    break;
             }
-
+            
             // text: shows the current step
             var hasActionWindow = currentStep.actionwindow;
-            var detail = ((currentStep.name.includes('Action Window')) ? '<span style="color:SpringGreen">' + currentStep.name + '<step>' : currentStep.name) +
-                (hasActionWindow ? '<br>&amp;<br><span style="color:SpringGreen">Action Window</span>' : '');
-            if (!isALLPLAYERS) { // are we inside a loop?
+            var detail;
+            switch (true) {
+                case ((currentState.gameloopstart != null) && (currentNumPlayers == 1)):
+                    detail = '<span style="color:SpringGreen">End of Turn Action Window<step>';
+                    break;
+                case (currentStep.name.includes('Action Window')):
+                    detail = '<span style="color:SpringGreen">' + currentStep.name + '<step>';
+                    break; 
+                case (hasActionWindow):
+                    detail = currentStep.name + '<br>&amp;<br><span style="color:SpringGreen">Action Window</span>';
+                    break;
+                default:
+                    detail = currentStep.name;
+                    break;
+            }
+            if (!isALLPLAYERS) { // are we inside a team loop?
                 detail = (isFirstPlayer ? 'First Player' : 'Player ' + currentPlayer) + ': ' + detail;
             }
 
@@ -1141,18 +1215,18 @@
             }
         }
 
-        function game_hideHelp() {        
+        function game_hideHelp() {
             GameHelp.classList.add("hidden")
             showSideNav('all'); // the help display hides the side navs
         }
 
-        function game_showCompendium(helpInfo, event=null) {
+        function game_showCompendium(helpInfo, event = null) {
             var address, fragment, query;
             if (CompendiumAsHtml) {
                 address = './RulesCompendium_v2.0/Rules_Compendium_v2_0.html';
-                fragment = '#p' + helpInfo[0].toString().padStart(3, '0')  + '_' + helpInfo[3];
+                fragment = '#p' + helpInfo[0].toString().padStart(3, '0') + '_' + helpInfo[3];
                 query = '?section=s' + helpInfo[0].toString().padStart(3, '0') + '_' + helpInfo[4] +
-                        '&cwidth=' + GAME_HELP_DISPLAY.offsetWidth;
+                    '&cwidth=' + GAME_HELP_DISPLAY.offsetWidth;
             } else {
                 address = './Images/RulesCompendium_v2.0.pdf';
                 fragment = '#page=' + helpInfo[0] + '&zoom=100,' + helpInfo[1] + ',' + helpInfo[2] + '&pagemode=none&view=FitH';
@@ -1166,7 +1240,7 @@
             }
         }
 
-        function game_showCompanion(pageNum, event=null) {
+        function game_showCompanion(pageNum, event = null) {
             var address = 'https://lotr-lcg-quest-companion.gamersdungeon.net/#Rule';
 
             GAME_HELP_DISPLAY.innerHTML = "<iframe src='" + address + pageNum + "' type='text/html'></iframe>";
@@ -1318,8 +1392,8 @@
             }
 
             // close button:
-            var showClose = (typeof(closeInfo) == 'boolean') ? closeInfo : (showClose != '');
-            var closeTip = (typeof(closeInfo) == 'string') ? closeInfo : '';
+            var showClose = (typeof (closeInfo) == 'boolean') ? closeInfo : (showClose != '');
+            var closeTip = (typeof (closeInfo) == 'string') ? closeInfo : '';
             if (showClose) { // make the close <span> appear
                 MODAL_CLOSE.innerHTML = '&times;' + ((closeTip == '') ? '' : '<span class="tooltiptext">' + closeTip + '</span>');
                 MODAL_CLOSE.style.display = 'block';
@@ -1346,9 +1420,12 @@
 
             // SideNavs:
             var showBack = (sideNavInfo == null) ? false : sideNavInfo[0];
-            var skipInfo = (sideNavInfo == null) ? null  : sideNavInfo[1];
+            var skipInfo = (sideNavInfo == null) ? null : sideNavInfo[1];
             var showElim = (sideNavInfo == null) ? false : sideNavInfo[2]
-            var showVP   = (sideNavInfo == null) ? false : sideNavInfo[3];
+            var showVP = (sideNavInfo == null) ? false : sideNavInfo[3];
+
+            // SideNavs: new game:
+            showSideNav(NAV_NEW, 'New Game', function () { newgame_setup('a'); });
 
             // SideNavs: back:
             if (showBack) {
@@ -1419,7 +1496,7 @@
             }
         }
 
-        function showSideNav(navElement, textContent, onclick, extend=false) {
+        function showSideNav(navElement, textContent, onclick, extend = false) {
             if (navElement == 'all') {
                 document.getElementById('SideNavLeft').classList.remove('hidden');
                 document.getElementById('SideNavRight').classList.remove('hidden');
@@ -1449,17 +1526,17 @@
             }
         }
 
-        function showAbout() {            
+        function showAbout() {
             if (ABOUT_AREA.classList.contains('hidden')) {
                 INFO_AREA.style.color = 'white';
                 ABOUT_AREA.classList.add('fade-in');
                 ABOUT_AREA.classList.remove('hidden');
-                ABOUT_AREA.addEventListener('animationend',aboutFadeinDone);
-            }    
+                ABOUT_AREA.addEventListener('animationend', aboutFadeinDone);
+            }
 
             function aboutFadeinDone() {
                 ABOUT_AREA.classList.remove('fade-in');
-                ABOUT_AREA.removeEventListener('animationend',aboutFadeinDone);
+                ABOUT_AREA.removeEventListener('animationend', aboutFadeinDone);
                 window.addEventListener('click', aboutUserClicked);
             }
 
@@ -1468,7 +1545,7 @@
                 ABOUT_AREA.classList.add('fade-out');
                 ABOUT_AREA.addEventListener('animationend', aboutFadeoutDone);
             }
-            
+
             function aboutFadeoutDone() {
                 INFO_AREA.style.color = 'black';
                 ABOUT_AREA.classList.add('hidden');
@@ -1483,12 +1560,12 @@
                 document.options.showToolTips.checked == ShowToolTips;
                 OPTIONS_AREA.classList.add('fade-in');
                 OPTIONS_AREA.classList.remove('hidden');
-                OPTIONS_AREA.addEventListener('animationend',optionsFadeinDone);
+                OPTIONS_AREA.addEventListener('animationend', optionsFadeinDone);
             }
 
             function optionsFadeinDone() {
                 OPTIONS_AREA.classList.remove('fade-in');
-                OPTIONS_AREA.removeEventListener('animationend',optionsFadeinDone);
+                OPTIONS_AREA.removeEventListener('animationend', optionsFadeinDone);
                 window.addEventListener('click', optionsUserClicked);
             }
 
@@ -1500,7 +1577,7 @@
                     OPTIONS_AREA.addEventListener('animationend', optionsFadeoutDone);
                 }
             }
-            
+
             function optionsFadeoutDone() {
                 OPTIONS_AREA.classList.add('hidden');
                 OPTIONS_AREA.classList.remove('fade-out');
@@ -1515,13 +1592,15 @@
             if ((last < 0) || (last > 255)) {
                 states.push(last.toString());
             }
-            
+
             CompendiumAsHtml = document.options.compendiumAs[0].checked;
             ShowToolTips = document.options.showToolTips.checked;
 
-            var optionsVal = (CompendiumIsPreferred ? 1 : 0) +
-                             (CompendiumAsHtml ? 2 : 0) +
-                             (ShowToolTips ? 4 : 0);
+            var optionsVal = 
+                (CompendiumIsPreferred ? 1 : 0) +
+                (CompendiumAsHtml ? 2 : 0) +
+                (ShowToolTips ? 4 : 0) +
+                (IsCampaign ? 8 : 0);
             states.push(optionsVal.toString());
             localStorage.setItem('stateHistory', states.join(','));
         }
