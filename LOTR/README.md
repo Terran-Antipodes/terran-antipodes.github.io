@@ -2,6 +2,9 @@
 This website is an SPA intended to provide a non-commercial aid while playing the [Lord of the Rings LCG](https://www.fantasyflightgames.com/en/products/the-lord-of-the-rings-the-card-game/) from [Final Flight Game](https://www.fantasyflightgames.com/en/index/).
 
 ## Version History
+#### v1.7.2
+Corrected display of tooltips.
+Removed display of "TrackerDisplay" as tooltip.
 #### v1.7.1
 Changed About text.
 Shortened URLs of background images.

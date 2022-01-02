@@ -599,7 +599,7 @@
 </head>
 
 <body>
-    <div title='TrackerDisplay'>
+    <div data-title='TrackerDisplay'>
         <div class="BackgroundContainer">
             <div class="fixed bg_1"></div>
             <div class="fixed bg_2"></div>
@@ -672,7 +672,7 @@
         </div>
     </div>
     <script> /*Set up */
-        var VERSION = 'v1.7.1';
+        var VERSION = 'v1.7.2';
 
         /* define game steps */
         var Sequence = JSON.parse(
@@ -1195,7 +1195,7 @@
             var compendiumInfo = helpLocations[0];
             var companionInfo = (helpLocations.length < 2) ? [] : helpLocations[1];
             var actionWindowInfo = (helpLocations.length < 3) ? [] : helpLocations[2];
-            var tipText = (IS_MOBILE || (!ShowToolTips)) ? '' : 'Hold Alt while pressing the button to open help in a new tab';
+            var tipText = (ShowToolTips && !IS_MOBILE) ? '' : 'Hold Alt while pressing the button to open help in a new tab';
             GAME_HELP_TEXT.innerHTML =
                 stepText +
                 '<div class="buttonHolder">' +
@@ -1393,7 +1393,7 @@
 
             // close button:
             var showClose = (typeof (closeInfo) == 'boolean') ? closeInfo : (showClose != '');
-            var closeTip = (typeof (closeInfo) == 'string') ? closeInfo : '';
+            var closeTip = (ShowToolTips && (typeof (closeInfo) == 'string')) ? closeInfo : '';
             if (showClose) { // make the close <span> appear
                 MODAL_CLOSE.innerHTML = '&times;' + ((closeTip == '') ? '' : '<span class="tooltiptext">' + closeTip + '</span>');
                 MODAL_CLOSE.style.display = 'block';
@@ -1609,7 +1609,7 @@
             var ocevent = (onclick == null) ? '' : " onclick='" + onclick + "'";
             var tt = '';
 
-            if (btnToolTip != '') {
+            if (ShowToolTips && (btnToolTip != '')) {
                 btnClass += ' tooltipContainer';
                 tt = '<span class="tooltiptext">' + btnToolTip + '</span>';
             }
