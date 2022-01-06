@@ -672,7 +672,7 @@
         </div>
     </div>
     <script> /*Set up */
-        var VERSION = 'v1.7.2';
+        var VERSION = 'v1.7.3';
 
         /* define game steps */
         var Sequence = JSON.parse(
@@ -792,11 +792,11 @@
         const ALLPLAYERS = 0; // player number used when a step is performed by all players
 
         /* define state encoding values (see https://clivesyabb.com/2021/10/01/encoding-multiple-values-in-a-single-number/) */
-        const PLAYER_EVS = { cram: 2057566, extract: 5 };
-        const PLAYERS_EVS = { cram: -734845, extract: 7 };
-        const STEP_EVS = { cram: 1422785, extract: 47 };
-        const ROUND_EVS = { cram: -2135210, extract: 53 };
-        const VP_EVS = { cram: -610295, extract: 59 };
+        const PLAYER_EVS = { cram: 7148163, extract: 7 };
+        const PLAYERS_EVS = { cram: 4548831, extract: 11 };
+        const STEP_EVS = { cram: 6015394, extract: 61 };
+        const ROUND_EVS = { cram: 2202893, extract: 53 };
+        const VP_EVS = { cram: 13442814, extract: 67 };
 
         /* define webpage constants */
         const BACKGROUND_CONTAINER = document.getElementsByClassName('BackgroundContainer')[0];
@@ -826,11 +826,16 @@
         /* Define webpage globals */
         var SequenceImage;
         var SequenceImageSize;
-        var CompendiumIsPreferred = true;
-        var CompendiumAsHtml = true;
-        var IsCampaign = false;
-        var ShowToolTips = true;
         var OutlineBox;
+        var StateStorageKey = 'LOTR_States';
+        var OptionsStorageKey = 'LOTR_Options';
+        var Options = {
+            format : 1,
+            preferCompendium : true,
+            compendiumFormat : 'HTML',
+            campaign : false,
+            showTips : true
+        };
     </script>
     <script> /* main code */
         INFO_AREA.innerHTML = VERSION;
@@ -885,19 +890,73 @@
                 }
             }
 
+            // Determine the current state history format
+            var expectedFormat = Options.format;
             var stateHistory = localStorage.getItem('stateHistory');
-            showSideNav(NAV_NEW, 'New Game', function () { newgame_setup('a'); }, (stateHistory == null));
             if (stateHistory) {
-                var optionsVal = Number(stateHistory.split(',').at(-1));
-                if ((optionsVal > 0) && (optionsVal < 256)) {
-                    CompendiumIsPreferred = ((optionsVal & 1) == 1);
-                    CompendiumAsHtml = ((optionsVal & 2) == 2);
-                    ShowToolTips = ((optionsVal & 4) == 4);
-                    IsCampaign = ((optionsVal & 8) == 8);
+                Options.format = 0;
+                console.log('found stateHistory = ' + stateHistory);
+            } else {
+                console.log('found stateStorage');
+                var storedOptions = localStorage.getItem(StateStorageKey);
+                if (storedOptions) {
+                    Options = JSON.Parse(storedOptions);
+                };
+            }
+            console.log('Options=' + JSON.stringify(Options));
+
+            // update the stored state information to the next format until we reach the current format
+            while (Options.format < expectedFormat) {
+                switch(Options.format) {
+                    case 0: // convert from f0 (pre-v1.7.3) to f1 (v1.7.3+)
+                        console.log('convert from f0 (pre-v1.7.3) to f1 (v1.7.3+)');
+                        var states = stateHistory.split(',')
+                        var newStates = [];
+
+                        // convert the options
+                        var optionsVal = Number(states.pop());      
+                        console.log('popped optionsVal = ' + optionsVal);                  
+                        if ((optionsVal > 0) && (optionsVal < 256)) {
+                            Options.format = 1;
+                            Options.preferCompendium = ((optionsVal & 1) == 1);
+                            Options.compendiumFormat = ((optionsVal & 2) == 2) ? 'HTML' : 'PDF';
+                            Options.campaign = ((optionsVal & 8) == 8);
+                            Options.showTips = ((optionsVal & 4) == 4);
+                        }
+                        localStorage.setItem(OptionsStorageKey, JSON.stringify(Options));
+                        console.log('stored ' + OptionsStorageKey + ' = ' + JSON.stringify(Options));
+
+                        // convert the states
+                        states.forEach(stateStr => {
+                            state = parseInt(stateStr, 10);
+                            newStates.push(
+                                (modulo(state, 53) * ROUND_EVS.cram +
+                                 modulo(state, 47) * STEP_EVS.cram +
+                                 modulo(state, 5)  * PLAYER_EVS.cram +
+                                 modulo(state, 7)  * PLAYERS_EVS.cram +
+                                 modulo(state, 59) * VP_EVS.cram).toString());
+                        });
+                        localStorage.setItem(StateStorageKey, newStates.toString());
+                        console.log('stored ' + StateStorageKey + ' = ' + newStates.toString());
+                        // localStorage.removeItem('StateHistory');
+                        break;
+                    case 1: // convert from f1 (v1.7.3+) to f2
+                    break;
+                    case 2: // convert from f2 to f3
+                    break;
+                    case 3: // convert from f3 to f0
+                    break;
                 }
 
-                var initialState = Number(stateHistory.split(',')[0]);
-                game_setCurrentState(initialState, true);
+                Options.format++;
+            }
+
+            // Obtain flags from state history (or use defaults)
+            var stateHistory = localStorage.getItem(StateStorageKey);
+            showSideNav(NAV_NEW, 'New Game', function () { newgame_setup('a'); }, (stateHistory == null));
+            if (stateHistory) {
+                var initialStateHash = Number(stateHistory.split(',')[0]);
+                game_setCurrentState(initialStateHash, true);
             }
         }
 
@@ -917,7 +976,7 @@
         }
 
         function newgame_setup(token) { // Open modal dialogue to get information about (or to cancel) a new game
-            IsCampaign = (token == 'c');
+            Options.campaign = (token == 'c');
             var closeTip = '(press to return without starting a new game)';
             var buttons = [];
             switch (token) {
@@ -929,7 +988,7 @@
                     break;
                 case 'c':
                 case 'r':
-                    var prompt = 'How many players in the new ' + (IsCampaign ? 'campaign' : 'game') + '?';
+                    var prompt = 'How many players in the new ' + (Options.campaign ? 'campaign' : 'game') + '?';
                     for (var x = 1; x < 5; x++) {
                         buttons[x] = generateButton('&nbsp;' + x + '&nbsp;', 'newgame_start(' + x + ')');
                     }
@@ -940,9 +999,9 @@
         }
 
         function newgame_start(numPlayers) { // Resets the page for a new game
-            localStorage.removeItem('stateHistory');
-            var initialState = numPlayers * PLAYERS_EVS.cram;
-            localStorage.setItem('stateHistory', initialState.toString());
+            localStorage.removeItem(StateStorageKey);
+            var initialStateHash = numPlayers * PLAYERS_EVS.cram;
+            localStorage.setItem(StateStorageKey, initialStateHash.toString());
             recordOptions();
             game_advanceToStep(0, ALLPLAYERS);
         }
@@ -950,132 +1009,139 @@
         function game_advanceToStep(newStepNum, newPlayer = null, newRound = null) { // shows the modal dialogue information for a step in the game
             // At this point we have not yet changed our state to be in the new step.
             // We are gathering information about the current state we are moving from and the new state we are move to.
-            var stateHistory = localStorage.getItem('stateHistory');
-            var fromState = parseInt(stateHistory.split(',')[0], 10);
-
-            var fromRound = modulo(fromState, ROUND_EVS.extract);
-            var fromPlayer = modulo(fromState, PLAYER_EVS.extract);
-            var fromNumPlayers = modulo(fromState, PLAYERS_EVS.extract);
-            var fromVictoryPoints = modulo(fromState, VP_EVS.extract);
+            var stateHistory = localStorage.getItem(StateStorageKey);
+            var fromHash = parseInt(stateHistory.split(',')[0], 10);
+            var fromState = {
+                round : modulo(fromHash, ROUND_EVS.extract),
+                // stepNum : modulo(fromHash, STEP_EVS.extract),
+                player : modulo(fromHash, PLAYER_EVS.extract),
+                players : modulo(fromHash, PLAYERS_EVS.extract),
+                points : modulo(fromHash, VP_EVS.extract)
+            };
+            // var fromStep = Sequence.steps[fromState.stepNum];
 
             if (Sequence.steps[newStepNum].type != null) {
-                while ((Sequence.steps[newStepNum].type == 'campaign') && !IsCampaign) {
+                while ((Sequence.steps[newStepNum].type == 'campaign') && !Options.campaign) {
                     newStepNum++;
                 }
             }
 
-            var toRound = (newRound == null) ? fromRound : newRound;
-            var toStepNum = newStepNum;
-            var toStep = Sequence.steps[newStepNum];
-            var toPlayer = (newPlayer == null) ? fromPlayer : newPlayer;
-            var toNumPlayers = fromNumPlayers;
-            var toVictoryPoints = fromVictoryPoints;
+            var toState = {
+                round : (newRound == null) ? fromState.round : newRound,
+                // stepNum : newStepNum,
+                player : (newPlayer == null) ? fromState.player : newPlayer,
+                players : fromState.players,
+                points : fromState.points
+            };
+            var toStep = Sequence.steps[toState.stepNum];
 
-            // check if we starting new loop
-            if ((toPlayer == ALLPLAYERS) && (toStep.teamloop)) {
-                toPlayer = 1;
+            // check if we are starting new loop
+            if ((toState.player == ALLPLAYERS) && (toStep.teamloop)) {
+                toState.player = 1;
             }
 
-            var newState =
-                toRound * ROUND_EVS.cram +
-                toStepNum * STEP_EVS.cram +
-                toPlayer * PLAYER_EVS.cram +
-                toNumPlayers * PLAYERS_EVS.cram +
-                toVictoryPoints * VP_EVS.cram;
-
-            // var fromStepNum = modulo(fromState, STEP_EVS.extract);
-            // var fromStep = Sequence.steps[fromStepNum];
-            // var fromPhaseNum = fromStep.phase;
-            // var toPhaseNum = toStep.phase;
-            // console.log('advanceToStep -> round:' + fromRound + '->' + toRound +
-            //             ' phase:' + fromPhaseNum + '->' + toPhaseNum +
-            //             ' step:' + fromStepNum + '->' + toStepNum + ' (' + Sequence.steps[toStepNum].name + ')' +
-            //             ' player:' + fromPlayer + '->' + toPlayer +
-            //             ' # players:' + fromNumPlayers + '->' + toNumPlayers +
-            //             ' points:' + fromVictoryPoints + '->' + toVictoryPoints +
+            // console.log('advanceToStep -> round:' + fromState.round + '->' + toState.round +
+            //             ' phase:' + fromStep.phase + '->' + toStep.phase +
+            //             ' step:' + fromState.stepNum + '->' + toState.stepNum + ' (' + toStep.name + ')' +
+            //             ' player:' + fromState.player + '->' + toState.player +
+            //             ' # players:' + fromState.players + '->' + toState.players +
+            //             ' points:' + fromState.points + '->' + toState.points +
             //             '');
 
-            game_setCurrentState(newState);
+            var newStateHash =
+                toState.round * ROUND_EVS.cram +
+                toState.stepNum * STEP_EVS.cram +
+                toState.player * PLAYER_EVS.cram +
+                toState.players * PLAYERS_EVS.cram +
+                toState.points * VP_EVS.cram;
+                
+            game_setCurrentState(newStateHash);
         }
 
         function game_backToPreviousStep() {
-            var stateHistory = localStorage.getItem('stateHistory');
-            var toState = parseInt(stateHistory.split(',')[1], 10); // go back 2 states in the history because we have already added the current state to the history
-            localStorage.setItem('stateHistory', stateHistory.slice(stateHistory.split(',', 2).join(',').length + 1)); // removes the first two states from the history
+            var stateHistory = localStorage.getItem(StateStorageKey);
+            var toStateHash = parseInt(stateHistory.split(',')[1], 10); // go back 2 states in the history because we have already added the current state to the history
+            localStorage.setItem(StateStorageKey, stateHistory.slice(stateHistory.split(',', 2).join(',').length + 1)); // removes the first two states from the history
 
-            // var fromState = parseInt(stateHistory.split(',')[0], 10);
-            // var fromStepNum = modulo(fromState, STEP_EVS.extract);
-            // var fromStep = Sequence.steps[fromStepNum];
-            // var fromRound = modulo(fromState, ROUND_EVS.extract);
-            // var fromPhaseNum = fromStep.phase;
-            // var fromPlayer = modulo(fromState, PLAYER_EVS.extract);
-            // var fromNumPlayers = modulo(fromState, PLAYERS_EVS.extract);
-            // var fromVictoryPoints = modulo(fromState, VP_EVS.extract);
-            // var toStepNum = modulo(toState, STEP_EVS.extract);
-            // var toStep = Sequence.steps[toStepNum];
-            // var toRound = modulo(toState, ROUND_EVS.extract);
-            // var toPhaseNum = toStep.phase;
-            // var toPlayer = modulo(toState, PLAYER_EVS.extract);
-            // var toNumPlayers = modulo(toState, PLAYERS_EVS.extract);
-            // var toVictoryPoints = modulo(toState, VP_EVS.extract);
-            // console.log('backToPreviousStep -> round:' + fromRound + '->' + toRound +
-            //             ' phase:' + fromPhaseNum + '->' + toPhaseNum +
-            //             ' step:' + fromStepNum + ' (' + Sequence.steps[fromStepNum].name + ') ->' + toStepNum + ' (' + Sequence.steps[toStepNum].name + ')' +
-            //             ' player:' + fromPlayer + '->' + toPlayer +
-            //             ' # players:' + fromNumPlayers + '->' + toNumPlayers +
-            //             ' points:' + fromVictoryPoints + '->' + toVictoryPoints +
+            // var fromHash = parseInt(stateHistory.split(',')[0], 10);
+            // var from = {
+            //     round : modulo(fromHash, ROUND_EVS.extract),
+            //     stepNum : modulo(from, STEP_EVS.extract),
+            //     player : modulo(fromHash, PLAYER_EVS.extract),
+            //     numPlayers : modulo(fromHash, PLAYERS_EVS.extract)
+            //     points : modulo(fromHash, VP_EVS.extract);
+            // };
+            // var fromStep = Sequence.steps[fromState.stepNum];
+            // var toState = {
+            //     round : modulo(toState, ROUND_EVS.extract),
+            //     stepNum : modulo(toState, STEP_EVS.extract),
+            //     player : modulo(toState, PLAYER_EVS.extract),
+            //     players : modulo(toState, PLAYERS_EVS.extract),
+            //     points : modulo(toState, VP_EVS.extract)
+            // };
+            // var toStep = Sequence.steps[toState.stepNum];
+            // console.log('backToPreviousStep -> round:' + fromState.round + '->' + toState.round +
+            //             ' phase:' + fromStep.phase; + '->' + toStep.phase +
+            //             ' step:' + fromState.stepNum + ' (' + fromStep.name + ') ->' + toState.stepNum + ' (' + toStep.name + ')' +
+            //             ' player:' + fromState.player + '->' + toState.player +
+            //             ' # players:' + fromState.players + '->' + toState.players +
+            //             ' points:' + fromState.points + '->' + toState.points +
             //             '');
 
-            game_setCurrentState(toState);
+            game_setCurrentState(toStateHash);
         }
 
-        function game_setCurrentState(currentState, isRefresh = false) {
-            var stateHistory = localStorage.getItem('stateHistory');
+        function game_setCurrentState(currentStateHash, isRefresh = false) {
+            var stateHistory = localStorage.getItem(StateStorageKey);
             if (!isRefresh) {
-                localStorage.setItem('stateHistory', currentState + ',' + stateHistory);
+                localStorage.setItem(StateStorageKey, currentStateHash + ',' + stateHistory);
             }
 
-            var previousState = parseInt(stateHistory.split(',')[0], 10);
+            var previousStateHash = parseInt(stateHistory.split(',')[0], 10);
+            var previousStepNum = modulo(previousStateHash, STEP_EVS.extract);
+            var previousPhase = Sequence.steps[previousStepNum].phase;
 
-            var currentStepNum = modulo(currentState, STEP_EVS.extract);
-            var currentStep = Sequence.steps[currentStepNum];
-            var currentPhaseNum = currentStep.phase;
-            var currentPlayer = modulo(currentState, PLAYER_EVS.extract);
-            var currentNumPlayers = modulo(currentState, PLAYERS_EVS.extract);
-            var currentRound = modulo(currentState, ROUND_EVS.extract);
-            // console.log('setCurrentState -> set current -> round:' + currentRound  +
-            //              ' phase:' + currentPhaseNum +
-            //              ' step:' + currentStepNum + ' (' + Sequence.steps[currentStepNum].name + ')' +
-            //              ' player:' + currentPlayer +
-            //              ' # players:' + currentNumPlayers +
+            var current = {
+                round : modulo(currentStateHash, ROUND_EVS.extract),
+                stepNum : modulo(currentStateHash, STEP_EVS.extract),
+                player : modulo(currentStateHash, PLAYER_EVS.extract),
+                players : modulo(currentStateHash, PLAYERS_EVS.extract),
+                // points : modulo(currentStateHash, VP_EVS.extract)
+            };
+            var currentStep = Sequence.steps[current.stepNum];
+            // console.log('setCurrentState -> set current -> round:' + current.round  +
+            //              ' phase:' + currentStep.phase +
+            //              ' step:' + current.stepNum + ' (' + currentStep.name + ')' +
+            //              ' player:' + current.player +
+            //              ' # players:' + current.players +
             //              '');
 
-            var bannerInfo = game_setStandardBanners(currentState, previousState);
+            var bannerInfo = game_setStandardBanners(current, previousPhase);
             var banner = bannerInfo[0];
             var changeBanner = bannerInfo[1];
             var showClose = bannerInfo[2];
             var header = bannerInfo[3];
 
-            var isALLPLAYERS = (currentPlayer == ALLPLAYERS);
-            var isFirstPlayer = (currentPlayer == 1);
-            var isLastPlayer = (currentPlayer == currentNumPlayers);
+            var isALLPLAYERS = (current.player == ALLPLAYERS);
+            var isFirstPlayer = (current.player == 1);
+            var isLastPlayer = (current.player == current.players);
 
-            var nextStepNum = currentStepNum + 1;
-            var nextPlayer = currentPlayer;
-            var nextRound = currentRound;
+            var nextStepNum = current.stepNum + 1;
+            var nextPlayer = current.player;
+            var nextRound = current.round;
             switch (true) {
                 case (currentStep.teamloopstart != null):
-                    nextStepNum = (isLastPlayer) ? currentStepNum + 1 : currentStep.teamloopstart;
-                    nextPlayer = (isLastPlayer) ? ALLPLAYERS : currentPlayer + 1;
+                    nextStepNum = (isLastPlayer) ? current.stepNum + 1 : currentStep.teamloopstart;
+                    nextPlayer = (isLastPlayer) ? ALLPLAYERS : current.player + 1;
                     break;
                 case (currentStep.gameloopstart != null):
                     nextStepNum = currentStep.gameloopstart;
                     nextPlayer = ALLPLAYERS;
-                    nextRound = currentRound + 1;
+                    nextRound = current.round + 1;
                     break;
-                case ((currentRound == 0) && (Sequence.steps[nextStepNum].gameloopend != null)):
+                case ((current.round == 0) && (Sequence.steps[nextStepNum].gameloopend != null)):
                     nextPlayer = ALLPLAYERS;
-                    nextRound = currentRound + 1;
+                    nextRound = current.round + 1;
                     break;
             }
             
@@ -1083,7 +1149,7 @@
             var hasActionWindow = currentStep.actionwindow;
             var detail;
             switch (true) {
-                case ((currentState.gameloopstart != null) && (currentNumPlayers == 1)):
+                case ((currentStep.gameloopstart != null) && (current.players == 1)):
                     detail = '<span style="color:SpringGreen">End of Turn Action Window<step>';
                     break;
                 case (currentStep.name.includes('Action Window')):
@@ -1097,7 +1163,7 @@
                     break;
             }
             if (!isALLPLAYERS) { // are we inside a team loop?
-                detail = (isFirstPlayer ? 'First Player' : 'Player ' + currentPlayer) + ': ' + detail;
+                detail = (isFirstPlayer ? 'First Player' : 'Player ' + current.player) + ': ' + detail;
             }
 
             // buttons
@@ -1108,7 +1174,7 @@
             }
 
             // SideNav: back
-            var showBack = (currentStepNum > 0);
+            var showBack = (current.stepNum > 0);
 
             // SideNav: skip
             var skipInfo = null;
@@ -1117,17 +1183,17 @@
                     skipInfo = [currentStep.teamskip[0], currentStep.skipto, ALLPLAYERS];
                     break;
                 case (currentStep.playerskip != null):
-                    var skiptoStepNum = (isLastPlayer) ? currentStep.teamloopend + 1 : currentStepNum;
-                    var skiptoPlayer = (isLastPlayer) ? ALLPLAYERS : currentPlayer + 1;
+                    var skiptoStepNum = (isLastPlayer) ? currentStep.teamloopend + 1 : current.stepNum;
+                    var skiptoPlayer = (isLastPlayer) ? ALLPLAYERS : current.player + 1;
                     skipInfo = [currentStep.playerskip, skiptoStepNum, skiptoPlayer];
                     break;
             }
 
             // SideNav: eliminate player
-            var showElim = ((currentNumPlayers > 1) && (currentPhaseNum > 0));
+            var showElim = ((current.players > 1) && (currentStep.phase > 0));
 
             // SideNav: victory points
-            var showVP = (currentPhaseNum > 0);
+            var showVP = (currentStep.phase > 0);
 
             var sideNavInfo = [showBack, skipInfo, showElim, showVP];
 
@@ -1155,37 +1221,28 @@
             });
         }
 
-        function game_setStandardBanners(currentState, previousState) {
-            var previousStepNum = modulo(previousState, STEP_EVS.extract);
-            var previousStep = Sequence.steps[previousStepNum];
-            var previousPhaseNum = previousStep.phase;
-
-            var currentRound = modulo(currentState, ROUND_EVS.extract);
-            var currentStepNum = modulo(currentState, STEP_EVS.extract);
-            var currentStep = Sequence.steps[currentStepNum];
-            var currentPhaseNum = currentStep.phase;
-            var currentNumPlayers = modulo(currentState, PLAYERS_EVS.extract);
-            var currentVictoryPoints = modulo(currentState, VP_EVS.extract);
+        function game_setStandardBanners(currentState, previousPhase) {
+            var currentStep = Sequence.steps[currentState.stepNum];
 
             // banner: shows the current round
-            var banner = (currentRound == 0)
+            var banner = (currentState.round == 0)
                 ? ''
-                : 'Round ' + currentRound +
-                ((currentNumPlayers == 1) ? '' : ' (' + currentNumPlayers + ' players)') +
-                ((currentVictoryPoints == 0) ? '' : ' VP: ' + currentVictoryPoints);
+                : 'Round ' + currentState.round +
+                ((currentState.players == 1) ? '' : ' (' + currentState.players + ' players)') +
+                ((currentState.points == 0) ? '' : ' VP: ' + currentState.points);
 
             // change banner: shows when the phase changes
-            var isPhaseChange = (currentPhaseNum != previousPhaseNum);
+            var isPhaseChange = (currentStep.phase != previousPhase);
             var changeBanner = (isPhaseChange)
-                ? 'End of the ' + Sequence.phases[previousPhaseNum] + ' Phase<br>' +
-                'Start of the ' + Sequence.phases[currentPhaseNum] + ' Phase'
+                ? 'End of the ' + Sequence.phases[previousPhase] + ' Phase<br>' +
+                'Start of the ' + Sequence.phases[currentStep.phase] + ' Phase'
                 : '';
 
             // close button: shows only for the new game state
             var showClose = false;
 
             // header: shows the current phase and stage
-            var header = Sequence.phases[currentPhaseNum] + ' Phase' +
+            var header = Sequence.phases[currentStep.phase] + ' Phase' +
                 ((currentStep.stage == null) ? '' : ': ' + currentStep.stage + ' Stage');
 
             return [banner, changeBanner, showClose, header];
@@ -1195,12 +1252,12 @@
             var compendiumInfo = helpLocations[0];
             var companionInfo = (helpLocations.length < 2) ? [] : helpLocations[1];
             var actionWindowInfo = (helpLocations.length < 3) ? [] : helpLocations[2];
-            var tipText = (ShowToolTips && !IS_MOBILE) ? '' : 'Hold Alt while pressing the button to open help in a new tab';
+            var tipText = (Options.showTips && !IS_MOBILE) ? '' : 'Hold Alt while pressing the button to open help in a new tab';
             GAME_HELP_TEXT.innerHTML =
                 stepText +
                 '<div class="buttonHolder">' +
-                ((compendiumInfo.length == 0) ? '' : generateButton('Compendium', 'CompendiumIsPreferred=true;game_showCompendium(' + JSON.stringify(compendiumInfo) + ',event)', 'helpBtn', tipText)) +
-                ((companionInfo.length == 0) ? '' : generateButton('Companion', 'CompendiumIsPreferred=false;game_showCompanion(' + companionInfo[0] + ',event)', 'helpBtn', tipText)) +
+                ((compendiumInfo.length == 0) ? '' : generateButton('Compendium', 'Options.preferCompendium=true;game_showCompendium(' + JSON.stringify(compendiumInfo) + ',event)', 'helpBtn', tipText)) +
+                ((companionInfo.length == 0) ? '' : generateButton('Companion', 'Options.preferCompendium=false;game_showCompanion(' + companionInfo[0] + ',event)', 'helpBtn', tipText)) +
                 ((actionWindowInfo.length == 0) ? '' : generateButton('Action Window', 'game_showCompendium(' + JSON.stringify(actionWindowInfo) + ',event)', 'helpBtn', tipText)) +
                 '</div>';
 
@@ -1208,7 +1265,7 @@
             if ((compendiumInfo.length == 0) && (companionInfo.length == 0)) {
                 game_showCompendium(actionWindowInfo);
             }
-            else if (CompendiumIsPreferred && (compendiumInfo.length > 0)) {
+            else if (Options.preferCompendium && (compendiumInfo.length > 0)) {
                 game_showCompendium(compendiumInfo);
             } else {
                 game_showCompanion(companionInfo[0]);
@@ -1222,15 +1279,18 @@
 
         function game_showCompendium(helpInfo, event = null) {
             var address, fragment, query;
-            if (CompendiumAsHtml) {
-                address = './RulesCompendium_v2.0/Rules_Compendium_v2_0.html';
-                fragment = '#p' + helpInfo[0].toString().padStart(3, '0') + '_' + helpInfo[3];
-                query = '?section=s' + helpInfo[0].toString().padStart(3, '0') + '_' + helpInfo[4] +
-                    '&cwidth=' + GAME_HELP_DISPLAY.offsetWidth;
-            } else {
-                address = './Images/RulesCompendium_v2.0.pdf';
-                fragment = '#page=' + helpInfo[0] + '&zoom=100,' + helpInfo[1] + ',' + helpInfo[2] + '&pagemode=none&view=FitH';
-                query = '';
+            switch(Options.compendiumFormat) {
+                case 'HTML':
+                    address = './RulesCompendium_v2.0/Rules_Compendium_v2_0.html';
+                    fragment = '#p' + helpInfo[0].toString().padStart(3, '0') + '_' + helpInfo[3];
+                    query = '?section=s' + helpInfo[0].toString().padStart(3, '0') + '_' + helpInfo[4] +
+                            '&cwidth=' + GAME_HELP_DISPLAY.offsetWidth;
+                    break;
+                case 'PDF':
+                    address = './Images/RulesCompendium_v2.0.pdf';
+                    fragment = '#page=' + helpInfo[0] + '&zoom=100,' + helpInfo[1] + ',' + helpInfo[2] + '&pagemode=none&view=FitH';
+                    query = '';
+                    break;
             }
             GAME_HELP_DISPLAY.innerHTML = "<iframe src='" + address + query + fragment + "' ></iframe>";
             GAME_HELP.classList.remove('hidden');
@@ -1252,18 +1312,21 @@
         }
 
         function game_verifyElimPlayer() {
-            var stateHistory = localStorage.getItem('stateHistory');
-            var currentState = parseInt(stateHistory.split(',')[0], 10);
+            var stateHistory = localStorage.getItem(StateStorageKey);
+            var currentStateHash = parseInt(stateHistory.split(',')[0], 10);
+            var previousStateHash = parseInt(stateHistory.split(',')[1], 10);
+            var previousStepNum = modulo(previousStateHash, STEP_EVS.extract);
+            var previousPhase = Sequence.steps[previousStepNum].phase;
 
-            var previousState = parseInt(stateHistory.split(',')[1], 10);
+            var currentState = {
+                round : modulo(currentStateHash, ROUND_EVS.extract),
+                stepNum : modulo(currentStateHash, STEP_EVS.extract),
+                player : modulo(currentStateHash, PLAYER_EVS.extract),
+                players : modulo(currentStateHash, PLAYERS_EVS.extract),
+                points : modulo(currentStateHash, VP_EVS.extract)
+            };
 
-            var currentRound = modulo(currentState, ROUND_EVS.extract);
-            var currentStepNum = modulo(currentState, STEP_EVS.extract);
-            var currentPlayer = modulo(currentState, PLAYER_EVS.extract);
-            var currentNumPlayers = modulo(currentState, PLAYERS_EVS.extract);
-            var currentVictoryPoints = modulo(currentState, VP_EVS.extract);
-
-            var bannerInfo = game_setStandardBanners(currentState, previousState);
+            var bannerInfo = game_setStandardBanners(currentState, previousPhase);
             var banner = bannerInfo[0];
             var changeBanner = bannerInfo[1];
             var showClose = bannerInfo[2];
@@ -1274,14 +1337,14 @@
 
             // buttons
             var buttons = [];
-            var newState =
-                currentRound * ROUND_EVS.cram +
-                currentStepNum * STEP_EVS.cram +
-                currentPlayer * PLAYER_EVS.cram +
-                (currentNumPlayers - 1) * PLAYERS_EVS.cram +
-                currentVictoryPoints * VP_EVS.cram;
-            buttons.push(generateButton('Yes', 'game_setCurrentState(' + newState + ')'));
-            buttons.push(generateButton('No', 'game_setCurrentState(' + currentState + ',"true")'));
+            var newStateHash =
+                currentState.round * ROUND_EVS.cram +
+                currentState.stepNum * STEP_EVS.cram +
+                currentState.player * PLAYER_EVS.cram +
+                (currentState.players - 1) * PLAYERS_EVS.cram +
+                current.points * VP_EVS.cram;
+            buttons.push(generateButton('Yes', 'game_setCurrentState(' + newStateHash + ')'));
+            buttons.push(generateButton('No', 'game_setCurrentState(' + currentStateHash + ',"true")'));
 
             // SideNav: back
             var showBack = false;
@@ -1303,23 +1366,27 @@
             showModal(banner, changeBanner, showClose, header, detail, buttons, sideNavInfo, box);
         }
 
-        function game_changeVP(newState = null) {
-            var stateHistory = localStorage.getItem('stateHistory');
-            var currentState = parseInt(stateHistory.split(',')[0], 10);
+        function game_changeVP(newStateHash = null) {
+            var stateHistory = localStorage.getItem(StateStorageKey);
+            var currentStateHash = parseInt(stateHistory.split(',')[0], 10);
 
             if (newState == null) {
-                newState = currentState;
+                newStateHash = currentStateHash;
             }
 
-            var previousState = parseInt(stateHistory.split(',')[1], 10);
+            var previousStateHash = parseInt(stateHistory.split(',')[1], 10);
+            var previousStepNum = modulo(previousStateHash, STEP_EVS.extract);
+            var previousPhase = Sequence.steps[previousStepNum].phase;
 
-            // var newRound = modulo(newState, ROUND_EVS.extract);
-            // var newStepNum = modulo(newState, STEP_EVS.extract);
-            // var newPlayer = modulo(newState, PLAYER_EVS.extract);
-            // var newNumPlayers = modulo(newState, PLAYERS_EVS.extract);
-            var newVictoryPoints = modulo(newState, VP_EVS.extract);
+            var newState = {
+                round : modulo(newStateHash, ROUND_EVS.extract),
+                stepNum : modulo(newStateHash, STEP_EVS.extract),
+                player : modulo(newStateHash, PLAYER_EVS.extract),
+                players : modulo(newStateHash, PLAYERS_EVS.extract),
+                points : modulo(newStateHash, VP_EVS.extract)
+            };
 
-            var bannerInfo = game_setStandardBanners(newState, previousState);
+            var bannerInfo = game_setStandardBanners(newState, previousPhase);
             var banner = bannerInfo[0];
             var changeBanner = bannerInfo[1];
             var showClose = bannerInfo[2];
@@ -1331,17 +1398,17 @@
             // buttons
             var buttons = [];
             if (newVictoryPoints > 4) {
-                buttons.push(generateButton('-5', 'game_changeVP(' + (newState - 5 * VP_EVS.cram) + ')', 'modalBtn small'));
+                buttons.push(generateButton('-5', 'game_changeVP(' + (newStateHash - 5 * VP_EVS.cram) + ')', 'modalBtn small'));
             }
             if (newVictoryPoints > 0) {
-                buttons.push(generateButton('-1', 'game_changeVP(' + (newState - VP_EVS.cram) + ')', 'modalBtn small'));
+                buttons.push(generateButton('-1', 'game_changeVP(' + (newStateHash - VP_EVS.cram) + ')', 'modalBtn small'));
             }
-            if (newState != currentState) {
-                buttons.push(generateButton('Done', 'game_setCurrentState(' + newState + ')', 'modalBtn small'));
+            if (newStateHash != currentStateHash) {
+                buttons.push(generateButton('Done', 'game_setCurrentState(' + newStateHash + ')', 'modalBtn small'));
             }
-            buttons.push(generateButton('+1', 'game_changeVP(' + (newState + VP_EVS.cram) + ')', 'modalBtn small'));
-            buttons.push(generateButton('+5', 'game_changeVP(' + (newState + 5 * VP_EVS.cram) + ')', 'modalBtn small'));
-            buttons.push(generateButton('Cancel', 'game_setCurrentState(' + currentState + ',"true")', 'modalBtn small'));
+            buttons.push(generateButton('+1', 'game_changeVP(' + (newStateHash + VP_EVS.cram) + ')', 'modalBtn small'));
+            buttons.push(generateButton('+5', 'game_changeVP(' + (newStateHash + 5 * VP_EVS.cram) + ')', 'modalBtn small'));
+            buttons.push(generateButton('Cancel', 'game_setCurrentState(' + currentStateHash + ',"true")', 'modalBtn small'));
 
             // SideNav: back
             var showBack = false;
@@ -1393,15 +1460,15 @@
 
             // close button:
             var showClose = (typeof (closeInfo) == 'boolean') ? closeInfo : (showClose != '');
-            var closeTip = (ShowToolTips && (typeof (closeInfo) == 'string')) ? closeInfo : '';
+            var closeTip = (Options.showTips && (typeof (closeInfo) == 'string')) ? closeInfo : '';
             if (showClose) { // make the close <span> appear
                 MODAL_CLOSE.innerHTML = '&times;' + ((closeTip == '') ? '' : '<span class="tooltiptext">' + closeTip + '</span>');
                 MODAL_CLOSE.style.display = 'block';
                 MODAL_CLOSE.onclick = function () { // When the user clicks on <span> (x), close the modal dialogue                    
                     MODAL_DIALOGUE.style.display = 'none'; // hide the modal dialogue
-                    if (localStorage.getItem('stateHistory')) {
-                        latestState = parseInt(localStorage.getItem('stateHistory').split(',')[0], 10);
-                        game_setCurrentState(latestState);
+                    if (localStorage.getItem(StateStorageKey)) {
+                        latestStateHash = parseInt(localStorage.getItem(StateStorageKey).split(',')[0], 10);
+                        game_setCurrentState(latestStateHash);
                     }
                 }
             } else { // hide the close <span>
@@ -1556,8 +1623,8 @@
 
         function showOptions() {
             if (OPTIONS_AREA.classList.contains('hidden')) {
-                document.options.compendiumAs[CompendiumAsHtml ? 0 : 1].checked = true;
-                document.options.showToolTips.checked == ShowToolTips;
+                document.options.compendiumAs[(Options.compendiumFormat == 'HTML') ? 0 : 1].checked = true;
+                document.options.showToolTips.checked == Options.showTips;
                 OPTIONS_AREA.classList.add('fade-in');
                 OPTIONS_AREA.classList.remove('hidden');
                 OPTIONS_AREA.addEventListener('animationend', optionsFadeinDone);
@@ -1586,30 +1653,16 @@
         }
 
         function recordOptions() {
-            stateHistory = localStorage.getItem('stateHistory') ?? '0';
-            var states = stateHistory.split(',');
-            var last = Number(states.pop());
-            if ((last < 0) || (last > 255)) {
-                states.push(last.toString());
-            }
-
-            CompendiumAsHtml = document.options.compendiumAs[0].checked;
-            ShowToolTips = document.options.showToolTips.checked;
-
-            var optionsVal = 
-                (CompendiumIsPreferred ? 1 : 0) +
-                (CompendiumAsHtml ? 2 : 0) +
-                (ShowToolTips ? 4 : 0) +
-                (IsCampaign ? 8 : 0);
-            states.push(optionsVal.toString());
-            localStorage.setItem('stateHistory', states.join(','));
+            Options.preferCompendium = document.options.compendiumAs[0].checked;
+            Options.showTips = document.options.showToolTips.checked;
+            localStorage.setItem(OptionsStorageKey, JSON.stringify(Options));
         }
 
         function generateButton(buttonText, onclick = null, btnClass = 'modalBtn', btnToolTip = '') {
             var ocevent = (onclick == null) ? '' : " onclick='" + onclick + "'";
             var tt = '';
 
-            if (ShowToolTips && (btnToolTip != '')) {
+            if (Options.showTips && (btnToolTip != '')) {
                 btnClass += ' tooltipContainer';
                 tt = '<span class="tooltiptext">' + btnToolTip + '</span>';
             }
