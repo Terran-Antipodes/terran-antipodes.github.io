@@ -144,7 +144,7 @@
             transition: all 5s;
         }
     </style>
-    <style> /*Custom radio buttons and checkboxes */
+    <style> /* Custom radio buttons and checkboxes */
         /* Style for the label */
         .choiceHolder {
             display: block;
@@ -264,6 +264,21 @@
             padding: 2vh;
         }
 
+        #SideNavLeft a span,
+        #SideNavRight a span {
+            /* Hide nav text in case it spills over into view */
+            opacity: 0;
+        }
+
+        #SideNavLeft a:hover span,
+        #SideNavLeft a.simhover span,
+        #SideNavRight a:hover span,
+        #SideNavRight a.simhover span {
+            /* Show nav text on hover */
+            opacity: 1;
+            transition: 0.3s;
+        }
+
         #SideNavLeft a {
             /* Rounded corners on the top right and bottom right side */
             border-radius: 0 5px 5px 0;
@@ -273,12 +288,6 @@
             transition: 0.3s;
         }
 
-        #SideNavLeft a span,
-        #SideNavRight a span {
-            /* Hide nav text in case it spills over into view */
-            opacity: 0;
-        }
-
         #SideNavLeft a:hover,
         #SideNavLeft a.simhover {
             /* On mouse-over, make the elements appear as they should */
@@ -286,13 +295,6 @@
             color: white;
             opacity: 1;
             /* Add transition on hover */
-            transition: 0.3s;
-        }
-
-        #SideNavLeft a:hover span,
-        #SideNavLeft a.simhover span {
-            /* Show nav text on hover */
-            opacity: 1;
             transition: 0.3s;
         }
 
@@ -619,8 +621,8 @@
             <div class='hidden'><a href='#' id='vp'></a></div>
         </div>
         <div id='SideNavRight'>
-            <div onclick='showOptions()'><a href='#' id='options'>Options</a></div>
-            <div onclick='showAbout()'><a href='#' id='about'>About</a></div>
+            <div class='hidden'><a href='#' id='options'></a></div>
+            <div class='hidden'><a href='#' id='about'></a></div>
         </div>
         <div id='GameModal' class='modal'>
             <div class='modal-content'>
@@ -668,59 +670,73 @@
                         <span class='indicator'></span>
                     </label>
                 </div>
+                <div class='optionSet'>
+                    <label class='choiceHolder'>Show End/Start of phases as steps
+                        <input type='checkbox' name='showChangePhaseSteps'>
+                        <span class='indicator'></span>
+                    </label>
+                </div>
             </form>
         </div>
     </div>
     <script> /*Set up */
-        var VERSION = 'v1.7.3';
+        var VERSION = 'v1.8.0';
 
         /* define game steps */
         var Sequence = JSON.parse(
-            '{ "phases": [ "Setup", "Resource", "Planning", "Quest", "Travel", "Encounter", "Combat", "Refresh" ] ' +
             // boxes format (in px): [left, top, right, bottom] or [initialplayerbox, subsequentplayerbox, finalplayerbox]
             // help format: [compendium_info, companion_info, action_window_info]
             //              compendium_info:    [page number, pdf horiz offset, pdf offset, html jump index, html highlight index]
             //              companion_info:     [page number]
             //   (optional) action_window_info: [page number, pdf horiz offset, pdf offset, html jump index, html highlight index]
             // gameloop: value indicates the last step in the loop. After that step, the tracker will increment the round and loop back to this step.
+            // playerloop: value indicates the last step in each player's steps. After that step, the tracker will return to this step for the same player. Should be combined with a playerskip.
+            // playerskip: value indicates prompt. If the player opts to skip, then the tracker will switch to the next player and loop back to this step, or, if the player was the last player, continue to the next step.
             // teamloop: value indicates the last step in each player's steps. After that step, the tracker will switch to the next player and loop back to this step, or, if the player was the last player, continue to the next step.
             // teamskip: value indicates prompt and next step for all players if the first player opts to skip.
-            // playerskip: value indicates prompt. If the player opts to skip, then the tracter will switch to the next player and loop back to this step, or, if the player was the last player, continue to the next step.
-            ' ,"steps": [ { "phase": 0, "name": "Extract Campaign Setup cards", "type": "campaign" } ' +
-            '            ,{ "phase": 0, "name": "Shuffle Player Decks", "help" : [[47,0,135,1,1],[209]] } ' +
-            '            ,{ "phase": 0, "name": "Shuffle Encounter Deck", "help" : [[47,0,130,1,2],[209]] } ' +
-            '            ,{ "phase": 0, "name": "Place Heroes", "help" : [[47,0,400,2,3],[210]] } ' +
-            '            ,{ "phase": 0, "name": "Perform Campaign Setup", "help" : [[47,0,700,3,4],[210]], "type": "campaign" } ' +
-            '            ,{ "phase": 0, "name": "Set Threat Levels", "help" : [[47,0,400,2,5],[210]] } ' +
-            '            ,{ "phase": 0, "name": "Create Token Banks", "help" : [[47,500,305,4,6],[211]] } ' +
-            '            ,{ "phase": 0, "name": "Determine First Player", "help" : [[47,500,380,5,7],[212]] } ' +
-            '            ,{ "phase": 0, "name": "Draw Starting Hand", "help" : [[47,500,455,6,8],[213]] } ' +
-            '            ,{ "phase": 0, "name": "Place Quest Cards", "help" : [[47,500,555,7,9],[214]] } ' +
-            '            ,{ "phase": 0, "name": "Perform Scenario Setup", "help" : [[47,500,650,8,10],[215]] } ' +
-            '            ,{ "phase": 1, "name": "Gather Resources", "gameloop" : "Pass First Player Token", "boxes" : [60,75,490,190], "help" : [[48,0,510,1,1],[217]] }' +
-            '            ,{ "phase": 1, "name": "Draw a Card", "actionwindow" : "true", "boxes" : [60,190,490,310], "help" : [[48,0,620,1,2],[217],[128,0,400,1,1]] } ' +
-            '            ,{ "phase": 2, "name": "Special Action Window", "teamloop" : "Special Action Window", "boxes" : [[60,465,490,685],[60,525,490,685],[60,525,490,740]], "help" : [[48,0,710,2,3],[218],[128,0,600,2,2]] } ' +
-            '            ,{ "phase": 3, "name": "Quest Action Window", "boxes" : [60,840,490,960], "help" : [[],[],[128,0,920,3,3]] } ' +
-            '            ,{ "phase": 3, "name": "Commit Characters", "actionwindow" : "true", "boxes" : [60,960,490,1080], "help" : [[48,500,100,3,4],[220],[129,0,50,1,1]] } ' +
-            '            ,{ "phase": 3, "name": "Staging", "teamloop" : "Staging", "boxes" : [60,1080,490,1135], "help" : [[48,500,380,4,5],[221]] } ' +
-            '            ,{ "phase": 3, "name": "Staging Action Window", "boxes" : [60,1135,490,1195], "help" : [[],[],[129,0,280,2,2]] } ' +
-            '            ,{ "phase": 3, "name": "Quest Resolution", "actionwindow" : "true", "boxes" : [60,1195,490,1315], "help" : [[48,500,825,5,6],[222],[129,0,420,3,3]] } ' +
-            '            ,{ "phase": 4, "name": "Travel Opportunity", "actionwindow" : "true", "boxes" : [60,1530,490,1645], "help" : [[49,500,100,1,1],[227],[129,0,725,4,4]] } ' +
-            '            ,{ "phase": 5, "name": "Optional Engagement", "actionwindow" : "true", "boxes" : [60,1860,490,1980], "help" : [[49,500,750,2,2],[232],[129,0,910,5,5]] } ' +
-            '            ,{ "phase": 5, "name": "Engagement Checks", "actionwindow" : "true", "boxes" : [60,1980,490,2100], "help" : [[50,0,50,1,1],[233],[129,0,980,6,6]] } ' +
-            '            ,{ "phase": 6, "name": "Combat Check", "teamskip" : ["No Combat?", "Ready All Cards"], "boxes" : [60,2215,490,2320] } ' +
-            '            ,{ "phase": 6, "name": "Deal Shadow Cards", "actionwindow" : "true", "teamskip" : ["No Enemy Attacks?", "Choose Enemy and Attackers"], "teamloop" : "Deal Shadow Cards", "boxes" : [60,2320,490,2428], "help" : [[50,0,845,2,2],[237],[130,0,130,1,1]] } ' +
-            '            ,{ "phase": 6, "stage": "Enemy Attack", "name": "Choose Attacking Enemy", "actionwindow" : "true", "playerskip" : "Player Is Not Under Attack?", "teamloop" : "Determine Enemy and Defender Combat Damage", "boxes" : [[60,2428,490,2675],[60,2480,490,2675]], "help" : [[50,500,150,3,3],[238],[130,0,270,2,2]] } ' +
-            '            ,{ "phase": 6, "stage": "Enemy Attack", "name": "Declare Defender", "actionwindow" : "true", "boxes" : [60,2675,490,2795], "help" : [[50,500,190,4,4],[238],[130,0,410,3,3]] } ' +
-            '            ,{ "phase": 6, "stage": "Enemy Attack", "name": "Reveal & Resolve Shadow Effects", "actionwindow" : "true", "boxes" : [60,2795,490,2915], "help" : [[50,500,300,5,5],[238],[130,0,535,4,4]] } ' +
-            '            ,{ "phase": 6, "stage": "Enemy Attack", "name": "Determine Enemy and Defender Combat Damage", "actionwindow" : "true", "boxes" : [60,2915,490,3035], "help" : [[50,0,340,6,6],[238],[130,0,730,5,5]] } ' +
-            '            ,{ "phase": 6, "stage": "Player Attack", "name": "Choose Enemy and Attackers", "actionwindow" : "true", "playerskip" : "Player Is Not Attacking An Enemy?", "teamloop" : "Determine Attacker and Enemy Combat Damage", "boxes" : [0,3330,470,3585], "help" : [[51,0,290,1,1],[240],[131,0,85,1,1]] } ' +
-            '            ,{ "phase": 6, "stage": "Player Attack", "name": "Determine Attacker Strength", "actionwindow" : "true" , "boxes" : [0,3585,470,3705], "help" : [[51,0,345,2,2],[240],[131,0,160,2,2]] } ' +
-            '            ,{ "phase": 6, "stage": "Player Attack", "name": "Determine Attacker and Enemy Combat Damage", "actionwindow" : "true", "boxes" : [0,3705,470,3825], "help" : [[51,0,390,3,3],[240],[131,0,350,3,3]] } ' +
-            '            ,{ "phase": 6, "name": "Discard All Shadow Cards", "boxes" : [0,4060,470,4110], "help" : [[51,0,860,4,4]] } ' +
-            '            ,{ "phase": 7, "name": "Ready All Cards", "boxes" : [0,4265,470,4320], "help" : [[52,500,315,1,1],[255]] } ' +
-            '            ,{ "phase": 7, "name": "Raise Threat Levels", "boxes" : [0,4325,470,4380], "help" : [[52,500,315,1,1],[255]] } ' +
-            '            ,{ "phase": 7, "name": "Pass First Player Token", "actionwindow" : "true", "boxes" : [0,4380,470,4500], "help" : [[52,500,315,1,1],[255],[131,0,420,4,4]] } ' +
+            '{ "steps": [ { "phase": "Setup",     "name": "Extract Campaign Setup cards", "type": "campaign" } ' +
+            '            ,{ "phase": "Setup",     "name": "Shuffle Player Decks", "help" : [[47,0,135,1,1],[209]] } ' +
+            '            ,{ "phase": "Setup",     "name": "Shuffle Encounter Deck", "help" : [[47,0,130,1,2],[209]] } ' +
+            '            ,{ "phase": "Setup",     "name": "Place Heroes", "help" : [[47,0,400,2,3],[210]] } ' +
+            '            ,{ "phase": "Setup",     "name": "Perform Campaign Setup", "help" : [[47,0,700,3,4],[210]], "type": "campaign" } ' +
+            '            ,{ "phase": "Setup",     "name": "Set Threat Levels", "help" : [[47,0,400,2,5],[210]] } ' +
+            '            ,{ "phase": "Setup",     "name": "Create Token Banks", "help" : [[47,500,305,4,6],[211]] } ' +
+            '            ,{ "phase": "Setup",     "name": "Determine First Player", "help" : [[47,500,380,5,7],[212]] } ' +
+            '            ,{ "phase": "Setup",     "name": "Draw Starting Hand", "help" : [[47,500,455,6,8],[213]] } ' +
+            '            ,{ "phase": "Setup",     "name": "Place Quest Cards", "help" : [[47,500,555,7,9],[214]] } ' +
+            '            ,{ "phase": "Setup",     "name": "Perform Scenario Setup", "help" : [[47,500,650,8,10],[215]] } ' +
+		    '            ,{ "phase": "Change",    "name": "Start of the Resource Phase", "gameloop" : "End of the Refresh Phase", "boxes" : [60,75,490,135] } ' +
+            '            ,{ "phase": "Resource",  "name": "Gather Resources", "boxes" : [60,135,490,190], "help" : [[48,0,510,1,1],[217]] }' +
+            '            ,{ "phase": "Resource",  "name": "Draw a Card", "actionwindow" : true, "boxes" : [60,190,490,310], "help" : [[48,0,620,1,2],[217],[128,0,400,1,1]] } ' +
+		    '            ,{ "phase": "Change",    "name": "End of the Resource Phase<br/>Start of the Planning Phase", "boxes" : [60,315,490,527] } ' +
+            '            ,{ "phase": "Planning",  "name": "Special Action Window", "teamloop" : "Special Action Window", "boxes" : [[60,525,490,685],[60,525,490,685],[60,525,490,740]], "help" : [[48,0,710,2,3],[218],[128,0,600,2,2]] } ' +
+		    '            ,{ "phase": "Change",    "name": "End of the Planning Phase<br/>Start of the Quest Phase", "boxes" : [60,688,490,900] } ' +
+            '            ,{ "phase": "Quest",     "name": "Quest Action Window", "boxes" : [60,840,490,960], "help" : [[],[],[128,0,920,3,3]] } ' +
+            '            ,{ "phase": "Quest",     "name": "Commit Characters", "actionwindow" : true, "boxes" : [60,960,490,1080], "help" : [[48,500,100,3,4],[220],[129,0,50,1,1]] } ' +
+            '            ,{ "phase": "Quest",     "name": "Staging", "teamloop" : "Staging", "boxes" : [60,1080,490,1135], "help" : [[48,500,380,4,5],[221]] } ' +
+            '            ,{ "phase": "Quest",     "name": "Staging Action Window", "boxes" : [60,1135,490,1195], "help" : [[],[],[129,0,280,2,2]] } ' +
+            '            ,{ "phase": "Quest",     "name": "Quest Resolution", "actionwindow" : true, "boxes" : [60,1195,490,1315], "help" : [[48,500,825,5,6],[222],[129,0,420,3,3]] } ' +
+		    '            ,{ "phase": "Change",    "name": "End of the Quest Phase<br/>Start of the Travel Phase", "boxes" : [60,1318,490,1530] } ' +
+            '            ,{ "phase": "Travel",    "name": "Travel Opportunity", "actionwindow" : true, "boxes" : [60,1530,490,1645], "help" : [[49,500,100,1,1],[227],[129,0,725,4,4]] } ' +
+		    '            ,{ "phase": "Change",    "name": "End of the Travel Phase<br/>Start of the Encounter Phase", "boxes" : [60,1650,490,1865] } ' +
+		    '            ,{ "phase": "Encounter", "name": "Optional Engagement", "actionwindow" : true, "boxes" : [60,1860,490,1980], "help" : [[49,500,750,2,2],[232],[129,0,910,5,5]] } ' +
+            '            ,{ "phase": "Encounter", "name": "Engagement Checks", "actionwindow" : true, "boxes" : [60,1980,490,2100], "help" : [[50,0,50,1,1],[233],[129,0,980,6,6]] } ' +
+		    '            ,{ "phase": "Change",    "name": "End of the Encounter Phase<br/>Start of the Combat Phase", "teamskip" : ["No Combat?", "Ready All Cards"], "boxes" : [60,2105,490,2310] } ' +
+            '            ,{ "phase": "Combat",    "name": "Combat Check", "type": "postPhaseChange", "teamskip" : ["No Combat?", "Ready All Cards"], "boxes" : [60,2215,490,2320] } ' +
+            '            ,{ "phase": "Combat",    "name": "Deal Shadow Cards", "actionwindow" : true, "teamskip" : ["No Enemy Attacks?", "Choose Enemy and Attackers"], "teamloop" : "Deal Shadow Cards", "boxes" : [60,2320,490,2428], "help" : [[50,0,845,2,2],[237],[130,0,130,1,1]] } ' +
+            '            ,{ "phase": "Combat",    "stage": "Enemy Attack",  "name": "Choose Attacking Enemy", "actionwindow" : true, "playerskip" : "Player is not Attacked by an{other} Enemy?", "playerloop" : "Determine Enemy and Defender Combat Damage", "boxes" : [[60,2428,490,2675],[60,2480,490,2675]], "help" : [[50,500,150,3,3],[238],[130,0,270,2,2]] } ' +
+            '            ,{ "phase": "Combat",    "stage": "Enemy Attack",  "name": "Declare Defender", "actionwindow" : true, "boxes" : [60,2675,490,2795], "help" : [[50,500,190,4,4],[238],[130,0,410,3,3]] } ' +
+            '            ,{ "phase": "Combat",    "stage": "Enemy Attack",  "name": "Reveal and Resolve Shadow Effects", "actionwindow" : true, "boxes" : [60,2795,490,2915], "help" : [[50,500,300,5,5],[238],[130,0,535,4,4]] } ' +
+            '            ,{ "phase": "Combat",    "stage": "Enemy Attack",  "name": "Determine Enemy and Defender Combat Damage", "actionwindow" : true, "boxes" : [60,2915,490,3035], "help" : [[50,0,340,6,6],[238],[130,0,730,5,5]] } ' +
+            '            ,{ "phase": "Combat",    "stage": "Player Attack", "name": "Choose Enemy and Attackers", "actionwindow" : true, "playerskip" : "Player is not Attacking an{other} Enemy?", "playerloop" : "Determine Attacker and Enemy Combat Damage", "boxes" : [0,3330,470,3585], "help" : [[51,0,290,1,1],[240],[131,0,85,1,1]] } ' +
+            '            ,{ "phase": "Combat",    "stage": "Player Attack", "name": "Determine Attacker Strength", "actionwindow" : true , "boxes" : [0,3585,470,3705], "help" : [[51,0,345,2,2],[240],[131,0,160,2,2]] } ' +
+            '            ,{ "phase": "Combat",    "stage": "Player Attack", "name": "Determine Attacker and Enemy Combat Damage", "actionwindow" : true, "boxes" : [0,3705,470,3825], "help" : [[51,0,390,3,3],[240],[131,0,350,3,3]] } ' +
+            '            ,{ "phase": "Combat",    "name": "Discard All Shadow Cards", "boxes" : [0,4060,470,4110], "help" : [[51,0,860,4,4]] } ' +
+		    '            ,{ "phase": "Change",    "name": "End of the Combat Phase<br/>Start of the Refresh Phase", "boxes" : [60,4065,490,4267] } ' +
+            '            ,{ "phase": "Refresh",   "name": "Ready All Cards", "boxes" : [0,4265,470,4320], "help" : [[52,500,315,1,1],[255]] } ' +
+            '            ,{ "phase": "Refresh",   "name": "Raise Threat Levels", "boxes" : [0,4325,470,4380], "help" : [[52,500,315,1,1],[255]] } ' +
+            '            ,{ "phase": "Refresh",   "name": ["End of Round Action Window","Pass First Player Token"], "actionwindow" : true, "boxes" : [0,4380,470,4500], "help" : [[52,500,315,1,1],[255],[131,0,420,4,4]] } ' +
+		    '            ,{ "phase": "Change",    "name": "End of the Refresh Phase<br/>Start of the next Round", "boxes" : [60,4500,490,4560] } ' +
             '           ]' +
             ' ,"areas": [ { "name": "RESOURCE & PLANNING" ' +
             '              ,"voffset": 0 ' +
@@ -790,6 +806,7 @@
         );
 
         const ALLPLAYERS = 0; // player number used when a step is performed by all players
+        const MAXPLAYERS = 6;
 
         /* define state encoding values (see https://clivesyabb.com/2021/10/01/encoding-multiple-values-in-a-single-number/) */
         const PLAYER_EVS = { cram: 7148163, extract: 7 };
@@ -806,6 +823,8 @@
         const NAV_SKIP = document.getElementById('skip');
         const NAV_ELIM = document.getElementById('elim');
         const NAV_VP = document.getElementById('vp');
+        const NAV_OPTIONS = document.getElementById('options');
+        const NAV_ABOUT = document.getElementById('about');
         const MODAL_DIALOGUE = document.getElementById('GameModal');
         const MODAL_BANNER = MODAL_DIALOGUE.getElementsByClassName('modalBanner')[0];
         const MODAL_CHANGE_BANNER = MODAL_DIALOGUE.getElementsByClassName('modalChangeBanner')[0];
@@ -834,7 +853,9 @@
             preferCompendium : true,
             compendiumFormat : 'HTML',
             campaign : false,
-            showTips : true
+            showTips : true,
+            showChangePhaseSteps : true,
+            previouslyExtended : []
         };
     </script>
     <script> /* main code */
@@ -885,6 +906,11 @@
                     Sequence.steps[step].teamloopend = teamloopend;
                     Sequence.steps[teamloopend].teamloopstart = step;
                 }
+                if (Sequence.steps[step].playerloop) {
+                    var playerloopend = findStepNum(Sequence.steps[step].playerloop);
+                    Sequence.steps[step].playerloopend = playerloopend;
+                    Sequence.steps[playerloopend].playerloopstart = step;
+                }
                 if (Sequence.steps[step].teamskip) {
                     Sequence.steps[step].skipto = findStepNum(Sequence.steps[step].teamskip[1]);
                 }
@@ -893,52 +919,55 @@
             // Determine the current state history format
             var expectedFormat = Options.format;
             var stateHistory = localStorage.getItem('stateHistory');
-            if (stateHistory) {
-                Options.format = 0;
-                console.log('found stateHistory = ' + stateHistory);
-            } else {
-                console.log('found stateStorage');
-                var storedOptions = localStorage.getItem(StateStorageKey);
+            if (stateHistory == null) {
+                var storedOptions = localStorage.getItem(OptionsStorageKey);
                 if (storedOptions) {
-                    Options = JSON.Parse(storedOptions);
+                    Options = JSON.parse(storedOptions);
                 };
+            } else {
+                Options.format = 0;
             }
-            console.log('Options=' + JSON.stringify(Options));
 
             // update the stored state information to the next format until we reach the current format
             while (Options.format < expectedFormat) {
                 switch(Options.format) {
                     case 0: // convert from f0 (pre-v1.7.3) to f1 (v1.7.3+)
-                        console.log('convert from f0 (pre-v1.7.3) to f1 (v1.7.3+)');
-                        var states = stateHistory.split(',')
+                        var states = stateHistory.split(',');
                         var newStates = [];
 
                         // convert the options
-                        var optionsVal = Number(states.pop());      
-                        console.log('popped optionsVal = ' + optionsVal);                  
+                        var optionsVal = Number(states.pop());                  
                         if ((optionsVal > 0) && (optionsVal < 256)) {
                             Options.format = 1;
                             Options.preferCompendium = ((optionsVal & 1) == 1);
                             Options.compendiumFormat = ((optionsVal & 2) == 2) ? 'HTML' : 'PDF';
                             Options.campaign = ((optionsVal & 8) == 8);
                             Options.showTips = ((optionsVal & 4) == 4);
+                            Options.showChangePhaseSteps = true;
                         }
                         localStorage.setItem(OptionsStorageKey, JSON.stringify(Options));
-                        console.log('stored ' + OptionsStorageKey + ' = ' + JSON.stringify(Options));
 
                         // convert the states
                         states.forEach(stateStr => {
                             state = parseInt(stateStr, 10);
+							var oldStep = modulo(state, 47);
+							oldStep += (oldStep > 31) ? 7 :
+							           (oldStep > 21) ? 6 :
+							           (oldStep > 19) ? 5 :
+							           (oldStep > 18) ? 4 :
+							           (oldStep > 13) ? 3 :
+							           (oldStep > 12) ? 2 :
+							           (oldStep > 10) ? 1 :
+							                            0;
                             newStates.push(
                                 (modulo(state, 53) * ROUND_EVS.cram +
-                                 modulo(state, 47) * STEP_EVS.cram +
+                                 oldStep * STEP_EVS.cram +
                                  modulo(state, 5)  * PLAYER_EVS.cram +
                                  modulo(state, 7)  * PLAYERS_EVS.cram +
                                  modulo(state, 59) * VP_EVS.cram).toString());
                         });
                         localStorage.setItem(StateStorageKey, newStates.toString());
-                        console.log('stored ' + StateStorageKey + ' = ' + newStates.toString());
-                        // localStorage.removeItem('StateHistory');
+                        localStorage.removeItem('StateHistory');
                         break;
                     case 1: // convert from f1 (v1.7.3+) to f2
                     break;
@@ -954,6 +983,8 @@
             // Obtain flags from state history (or use defaults)
             var stateHistory = localStorage.getItem(StateStorageKey);
             showSideNav(NAV_NEW, 'New Game', function () { newgame_setup('a'); }, (stateHistory == null));
+            showSideNav(NAV_OPTIONS, 'Options', function () { showOptions(); });
+            showSideNav(NAV_ABOUT, 'About', function () { showAbout(); });
             if (stateHistory) {
                 var initialStateHash = Number(stateHistory.split(',')[0]);
                 game_setCurrentState(initialStateHash, true);
@@ -988,8 +1019,8 @@
                     break;
                 case 'c':
                 case 'r':
-                    var prompt = 'How many players in the new ' + (Options.campaign ? 'campaign' : 'game') + '?';
-                    for (var x = 1; x < 5; x++) {
+                    var prompt = 'How many players in the ' + (Options.campaign ? 'campaign' : 'new game') + '?';
+                    for (var x = 1; x <= MAXPLAYERS; x++) {
                         buttons[x] = generateButton('&nbsp;' + x + '&nbsp;', 'newgame_start(' + x + ')');
                     }
                     break;
@@ -1002,6 +1033,7 @@
             localStorage.removeItem(StateStorageKey);
             var initialStateHash = numPlayers * PLAYERS_EVS.cram;
             localStorage.setItem(StateStorageKey, initialStateHash.toString());
+            Options.previouslyExtended = [];
             recordOptions();
             game_advanceToStep(0, ALLPLAYERS);
         }
@@ -1010,43 +1042,34 @@
             // At this point we have not yet changed our state to be in the new step.
             // We are gathering information about the current state we are moving from and the new state we are move to.
             var stateHistory = localStorage.getItem(StateStorageKey);
-            var fromHash = parseInt(stateHistory.split(',')[0], 10);
-            var fromState = {
-                round : modulo(fromHash, ROUND_EVS.extract),
-                // stepNum : modulo(fromHash, STEP_EVS.extract),
-                player : modulo(fromHash, PLAYER_EVS.extract),
-                players : modulo(fromHash, PLAYERS_EVS.extract),
-                points : modulo(fromHash, VP_EVS.extract)
-            };
-            // var fromStep = Sequence.steps[fromState.stepNum];
+            var fromState = decodeStateHash(stateHistory.split(',')[0]);
 
-            if (Sequence.steps[newStepNum].type != null) {
-                while ((Sequence.steps[newStepNum].type == 'campaign') && !Options.campaign) {
+            while ((((Sequence.steps[newStepNum].type ?? '') == 'campaign') && !Options.campaign) || // skip campaign steps when it is not a campaign game
+                   ((Sequence.steps[newStepNum].phase == 'Change') && !Options.showChangePhaseSteps) || // skip phase end/start steps when they are to be shown
+                   (((Sequence.steps[newStepNum].type ?? '') == 'postPhaseChange') && Options.showChangePhaseSteps)) // special: skip this step when phase end/start steps are shown
+            {
+                if (Sequence.steps[newStepNum].gameloopstart != null) {
+                    newStepNum = Sequence.steps[newStepNum].gameloopstart;
+                    nextPlayer = ALLPLAYERS;
+                    nextRound = fromState.round + 1;
+                } else {
                     newStepNum++;
                 }
             }
 
             var toState = {
-                round : (newRound == null) ? fromState.round : newRound,
-                // stepNum : newStepNum,
-                player : (newPlayer == null) ? fromState.player : newPlayer,
+                round   : (newRound == null) ? fromState.round : newRound,
+                stepNum : newStepNum,
+                player  : (newPlayer == null) ? fromState.player : newPlayer,
                 players : fromState.players,
-                points : fromState.points
+                points  : fromState.points,
+                step    : Sequence.steps[newStepNum]
             };
-            var toStep = Sequence.steps[toState.stepNum];
 
             // check if we are starting new loop
-            if ((toState.player == ALLPLAYERS) && (toStep.teamloop)) {
+            if ((toState.player == ALLPLAYERS) && (toState.step.teamloop || toState.step.playerloop)) {
                 toState.player = 1;
             }
-
-            // console.log('advanceToStep -> round:' + fromState.round + '->' + toState.round +
-            //             ' phase:' + fromStep.phase + '->' + toStep.phase +
-            //             ' step:' + fromState.stepNum + '->' + toState.stepNum + ' (' + toStep.name + ')' +
-            //             ' player:' + fromState.player + '->' + toState.player +
-            //             ' # players:' + fromState.players + '->' + toState.players +
-            //             ' points:' + fromState.points + '->' + toState.points +
-            //             '');
 
             var newStateHash =
                 toState.round * ROUND_EVS.cram +
@@ -1062,32 +1085,6 @@
             var stateHistory = localStorage.getItem(StateStorageKey);
             var toStateHash = parseInt(stateHistory.split(',')[1], 10); // go back 2 states in the history because we have already added the current state to the history
             localStorage.setItem(StateStorageKey, stateHistory.slice(stateHistory.split(',', 2).join(',').length + 1)); // removes the first two states from the history
-
-            // var fromHash = parseInt(stateHistory.split(',')[0], 10);
-            // var from = {
-            //     round : modulo(fromHash, ROUND_EVS.extract),
-            //     stepNum : modulo(from, STEP_EVS.extract),
-            //     player : modulo(fromHash, PLAYER_EVS.extract),
-            //     numPlayers : modulo(fromHash, PLAYERS_EVS.extract)
-            //     points : modulo(fromHash, VP_EVS.extract);
-            // };
-            // var fromStep = Sequence.steps[fromState.stepNum];
-            // var toState = {
-            //     round : modulo(toState, ROUND_EVS.extract),
-            //     stepNum : modulo(toState, STEP_EVS.extract),
-            //     player : modulo(toState, PLAYER_EVS.extract),
-            //     players : modulo(toState, PLAYERS_EVS.extract),
-            //     points : modulo(toState, VP_EVS.extract)
-            // };
-            // var toStep = Sequence.steps[toState.stepNum];
-            // console.log('backToPreviousStep -> round:' + fromState.round + '->' + toState.round +
-            //             ' phase:' + fromStep.phase; + '->' + toStep.phase +
-            //             ' step:' + fromState.stepNum + ' (' + fromStep.name + ') ->' + toState.stepNum + ' (' + toStep.name + ')' +
-            //             ' player:' + fromState.player + '->' + toState.player +
-            //             ' # players:' + fromState.players + '->' + toState.players +
-            //             ' points:' + fromState.points + '->' + toState.points +
-            //             '');
-
             game_setCurrentState(toStateHash);
         }
 
@@ -1097,26 +1094,10 @@
                 localStorage.setItem(StateStorageKey, currentStateHash + ',' + stateHistory);
             }
 
-            var previousStateHash = parseInt(stateHistory.split(',')[0], 10);
-            var previousStepNum = modulo(previousStateHash, STEP_EVS.extract);
-            var previousPhase = Sequence.steps[previousStepNum].phase;
+            var previous = decodeStateHash(stateHistory.split(',')[0]);
+            var current = decodeStateHash(currentStateHash);
 
-            var current = {
-                round : modulo(currentStateHash, ROUND_EVS.extract),
-                stepNum : modulo(currentStateHash, STEP_EVS.extract),
-                player : modulo(currentStateHash, PLAYER_EVS.extract),
-                players : modulo(currentStateHash, PLAYERS_EVS.extract),
-                // points : modulo(currentStateHash, VP_EVS.extract)
-            };
-            var currentStep = Sequence.steps[current.stepNum];
-            // console.log('setCurrentState -> set current -> round:' + current.round  +
-            //              ' phase:' + currentStep.phase +
-            //              ' step:' + current.stepNum + ' (' + currentStep.name + ')' +
-            //              ' player:' + current.player +
-            //              ' # players:' + current.players +
-            //              '');
-
-            var bannerInfo = game_setStandardBanners(current, previousPhase);
+            var bannerInfo = game_setStandardBanners(current, previous.step.phase);
             var banner = bannerInfo[0];
             var changeBanner = bannerInfo[1];
             var showClose = bannerInfo[2];
@@ -1130,12 +1111,15 @@
             var nextPlayer = current.player;
             var nextRound = current.round;
             switch (true) {
-                case (currentStep.teamloopstart != null):
-                    nextStepNum = (isLastPlayer) ? current.stepNum + 1 : currentStep.teamloopstart;
+                case (current.step.teamloopstart != null):
+                    nextStepNum = (isLastPlayer) ? current.stepNum + 1 : current.step.teamloopstart;
                     nextPlayer = (isLastPlayer) ? ALLPLAYERS : current.player + 1;
                     break;
-                case (currentStep.gameloopstart != null):
-                    nextStepNum = currentStep.gameloopstart;
+                case (current.step.playerloopstart != null):
+                    nextStepNum = current.step.playerloopstart;
+                    break;
+                case (current.step.gameloopstart != null):
+                    nextStepNum = current.step.gameloopstart;
                     nextPlayer = ALLPLAYERS;
                     nextRound = current.round + 1;
                     break;
@@ -1146,31 +1130,37 @@
             }
             
             // text: shows the current step
-            var hasActionWindow = currentStep.actionwindow;
+            var stepName = Array.isArray(current.step.name) 
+                ? current.step.name[Math.max(current.players,2)-1]
+                : current.step.name;
+            var hasActionWindow = (current.step.actionwindow || stepName.includes('Action Window'));
+            var tipClass = (hasActionWindow && Options.showTips) ? ' class="tooltipContainer"' : '';
+            var spanTag = (hasActionWindow) ? '<span style="color:SpringGreen"' + tipClass + '>' : '';
+            var tipText = (stepName.startsWith('Special')) 
+                ? 'May play Ally, Attachement and/or Event cards'
+                : 'May play Event cards only';
+            var spanEndTag = (hasActionWindow && Options.showTips) ? '<span class="tooltiptext">' + tipText + '</span></span>' : '</span>';
             var detail;
             switch (true) {
-                case ((currentStep.gameloopstart != null) && (current.players == 1)):
-                    detail = '<span style="color:SpringGreen">End of Turn Action Window<step>';
-                    break;
-                case (currentStep.name.includes('Action Window')):
-                    detail = '<span style="color:SpringGreen">' + currentStep.name + '<step>';
+                case (stepName.includes('Action Window')):
+                    detail = spanTag + stepName + spanEndTag;
                     break; 
                 case (hasActionWindow):
-                    detail = currentStep.name + '<br>&amp;<br><span style="color:SpringGreen">Action Window</span>';
+                    detail = stepName + '<br>&amp;<br>' + spanTag + 'Action Window' + spanEndTag;
                     break;
                 default:
-                    detail = currentStep.name;
+                    detail = stepName;
                     break;
             }
-            if (!isALLPLAYERS) { // are we inside a team loop?
-                detail = (isFirstPlayer ? 'First Player' : 'Player ' + current.player) + ': ' + detail;
+            if (!isALLPLAYERS && current.players > 1) { 
+                detail = (isFirstPlayer ? 'First Player: ' : 'Player ' + current.player + ': ') + detail;
             }
 
             // buttons
             var buttons = [];
             buttons.push(generateButton('Next', 'game_advanceToStep(' + nextStepNum + ',' + nextPlayer + ',' + nextRound + ')'));
-            if (currentStep.help) {
-                buttons.push(generateButton('Help', 'game_showHelp("' + currentStep.name + '",' + JSON.stringify(currentStep.help) + ')'));
+            if (current.step.help) {
+                buttons.push(generateButton('Help', 'game_showHelp("' + stepName + '",' + JSON.stringify(current.step.help) + ')'));
             }
 
             // SideNav: back
@@ -1179,40 +1169,43 @@
             // SideNav: skip
             var skipInfo = null;
             switch (true) {
-                case ((currentStep.teamskip != null) && (isALLPLAYERS || isFirstPlayer)):
-                    skipInfo = [currentStep.teamskip[0], currentStep.skipto, ALLPLAYERS];
+                case ((current.step.teamskip != null) && (isALLPLAYERS || isFirstPlayer)):
+                    skipInfo = [current.step.teamskip[0], current.step.skipto, ALLPLAYERS];
                     break;
-                case (currentStep.playerskip != null):
-                    var skiptoStepNum = (isLastPlayer) ? currentStep.teamloopend + 1 : current.stepNum;
+                case (current.step.playerskip != null):
+                    var skipText = (current.player == previous.player) 
+                        ? current.step.playerskip.replace(new RegExp("[\\{\\}]", "gm"), "")  // same player      : an{other} => another
+                        : current.step.playerskip.replace(new RegExp("\\{.*\\}", "gm"), ""); // different player : an{other} => an
+                    var skiptoStepNum = (isLastPlayer) ? current.step.playerloopend + 1 : current.stepNum;
                     var skiptoPlayer = (isLastPlayer) ? ALLPLAYERS : current.player + 1;
-                    skipInfo = [currentStep.playerskip, skiptoStepNum, skiptoPlayer];
+                    skipInfo = [skipText, skiptoStepNum, skiptoPlayer];
                     break;
             }
 
             // SideNav: eliminate player
-            var showElim = ((current.players > 1) && (currentStep.phase > 0));
+            var showElim = ((current.players > 1) && (current.step.phase != "Setup"));
 
             // SideNav: victory points
-            var showVP = (currentStep.phase > 0);
+            var showVP = (current.step.phase != "Setup");
 
             var sideNavInfo = [showBack, skipInfo, showElim, showVP];
 
             // repositioning of the background image
             switch (true) {
-                case (currentStep.boxes == null):
+                case (current.step.boxes == null):
                     OutlineBox = null;
                     break;
-                case (currentStep.boxes.length == 4):
-                    OutlineBox = currentStep.boxes;
+                case (current.step.boxes.length == 4):
+                    OutlineBox = current.step.boxes;
                     break;
                 case (isALLPLAYERS || isFirstPlayer):
-                    OutlineBox = currentStep.boxes[0];
+                    OutlineBox = current.step.boxes[0];
                     break;
                 case (isLastPlayer):
-                    OutlineBox = currentStep.boxes[currentStep.boxes.length - 1];
+                    OutlineBox = current.step.boxes[current.step.boxes.length - 1];
                     break;
                 default:
-                    OutlineBox = currentStep.boxes[1];
+                    OutlineBox = current.step.boxes[1];
                     break;
             }
 
@@ -1222,28 +1215,26 @@
         }
 
         function game_setStandardBanners(currentState, previousPhase) {
-            var currentStep = Sequence.steps[currentState.stepNum];
-
             // banner: shows the current round
             var banner = (currentState.round == 0)
                 ? ''
                 : 'Round ' + currentState.round +
                 ((currentState.players == 1) ? '' : ' (' + currentState.players + ' players)') +
-                ((currentState.points == 0) ? '' : ' VP: ' + currentState.points);
+                (((currentState.points ?? 0) == 0) ? '' : ' VP: ' + currentState.points);
 
-            // change banner: shows when the phase changes
-            var isPhaseChange = (currentStep.phase != previousPhase);
-            var changeBanner = (isPhaseChange)
-                ? 'End of the ' + Sequence.phases[previousPhase] + ' Phase<br>' +
-                'Start of the ' + Sequence.phases[currentStep.phase] + ' Phase'
+            // change banner: shows when the phase changes (unless phase changes are shown as steps)
+            var isPhaseChange = (currentState.step.phase != previousPhase);
+            var changeBanner = (isPhaseChange && !Options.showChangePhaseSteps)
+                ? 'End of the ' + previousPhase + ' Phase<br>' + 'Start of the ' + currentState.step.phase + ' Phase'
                 : '';
 
             // close button: shows only for the new game state
             var showClose = false;
 
             // header: shows the current phase and stage
-            var header = Sequence.phases[currentStep.phase] + ' Phase' +
-                ((currentStep.stage == null) ? '' : ': ' + currentStep.stage + ' Stage');
+            var header = 
+                ((currentState.step.phase == 'Change') ? '' : currentState.step.phase + ' Phase') +
+                ((currentState.step.stage == null) ? '' : ': ' + currentState.step.stage + ' Stage');
 
             return [banner, changeBanner, showClose, header];
         }
@@ -1314,19 +1305,11 @@
         function game_verifyElimPlayer() {
             var stateHistory = localStorage.getItem(StateStorageKey);
             var currentStateHash = parseInt(stateHistory.split(',')[0], 10);
-            var previousStateHash = parseInt(stateHistory.split(',')[1], 10);
-            var previousStepNum = modulo(previousStateHash, STEP_EVS.extract);
-            var previousPhase = Sequence.steps[previousStepNum].phase;
 
-            var currentState = {
-                round : modulo(currentStateHash, ROUND_EVS.extract),
-                stepNum : modulo(currentStateHash, STEP_EVS.extract),
-                player : modulo(currentStateHash, PLAYER_EVS.extract),
-                players : modulo(currentStateHash, PLAYERS_EVS.extract),
-                points : modulo(currentStateHash, VP_EVS.extract)
-            };
+            var current = decodeStateHash(stateHistory.split(',')[0]);
+            var previous = decodeStateHash(stateHistory.split(',')[1]);
 
-            var bannerInfo = game_setStandardBanners(currentState, previousPhase);
+            var bannerInfo = game_setStandardBanners(current, previous.step.phase);
             var banner = bannerInfo[0];
             var changeBanner = bannerInfo[1];
             var showClose = bannerInfo[2];
@@ -1338,10 +1321,10 @@
             // buttons
             var buttons = [];
             var newStateHash =
-                currentState.round * ROUND_EVS.cram +
-                currentState.stepNum * STEP_EVS.cram +
-                currentState.player * PLAYER_EVS.cram +
-                (currentState.players - 1) * PLAYERS_EVS.cram +
+                current.round * ROUND_EVS.cram +
+                current.stepNum * STEP_EVS.cram +
+                current.player * PLAYER_EVS.cram +
+                (current.players - 1) * PLAYERS_EVS.cram +
                 current.points * VP_EVS.cram;
             buttons.push(generateButton('Yes', 'game_setCurrentState(' + newStateHash + ')'));
             buttons.push(generateButton('No', 'game_setCurrentState(' + currentStateHash + ',"true")'));
@@ -1370,37 +1353,26 @@
             var stateHistory = localStorage.getItem(StateStorageKey);
             var currentStateHash = parseInt(stateHistory.split(',')[0], 10);
 
-            if (newState == null) {
-                newStateHash = currentStateHash;
-            }
+            newStateHash = newStateHash ?? currentStateHash;
+            var newState = decodeStateHash(newStateHash);
 
-            var previousStateHash = parseInt(stateHistory.split(',')[1], 10);
-            var previousStepNum = modulo(previousStateHash, STEP_EVS.extract);
-            var previousPhase = Sequence.steps[previousStepNum].phase;
+            var previousState = decodeStateHash(stateHistory.split(',')[1]);
 
-            var newState = {
-                round : modulo(newStateHash, ROUND_EVS.extract),
-                stepNum : modulo(newStateHash, STEP_EVS.extract),
-                player : modulo(newStateHash, PLAYER_EVS.extract),
-                players : modulo(newStateHash, PLAYERS_EVS.extract),
-                points : modulo(newStateHash, VP_EVS.extract)
-            };
-
-            var bannerInfo = game_setStandardBanners(newState, previousPhase);
+            var bannerInfo = game_setStandardBanners(newState, previousState.step.phase);
             var banner = bannerInfo[0];
             var changeBanner = bannerInfo[1];
             var showClose = bannerInfo[2];
             var header = bannerInfo[3];
 
             // text:
-            var detail = 'Adjust Victory Points';
+            var detail = 'Adjust Victory Points: ' + newState.points;
 
             // buttons
             var buttons = [];
-            if (newVictoryPoints > 4) {
+            if (newState.points > 4) {
                 buttons.push(generateButton('-5', 'game_changeVP(' + (newStateHash - 5 * VP_EVS.cram) + ')', 'modalBtn small'));
             }
-            if (newVictoryPoints > 0) {
+            if (newState.points > 0) {
                 buttons.push(generateButton('-1', 'game_changeVP(' + (newStateHash - VP_EVS.cram) + ')', 'modalBtn small'));
             }
             if (newStateHash != currentStateHash) {
@@ -1525,6 +1497,12 @@
                 hideSideNav(NAV_VP);
             }
 
+            // SideNavs: Options
+            showSideNav(NAV_OPTIONS, 'Options', function () { showOptions(); });
+
+            // SideNavs: About
+            showSideNav(NAV_ABOUT, 'About', function () { showAbout(); });
+
             MODAL_DIALOGUE.style.display = 'block';  // make the modal dialogue appear
 
             // background image and outlining box:
@@ -1571,13 +1549,18 @@
                 navElement.innerHTML = '<span>' + textContent + '</span>';
                 navElement.parentElement.onclick = onclick;
                 navElement.parentElement.classList.remove('hidden');
-                if (extend) {
+                var notBeenExtended = !Options.previouslyExtended.includes(textContent);
+                if (extend || notBeenExtended) {
                     navElement.classList.add('simhover');
                     window.addEventListener('click', endsimhover);
 
                     function endsimhover(e) {
                         window.removeEventListener('click', endsimhover);
                         navElement.classList.remove('simhover');
+                    }
+                    if (notBeenExtended) {
+                        Options.previouslyExtended.push(textContent);
+                        localStorage.setItem(OptionsStorageKey, JSON.stringify(Options));
                     }
                 }
             }
@@ -1624,7 +1607,8 @@
         function showOptions() {
             if (OPTIONS_AREA.classList.contains('hidden')) {
                 document.options.compendiumAs[(Options.compendiumFormat == 'HTML') ? 0 : 1].checked = true;
-                document.options.showToolTips.checked == Options.showTips;
+                document.options.showToolTips.checked = Options.showTips;
+                document.options.showChangePhaseSteps.checked = Options.showChangePhaseSteps;
                 OPTIONS_AREA.classList.add('fade-in');
                 OPTIONS_AREA.classList.remove('hidden');
                 OPTIONS_AREA.addEventListener('animationend', optionsFadeinDone);
@@ -1653,9 +1637,22 @@
         }
 
         function recordOptions() {
-            Options.preferCompendium = document.options.compendiumAs[0].checked;
+            Options.compendiumFormat = document.options.compendiumAs[0].checked ? 'HTML' : 'PDF';
             Options.showTips = document.options.showToolTips.checked;
+            Options.showChangePhaseSteps = document.options.showChangePhaseSteps.checked;
             localStorage.setItem(OptionsStorageKey, JSON.stringify(Options));
+        }
+
+        function decodeStateHash(stateHash) {
+            var stepNum = modulo(stateHash, STEP_EVS.extract);
+            return {
+                round   : modulo(stateHash, ROUND_EVS.extract),
+                stepNum : stepNum,
+                step    : Sequence.steps[stepNum],
+                player  : modulo(stateHash, PLAYER_EVS.extract),
+                players : modulo(stateHash, PLAYERS_EVS.extract),
+                points  : modulo(stateHash, VP_EVS.extract)
+            };
         }
 
         function generateButton(buttonText, onclick = null, btnClass = 'modalBtn', btnToolTip = '') {
@@ -1673,7 +1670,14 @@
         function findStepNum(searchName) {
             var step = null;
             for (step = 0; step < Sequence.steps.length; step++) {
-                if (Sequence.steps[step].name == searchName) {
+                var names = (Array.isArray(Sequence.steps[step].name)) 
+                    ? Sequence.steps[step].name
+                    : [ Sequence.steps[step].name ]; 
+                var found = false;
+                names.forEach(name => {
+                    found |= (name.startsWith(searchName));
+                });
+                if (found) {
                     break
                 };
             };

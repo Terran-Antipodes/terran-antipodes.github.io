@@ -2,6 +2,37 @@
 This website is an SPA intended to provide a non-commercial aid while playing the [Lord of the Rings LCG](https://www.fantasyflightgames.com/en/products/the-lord-of-the-rings-the-card-game/) from [Final Flight Game](https://www.fantasyflightgames.com/en/index/).
 
 ## Version History
+### v1.8.0
+Overhaul
+Features:
+  - End and Start of Phases can now be optionally shown as steps.
+  - Each Nav bar will appear extended the first time it is displayed in a game.
+  - Added tooltip which shows cards can be played when step being displayed includes an Action Window.
+  - Removed display of 'First Player:' for single-player games.
+Bug Fix:
+  - i13: Action Windows were not indicated during the Combat sequence.
+  - i14: Combat sequence was only presented once for each player.
+  - Victory Points were not displayed.
+  - While altering Victory Points, the new value was not clearly shown.
+  - Option for displaying tooltips was not being correctly parsed.
+  - Option for compendium/companion preferrence was not being correctly parsed.
+  - Option for compendium foramt was not being parsed.
+Internal:
+  - Added code to automatically upgrade data storage formats.
+  - Added new format: options are stored separately from the state history,
+                      new storage location for state history.
+  - Generation and processing of Options and About Nav Bars is now consistent with other Nav bars.
+  - Replaced references to "phases" element of Sequence object with new "phase" element text in Sequence.steps.
+  - Removed "phases" element of Sequence object.
+  - Instituted "playerloop" to allow for mulitple attacks on/by each player.
+  - Implemented new "Change" phase type in Sequence.steps.
+  - Implemented new "postPhaseChange" as a new "type" in Sequence.steps to complement "Change".
+  - Changed Options from an integer of flags to an object.
+  - New function decodeStateHash() ensures consistent creation of state objects.
+  - Sequence.steps now supports different name for single-player and multi-player games.
+  - Removed old comments containing trace code.
+  - GetStandardBanners() now accepts a current state object and previous state name, rather than hash values.
+  - Changed Option for compendium format from boolean to string.
 #### v1.7.2
 Corrected display of tooltips.
 Removed display of "TrackerDisplay" as tooltip.
