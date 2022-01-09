@@ -2,6 +2,13 @@
 This website is an SPA intended to provide a non-commercial aid while playing the [Lord of the Rings LCG](https://www.fantasyflightgames.com/en/products/the-lord-of-the-rings-the-card-game/) from [Final Flight Game](https://www.fantasyflightgames.com/en/index/).
 
 ## Version History
+#### v1.8.2
+Added tooltips for Nav bars.
+Sequence steps include tooltips for special action Nav bars.
+#### v1.8.1
+Added alternate setup sequence.
+shortened tooltip fade time to 3 sec.
+support more variation of step name depending on number of players.
 ### v1.8.0
 Overhaul
 Features:

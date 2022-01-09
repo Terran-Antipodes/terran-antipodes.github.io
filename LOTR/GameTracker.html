@@ -664,9 +664,13 @@
                         <span class='indicator'></span>
                     </label>
                 </div>
-                <div class='optionSet'>
-                    <label class='choiceHolder'>Show tooltips
-                        <input type='checkbox' name='showToolTips'>
+                <div class='optionSet'>Show tooltips
+                    <label class='choiceHolder'>Show general tooltips
+                        <input type='checkbox' name='showGenTips'>
+                        <span class='indicator'></span>
+                    </label>
+                    <label class='choiceHolder'>Show tooltips on Navigation Bars
+                        <input type='checkbox' name='showNavTips'>
                         <span class='indicator'></span>
                     </label>
                 </div>
@@ -740,14 +744,14 @@
 		    '              ,{ "phase": "Change",    "name": "End of the Travel Phase<br/>Start of the Encounter Phase", "boxes" : [60,1650,490,1865] } ' +
 		    '              ,{ "phase": "Encounter", "name": "Optional Engagement", "actionwindow" : true, "boxes" : [60,1860,490,1980], "help" : [[49,500,750,2,2],[232],[129,0,910,5,5]] } ' +
             '              ,{ "phase": "Encounter", "name": "Engagement Checks", "actionwindow" : true, "boxes" : [60,1980,490,2100], "help" : [[50,0,50,1,1],[233],[129,0,980,6,6]] } ' +
-		    '              ,{ "phase": "Change",    "name": "End of the Encounter Phase<br/>Start of the Combat Phase", "teamskip" : ["No Combat?", "Ready All Cards"], "boxes" : [60,2105,490,2310] } ' +
-            '              ,{ "phase": "Combat",    "name": "Combat Check", "type": "postPhaseChange", "teamskip" : ["No Combat?", "Ready All Cards"], "boxes" : [60,2215,490,2320] } ' +
-            '              ,{ "phase": "Combat",    "name": "Deal Shadow Cards", "actionwindow" : true, "teamskip" : ["No Enemy Attacks?", "Choose Enemy and Attackers"], "teamloop" : "Deal Shadow Cards", "boxes" : [60,2320,490,2428], "help" : [[50,0,845,2,2],[237],[130,0,130,1,1]] } ' +
-            '              ,{ "phase": "Combat",    "stage": "Enemy Attack",  "name": "Choose Attacking Enemy", "actionwindow" : true, "playerskip" : "Player is not Attacked by an{other} Enemy?", "playerloop" : "Determine Enemy and Defender Combat Damage", "boxes" : [[60,2428,490,2675],[60,2480,490,2675]], "help" : [[50,500,150,3,3],[238],[130,0,270,2,2]] } ' +
+		    '              ,{ "phase": "Change",    "name": "End of the Encounter Phase<br/>Start of the Combat Phase", "teamskip" : ["No Combat?|Select if there are no Enemy or Player Attacks this Round", "Ready All Cards"], "boxes" : [60,2105,490,2310] } ' +
+            '              ,{ "phase": "Combat",    "name": "Combat Check", "type": "postPhaseChange", "teamskip" : ["No Combat?|Select if there are no Enemy or Player Attacks this Round", "Ready All Cards"], "boxes" : [60,2215,490,2320] } ' +
+            '              ,{ "phase": "Combat",    "name": "Deal Shadow Cards", "actionwindow" : true, "teamskip" : ["No Enemies Attacking?|Select if no Enemies are attacking the Player", "Choose Enemy and Attackers"], "teamloop" : "Deal Shadow Cards", "boxes" : [60,2320,490,2428], "help" : [[50,0,845,2,2],[237],[130,0,130,1,1]] } ' +
+            '              ,{ "phase": "Combat",    "stage": "Enemy Attack",  "name": "Choose Attacking Enemy", "actionwindow" : true, "playerskip" : "Player is not Attacked by an{other} Enemy?|Select if all Enemy Attacks against the Player have been resolved", "playerloop" : "Determine Enemy and Defender Combat Damage", "boxes" : [[60,2428,490,2675],[60,2480,490,2675]], "help" : [[50,500,150,3,3],[238],[130,0,270,2,2]] } ' +
             '              ,{ "phase": "Combat",    "stage": "Enemy Attack",  "name": "Declare Defender", "actionwindow" : true, "boxes" : [60,2675,490,2795], "help" : [[50,500,190,4,4],[238],[130,0,410,3,3]] } ' +
             '              ,{ "phase": "Combat",    "stage": "Enemy Attack",  "name": "Reveal and Resolve Shadow Effects", "actionwindow" : true, "boxes" : [60,2795,490,2915], "help" : [[50,500,300,5,5],[238],[130,0,535,4,4]] } ' +
             '              ,{ "phase": "Combat",    "stage": "Enemy Attack",  "name": "Determine Enemy and Defender Combat Damage", "actionwindow" : true, "boxes" : [60,2915,490,3035], "help" : [[50,0,340,6,6],[238],[130,0,730,5,5]] } ' +
-            '              ,{ "phase": "Combat",    "stage": "Player Attack", "name": "Choose Enemy and Attackers", "actionwindow" : true, "playerskip" : "Player is not Attacking an{other} Enemy?", "playerloop" : "Determine Attacker and Enemy Combat Damage", "boxes" : [0,3330,470,3585], "help" : [[51,0,290,1,1],[240],[131,0,85,1,1]] } ' +
+            '              ,{ "phase": "Combat",    "stage": "Player Attack", "name": "Choose Enemy and Attackers", "actionwindow" : true, "playerskip" : "Player is not Attacking an{other} Enemy?|Select if all Attacks by the Player have been resolved.", "playerloop" : "Determine Attacker and Enemy Combat Damage", "boxes" : [0,3330,470,3585], "help" : [[51,0,290,1,1],[240],[131,0,85,1,1]] } ' +
             '              ,{ "phase": "Combat",    "stage": "Player Attack", "name": "Determine Attacker Strength", "actionwindow" : true , "boxes" : [0,3585,470,3705], "help" : [[51,0,345,2,2],[240],[131,0,160,2,2]] } ' +
             '              ,{ "phase": "Combat",    "stage": "Player Attack", "name": "Determine Attacker and Enemy Combat Damage", "actionwindow" : true, "boxes" : [0,3705,470,3825], "help" : [[51,0,390,3,3],[240],[131,0,350,3,3]] } ' +
             '              ,{ "phase": "Combat",    "name": "Discard All Shadow Cards", "boxes" : [0,4060,470,4110], "help" : [[51,0,860,4,4]] } ' +
@@ -872,7 +876,8 @@
             preferCompendium : true,
             compendiumFormat : 'HTML',
             campaign : false,
-            showTips : true,
+            showGeneralTips : true,
+            showNavTips : true,
             previouslyExtended : [],
             showChangePhaseSteps : true,
             altSetup : false
@@ -940,7 +945,8 @@
                             Options.preferCompendium = ((optionsVal & 1) == 1);
                             Options.compendiumFormat = ((optionsVal & 2) == 2) ? 'HTML' : 'PDF';
                             Options.campaign = ((optionsVal & 8) == 8);
-                            Options.showTips = ((optionsVal & 4) == 4);
+                            Options.showGeneralTips = ((optionsVal & 4) == 4);
+                            Options.showNavTips = ((optionsVal & 4) == 4);
                             Options.showChangePhaseSteps = true;
                             Options.altSetup = false;
                         }
@@ -982,8 +988,8 @@
             // Obtain flags from state history (or use defaults)
             var stateHistory = localStorage.getItem(StateStorageKey);
             showSideNav(NAV_NEW, 'New Game', function () { newgame_setup('a'); }, (stateHistory == null));
-            showSideNav(NAV_OPTIONS, 'Options', function () { showOptions(); });
-            showSideNav(NAV_ABOUT, 'About', function () { showAbout(); });
+            showSideNav(NAV_OPTIONS, 'Options', function () { showOptions(); }, 'Configure game and page settings');
+            showSideNav(NAV_ABOUT, 'About', function () { showAbout(); }, 'Show creators, rights, and version');
             if (stateHistory) {
                 var initialStateHash = Number(stateHistory.split(',')[0]);
                 initializeSteps();
@@ -1137,12 +1143,12 @@
                 ? current.step.name[Math.max(current.players,2)-1]
                 : current.step.name;
             var hasActionWindow = (current.step.actionwindow || stepName.includes('Action Window'));
-            var tipClass = (hasActionWindow && Options.showTips) ? ' class="tooltipContainer"' : '';
+            var tipClass = (hasActionWindow && Options.showGeneralTips) ? ' class="tooltipContainer"' : '';
             var spanTag = (hasActionWindow) ? '<span style="color:SpringGreen"' + tipClass + '>' : '';
             var tipText = (stepName.startsWith('Special')) 
                 ? 'May play Ally, Attachement and/or Event cards'
                 : 'May play Event cards only';
-            var spanEndTag = (hasActionWindow && Options.showTips) ? '<span class="tooltiptext">' + tipText + '</span></span>' : '</span>';
+            var spanEndTag = (hasActionWindow && Options.showGeneralTips) ? '<span class="tooltiptext">' + tipText + '</span></span>' : '</span>';
             var detail;
             switch (true) {
                 case (stepName.includes('Action Window')):
@@ -1249,7 +1255,7 @@
             var compendiumInfo = helpLocations[0];
             var companionInfo = (helpLocations.length < 2) ? [] : helpLocations[1];
             var actionWindowInfo = (helpLocations.length < 3) ? [] : helpLocations[2];
-            var tipText = (Options.showTips && !IS_MOBILE) ? '' : 'Hold Alt while pressing the button to open help in a new tab';
+            var tipText = (Options.showGeneralTips && !IS_MOBILE) ? '' : 'Hold Alt while pressing the button to open help in a new tab';
             GAME_HELP_TEXT.innerHTML =
                 stepText +
                 '<div class="buttonHolder">' +
@@ -1438,7 +1444,7 @@
 
             // close button:
             var showClose = (typeof (closeInfo) == 'boolean') ? closeInfo : (showClose != '');
-            var closeTip = (Options.showTips && (typeof (closeInfo) == 'string')) ? closeInfo : '';
+            var closeTip = (Options.showGeneralTips && (typeof (closeInfo) == 'string')) ? closeInfo : '';
             if (showClose) { // make the close <span> appear
                 MODAL_CLOSE.innerHTML = '&times;' + ((closeTip == '') ? '' : '<span class="tooltiptext">' + closeTip + '</span>');
                 MODAL_CLOSE.style.display = 'block';
@@ -1474,7 +1480,7 @@
 
             // SideNavs: back:
             if (showBack) {
-                showSideNav(NAV_BACK, 'Back', function () { game_backToPreviousStep(); });
+                showSideNav(NAV_BACK, 'Back', function () { game_backToPreviousStep(); }, 'Go back 1 step');
             } else {
                 hideSideNav(NAV_BACK);
             }
@@ -1483,31 +1489,32 @@
             if (skipInfo == null) {
                 hideSideNav(NAV_SKIP);
             } else {
-                var skiptext = skipInfo[0];
+                var skiptext = skipInfo[0].split('|')[0];
+                var skiptip = (skipInfo[0] + '|').split('|')[1];
                 var skipToStepNum = skipInfo[1];
                 var skipToPlayer = skipInfo[2];
-                showSideNav(NAV_SKIP, skiptext, function () { game_advanceToStep(skipToStepNum, skipToPlayer); }, true);
+                showSideNav(NAV_SKIP, skiptext, function () { game_advanceToStep(skipToStepNum, skipToPlayer); }, skiptip, true);
             }
 
             // SideNavs: eliminate player:
             if (showElim) {
-                showSideNav(NAV_ELIM, 'Elimination', function () { game_verifyElimPlayer(); });
+                showSideNav(NAV_ELIM, 'Elimination', function () { game_verifyElimPlayer(); }, 'Select when a player is removed from the game');
             } else {
                 hideSideNav(NAV_ELIM);
             }
 
             // SideNavs: victory points:
             if (showVP) {
-                showSideNav(NAV_VP, 'Points', function () { game_changeVP(); });
+                showSideNav(NAV_VP, 'Points', function () { game_changeVP(); }, 'Change the number of Victory Points gained');
             } else {
                 hideSideNav(NAV_VP);
             }
 
             // SideNavs: Options
-            showSideNav(NAV_OPTIONS, 'Options', function () { showOptions(); });
+            showSideNav(NAV_OPTIONS, 'Options', function () { showOptions(); }, 'Configure game and page settings');
 
             // SideNavs: About
-            showSideNav(NAV_ABOUT, 'About', function () { showAbout(); });
+            showSideNav(NAV_ABOUT, 'About', function () { showAbout(); }, 'Show creators, rights, and version');
 
             MODAL_DIALOGUE.style.display = 'block';  // make the modal dialogue appear
 
@@ -1547,12 +1554,14 @@
             }
         }
 
-        function showSideNav(navElement, textContent, onclick, extend = false) {
-            if (navElement == 'all') {
+        function showSideNav(navElement, textContent, onclick, tipText = null, extend = false) {
+            if (navElement == 'all') { // Used when all navs are hidden (e.g. when showing help)
                 document.getElementById('SideNavLeft').classList.remove('hidden');
                 document.getElementById('SideNavRight').classList.remove('hidden');
             } else {
-                navElement.innerHTML = '<span>' + textContent + '</span>';
+                navElement.innerHTML = (tipText && Options.showNavTips)
+                    ? '<span class="tooltipContainer">' + textContent + '<span class="tooltiptext">' + tipText + '</span></span>'
+                    : '<span>' + textContent + '</span>';
                 navElement.parentElement.onclick = onclick;
                 navElement.parentElement.classList.remove('hidden');
                 var notBeenExtended = !Options.previouslyExtended.includes(textContent);
@@ -1613,7 +1622,8 @@
         function showOptions() {
             if (OPTIONS_AREA.classList.contains('hidden')) {
                 document.options.compendiumAs[(Options.compendiumFormat == 'HTML') ? 0 : 1].checked = true;
-                document.options.showToolTips.checked = Options.showTips;
+                document.options.showGenTips.checked = Options.showGeneralTips;
+                document.options.showNavTips.checked = Options.showNavTips;
                 document.options.altSetup.checked = Options.altSetup;
                 document.options.showChangePhaseSteps.checked = Options.showChangePhaseSteps;
                 OPTIONS_AREA.classList.add('fade-in');
@@ -1645,7 +1655,8 @@
 
         function recordOptions() {
             Options.compendiumFormat = document.options.compendiumAs[0].checked ? 'HTML' : 'PDF';
-            Options.showTips = document.options.showToolTips.checked;
+            Options.showGeneralTips = document.options.showGenTips.checked;
+            Options.showNavTips = document.options.showNavTips.checked;
             Options.altSetup = document.options.altSetup.checked;
             Options.showChangePhaseSteps = document.options.showChangePhaseSteps.checked;
             localStorage.setItem(OptionsStorageKey, JSON.stringify(Options));
@@ -1667,7 +1678,7 @@
             var ocevent = (onclick == null) ? '' : " onclick='" + onclick + "'";
             var tt = '';
 
-            if (Options.showTips && (btnToolTip != '')) {
+            if (Options.showGeneralTips && (btnToolTip != '')) {
                 btnClass += ' tooltipContainer';
                 tt = '<span class="tooltiptext">' + btnToolTip + '</span>';
             }
