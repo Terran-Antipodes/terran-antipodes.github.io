@@ -135,7 +135,7 @@
             text-align: center;
             padding: 5px 0;
             border-radius: 6px;
-            z-index: 1;
+            z-index: 100;
         }
 
         /* Show the tooltip text when you mouse over the tooltip container */
@@ -235,7 +235,7 @@
             position: absolute;
             top: 50vh;
             width: 100%;
-            z-index: 1;
+            z-index: 10;
             display: flex;
             justify-content: center;
         }
@@ -247,7 +247,7 @@
 
         #gameOutline {
             position: relative;
-            z-index: 2;
+            z-index: 20;
         }
     </style>
     <style> /* Style the SideNavs to be sliding buttons */     
@@ -256,7 +256,7 @@
             position: fixed;
             /* Position them relative to the viewport - not affected by scrolling */
             width: 15vw;
-            z-index: 20;
+            z-index: 40;
             /* Remove underline */
             text-decoration: none;
             font-size: 3vh;
@@ -379,7 +379,7 @@
             left: 20vw;
             top: 2vw;
             width: 60vw;
-            z-index: 10;
+            z-index: 30;
             background-color: #fff;
             margin: 0 auto;
             padding: 5px;
@@ -515,7 +515,7 @@
     <style> /* Help */
         .help {
             position: fixed;
-            z-index: 11;
+            z-index: 50;
             left: 5vw;
             width: 90vw;
             top: 2vh;
@@ -609,14 +609,7 @@
 
 <body>
     <div data-title='TrackerDisplay'>
-        <div class="BackgroundContainer">
-            <div class="fixed bg_1"></div>
-            <div class="fixed bg_2"></div>
-            <div class="fixed bg_3"></div>
-            <div class="fixed bg_4"></div>
-            <div class="fixed bg_5"></div>
-            <div class="fixed bg_6"></div>
-        </div>
+        <div class="BackgroundContainer"></div>
         <div id="SequenceArea">
             <div id='gameOutline' class='bordered'></div>
         </div>
@@ -774,54 +767,88 @@
             '                ,{ "phase": "Special", "stage": "Out of Sequence Combat", "name": "Reveal and Resolve Shadow Effects", "actionwindow" : true, "boxes" : [60,2795,490,2915], "help" : [[50,500,300,5,5],[238],[130,0,535,4,4]] } ' +
             '                ,{ "phase": "Special", "stage": "Out of Sequence Combat", "name": "Apply Enemy and Defender Combat Damage", "actionwindow" : true, "boxes" : [60,2915,490,3035], "help" : [[50,0,340,6,6],[238],[130,0,730,5,5]] } ' +
             '               ] ' +
-            ' ,"areas": [ { "name": "RESOURCE & PLANNING" ' +
+            ' ,"areas": [ { "name": "RESOURCE" ' +
             '              ,"voffset": 0 ' +
-            '              ,"images": [ "bc/46/bc4690f5-b669-400b-bc4f-6e92cb813451/mec16_preview.jpg" ' +
-            '                          ,"e4/a5/e4a52d3a-5484-492f-a628-6948e65fe26f/jme07_preview1.jpg" ' +
-            '                          ,"c8/7e/c87eb0e6-2b62-442b-b151-157b73c9d310/ffi-preview.jpg" ' +
+            '              ,"images": [ "e4/a5/e4a52d3a-5484-492f-a628-6948e65fe26f/jme07_preview1.jpg" ' +
             '                          ,"0c/29/0c29b8cc-3f7a-4a90-a063-64576995a29d/mec32_one-ring_preview.jpg" ' +
-            '                          ,"bc/28/bc28f1d8-cfab-489b-bbe4-b0704715f471/mec34_preview.jpg" ' +
+            '                          ,"8f/66/8f66dc61-addd-4d8a-9a07-42f070536499/mec08_preview.jpg" ' +
+            '                          ,"28/53/28531b9e-a3f6-4c50-a1ec-39899ac073cb/mec17_preview.jpg" ' +
+            '                          ,"b6/7b/b67b151e-6fc1-4ce6-be68-161ce41db527/mec41_scavengeforsupplies.jpg" ' +
+            '                          ,"5c/72/5c726df9-6d05-4495-bc87-1444d31d820d/lanwyn-art.jpg" ' +
+            '                          ,"e9/8e/e98e9306-93cb-4921-b406-bc33baed9f8d/mec32_art_frodo.png" ' +
+            '                          ,"1a/1a/1a1a31e5-7ed7-45c4-81e3-5b51f2a39312/mec48-hold-the-line-art.jpg" ' +
+            '                          ,"6b/19/6b194864-c66c-4fdb-9ef0-503bd3126076/mec57_preview1.png" ' +
+            '                          ,"34/eb/34eb9df7-379c-4a13-bd89-d5aad6681621/mec67_preview2.png" ' +
             '                         ] ' +
             '             } ' +
-            '            ,{ "name": "QUEST & TRAVEL" ' +
-            '              ,"voffset": 762 ' +
-            '              ,"images": [ "c8/03/c80313c8-af07-43f8-af92-d6fb8cda51c2/kn22_preview.jpg" ' +
-            '                          ,"03/89/0389ccb0-5fc0-4027-bc00-5bbc4d26882e/mec86_preview1.jpg" ' +
+            '            ,{ "name": "PLANNING" ' +
+            '              ,"voffset": 390 ' +
+            '              ,"images": [ "c8/7e/c87eb0e6-2b62-442b-b151-157b73c9d310/ffi-preview.jpg" ' +
+            '                          ,"bc/28/bc28f1d8-cfab-489b-bbe4-b0704715f471/mec34_preview.jpg" ' +
             '                          ,"b7/1f/b71f7ce7-d492-46ec-878f-6d245f99e077/mec56-preview2.jpg" ' +
-            '                          ,"bc/0d/bc0dda1d-5722-4f61-abe0-60b868665aa2/umen43_growing-stench-art.jpg" ' +
-            '                          ,"a1/a3/a1a30a48-11f9-4c61-8a35-e7a5eeff823a/umen35-palace-ruins-art.jpg" ' +
-            '                          ,"69/76/697670b3-9205-4cd6-b2f3-16f974b5d17c/mec62_art_cracks-of-doom.png" ' +
-            '                          ,"e4/2f/e42f7766-9576-40f9-a04b-913bcad74fb6/jme01_preview_7.jpg" ' +
+            '                          ,"22/27/2227a0cf-4626-41a0-939c-542a115b3261/mec102-preview.jpg" ' +
+            '                          ,"4b/04/4b04d488-568b-471e-8206-8b1dd89c94f5/expert-trackers-art.jpg" ' +
+            '                          ,"77/f6/77f6897e-b5df-42fd-afed-76a33c1b4d21/mountainsofangmar.jpg" ' +
+            '                          ,"27/09/270975dd-cf2c-4498-a29e-0439555668ee/mec56_art_explore-secret-ways.png" ' +
+            '                         ] ' +
+            '             } ' +
+            '            ,{ "name": "QUEST" ' +
+            '              ,"voffset": 762 ' +
+            '              ,"images": [ "e4/2f/e42f7766-9576-40f9-a04b-913bcad74fb6/jme01_preview_7.jpg" ' +
+            '                          ,"bd/7c/bd7cf918-9c0f-4010-aff9-417431615ce7/mec01_step_00.jpg" ' +
+            '                          ,"5e/02/5e02b79e-cb55-46df-92da-ec1e0c35f4e4/mec62_heavy-and-tired_art.jpg" ' +
+            '                          ,"89/cb/89cb9619-d7c4-418b-9714-5aa7d839c1c8/mec41_barrenmoorland.jpg" ' +
+            '                          ,"b4/a1/b4a16672-8928-41e5-9813-938c617c9962/mec42-art4.jpg" ' +
+            '                          ,"86/5f/865f7363-6cac-42b9-a721-dffc64391bde/mec32_art_take-no-notice.png" ' +
+            '                          ,"79/65/7965eb6a-500b-4cda-a3f9-23fa28de6428/mec53_preview2.jpg" ' +
+            '                          ,"ad/20/ad2097d0-a221-454d-bd09-bdf49ec5f84c/mec53-inspiring-presence-art.jpg" ' +
+            '                          ,"02/fc/02fcb349-3447-4104-a1a9-c0fa19b45c4e/art-lost-underground.jpg" ' +
+            '                          ,"21/64/216407ba-bfac-4ecc-b5b5-8988769788a5/art-searching-the-caves.jpg" ' +
+            '                         ] ' +
+            '             } ' +
+            '            ,{ "name": "TRAVEL" ' +
+            '              ,"voffset": 1397 ' +
+            '              ,"images": [ "bc/46/bc4690f5-b669-400b-bc4f-6e92cb813451/mec16_preview.jpg" ' +
+            '                          ,"c8/03/c80313c8-af07-43f8-af92-d6fb8cda51c2/kn22_preview.jpg" ' +
+            '                          ,"bd/d8/bdd85041-d2ec-4861-ba91-d4367cf73fa7/mec62_preview_5.png" ' +
+            '                          ,"74/dc/74dc5d7a-9d32-4b3d-860d-8fb51385c08d/mec44_unholycrypt.jpg" ' +
+            '                          ,"9d/a4/9da4b616-d227-4713-bf97-2ca11bb9a177/mec48_preview2.jpg" ' +
+            '                          ,"e4/a4/e4a447c9-d9a4-49dc-8d1f-7cd3c04e5535/mec48_preview.jpg" ' +
             '                         ] ' +
             '             } ' +
             '            ,{ "name": "ENCOUNTER" ' +
             '              ,"voffset": 1730 ' +
-            '              ,"images": [ "cf/62/cf622e9b-9e77-40c2-98be-5a8c27a8f745/mec01_step_01.jpg" ' +
+            '              ,"images": [ "bc/0d/bc0dda1d-5722-4f61-abe0-60b868665aa2/umen43_growing-stench-art.jpg" ' +
+            '                          ,"cf/62/cf622e9b-9e77-40c2-98be-5a8c27a8f745/mec01_step_01.jpg" ' +
             '                          ,"47/df/47df5db1-b712-489e-9dd3-67f71becbb73/mec01_step_02.jpg" ' +
             '                          ,"3c/84/3c849cf3-e3b0-48ec-bd5f-312178c7974f/jme03-04_preview2.jpg" ' +
             '                          ,"dc/ef/dcefcd54-6869-419b-9a42-8edd87dc47df/umen35-shadow-the-orcs-art.jpg" ' +
-            '                          ,"aa/40/aa40ab22-6d12-469e-9be4-89e57dc6a5ad/umec84-85_preview1.jpg" ' +
-            '                          ,"51/23/512344fe-ba2a-493f-a051-cfee98d40c44/umen37-39_art_forced-off-track.png" ' +
-            '                          ,"09/59/09593360-9add-4e04-aa8b-e242fb93f68b/umen28_preview.jpg" ' +
             '                          ,"4f/e0/4fe0002f-3fd3-463b-8000-4b01ee45d992/mes01-05_preview1.png" ' +
+            '                          ,"00/6e/006e18e0-cd00-4083-9ce6-42ead3f90f05/jme01_preview_1.jpg" ' +
+            '                          ,"3e/c5/3ec56810-9135-4d9e-ad9b-63b041398aad/umen36_preview.png" ' +
+            '                          ,"5b/d5/5bd5866f-4bd7-4833-860e-21617f1814ba/furiouscharge.jpg" ' +
             '                         ] ' +
             '             } ' +
             '            ,{ "name": "ENEMY ATTACK" ' +
             '              ,"voffset": 2180 ' +
-            '              ,"images": [ "00/6e/006e18e0-cd00-4083-9ce6-42ead3f90f05/jme01_preview_1.jpg" ' +
-            '                          ,"10/3d/103d50a4-2789-4e99-91d0-5cb1e8e20f46/umen43_wicked-hobbits-art.jpg" ' +
-            '                          ,"3e/c5/3ec56810-9135-4d9e-ad9b-63b041398aad/umen36_preview.png" ' +
+            '              ,"images": [ "aa/40/aa40ab22-6d12-469e-9be4-89e57dc6a5ad/umec84-85_preview1.jpg" ' +
             '                          ,"3a/42/3a42f3c8-58da-45f9-b081-39329b5a5aca/umen20-34_preview.png" ' +
+            '                          ,"10/3d/103d50a4-2789-4e99-91d0-5cb1e8e20f46/umen43_wicked-hobbits-art.jpg" ' +
             '                          ,"b1/5d/b15d737a-8382-4e29-b746-9e65b3663fc9/mec54-city-besieged-art.jpg" ' +
             '                          ,"54/2d/542d8e96-93dd-444f-b04c-2a4a1af0a8c1/mec101_announcement_preview.png" ' +
+            '                          ,"a3/8a/a38aa921-1934-43c4-a045-f36ed3979c76/mec45_preview5.jpg" ' +
+            '                          ,"93/e5/93e57b07-195a-45c9-8b51-1fcbd475939c/mec41_ruthlesshilltroll.jpg" ' +
+            '                          ,"3c/a1/3ca1aede-0f61-471a-b3b6-30c271b2c0a4/mec60_preview1.jpg" ' +
             '                         ] ' +
             '             } ' +
             '            ,{ "name": "PLAYER ATTACK" ' +
             '              ,"voffset": 3266 ' +
-            '              ,"images": [ "6b/ab/6baba999-f2ff-492f-abd1-ad9893f1556e/mec_fellowship_2017_art_battle.png" ' +
-            '                          ,"ed/cc/edcc9c29-9bfa-4e25-b6ae-8e339893005a/fellowship2015_preview1.jpg" ' +
-            '                          ,"4e/5a/4e5a5a48-7678-45d2-bce0-a5c10bab1546/mec_fellowship_2017_art_siege.png" ' +
-            '                          ,"54/d8/54d87a57-b29c-4d7f-8951-2d94a676f902/umec64_coverart.jpg" ' +
+            '              ,"images": [ "ab/6baba999-f2ff-492f-abd1-ad9893f1556e/mec_fellowship_2017_art_battle.png" ' +
+            '                          ,"cc/edcc9c29-9bfa-4e25-b6ae-8e339893005a/fellowship2015_preview1.jpg" ' +
+            '                          ,"5a/4e5a5a48-7678-45d2-bce0-a5c10bab1546/mec_fellowship_2017_art_siege.png" ' +
+            '                          ,"b5/58b54268-64b1-441b-a007-e2686e9e89e6/jme01_preview_5.png" ' +
+            '                          ,"c7/c5c7cb22-7a5c-41bd-8716-d773efe7301b/mec53_preview.jpg" ' +
+            '                          ,"57/17579155-a219-4eb5-a1bd-42072b43470e/mec59_preview4.jpg" ' +
             '                         ] ' +
             '             } ' +
             '            ,{ "name": "REFRESH" ' +
@@ -923,15 +950,20 @@
             OPTIONS_AREA.classList.add('hidden');
 
             // set the background images.
-            var images = BACKGROUND_CONTAINER.getElementsByClassName('fixed');
-            for (var index = 0; index < images.length; index++) {
+            for (var index = 1; index < Sequence.areas.length; index++) {
+                var imageDiv = document.createElement('div');
+                imageDiv.classList.add('fixed');
                 var selection = modulo(Math.floor(Date.now() / 86400000), Sequence.areas[index].images.length);
-                images[index].style.backgroundImage = "url('https://images-cdn.fantasyflightgames.com/filer_public/" + Sequence.areas[index].images[selection] + "')";
+                imageDiv.style.backgroundImage = "url('https://images-cdn.fantasyflightgames.com/filer_public/" + Sequence.areas[index].images[selection] + "')";
+                BACKGROUND_CONTAINER.appendChild(imageDiv);
             }
             window.onresize = adjustBackground;
             window.addEventListener('resize', adjustBackground);
             window.addEventListener('resize', showOutline);
             adjustBackground();
+
+            INFO_AREA.addEventListener('mouseenter', hideForeground);
+            INFO_AREA.addEventListener('mouseleave', showForeground);
 
             // Determine the current state history format
             var expectedFormat = Options.format;
@@ -1661,6 +1693,18 @@
                 ABOUT_AREA.classList.remove('fade-out');
                 ABOUT_AREA.removeEventListener('animationend', aboutFadeoutDone);
             }
+        }
+
+        function hideForeground() {
+            SEQUENCE_AREA.classList.add('hidden');
+            MODAL_DIALOGUE.classList.add('hidden');
+            hideSideNav('all');
+        }
+
+        function showForeground() {
+            SEQUENCE_AREA.classList.remove('hidden');
+            MODAL_DIALOGUE.classList.remove('hidden');
+            showSideNav('all');
         }
 
         function showOptions() {
