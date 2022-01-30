@@ -843,12 +843,12 @@
             '             } ' +
             '            ,{ "name": "PLAYER ATTACK" ' +
             '              ,"voffset": 3266 ' +
-            '              ,"images": [ "ab/6baba999-f2ff-492f-abd1-ad9893f1556e/mec_fellowship_2017_art_battle.png" ' +
-            '                          ,"cc/edcc9c29-9bfa-4e25-b6ae-8e339893005a/fellowship2015_preview1.jpg" ' +
-            '                          ,"5a/4e5a5a48-7678-45d2-bce0-a5c10bab1546/mec_fellowship_2017_art_siege.png" ' +
-            '                          ,"b5/58b54268-64b1-441b-a007-e2686e9e89e6/jme01_preview_5.png" ' +
-            '                          ,"c7/c5c7cb22-7a5c-41bd-8716-d773efe7301b/mec53_preview.jpg" ' +
-            '                          ,"57/17579155-a219-4eb5-a1bd-42072b43470e/mec59_preview4.jpg" ' +
+            '              ,"images": [ "6b/ab/6baba999-f2ff-492f-abd1-ad9893f1556e/mec_fellowship_2017_art_battle.png" ' +
+            '                          ,"ed/cc/edcc9c29-9bfa-4e25-b6ae-8e339893005a/fellowship2015_preview1.jpg" ' +
+            '                          ,"4e/5a/4e5a5a48-7678-45d2-bce0-a5c10bab1546/mec_fellowship_2017_art_siege.png" ' +
+            '                          ,"58/b5/58b54268-64b1-441b-a007-e2686e9e89e6/jme01_preview_5.png" ' +
+            '                          ,"c5/c7/c5c7cb22-7a5c-41bd-8716-d773efe7301b/mec53_preview.jpg" ' +
+            '                          ,"17/57/17579155-a219-4eb5-a1bd-42072b43470e/mec59_preview4.jpg" ' +
             '                         ] ' +
             '             } ' +
             '            ,{ "name": "REFRESH" ' +
@@ -949,14 +949,41 @@
             ABOUT_AREA.classList.add('hidden');
             OPTIONS_AREA.classList.add('hidden');
 
+            function getBackgroundImageUrl(imageIndex) {
+                var selectionNum = modulo(Math.floor(Date.now() / 86400000), Sequence.areas[imageIndex].images.length);
+                var selection = Sequence.areas[imageIndex].images[selectionNum];
+                console.log('choosing #'+selectionNum+' ['+selection+' for index '+imageIndex);
+                return "url('https://images-cdn.fantasyflightgames.com/filer_public/" + selection + "')";
+            }
+
+            var imageObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting === true) {
+                        var target = entry['target'];
+                        console.log(target.id+' has come into view');
+                        if (typeof(target.backgroundImage) == 'undefined') {
+                            target.style.backgroundImage = getBackgroundImageUrl(target.id.split('_')[1]);
+                            imageObserver.unobserve(target);
+                        } else {
+                            console.log(target.id+' background already set to ['+imageContainer.backgroundImage+']');
+                        }
+                    }
+                })
+            }, { threshold: [0] });
+
             // set the background images.
-            for (var index = 1; index < Sequence.areas.length; index++) {
+            for (var index = 0; index < Sequence.areas.length - 1; index++) {
                 var imageDiv = document.createElement('div');
                 imageDiv.classList.add('fixed');
-                var selection = modulo(Math.floor(Date.now() / 86400000), Sequence.areas[index].images.length);
-                imageDiv.style.backgroundImage = "url('https://images-cdn.fantasyflightgames.com/filer_public/" + Sequence.areas[index].images[selection] + "')";
-                BACKGROUND_CONTAINER.appendChild(imageDiv);
+                imageDiv.setAttribute('id', 'bg_' + index);
+                if (index == 0) {
+                    imageDiv.style.backgroundImage = getBackgroundImageUrl(0);
+                } else {
+                    imageObserver.observe(imageDiv);
+                }
+                BACKGROUND_CONTAINER.appendChild(imageDiv); 
             }
+            
             window.onresize = adjustBackground;
             window.addEventListener('resize', adjustBackground);
             window.addEventListener('resize', showOutline);
