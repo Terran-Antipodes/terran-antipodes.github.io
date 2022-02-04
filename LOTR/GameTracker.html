@@ -676,7 +676,7 @@
                     </label>
                 </div>
                 <div class='optionSet'>Sequence Options
-                    <label class='choiceHolder'>Use alternate Setup sequence
+                    <label class='choiceHolder'>Alternate Setup (reduces shuffling decks)
                         <input type='checkbox' name='altSetup'>
                         <span class='indicator'></span>
                     </label>
@@ -689,7 +689,7 @@
         </div>
     </div>
     <script> /*Set up */
-        var VERSION = 'v1.8.3';
+        var VERSION = 'v1.8.4';
 
         /* define game steps */
         var Sequence = JSON.parse(
@@ -909,6 +909,7 @@
         /* Define webpage globals */
         var SequenceImage;
         var SequenceImageSize;
+        var ImageObserver;
         var OutlineBox;
         var StateStorageKey = 'LOTR_States';
         var OptionsStorageKey = 'LOTR_Options';
@@ -929,10 +930,12 @@
         loadBackground('./Images/RoundSequence.png');
 
         function loadBackground(url) {
+            // Obtains the image of the sequence of steps and waits for the image to load before
+            // continuing the intialization.
             const img = new Image();
             img.addEventListener('load', function () {
                 SequenceImageSize = [this.naturalHeight, this.naturalWidth];
-                // once the background is loaded, then the rest of the page can be set up.
+                // once the sequence image is loaded, then the rest of the page can be set up.
                 SEQUENCE_AREA.appendChild(img);
                 SequenceImage = SEQUENCE_AREA.getElementsByTagName('img')[0];
                 initialize();
@@ -941,6 +944,7 @@
         }
 
         function initialize() {
+            // Ensure certain page elements are not visible on start up.
             MODAL_BANNER.classList.add('hidden');
             MODAL_CHANGE_BANNER.classList.add('hidden');
             MODAL_CHANGE_BANNER.innerHTML = '';
@@ -949,70 +953,109 @@
             ABOUT_AREA.classList.add('hidden');
             OPTIONS_AREA.classList.add('hidden');
 
-            function getBackgroundImageUrl(imageIndex) {
-                var selectionNum = modulo(Math.floor(Date.now() / 86400000), Sequence.areas[imageIndex].images.length);
-                var selection = Sequence.areas[imageIndex].images[selectionNum];
-                console.log('choosing #'+selectionNum+' ['+selection+' for index '+imageIndex);
-                return "url('https://images-cdn.fantasyflightgames.com/filer_public/" + selection + "')";
-            }
+            // Obtain the previously recorded game history and update the formatting, if needed.
+            StateHistory = localStorage.getItem(StateStorageKey)?.split(',');   
+            updateStateHistoryFormat();         
 
-            var imageObserver = new IntersectionObserver(function(entries) {
+            // The ImageObserver waits for background image areas to come into view before
+            // determining which image to load.
+            ImageObserver = new IntersectionObserver(function(entries) {
                 entries.forEach(entry => {
                     if (entry.isIntersecting === true) {
-                        var target = entry['target'];
-                        console.log(target.id+' has come into view');
-                        if (typeof(target.backgroundImage) == 'undefined') {
-                            target.style.backgroundImage = getBackgroundImageUrl(target.id.split('_')[1]);
-                            imageObserver.unobserve(target);
-                        } else {
-                            console.log(target.id+' background already set to ['+imageContainer.backgroundImage+']');
-                        }
+                        setBackgroundImageUrl(entry['target']);
+                        ImageObserver.unobserve(entry['target']);
                     }
                 })
             }, { threshold: [0] });
-
-            // set the background images.
-            for (var index = 0; index < Sequence.areas.length - 1; index++) {
-                var imageDiv = document.createElement('div');
-                imageDiv.classList.add('fixed');
-                imageDiv.setAttribute('id', 'bg_' + index);
-                if (index == 0) {
-                    imageDiv.style.backgroundImage = getBackgroundImageUrl(0);
-                } else {
-                    imageObserver.observe(imageDiv);
-                }
-                BACKGROUND_CONTAINER.appendChild(imageDiv); 
-            }
+            setBackgroundImages();
             
+            // Ensure that whenever the window is resized, the background image positions are redetermined.
             window.onresize = adjustBackground;
             window.addEventListener('resize', adjustBackground);
             window.addEventListener('resize', showOutline);
             adjustBackground();
 
+            // Allow bacground images to be viewed without obstructions whenever
+            // the user hovers over the version number at the bottom of the page.
             INFO_AREA.addEventListener('mouseenter', hideForeground);
             INFO_AREA.addEventListener('mouseleave', showForeground);
 
+            showSideNav(NAV_NEW, 'New Game', function () { newgame_setup('a'); }, null, (StateHistory == null));
+            showSideNav(NAV_OPTIONS, 'Options', function () { showOptions(); }, 'Configure game and page settings');
+            showSideNav(NAV_ABOUT, 'About', function () { showAbout(); }, 'Show creators, rights, and version');
+            if (StateHistory) {
+                initializeSteps();
+                game_setCurrentState(StateHistory[0], true);
+            }
+        }
+
+        function setBackgroundImages() {
+            for (var index = 0; index < Sequence.areas.length - 1; index++) {
+                var imageDiv = document.createElement('div');
+                imageDiv.classList.add('fixed');
+                imageDiv.setAttribute('id', 'bg_' + index);
+                BACKGROUND_CONTAINER.appendChild(imageDiv); 
+                ImageObserver.observe(imageDiv);
+            }
+        }
+
+        function setBackgroundImageUrl(imageContainer) {
+            var round = (StateHistory) ? modulo(StateHistory[0], ROUND_EVS.extract) : 0;
+            offset = (round == 0) ? 1 : round * round;
+            imageIndex = imageContainer.id.split('_')[1]
+            var selectionNum = modulo(Math.floor(Date.now() / 86400000) + offset, Sequence.areas[imageIndex].images.length);
+            var selection = Sequence.areas[imageIndex].images[selectionNum];
+            if (!imageContainer.style.backgroundImage.includes(selection)) {
+                imageContainer.style.backgroundImage = "url('https://images-cdn.fantasyflightgames.com/filer_public/" + selection + "')";
+            }
+        }
+
+        function adjustBackground() {          
+            var pageTop = window.pageYOffset;
+            var pageBottom = pageTop + window.innerHeight;
+
+            // size the background images so that, when scrolling down, each image appears behind the corresponding area of the sequence.
+            var bounds = SequenceImage.getBoundingClientRect();
+            var vscale = bounds.height / SequenceImageSize[0]; // vscale: 1px of the sequence image is being rendered as ?px high onscreen
+            var offset = SEQUENCE_AREA.offsetTop
+            var images = BACKGROUND_CONTAINER.getElementsByClassName('fixed');
+            for (var index = 0; index < images.length; index++) {
+                var imageTop = Sequence.areas[index].voffset;
+                var imageBottom = Sequence.areas[index + 1].voffset;
+                images[index].style.height = offset + (imageBottom - imageTop) * vscale + 'px';
+                images[index].style.backgroundSize = "cover";
+                offset = 0;
+
+                // if the image area is currently onscreen then set its url now rather than waiting for 
+                // ImageObserver (ImageObserver won't set the image until it detectes an intersection with the 
+                // screen edges).
+                if ((imageTop <= pageBottom) && (imageBottom >= pageTop)) {
+                    setBackgroundImageUrl(images[index]);
+                }
+            }
+        }
+
+        function updateStateHistoryFormat() {
             // Determine the current state history format
             var expectedFormat = Options.format;
-            var stateHistory = localStorage.getItem('stateHistory');
-            if (stateHistory == null) {
+            if (StateHistory == null) {             
+                StateHistory = localStorage.getItem('stateHistory'); 
+                if (StateHistory) {
+                    Options.format = 0;  
+                }
+            } else {
                 var storedOptions = localStorage.getItem(OptionsStorageKey);
                 if (storedOptions) {
                     Options = JSON.parse(storedOptions);
                 };
-            } else {
-                Options.format = 0;
             }
 
             // update the stored state information to the next format until we reach the current format
             while (Options.format < expectedFormat) {
                 switch(Options.format) {
                     case 0: // convert from f0 (pre-v1.7.3) to f1 (v1.7.3+)
-                        var states = stateHistory.split(',');
-                        var newStates = [];
-
                         // convert the options
-                        var optionsVal = Number(states.pop());                  
+                        var optionsVal = Number(StateHistory.pop());                  
                         if ((optionsVal > 0) && (optionsVal < 256)) {
                             Options.format = 1;
                             Options.preferCompendium = ((optionsVal & 1) == 1);
@@ -1026,7 +1069,8 @@
                         localStorage.setItem(OptionsStorageKey, JSON.stringify(Options));
 
                         // convert the states
-                        states.forEach(stateStr => {
+                        var newStates = [];
+                        StateHistory.forEach(stateStr => {
                             state = parseInt(stateStr, 10);
 							var oldStep = modulo(state, 47);
 							oldStep += (oldStep > 31) ? 7 :
@@ -1044,7 +1088,8 @@
                                  modulo(state, 7)  * PLAYERS_EVS.cram +
                                  modulo(state, 59) * VP_EVS.cram).toString());
                         });
-                        localStorage.setItem(StateStorageKey, newStates.toString());
+                        StateHistory = newStates;
+                        localStorage.setItem(StateStorageKey, StateHistory.toString());
                         localStorage.removeItem('StateHistory');
                         break;
                     case 1: // convert from f1 (v1.7.3+) to f2
@@ -1056,32 +1101,6 @@
                 }
 
                 Options.format++;
-            }
-
-            // Obtain flags from state history (or use defaults)
-            var stateHistory = localStorage.getItem(StateStorageKey);
-            showSideNav(NAV_NEW, 'New Game', function () { newgame_setup('a'); }, (stateHistory == null));
-            showSideNav(NAV_OPTIONS, 'Options', function () { showOptions(); }, 'Configure game and page settings');
-            showSideNav(NAV_ABOUT, 'About', function () { showAbout(); }, 'Show creators, rights, and version');
-            if (stateHistory) {
-                var initialStateHash = Number(stateHistory.split(',')[0]);
-                initializeSteps();
-                game_setCurrentState(initialStateHash, true);
-            }
-        }
-
-        function adjustBackground() {
-            // size the background images so that, when scrolling down, each image appears behind the corresponding area of the sequence.
-            var bounds = SequenceImage.getBoundingClientRect();
-            var vscale = bounds.height / SequenceImageSize[0]; // vscale: 1px of the sequence image is being rendered as ?px high onscreen
-            var offset = SEQUENCE_AREA.offsetTop
-            var images = BACKGROUND_CONTAINER.getElementsByClassName('fixed');
-            for (var index = 0; index < images.length; index++) {
-                var imageTop = Sequence.areas[index].voffset;
-                var imageBottom = Sequence.areas[index + 1].voffset;
-                images[index].style.height = offset + (imageBottom - imageTop) * vscale + 'px';
-                images[index].style.backgroundSize = "cover";
-                offset = 0;
             }
         }
 
@@ -1109,9 +1128,8 @@
         }
 
         function newgame_start(numPlayers) { // Resets the page for a new game
-            localStorage.removeItem(StateStorageKey);
-            var initialStateHash = numPlayers * PLAYERS_EVS.cram;
-            localStorage.setItem(StateStorageKey, initialStateHash.toString());
+            StateHistory = [numPlayers * PLAYERS_EVS.cram];
+            localStorage.setItem(StateStorageKey, StateHistory.toString());
             Options.previouslyExtended = [];
             recordOptions();
             
@@ -1123,8 +1141,7 @@
         function game_advanceToStep(newStepNum, newPlayer = null, newRound = null) { // shows the modal dialogue information for a step in the game
             // At this point we have not yet changed our state to be in the new step.
             // We are gathering information about the current state we are moving from and the new state we are move to.
-            var stateHistory = localStorage.getItem(StateStorageKey);
-            var fromState = decodeStateHash(stateHistory.split(',')[0]);
+            var fromState = decodeStateHash(StateHistory[0]);
 
             while ((((Sequence.steps[newStepNum].type ?? '') == 'campaign') && !Options.campaign) || // skip campaign steps when it is not a campaign game
                    ((Sequence.steps[newStepNum].phase == 'Change') && !Options.showChangePhaseSteps) || // skip phase end/start steps when they are to be shown
@@ -1132,8 +1149,8 @@
             {
                 if (Sequence.steps[newStepNum].gameloopstart != null) {
                     newStepNum = Sequence.steps[newStepNum].gameloopstart;
-                    nextPlayer = ALLPLAYERS;
-                    nextRound = fromState.round + 1;
+                    newPlayer = ALLPLAYERS;
+                    newRound = fromState.round + 1;
                 } else {
                     newStepNum++;
                 }
@@ -1164,20 +1181,26 @@
         }
 
         function game_backToPreviousStep() {
-            var stateHistory = localStorage.getItem(StateStorageKey);
-            var toStateHash = parseInt(stateHistory.split(',')[1], 10); // go back 2 states in the history because we have already added the current state to the history
-            localStorage.setItem(StateStorageKey, stateHistory.slice(stateHistory.split(',', 2).join(',').length + 1)); // removes the first two states from the history
+            var toStateHash = StateHistory[1]; // the previous state is index 1 because we have already added the current state to the history.
+            StateHistory.splice(0, 2); // remove the current and previous state from the history.
+            localStorage.setItem(StateStorageKey, StateHistory.toString());
             game_setCurrentState(toStateHash);
         }
 
         function game_setCurrentState(currentStateHash, isRefresh = false) {
-            var stateHistory = localStorage.getItem(StateStorageKey);
+            var previous = decodeStateHash(StateHistory[0]);
+            var current = decodeStateHash(currentStateHash);
+
             if (!isRefresh) {
-                localStorage.setItem(StateStorageKey, currentStateHash + ',' + stateHistory);
+                StateHistory.splice(0,0,currentStateHash);
+                localStorage.setItem(StateStorageKey, StateHistory.toString());
             }
 
-            var previous = decodeStateHash(stateHistory.split(',')[0]);
-            var current = decodeStateHash(currentStateHash);
+            if (current.round != previous.round) {
+                Array.from(BACKGROUND_CONTAINER.getElementsByClassName('fixed')).forEach(imageDiv => {                    
+                    ImageObserver.observe(imageDiv);
+                });
+            }
 
             var bannerInfo = game_setStandardBanners(current, previous.step.phase);
             var banner = bannerInfo[0];
@@ -1252,7 +1275,7 @@
             }
 
             // SideNav: back
-            var showBack = (current.stepNum > 0);
+            var showBack = (current.stepNum > 1);
 
             // SideNav: skip
             var skipInfo = null;
@@ -1300,9 +1323,7 @@
                     break;
             }
 
-            sleep(250).then(() => {
-                showModal(banner, changeBanner, showClose, header, detail, buttons, sideNavInfo);
-            });
+            showModal(banner, changeBanner, showClose, header, detail, buttons, sideNavInfo);
         }
 
         function game_setStandardBanners(currentState, previousPhase) {
@@ -1396,11 +1417,8 @@
         }
 
         function game_verifyElimPlayer() {
-            var stateHistory = localStorage.getItem(StateStorageKey);
-            var currentStateHash = parseInt(stateHistory.split(',')[0], 10);
-
-            var current = decodeStateHash(stateHistory.split(',')[0]);
-            var previous = decodeStateHash(stateHistory.split(',')[1]);
+            var current = decodeStateHash(StateHistory[0]);
+            var previous = decodeStateHash(StateHistory[1]);
 
             var bannerInfo = game_setStandardBanners(current, previous.step.phase);
             var banner = bannerInfo[0];
@@ -1420,7 +1438,7 @@
                 (current.players - 1) * PLAYERS_EVS.cram +
                 current.points * VP_EVS.cram;
             buttons.push(generateButton('Yes', 'game_setCurrentState(' + newStateHash + ')'));
-            buttons.push(generateButton('No', 'game_setCurrentState(' + currentStateHash + ',"true")'));
+            buttons.push(generateButton('No', 'game_setCurrentState(' + StateHistory[0] + ',"true")'));
 
             // SideNav: back
             var showBack = false;
@@ -1446,13 +1464,12 @@
         }
 
         function game_changeVP(newStateHash = null) {
-            var stateHistory = localStorage.getItem(StateStorageKey);
-            var currentStateHash = parseInt(stateHistory.split(',')[0], 10);
+            var currentStateHash = StateHistory[0];
 
             newStateHash = newStateHash ?? currentStateHash;
             var newState = decodeStateHash(newStateHash);
 
-            var previousState = decodeStateHash(stateHistory.split(',')[1]);
+            var previousState = decodeStateHash(StateHistory[1]);
 
             var bannerInfo = game_setStandardBanners(newState, previousState.step.phase);
             var banner = bannerInfo[0];
@@ -1502,8 +1519,7 @@
         }
 
         function game_start_out_of_seq_attack() {
-            var stateHistory = localStorage.getItem(StateStorageKey);
-            var current = decodeStateHash(stateHistory.split(',')[0]);
+            var current = decodeStateHash(StateHistory[0]);
             var oosStart = findStepNum('Deal Attacker Shadow Card');
             var oosEnd = findStepNum('Apply Enemy and Defender Combat Damage');
             Sequence.steps[oosEnd].playerloopstart = current.stepNum;
@@ -1670,12 +1686,7 @@
                 var notBeenExtended = !Options.previouslyExtended.includes(textContent);
                 if (extend || notBeenExtended) {
                     navElement.classList.add('simhover');
-                    window.addEventListener('click', endsimhover);
-
-                    function endsimhover(e) {
-                        window.removeEventListener('click', endsimhover);
-                        navElement.classList.remove('simhover');
-                    }
+                    delayedRetractionOfSideNav(navElement);
                     if (notBeenExtended) {
                         Options.previouslyExtended.push(textContent);
                         localStorage.setItem(OptionsStorageKey, JSON.stringify(Options));
@@ -1684,14 +1695,21 @@
             }
         }
 
+        async function delayedRetractionOfSideNav(navElement) {
+            await sleep(5000);
+            navElement.classList.remove('simhover');
+        }
+
         function hideSideNav(navElement) {
             if (navElement == 'all') {
                 document.getElementById('SideNavLeft').classList.add('hidden');
                 document.getElementById('SideNavRight').classList.add('hidden');
-            } else {
-                navElement.parentElement.classList.add('hidden');
-                navElement.innerHTML = '';
+            } else if (navElement.classList.contains('simhover')) {
+                navElement.classList.remove('simhover');
             }
+
+            navElement.parentElement.classList.add('hidden');
+            navElement.innerHTML = '';
         }
 
         function showAbout() {
@@ -1778,7 +1796,7 @@
         }
 
         function decodeStateHash(stateHash) {
-            var stepNum = modulo(stateHash, STEP_EVS.extract);
+            var stepNum = modulo(parseInt(stateHash, 10), STEP_EVS.extract);
             return {
                 round   : modulo(stateHash, ROUND_EVS.extract),
                 stepNum : stepNum,
@@ -1850,8 +1868,8 @@
             return ((dividend % divisor) + divisor) % divisor
         }
 
-        function sleep(ms) {
-            return new Promise(resolve => setTimeout(resolve, ms));
+        async function sleep(ms) {
+            return await new Promise(resolve => setTimeout(resolve, ms));
         }
     </script>
 </body>

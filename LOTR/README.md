@@ -2,6 +2,12 @@
 This website is an SPA intended to provide a non-commercial aid while playing the [Lord of the Rings LCG](https://www.fantasyflightgames.com/en/products/the-lord-of-the-rings-the-card-game/) from [Final Flight Game](https://www.fantasyflightgames.com/en/index/).
 
 ## Version History
+#### v1.8.4 Image Processing
+JIT Image loading
+StateHistory: changed from retreival of local storage string to global array.
+Change images each round.
+Fixed appearance of Back button at step 0.
+Delay the retraction of extended Skip nav buttons.
 #### v1.8.3
 Added out-of-sequence attack steps.
 Altered positioning of tooltips.
