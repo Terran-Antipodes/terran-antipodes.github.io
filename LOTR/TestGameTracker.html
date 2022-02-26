@@ -1426,7 +1426,7 @@
  
         function gui_clearAndReload() { 
         console.log(' '.repeat(ind++)+'>gui_clearAndReload');
-            if ((window.document.url).contains('Test')) { 
+            if ((window.document.url).includes('Test')) { 
                 localStorage.removeItem(StateStorageKey); 
                 localStorage.removeItem(OptionsStorageKey); 
                 location.reload(); 
