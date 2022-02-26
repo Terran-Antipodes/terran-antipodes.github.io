@@ -689,7 +689,7 @@
         </div> 
     </div> 
     <script> /*Set up */ 
-        var VERSION = 'v2.0.0'; 
+        var VERSION = 'v2.0.0x'; 
  
         /* define game steps */ 
         var Sequence = JSON.parse( 
@@ -1426,7 +1426,7 @@
  
         function gui_clearAndReload() { 
         console.log(' '.repeat(ind++)+'>gui_clearAndReload');
-            if ((window.document.url).includes('Test')) { 
+            if (VERSION.includes('x')) { 
                 localStorage.removeItem(StateStorageKey); 
                 localStorage.removeItem(OptionsStorageKey); 
                 location.reload(); 
@@ -1738,7 +1738,7 @@
                 document.getElementById('SideNavRight').classList.remove('hidden'); 
             } else { 
                 navElement.innerHTML = (tipText && Options.showNavTips) 
-                    ? '<br/><span class="tooltipContainer">' + textContent + '<span class="tooltiptext">' + tipText + '</span></span>' 
+                    ? '<span class="tooltipContainer">' + textContent + '<span class="tooltiptext">' + tipText + '</span></span>' 
                     : '<span>' + textContent + '</span>'; 
                 navElement.parentElement.onclick = onclick; 
                 navElement.parentElement.classList.remove('hidden'); 
