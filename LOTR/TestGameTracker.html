@@ -1425,20 +1425,13 @@
         } 
  
         function gui_clearAndReload() { 
-<<<<<<< HEAD
         console.log(' '.repeat(ind++)+'>gui_clearAndReload');
             if ((window.document.url).contains('Test')) { 
-=======
-            if ((window.locaction.origin).contains('Test')) { 
->>>>>>> main
                 localStorage.removeItem(StateStorageKey); 
                 localStorage.removeItem(OptionsStorageKey); 
                 location.reload(); 
-            } 
-<<<<<<< HEAD
-        console.log(' '.repeat(--ind)+'<gui_clearAndReload'); 
-=======
->>>>>>> main
+            }
+        console.log(' '.repeat(--ind)+'<gui_clearAndReload');
         } 
  
         function gui_loadBackground(url) { 
