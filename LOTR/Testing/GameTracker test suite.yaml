@@ -1,0 +1,61 @@
+Suite A:
+  - clear browser local storage of LOTR_Options and LOTR_StateHistory:
+  - refresh browser:
+    o background pics are displayed.
+    o sequence image is displayed.
+    o version is displayed.
+    o Load/Save is displayed.
+    o NB1,NB2: nav bars New Game, Options, About appear, extend and retract.
+  - scroll down:
+    o background pics are loaded and displayed as needed.
+  - hover over side navs:
+    o navs bars extend.
+    o tooltips are displayed.
+    - end hover:
+      o navs bars retract.
+  - hover over version:
+    o sequence image is removed.
+    - end hover:
+      o returns sequence image.
+  - About:
+    o About text is displayed.
+    - click on background:
+      o remove About text.
+  - Options:
+    o selected - HTML, Show general tooltips, Show tooltips on Nav Bars, Show End/Start
+    o not selected - PDF, Alternate Setup.
+    - deselect PDF, Show tooltips on Nav Bars:
+    - click on background:
+      o removes Options.
+  - Load/Save:
+    o displays Load/Save.
+    o save text displayed.
+    - copy and save as code for suite A.
+
+Suite B: requires save code from Suite A
+  - Load/Save:
+    - copy save code from Suite A into text area:
+    - click on background:
+      o removes Load/Save.
+  - Options:
+    o selected - PDF, Show general tooltips, Show End/Start
+    o not selected - HTML, Show tooltips on Nav Bar, Alternate Setup. 
+
+Test Topics:
+  - Covered
+    - background image display
+    - background image loading
+    - Nav bar extension/retraction
+    - Nav bar materialization
+  - Not yet covered:
+    - single player referred to as 'the player'
+    - single player: single form of 'deck(s)', etc.
+    - single player: no reference to passing the 1st player token
+    - single player: no naming the player
+    - multiple players: plural for of 'deck(s)', etc.
+    - multiple players: pass 1st player token to player name
+    - multiple players: player names used in steps
+    - can eliminate player
+    - eliminated player skipped in sequence
+    - eliminiating the first player automatically changes 1st player
+    - companion/compendium choice is persistent
