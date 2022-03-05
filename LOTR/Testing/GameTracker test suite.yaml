@@ -4,15 +4,14 @@ Suite A:
     o background pics are displayed.
     o sequence image is displayed.
     o version is displayed.
-    o Load/Save is displayed.
-    o NB1,NB2: nav bars New Game, Options, About appear, extend and retract.
+    o side tabs New Game, Options, About, Load/Save appear, extend and retract.
   - scroll down:
     o background pics are loaded and displayed as needed.
-  - hover over side navs:
-    o navs bars extend.
+  - hover over side tabs:
+    o side tabs extend.
     o tooltips are displayed.
     - end hover:
-      o navs bars retract.
+      o side tabs retract.
   - hover over version:
     o sequence image is removed.
     - end hover:
@@ -22,15 +21,15 @@ Suite A:
     - click on background:
       o remove About text.
   - Options:
-    o selected - HTML, Show general tooltips, Show tooltips on Nav Bars, Show End/Start
+    o selected - HTML, Show general tooltips, Show tooltips on Tabs, Show End/Start
     o not selected - PDF, Alternate Setup.
-    - deselect PDF, Show tooltips on Nav Bars:
+    - select PDF, deselect Show tooltips on Tabs:
     - click on background:
       o removes Options.
   - Load/Save:
     o displays Load/Save.
-    o save text displayed.
-    - copy and save as code for suite A.
+    o save code displayed.
+    - copy save code and save as Suite A.
 
 Suite B: requires save code from Suite A
   - Load/Save:
@@ -39,17 +38,92 @@ Suite B: requires save code from Suite A
       o removes Load/Save.
   - Options:
     o selected - PDF, Show general tooltips, Show End/Start
-    o not selected - HTML, Show tooltips on Nav Bar, Alternate Setup. 
+    o not selected - HTML, Show tooltips on Tabs, Alternate Setup. 
+  - New Game:
+    o asks Regular or Campaign
+    - hover over close (x):
+      o show tooltip
+    - close:
+      o return to default page
+    - New Game -> Regular:
+      o displays options for number of players
+    - select 1:
+      o displays phase "Setup Phase"
+      o displays step "Shuffle Player Deck" (note singular "Deck")
+  - hover over side tabs:
+    o side tabs extend.
+    o tooltips are not displayed.
+    - end hover:
+      o side tabs retract.
+  - Help:
+    o displays compendium as PDF at "Shuffle Decks".
+    - hover over Compendium and Companion buttons:
+      o tooltip is displayed.
+    - Companion:
+      o displays Companion at "Shuffle Decks".
+    - Alt+Compendium:
+      o opens Compendium in a new tab at "Shuffle Decks".
+    - close tab, Alt+Companion:
+      o opens Companion in a new tab at "Shuffle Decks".
+    - close tab, close Help:
+  - Help:
+    o opens Companion.
+    - close Help:
+  - Next:
+    o side tab Back appears, extends, and retracts.
+    o displays step "Shuffle Encounter Deck".
+    - Back:
+      o Back disappears
+      o displays step "Shuffle Player Deck".
+    - Next:
+      o Back appears without extending.
+      o displays step "Shuffle Encounter Deck".
+  - Next, Next:
+    o displays step "Set Threat Level" (note singular Level).
+  - Next, Next:
+    o displays step "Draw Starting Hand" (note singular Hand).
+  - Next, Next, Next:
+    o side tabs Out of Sequence Enemy / Player Attacks appear, exend and retract.
+    o displays round as "1".
+    o displays step as "Start of the Resource Phase".
+    o phase is not displayed.
+    o Help button is not displayed.
+    o outline appears around 1.1.
+  - Next:
+    o displays phase as "Resource Phase".
+    o outline appears around 1.2.
+    - Help:
+      o displays Companion at "Resource Phase".
+      - Compendium:
+        o displays Compendium as PDF at "Resource Phase".
+      - close Help:
+    - Options:
+      - select HTML, deselect Show general tooltips:
+      - close Options:
+    - Help:
+      o displays Compendium as HTML at "Phase 1 Resource".
+      o 1st paragraph is highlighted.
+      - hover over Compendium and Companion buttons:
+        o no tooltips are displayed. 
+      - close Help:
+  - Load/Save:
+    - copy save code and save as Suite B.
+
+
+    
+
+    
+      
+    
 
 Test Topics:
   - Covered
     - background image display
     - background image loading
-    - Nav bar extension/retraction
-    - Nav bar materialization
+    - side tab extension/retraction
+    - side tab materialization
   - Not yet covered:
     - single player referred to as 'the player'
-    - single player: single form of 'deck(s)', etc.
     - single player: no reference to passing the 1st player token
     - single player: no naming the player
     - multiple players: plural for of 'deck(s)', etc.

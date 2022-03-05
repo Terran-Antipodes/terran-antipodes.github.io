@@ -250,48 +250,52 @@
             z-index: 20; 
         } 
     </style> 
-    <style> /* Style the SideNavs to be sliding buttons */      
-        #SideNavLeft a, 
-        #SideNavRight a { 
+    <style> /* Style the SideTabs to be sliding buttons */      
+        #SideTabLeft a, 
+        #SideTabRight a,
+        #SideTabBottom a { 
             position: fixed; 
-            /* Position them relative to the viewport - not affected by scrolling */ 
-            width: 15vw; 
             z-index: 40; 
             /* Remove underline */ 
             text-decoration: none; 
-            font-size: 3vh; 
             /* Centres text horizontally in the anchor element */ 
             text-align: center; 
             line-height: 3vh; 
-            padding: 2vh; 
         } 
  
-        #SideNavLeft a span, 
-        #SideNavRight a span { 
-            /* Hide nav text in case it spills over into view */ 
+        #SideTabLeft a span, 
+        #SideTabRight a span,
+        #SideTabBottom a span { 
+            /* Hide tab text in case it spills over into view */ 
             opacity: 0; 
         } 
  
-        #SideNavLeft a:hover span, 
-        #SideNavLeft a.simhover span, 
-        #SideNavRight a:hover span, 
-        #SideNavRight a.simhover span { 
-            /* Show nav text on hover */ 
+        #SideTabLeft a:hover span, 
+        #SideTabLeft a.simhover span,
+        #SideTabRight a:hover span, 
+        #SideTabRight a.simhover span,
+        #SideTabBottom a:hover span, 
+        #SideTabBottom a.simhover span { 
+            /* Show tab text on hover */ 
             opacity: 1; 
             transition: 0.3s; 
         } 
  
-        #SideNavLeft a { 
+        #SideTabLeft a { 
+            font-size: 3vh; 
+            padding: 2vh; 
             /* Rounded corners on the top right and bottom right side */ 
             border-radius: 0 5px 5px 0; 
+            /* Position them relative to the viewport - not affected by scrolling */ 
+            width: 15vw; 
             /* Position them outside of the screen */ 
             left: -15vw; 
             /* Add transition on hover */ 
             transition: 0.3s; 
         } 
  
-        #SideNavLeft a:hover, 
-        #SideNavLeft a.simhover { 
+        #SideTabLeft a:hover, 
+        #SideTabLeft a.simhover { 
             /* On mouse-over, make the elements appear as they should */ 
             left: 0; 
             color: white; 
@@ -300,9 +304,13 @@
             transition: 0.3s; 
         } 
  
-        #SideNavRight a { 
+        #SideTabRight a { 
+            font-size: 3vh; 
+            padding: 2vh; 
             /* Rounded corners on the top left and bottom left side */ 
             border-radius: 5px 0 0 5px; 
+            /* Position them relative to the viewport - not affected by scrolling */ 
+            width: 15vw; 
             /* Position them outside of the screen */ 
             right: -15vw; 
             /* Add transition on hover */ 
@@ -310,9 +318,30 @@
         } 
  
         /* On mouse-over, make the elements appear as they should */ 
-        #SideNavRight a:hover, 
-        #SideNavRight a.simhover { 
+        #SideTabRight a:hover, 
+        #SideTabRight a.simhover { 
             right: 0; 
+            color: white; 
+            opacity: 1; 
+            /* Add transition on hover */ 
+            transition: 0.3s; 
+        } 
+
+        #SideTabBottom a { 
+            font-size: 2vw; 
+            padding: 2vh; 
+            /* Rounded corners on the top left and top right side */ 
+            border-radius: 5px 5px 0 0; 
+            /* Position them outside of the screen */ 
+            bottom: -5vh; 
+            /* Add transition on hover */ 
+            transition: 0.3s; 
+        } 
+ 
+        /* On mouse-over, make the elements appear as they should */ 
+        #SideTabBottom a:hover, 
+        #SideTabBottom a.simhover { 
+            bottom: 0; 
             color: white; 
             opacity: 1; 
             /* Add transition on hover */ 
@@ -367,6 +396,12 @@
             top: 60vh; 
             background-color: #FFC300; 
             color: #FFC300; 
+        } 
+        
+        #loadSave { 
+            right: 8%; 
+            background-color: #ff00f2; 
+            color: #ff00f2; 
         } 
     </style> 
     <style> /* Modal Dialogue */ 
@@ -572,15 +607,6 @@
             background-color: #909497;
             z-index: 50; 
         } 
-
-        #LoadActivator { 
-            position: fixed; 
-            bottom: 0px; 
-            right: 1vw; 
-            font-size: 1vw; 
-            background-color: #909497;
-            z-index: 50; 
-        } 
  
         #AboutArea { 
             position: absolute; 
@@ -615,7 +641,7 @@
             padding: 2vh; 
         } 
  
-        #LoadArea { 
+        #LoadSaveArea { 
             position: absolute; 
             top: 15vh; 
             left: 10vw; 
@@ -640,17 +666,20 @@
         <div id="SequenceArea"> 
             <div id='gameOutline' class='bordered'></div> 
         </div> 
-        <div id='SideNavLeft'> 
+        <div id='SideTabLeft'> 
             <div class='hidden'><a href='#' id='newGame'></a></div> 
             <div class='hidden'><a href='#' id='back'></a></div> 
             <div class='hidden'><a href='#' id='skip'></a></div> 
             <div class='hidden'><a href='#' id='elim'></a></div> 
         </div> 
-        <div id='SideNavRight'> 
+        <div id='SideTabRight'> 
             <div class='hidden'><a href='#' id='oosEAttack'></a></div> 
             <div class='hidden'><a href='#' id='oosPAttack'></a></div> 
             <div class='hidden'><a href='#' id='options'></a></div> 
             <div class='hidden'><a href='#' id='about'></a></div> 
+        </div>
+        <div id='SideTabBottom'>
+            <div class='hidden'><a href='#' id='loadSave'></a></div>
         </div> 
         <div id='GameModal' class='modal'> 
             <div class='modal-content'> 
@@ -670,7 +699,6 @@
             </div> 
         </div> 
         <div id='InfoArea' onclick='gui_clearAndReload()'></div> 
-        <div id='LoadActivator' onclick='gui_showLoadSave()'>Load/Save</div> 
         <div id='AboutArea'> 
             <span style='vertical-align:middle'> 
                 This GameTracker webpage is the property of Clive Pottinger. Email any comments or concerns to terran.antipodes@gmail.com<br /> 
@@ -698,8 +726,8 @@
                         <input type='checkbox' name='showGenTips'> 
                         <span class='indicator'></span> 
                     </label> 
-                    <label class='choiceHolder'>Show tooltips on Navigation Bars 
-                        <input type='checkbox' name='showNavTips'> 
+                    <label class='choiceHolder'>Show tooltips on Tabs 
+                        <input type='checkbox' name='showTabTips'> 
                         <span class='indicator'></span> 
                     </label> 
                 </div> 
@@ -715,11 +743,11 @@
                 </div> 
             </form> 
         </div> 
-        <div id='LoadArea'>
+        <div id='LoadSaveArea'>
             <form name='loadsave'>
-                To save the current game information, copy the information below and save use your text editor of choice to save the code.
+                To save the current game information, copy the information below and use your text editor of choice to save the code.
                 <textarea id='codeBox' rows='5' cols='50'></textarea>
-                <br>To load information about a previously saved game, paste the save code in the space above and then click outside this area.<br>
+                <br>To load information about a previously saved game, paste the saved code in the space above and then click outside this area.<br>
                 <span id="codeErr"></span>
             </form>
         </div>
@@ -920,14 +948,15 @@
         /* define webpage constants */ 
         const BACKGROUND_CONTAINER = document.getElementsByClassName('BackgroundContainer')[0]; 
         const SEQUENCE_AREA = document.getElementById('SequenceArea'); 
-        const NAV_NEW = document.getElementById('newGame'); 
-        const NAV_BACK = document.getElementById('back'); 
-        const NAV_SKIP = document.getElementById('skip'); 
-        const NAV_ELIM = document.getElementById('elim'); 
-        const NAV_OUT_OF_SEQ_ENEMY_ATTACK = document.getElementById('oosEAttack'); 
-        const NAV_OUT_OF_SEQ_PLAYER_ATTACK = document.getElementById('oosPAttack'); 
-        const NAV_OPTIONS = document.getElementById('options'); 
-        const NAV_ABOUT = document.getElementById('about'); 
+        const TAB_NEW = document.getElementById('newGame'); 
+        const TAB_BACK = document.getElementById('back'); 
+        const TAB_SKIP = document.getElementById('skip'); 
+        const TAB_ELIM = document.getElementById('elim'); 
+        const TAB_OUT_OF_SEQ_ENEMY_ATTACK = document.getElementById('oosEAttack'); 
+        const TAB_OUT_OF_SEQ_PLAYER_ATTACK = document.getElementById('oosPAttack'); 
+        const TAB_OPTIONS = document.getElementById('options'); 
+        const TAB_ABOUT = document.getElementById('about'); 
+        const TAB_LOADSAVE = document.getElementById('loadSave')
         const MODAL_DIALOGUE = document.getElementById('GameModal'); 
         const MODAL_BANNER = MODAL_DIALOGUE.getElementsByClassName('modalBanner')[0]; 
         const MODAL_CHANGE_BANNER = MODAL_DIALOGUE.getElementsByClassName('modalChangeBanner')[0]; 
@@ -943,7 +972,7 @@
         const INFO_AREA = document.getElementById('InfoArea'); 
         const ABOUT_AREA = document.getElementById('AboutArea'); 
         const OPTIONS_AREA = document.getElementById('OptionsArea');
-        const LOAD_AREA = document.getElementById('LoadArea'); 
+        const LOAD_AREA = document.getElementById('LoadSaveArea'); 
         const CODE_BOX = document.getElementById('codeBox');
         const CODE_ERR = document.getElementById('codeErr');
         const IS_MOBILE = navigator.userAgentData.mobile; 
@@ -962,7 +991,7 @@
                 compendiumFormat: 'HTML', 
                 campaign: false, 
                 showGeneralTips: true, 
-                showNavTips: true, 
+                showTabTips: true, 
                 previouslyExtended: [], 
                 showChangePhaseSteps: true, 
                 altSetup: false, 
@@ -1136,27 +1165,27 @@
             while (player != current.first); 
             buttons.push(gui_generateButton('Cancel', 'game_setCurrentState(' + StateHistory[0] + ',"true")')); 
  
-            // SideNav: back 
+            // SideTab: back 
             var showBack = false; 
  
-            // SideNav: skip 
+            // SideTab: skip 
             var skipInfo = null; 
  
-            // SideNav: eliminate player 
+            // SideTab: eliminate player 
             var showElim = false; 
  
-            // SideNav: victory points 
+            // SideTab: victory points 
             var showVP = false; 
  
-            // SideNav: out of sequence combat 
+            // SideTab: out of sequence combat 
             var showOOSEA = false; 
  
-            var sideNavInfo = [showBack, skipInfo, showElim, showVP, showOOSEA]; 
+            var SideTabInfo = [showBack, skipInfo, showElim, showVP, showOOSEA]; 
  
             // repositioning of the background image 
             var box = null; 
  
-            gui_showModal(banner, changeBanner, showClose, header, detail, buttons, sideNavInfo, box); 
+            gui_showModal(banner, changeBanner, showClose, header, detail, buttons, SideTabInfo, box); 
         console.log(' '.repeat(--ind)+'<game_eliminatePlayer'); 
         } 
  
@@ -1216,7 +1245,7 @@
         function game_hideHelp() { 
         console.log(' '.repeat(ind++)+'>game_hideHelp'); 
             GameHelp.classList.add("hidden") 
-            gui_showSideNav('all'); // the help display hides the side navs 
+            gui_showSideTab('all'); // the help display hides the side tabs 
         console.log(' '.repeat(--ind)+'<game_hideHelp'); 
         } 
  
@@ -1309,10 +1338,10 @@
                 buttons.push(gui_generateButton('Help', 'game_showHelp("' + stepName + '",' + JSON.stringify(current.step.help) + ')')); 
             } 
  
-            // SideNav: back 
+            // SideTab: back 
             var showBack = (current.stepNum > 1); 
  
-            // SideNav: skip 
+            // SideTab: skip 
             var skipInfo = null; 
             switch (true) { 
                 case ((current.step.teamskip != null) && (isFirstPlayer)): 
@@ -1327,13 +1356,13 @@
                     break; 
             } 
  
-            // SideNav: eliminate player 
+            // SideTab: eliminate player 
             var showElim = ((current.players > 1) && (current.step.phase != "Setup")); 
  
-            // SideNav: out of sequence combat 
+            // SideTab: out of sequence combat 
             var showOOS = (current.step.phase != "Setup") && (!current.step.phase.startsWith != "Special"); 
              
-            var sideNavInfo = [showBack, skipInfo, showElim, showOOS]; 
+            var SideTabInfo = [showBack, skipInfo, showElim, showOOS]; 
  
             // repositioning of the background image 
             switch (true) { 
@@ -1354,7 +1383,7 @@
                     break; 
             } 
  
-            gui_showModal(banner, changeBanner, showClose, header, detail, buttons, sideNavInfo); 
+            gui_showModal(banner, changeBanner, showClose, header, detail, buttons, SideTabInfo); 
         console.log(' '.repeat(--ind)+'<game_setCurrentState'); 
         } 
  
@@ -1441,7 +1470,7 @@
                 ((actionWindowInfo.length == 0) ? '' : gui_generateButton('Action Window<br/>', 'game_showCompendium(' + JSON.stringify(actionWindowInfo) + ',event)', 'helpBtn', tipText)) + 
                 '</div>'; 
  
-            gui_hideSideNav('all'); 
+            gui_hideSideTab('all'); 
             if ((compendiumInfo.length == 0) && (companionInfo.length == 0)) { 
                 game_showCompendium(actionWindowInfo); 
             } 
@@ -1635,10 +1664,11 @@
             INFO_AREA.addEventListener('mouseenter', gui_hideForeground); 
             INFO_AREA.addEventListener('mouseleave', gui_showForeground); 
  
-            gui_showSideNav(NAV_NEW, 'New Game', function () { newgame_setup('a'); }, null, (StateHistory == null)); 
-            gui_showSideNav(NAV_OPTIONS, 'Options', function () { gui_showOptions(); }, 'Configure game and page settings'); 
-            gui_showSideNav(NAV_ABOUT, 'About', function () { gui_showAbout(); }, 'Show creators, rights, and version'); 
-             
+            gui_showSideTab(TAB_NEW, 'New Game', function () { newgame_setup('a'); }, null, (StateHistory == null)); 
+            gui_showSideTab(TAB_OPTIONS, 'Options', function () { gui_showOptions(); }, 'Configure game and page settings', (StateHistory == null)); 
+            gui_showSideTab(TAB_ABOUT, 'About', function () { gui_showAbout(); }, 'Show creators, rights, and version', (StateHistory == null)); 
+            gui_showSideTab(TAB_LOADSAVE, 'Load/Save', function () { gui_showLoadSave(); }, null, (StateHistory == null)); 
+ 
             gui_initializeSteps();             
         console.log(' '.repeat(--ind)+'<gui_initialize'); 
         } 
@@ -1673,7 +1703,7 @@
         console.log(' '.repeat(--ind)+'<gui_initializeSteps'); 
         } 
  
-        function gui_showModal(bannerText, changeBannerText, closeInfo, headerText, detailText, buttons, sideNavInfo) { // display the modal dialogue 
+        function gui_showModal(bannerText, changeBannerText, closeInfo, headerText, detailText, buttons, SideTabInfo) { // display the modal dialogue 
         console.log(' '.repeat(ind++)+'>gui_showModal('+bannerText+')'); 
             // banner: 
             MODAL_BANNER.innerHTML = bannerText; 
@@ -1729,54 +1759,57 @@
             MODAL_BUTTONS_AREA.innerHTML = ''; 
             buttons.forEach(b => MODAL_BUTTONS_AREA.innerHTML += b); 
  
-            // SideNavs: 
-            var showBack = (sideNavInfo == null) ? false : sideNavInfo[0]; 
-            var skipInfo = (sideNavInfo == null) ? null : sideNavInfo[1]; 
-            var showElim = (sideNavInfo == null) ? false : sideNavInfo[2] 
-            var showOOS = (sideNavInfo == null) ? false : sideNavInfo[3]; 
+            // SideTabs: 
+            var showBack = (SideTabInfo == null) ? false : SideTabInfo[0]; 
+            var skipInfo = (SideTabInfo == null) ? null : SideTabInfo[1]; 
+            var showElim = (SideTabInfo == null) ? false : SideTabInfo[2] 
+            var showOOS = (SideTabInfo == null) ? false : SideTabInfo[3]; 
  
-            // SideNavs: new game: 
-            gui_showSideNav(NAV_NEW, 'New Game', function () { newgame_setup('a'); }); 
+            // SideTabs: new game: 
+            gui_showSideTab(TAB_NEW, 'New Game', function () { newgame_setup('a'); }); 
  
-            // SideNavs: back: 
+            // SideTabs: back: 
             if (showBack) { 
-                gui_showSideNav(NAV_BACK, 'Back', function () { game_backToPreviousStep(); }, 'Go back 1 step'); 
+                gui_showSideTab(TAB_BACK, 'Back', function () { game_backToPreviousStep(); }, 'Go back 1 step'); 
             } else { 
-                gui_hideSideNav(NAV_BACK); 
+                gui_hideSideTab(TAB_BACK); 
             } 
  
-            // SideNavs: skip: 
+            // SideTabs: skip: 
             if (skipInfo == null) { 
-                gui_hideSideNav(NAV_SKIP); 
+                gui_hideSideTab(TAB_SKIP); 
             } else { 
                 var skiptext = skipInfo[0].split('|')[0]; 
                 var skiptip = (skipInfo[0] + '|').split('|')[1]; 
                 var skipToStepNum = skipInfo[1]; 
                 var skipToPlayer = skipInfo[2]; 
-                gui_showSideNav(NAV_SKIP, skiptext, function () { game_advanceToStep(skipToStepNum, skipToPlayer); }, skiptip, true); 
+                gui_showSideTab(TAB_SKIP, skiptext, function () { game_advanceToStep(skipToStepNum, skipToPlayer); }, skiptip, true); 
             } 
  
-            // SideNavs: eliminate player: 
+            // SideTabs: eliminate player: 
             if (showElim) { 
-                gui_showSideNav(NAV_ELIM, 'Elimination', function () { game_eliminatePlayer(); }, 'Select when a player is removed from the game'); 
+                gui_showSideTab(TAB_ELIM, 'Elimination', function () { game_eliminatePlayer(); }, 'Select when a player is removed from the game'); 
             } else { 
-                gui_hideSideNav(NAV_ELIM); 
+                gui_hideSideTab(TAB_ELIM); 
             } 
  
-            // SideNavs: Out of Sequence Attacks 
+            // SideTabs: Out of Sequence Attacks 
             if (showOOS) { 
-                gui_showSideNav(NAV_OUT_OF_SEQ_ENEMY_ATTACK, 'Out of Sequence Enemy Attack', function () { game_startOutOfSeqAttack('enemy'); }, 'Enemy is attacking outside of the normal combat sequence'); 
-                gui_showSideNav(NAV_OUT_OF_SEQ_PLAYER_ATTACK, 'Out of Sequence Player Attack', function () { game_startOutOfSeqAttack('player'); }, 'Character is attacking outside of the normal combat sequence'); 
+                gui_showSideTab(TAB_OUT_OF_SEQ_ENEMY_ATTACK, 'Out of Sequence Enemy Attack', function () { game_startOutOfSeqAttack('enemy'); }, 'Enemy is attacking outside of the normal combat sequence'); 
+                gui_showSideTab(TAB_OUT_OF_SEQ_PLAYER_ATTACK, 'Out of Sequence Player Attack', function () { game_startOutOfSeqAttack('player'); }, 'Character is attacking outside of the normal combat sequence'); 
             } else { 
-                gui_hideSideNav(NAV_OUT_OF_SEQ_ENEMY_ATTACK); 
-                gui_hideSideNav(NAV_OUT_OF_SEQ_PLAYER_ATTACK); 
+                gui_hideSideTab(TAB_OUT_OF_SEQ_ENEMY_ATTACK); 
+                gui_hideSideTab(TAB_OUT_OF_SEQ_PLAYER_ATTACK); 
             } 
  
-            // SideNavs: Options 
-            gui_showSideNav(NAV_OPTIONS, 'Options', function () { gui_showOptions(); }, 'Configure game and page settings'); 
+            // SideTabs: Options 
+            gui_showSideTab(TAB_OPTIONS, 'Options', function () { gui_showOptions(); }, 'Configure game and page settings'); 
  
-            // SideNavs: About 
-            gui_showSideNav(NAV_ABOUT, 'About', function () { gui_showAbout(); }, 'Show creators, rights, and version'); 
+            // SideTabs: About 
+            gui_showSideTab(TAB_ABOUT, 'About', function () { gui_showAbout(); }, 'Show creators, rights, and version'); 
+ 
+            // SideTabs: load/save: 
+            gui_showSideTab(TAB_LOADSAVE, 'Load/Save', function () { gui_showLoadSave(); }); 
  
             MODAL_DIALOGUE.style.display = 'block';  // make the modal dialogue appear 
  
@@ -1819,50 +1852,52 @@
         console.log(' '.repeat(--ind)+'<gui_showOutline'); 
         } 
  
-        function gui_showSideNav(navElement, textContent, onclick, tipText = null, extend = false) { 
-        console.log(' '.repeat(ind++)+'>gui_showSideNav'); 
-            if (navElement == 'all') { // Used when all navs are hidden (e.g. when showing help) 
-                document.getElementById('SideNavLeft').classList.remove('hidden'); 
-                document.getElementById('SideNavRight').classList.remove('hidden'); 
+        function gui_showSideTab(tabElement, textContent, onclick, tipText = null, extend = false) { 
+        console.log(' '.repeat(ind++)+'>gui_showSideTab'); 
+            if (tabElement == 'all') { // Used when all tabs are hidden (e.g. when showing help) 
+                document.getElementById('SideTabLeft').classList.remove('hidden'); 
+                document.getElementById('SideTabRight').classList.remove('hidden'); 
+                document.getElementById('SideTabBottom').classList.remove('hidden'); 
             } else { 
-                navElement.innerHTML = (tipText && Options.showNavTips) 
+                tabElement.innerHTML = (tipText && Options.showTabTips) 
                     ? '<span class="tooltipContainer">' + textContent + '<span class="tooltiptext">' + tipText + '</span></span>' 
                     : '<span>' + textContent + '</span>'; 
-                navElement.parentElement.onclick = onclick; 
-                navElement.parentElement.classList.remove('hidden'); 
+                tabElement.parentElement.onclick = onclick; 
+                tabElement.parentElement.classList.remove('hidden'); 
                 var notBeenExtended = !Options.previouslyExtended.includes(textContent); 
                 if (extend || notBeenExtended) { 
-                    navElement.classList.add('simhover'); 
-                    gui_retractSideNav(navElement); 
+                    tabElement.classList.add('simhover'); 
+                    gui_retractSideTab(tabElement); 
                     if (notBeenExtended) { 
                         Options.previouslyExtended.push(textContent); 
                         localStorage.setItem(OptionsStorageKey, JSON.stringify(Options)); 
                     } 
                 } 
             } 
-        console.log(' '.repeat(--ind)+'<gui_showSideNav'); 
+        console.log(' '.repeat(--ind)+'<gui_showSideTab'); 
         } 
  
-        function gui_hideSideNav(navElement) { 
-        console.log(' '.repeat(ind++)+'>gui_hideSideNav'); 
-            if (navElement == 'all') { 
-                document.getElementById('SideNavLeft').classList.add('hidden'); 
-                document.getElementById('SideNavRight').classList.add('hidden'); 
+        function gui_hideSideTab(tabElement) { 
+        console.log(' '.repeat(ind++)+'>gui_hideSideTab'); 
+            if (tabElement == 'all') { 
+                document.getElementById('SideTabLeft').classList.add('hidden'); 
+                document.getElementById('SideTabRight').classList.add('hidden'); 
+                document.getElementById('SideTabBottom').classList.add('hidden'); 
             } else { 
-                if (navElement.classList.contains('simhover')) { 
-                   navElement.classList.remove('simhover'); 
+                if (tabElement.classList.contains('simhover')) { 
+                   tabElement.classList.remove('simhover'); 
                 } 
-                navElement.parentElement.classList.add('hidden'); 
-                navElement.innerHTML = ''; 
+                tabElement.parentElement.classList.add('hidden'); 
+                tabElement.innerHTML = ''; 
             } 
-        console.log(' '.repeat(--ind)+'<gui_hideSideNav'); 
+        console.log(' '.repeat(--ind)+'<gui_hideSideTab'); 
         } 
  
-        async function gui_retractSideNav(sideNav) { 
-        console.log(' '.repeat(ind++)+'>gui_retractSideNav'); 
+        async function gui_retractSideTab(SideTab) { 
+        console.log(' '.repeat(ind++)+'>gui_retractSideTab'); 
             await sleep(5000); 
-            sideNav.classList.remove('simhover'); 
-        console.log(' '.repeat(--ind)+'<gui_retractSideNav'); 
+            SideTab.classList.remove('simhover'); 
+        console.log(' '.repeat(--ind)+'<gui_retractSideTab'); 
         } 
  
         function gui_showAbout() { 
@@ -1899,7 +1934,7 @@
         console.log(' '.repeat(ind++)+'>gui_showForeground'); 
             SEQUENCE_AREA.classList.remove('hidden'); 
             MODAL_DIALOGUE.classList.remove('hidden'); 
-            gui_showSideNav('all'); 
+            gui_showSideTab('all'); 
         console.log(' '.repeat(--ind)+'<gui_showForeground'); 
         } 
  
@@ -1907,7 +1942,7 @@
         console.log(' '.repeat(ind++)+'>gui_hideForeground'); 
             SEQUENCE_AREA.classList.add('hidden'); 
             MODAL_DIALOGUE.classList.add('hidden'); 
-            gui_hideSideNav('all'); 
+            gui_hideSideTab('all'); 
         console.log(' '.repeat(--ind)+'<gui_hideForeground'); 
         } 
  
@@ -1947,7 +1982,7 @@
         console.log(' '.repeat(ind++)+'>gui_setOptionsControls'); 
             document.options.compendiumAs[(Options.compendiumFormat == 'HTML') ? 0 : 1].checked = true; 
             document.options.showGenTips.checked = Options.showGeneralTips; 
-            document.options.showNavTips.checked = Options.showNavTips; 
+            document.options.showTabTips.checked = Options.showTabTips; 
             document.options.altSetup.checked = Options.altSetup; 
             document.options.showChangePhaseSteps.checked = Options.showChangePhaseSteps; 
         console.log(' '.repeat(--ind)+'<gui_setOptionsControls'); 
@@ -1958,7 +1993,7 @@
             if (fromControls) { 
                 Options.compendiumFormat = document.options.compendiumAs[0].checked ? 'HTML' : 'PDF'; 
                 Options.showGeneralTips = document.options.showGenTips.checked; 
-                Options.showNavTips = document.options.showNavTips.checked; 
+                Options.showTabTips = document.options.showTabTips.checked; 
                 Options.altSetup = document.options.altSetup.checked; 
                 Options.showChangePhaseSteps = document.options.showChangePhaseSteps.checked; 
             } 
