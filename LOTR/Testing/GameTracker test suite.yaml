@@ -1,10 +1,10 @@
 Suite A:
   - clear browser local storage of LOTR_Options and LOTR_StateHistory:
   - refresh browser:
+    o side tabs New Game, Options, About, Load/Save appear, extend and retract.
     o background pics are displayed.
     o sequence image is displayed.
     o version is displayed.
-    o side tabs New Game, Options, About, Load/Save appear, extend and retract.
   - scroll down:
     o background pics are loaded and displayed as needed.
   - hover over side tabs:
@@ -19,33 +19,35 @@ Suite A:
   - About:
     o About text is displayed.
     - click on background:
-      o remove About text.
+      o removes About text.
   - Options:
-    o selected - HTML, Show general tooltips, Show tooltips on Tabs, Show End/Start
+    o selected - HTML, Show general tooltips, Show tooltips on tabs, Show End/Start of phases
     o not selected - PDF, Alternate Setup.
-    - select PDF, deselect Show tooltips on Tabs:
+    - select PDF, deselect Show tooltips on tabs:
     - click on background:
       o removes Options.
   - Load/Save:
     o displays Load/Save.
-    o save code displayed.
+    o save code displayed and selected.
     - copy save code and save as Suite A.
 
 Suite B: requires save code from Suite A
+  - clear browser local storage of LOTR_Options and LOTR_StateHistory:
   - Load/Save:
     - copy save code from Suite A into text area:
     - click on background:
       o removes Load/Save.
   - Options:
-    o selected - PDF, Show general tooltips, Show End/Start
-    o not selected - HTML, Show tooltips on Tabs, Alternate Setup. 
+    o selected - PDF, Show general tooltips, Show End/Start of phases
+    o not selected - HTML, Show tooltips on tabs, Alternate Setup. 
   - New Game:
+    o closes Options
     o asks Regular or Campaign
     - hover over close (x):
-      o show tooltip
+      o shows tooltip
     - close:
       o return to default page
-    - New Game -> Regular:
+    - New Game, Regular:
       o displays options for number of players
     - select 1:
       o displays phase "Setup Phase"
@@ -62,7 +64,7 @@ Suite B: requires save code from Suite A
     - Companion:
       o displays Companion at "Shuffle Decks".
     - Alt+Compendium:
-      o opens Compendium in a new tab at "Shuffle Decks".
+      o opens Compendium PDF in a new tab at "Shuffle Decks".
     - close tab, Alt+Companion:
       o opens Companion in a new tab at "Shuffle Decks".
     - close tab, close Help:
@@ -83,7 +85,7 @@ Suite B: requires save code from Suite A
   - Next, Next:
     o displays step "Draw Starting Hand" (note singular Hand).
   - Next, Next, Next:
-    o side tabs Out of Sequence Enemy / Player Attacks appear, exend and retract.
+    o side tabs Out of Sequence Enemy / Player Attacks appear, extend and retract.
     o displays round as "1".
     o displays step as "Start of the Resource Phase".
     o phase is not displayed.
@@ -109,19 +111,55 @@ Suite B: requires save code from Suite A
   - Load/Save:
     - copy save code and save as Suite B.
 
+Suite C: requires save code from Suite B
+  - clear browser local storage of LOTR_Options and LOTR_StateHistory:
+  - Load/Save:
+    - copy save code from Suite B into text area:
+    - click on background:
+      o removes Load/Save.
+      o displays step "Gain Resources".
+  - Options:
+    o selected - HTML, Show End/Start of phases
+    o not selected - PDF, Show tooltips on tabs, Show general tooltips, Alternate Setup. 
+    - close options:
+  - Next:
+    o displays step "Draw Card & Action Window" (note singular Card).
+    o Action Window is highlighted.
+  - Help:
+    o displays Compendium as HTML at "Phase 1 Resource".
+    o 2nd and 3rd paragraphs are highlighted.
+    o displays Action Window button.
+    - Action Window:
+      - o displays Compendium at "Resource Phase" - "Action Window"
+      - o Action Window text is highlighted.
+      - Alt+Action Window:
+        o displays Compendium in new tab at "Resource Phase" - "Action Window"
+        o Action Window text is highlighted.
+        - close tab:
+      - close Help:
+    - Next:
+      o displays step "End of the Resource Phase Start of the Planning Phase".
+    - Options:
+      - deselect Show End/Start of phases:
+      - close Options:
+        o displays round as 1 with End and Start of Phase messages.
+        o displays phase as "Planning Phase".
+        o displays step "Special Action Window" in highlighted colour.
+        o outline around 2.1 to 2.3.
+    - Next:
+      o displays step "Quest Action Window".
+    - Next, Next:
+      o displays step "Staging Action Window".
+    - Next, Next, Next, Next, Next:
+      o Combat Check tab appears, extends, and retracts.
+      o displays step "Combat Check".
+  - Load/Save:
+    - copy save code and save as Suite C.
 
-    
 
-    
-      
-    
+
 
 Test Topics:
-  - Covered
-    - background image display
-    - background image loading
-    - side tab extension/retraction
-    - side tab materialization
   - Not yet covered:
     - single player referred to as 'the player'
     - single player: no reference to passing the 1st player token
@@ -132,4 +170,4 @@ Test Topics:
     - can eliminate player
     - eliminated player skipped in sequence
     - eliminiating the first player automatically changes 1st player
-    - companion/compendium choice is persistent
+    - Combat Check skips combat

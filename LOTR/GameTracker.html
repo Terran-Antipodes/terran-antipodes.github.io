@@ -476,11 +476,6 @@
             font-size: 2vw; 
         } 
  
-        a:active { 
-            position: relative; 
-            top: 3px; 
-        } 
- 
         /* Used to fade in the banner when changing to a new phase */ 
         .fade-in { 
             animation: fadeIn ease 2s; 
@@ -726,7 +721,7 @@
                         <input type='checkbox' name='showGenTips'> 
                         <span class='indicator'></span> 
                     </label> 
-                    <label class='choiceHolder'>Show tooltips on Tabs 
+                    <label class='choiceHolder'>Show tooltips on tabs 
                         <input type='checkbox' name='showTabTips'> 
                         <span class='indicator'></span> 
                     </label> 
@@ -822,8 +817,8 @@
             '              ,{ "phase": "Combat",    "name": "Discard All Shadow Cards", "boxes" : [0,4060,470,4110], "help" : [[51,0,860,4,4]] } ' + 
 		    '              ,{ "phase": "Change",    "name": "End of the Combat Phase<br/>Start of the Refresh Phase", "boxes" : [60,4065,490,4267] } ' + 
             '              ,{ "phase": "Refresh",   "name": "Ready All Cards", "boxes" : [0,4265,470,4320], "help" : [[52,500,315,1,1],[255]] } ' + 
-            '              ,{ "phase": "Refresh",   "name": "Raise Threat Levels", "boxes" : [0,4325,470,4380], "help" : [[52,500,315,1,1],[255]] } ' + 
-            '              ,{ "phase": "Refresh",   "name": "End of Round Action Window|Pass First Player Token to {pn+}", "actionwindow" : true, "boxes" : [0,4380,470,4500], "help" : [[52,500,315,1,1],[255],[131,0,420,4,4]] } ' + 
+            '              ,{ "phase": "Refresh",   "name": "Raise Threat Level{|s}", "boxes" : [0,4325,470,4380], "help" : [[52,500,315,1,1],[255]] } ' + 
+            '              ,{ "phase": "Refresh",   "name": "{End of Round Action Window|Pass First Player Token to {pn+}}", "actionwindow" : true, "boxes" : [0,4380,470,4500], "help" : [[52,500,315,1,1],[255],[131,0,420,4,4]] } ' + 
 		    '              ,{ "phase": "Change",    "name": "End of the Refresh Phase<br/>Start of the next Round", "boxes" : [60,4500,490,4560] } ' + 
             '             ] ' + 
             ' ,"oosEAttack": [ { "phase": "Special", "stage": "Out of Sequence Combat", "name": "Deal Shadow Card", "actionwindow" : true, "boxes" : [60,2320,490,2428], "help" : [[50,0,845,2,2],[237],[130,0,130,1,1]] } ' + 
@@ -1033,7 +1028,12 @@
  
         function newgame_start(numPlayers) { // Resets the page for a new game 
         console.log(' '.repeat(ind++)+'>newgame_start('+numPlayers+')'); 
-            StateHistory = [(Math.pow(2, numPlayers) - 1) * ACTIVE_PLAYERS_EVS.cram]; 
+            var newStateHash = (Math.pow(2, numPlayers) - 1) * ACTIVE_PLAYERS_EVS.cram + 
+                               1 * FIRST_PLAYER_EVS.cram + 
+                               1 * CURRENT_PLAYER_EVS.cram + 
+                               0 * ROUND_EVS.cram + 
+                               0 * STEPNUM_EVS.cram; 
+            StateHistory = [newStateHash]; 
             localStorage.setItem(StateStorageKey, StateHistory.toString()); 
             Options.previouslyExtended = []; 
             Options.names = new Array(numPlayers + 1); 
@@ -1046,14 +1046,14 @@
  
             var start = 
                 {  
-                    step: 0, 
+                    stepNum: 0, 
                     player: 1, 
                     round: 0, 
                     first: 1, 
                     active: ' ' + '1'.repeat(numPlayers) 
                 }; 
             start = game_autoAdvanceStep(start) 
-            game_advanceToStep(start.step); 
+            game_advanceToStep(start.stepNum); 
         console.log(' '.repeat(--ind)+'<newgame_start'); 
         } 
  
@@ -1086,23 +1086,23 @@
         console.log(' '.repeat(ind++)+'>game_autoAdvanceStep');  
             var relevant =  
                 { 
-                    step: initial.step, 
+                    stepNum: initial.stepNum, 
                     player: initial.player, 
                     round: initial.round, 
                     first: initial.first, 
                 }; 
-            while ((((Sequence.steps[relevant.step].type ?? '') == 'campaign') && !Options.campaign) || // skip campaign steps when it is not a campaign game 
-                   (((Sequence.steps[relevant.step].type ?? '') == 'multi') && (initial.active.length == 2)) || // skip multiplayer steps when there is only one player 
-                   ((Sequence.steps[relevant.step].phase == 'Change') && !Options.showChangePhaseSteps) || // skip phase end/start steps when they are to be shown 
-                   (((Sequence.steps[relevant.step].type ?? '') == 'postPhaseChange') && Options.showChangePhaseSteps)) // special: skip this step when phase end/start steps are shown 
+            while ((((Sequence.steps[relevant.stepNum].type ?? '') == 'campaign') && !Options.campaign) || // skip campaign steps when it is not a campaign game 
+                   (((Sequence.steps[relevant.stepNum].type ?? '') == 'multi') && (initial.active.length == 2)) || // skip multiplayer steps when there is only one player 
+                   ((Sequence.steps[relevant.stepNum].phase == 'Change') && !Options.showChangePhaseSteps) || // skip phase end/start steps when they are to be shown 
+                   (((Sequence.steps[relevant.stepNum].type ?? '') == 'postPhaseChange') && Options.showChangePhaseSteps)) // special: skip this step when phase end/start steps are shown 
             { 
-                if (Sequence.steps[relevant.step].gameloopstart != null) { 
-                    relevant.step = Sequence.steps[relevant.step].gameloopstart; 
+                if (Sequence.steps[relevant.stepNum].gameloopstart != null) { 
+                    relevant.stepNum = Sequence.steps[relevant.stepNum].gameloopstart; 
                     relevant.player = game_getNextPlayer(relevant.player, initial.active) 
                     relevant.round++; 
                     relevant.first = game_getNextPlayer(relevant.first, initial.active); 
                 } else { 
-                    relevant.step++; 
+                    relevant.stepNum++; 
                 } 
             } 
         console.log(' '.repeat(--ind)+'<game_getNextPlayer'); 
@@ -1230,7 +1230,7 @@
         } 
  
         function game_getNextPlayer(player, active, dir=1) { 
-        console.log(' '.repeat(ind++)+'>game_getNextPlayer'); 
+        console.log(' '.repeat(ind++)+'>game_getNextPlayer('+player+')'); 
             var next_player = player; 
             var num_players = active.length - 1; 
             do { 
@@ -1238,7 +1238,7 @@
             } 
             while (active[next_player] == '0'); 
  
-        console.log(' '.repeat(--ind)+'<game_getNextPlayer'); 
+        console.log(' '.repeat(--ind)+'<game_getNextPlayer = '+next_player); 
             return next_player; 
         } 
  
@@ -1253,9 +1253,17 @@
         console.log(' '.repeat(ind++)+'>game_setCurrentState'); 
             var previous = game_decodeStateHash(StateHistory[0]); 
             var current = game_decodeStateHash(currentStateHash); 
- 
-            // insert the new state and save it. 
-            if (!isRefresh) { 
+
+            if (isRefresh) {
+                // If refresh is used on a step that should be skipped then advance to next step.
+                // This can occur when Options have been changed.
+                var advanced = game_autoAdvanceStep(current);
+                if (advanced.stepNum != current.stepNum) {
+                    game_advanceToStep(advanced.stepNum);                   
+                    return; // do not continue - game_advanceToStep() has made its own call to game_setCurrentState() to show the new step.
+                }
+            } else { 
+                // insert the new state and save it. 
                 StateHistory.splice(0,0,currentStateHash); 
                 localStorage.setItem(StateStorageKey, StateHistory.toString()); 
             } 
@@ -1278,7 +1286,7 @@
  
             var next =  
                 {  
-                    step: current.stepNum + 1, 
+                    stepNum: current.stepNum + 1, 
                     player: current.player, 
                     round: current.round, 
                     first: current.first, 
@@ -1287,19 +1295,19 @@
  
             switch (true) { 
                 case (current.step.teamloopstart != null): 
-                    next.step = (isLastPlayer) ? next.step : current.step.teamloopstart; 
+                    next.stepNum = (isLastPlayer) ? next.stepNum : current.step.teamloopstart; 
                     next.player = game_getNextPlayer(current.player, current.active); 
                     break; 
                 case (current.step.playerloopstart != null): 
-                    next.step = current.step.playerloopstart; 
+                    next.stepNum = current.step.playerloopstart; 
                     break; 
                 case (current.step.gameloopstart != null): 
-                    next.step = current.step.gameloopstart; 
+                    next.stepNum = current.step.gameloopstart; 
                     nextPlayer = game_getnext.player(current); 
                     next.round = current.round + 1; 
                     next.first = game_getNextPlayer (current.first, current.active); 
                     break; 
-                case ((current.round == 0) && (Sequence.steps[next.step].gameloopend != null)): 
+                case ((current.round == 0) && (Sequence.steps[next.stepNum].gameloopend != null)): 
                     next.player = current.first; 
                     next.round = 1; 
                     break; 
@@ -1333,7 +1341,7 @@
  
             // buttons 
             var buttons = []; 
-            buttons.push(gui_generateButton('Next', 'game_advanceToStep(' + next.step + ',' + next.player + ',' + next.first + ',' + next.round + ')')); 
+            buttons.push(gui_generateButton('Next', 'game_advanceToStep(' + next.stepNum + ',' + next.player + ',' + next.first + ',' + next.round + ')')); 
             if (current.step.help) { 
                 buttons.push(gui_generateButton('Help', 'game_showHelp("' + stepName + '",' + JSON.stringify(current.step.help) + ')')); 
             } 
@@ -1530,12 +1538,10 @@
         } 
 
         function gui_showLoadSave() {
-        console.log(' '.repeat(ind++)+'>gui_showLoadSave'); 
-            var encodedStates = (StateHistory) ? btoa(JSON.stringify(StateHistory)) : '';
-            var encodedOptions = (Options) ? btoa(JSON.stringify(Options)) : '';
+        console.log(' '.repeat(ind++)+'>gui_showLoadSave');
             CODE_ERR.innerHTML = '';
-            CODE_BOX.value = encodedStates + '|' + encodedOptions;
-            CODE_BOX.select();
+            CODE_BOX.value = btoa(((StateHistory) ? JSON.stringify(StateHistory) : '') + '|' +
+                                  ((Options) ? JSON.stringify(Options) : ''));
 
             if (LOAD_AREA.classList.contains('hidden')) { 
                 LOAD_AREA.classList.add('fade-in'); 
@@ -1547,20 +1553,25 @@
                 LOAD_AREA.classList.remove('fade-in'); 
                 LOAD_AREA.removeEventListener('animationend', loadFadeinDone); 
                 window.addEventListener('click', loadUserClicked); 
+                CODE_BOX.focus();
+                CODE_BOX.select();
             } 
 
             function loadUserClicked(e) { 
                 if (!LOAD_AREA.contains(e.target)) { 
                     if (CODE_BOX.value.trim() != '') {
-                        var encodedGame = CODE_BOX.value.trim().split('|');
                         try {
-                            StateHistory = (encodedGame[0] == '') ? null : JSON.parse(atob(encodedGame[0]));
-                            Options = JSON.parse(atob(encodedGame[1]));
+                            var saved = atob(CODE_BOX.value.trim()).split('|');
+                            StateHistory = (saved[0] == '') ? null : JSON.parse(saved[0]);
+                            Options = JSON.parse(saved[1]);
                         }
                         catch(err) {
                             CODE_ERR.innerHTML = 'Unable to use the code entered:<br>[' + err.message +
-                                                ']<br>Please try again or clear the code and click outside this area';
+                                                 ']<br>Please try again or clear the code and click outside this area';
                             return;
+                        }
+                        if (StateHistory) {
+                          game_setCurrentState(StateHistory[0], true);
                         }
                     }
                     window.removeEventListener('click', loadUserClicked); 
@@ -1779,8 +1790,8 @@
             if (skipInfo == null) { 
                 gui_hideSideTab(TAB_SKIP); 
             } else { 
-                var skiptext = skipInfo[0].split('|')[0]; 
-                var skiptip = (skipInfo[0] + '|').split('|')[1]; 
+                var skiptext = skipInfo[0].split('~')[0]; 
+                var skiptip = (skipInfo[0] + '~').split('~')[1]; 
                 var skipToStepNum = skipInfo[1]; 
                 var skipToPlayer = skipInfo[2]; 
                 gui_showSideTab(TAB_SKIP, skiptext, function () { game_advanceToStep(skipToStepNum, skipToPlayer); }, skiptip, true); 
@@ -1966,7 +1977,10 @@
                     gui_recordOptions(true); 
                     window.removeEventListener('click', optionsUserClicked); 
                     OPTIONS_AREA.classList.add('fade-out'); 
-                    OPTIONS_AREA.addEventListener('animationend', optionsFadeoutDone); 
+                    OPTIONS_AREA.addEventListener('animationend', optionsFadeoutDone);
+                    if (StateHistory) {
+                        game_setCurrentState(StateHistory[0], true);
+                    }
                 } 
             } 
  
