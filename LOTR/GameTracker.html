@@ -807,11 +807,11 @@
 		    '              ,{ "phase": "Change",    "name": "End of the Encounter Phase<br/>Start of the Combat Phase", "teamskip" : ["No Combat?~Select if there are no Enemy or Player Attacks this Round", "Ready All Cards"], "boxes" : [60,2105,490,2310] } ' + 
             '              ,{ "phase": "Combat",    "name": "Combat Check", "type": "postPhaseChange", "teamskip" : ["No Combat?~Select if there are no Enemy or Player Attacks this Round", "Ready All Cards"], "boxes" : [60,2215,490,2320] } ' + 
             '              ,{ "phase": "Combat",    "name": "{pp}Deal Shadow Cards", "actionwindow" : true, "teamskip" : ["No Enemies attacking {pn}?~Select if no Enemies are attacking {pn}", "{pp}Choose Enemy to Attack and Attackers"], "teamloop" : "{pp}Deal Shadow Cards", "boxes" : [60,2320,490,2428], "help" : [[50,0,845,2,2],[237],[130,0,130,1,1]] } ' + 
-            '              ,{ "phase": "Combat",    "stage": "Enemy Attacks",  "name": "{pp}Choose Attacking Enemy", "actionwindow" : true, "playerskip" : "{pn} is not being attacked by an{other} Enemy?~Select if all Enemy attacks against {pn} have been resolved", "playerloop" : "{pp}Determine Combat Damage to Defender", "boxes" : [[60,2428,490,2675],[60,2480,490,2675]], "help" : [[50,500,150,3,3],[238],[130,0,270,2,2]] } ' + 
+            '              ,{ "phase": "Combat",    "stage": "Enemy Attacks",  "name": "{pp}Choose Attacking Enemy", "actionwindow" : true, "playerskip" : "{pn} is not being attacked by an{=other} Enemy?~Select if all Enemy attacks against {pn} have been resolved", "playerloop" : "{pp}Determine Combat Damage to Defender", "boxes" : [[60,2428,490,2675],[60,2480,490,2675]], "help" : [[50,500,150,3,3],[238],[130,0,270,2,2]] } ' + 
             '              ,{ "phase": "Combat",    "stage": "Enemy Attacks",  "name": "{pp}Declare Defender", "actionwindow" : true, "boxes" : [60,2675,490,2795], "help" : [[50,500,190,4,4],[238],[130,0,410,3,3]] } ' + 
             '              ,{ "phase": "Combat",    "stage": "Enemy Attacks",  "name": "{pp}Reveal and Resolve Shadow Effect", "actionwindow" : true, "boxes" : [60,2795,490,2915], "help" : [[50,500,300,5,5],[238],[130,0,535,4,4]] } ' + 
             '              ,{ "phase": "Combat",    "stage": "Enemy Attacks",  "name": "{pp}Determine Combat Damage to Defender", "actionwindow" : true, "boxes" : [60,2915,490,3035], "help" : [[50,0,340,6,6],[238],[130,0,730,5,5]] } ' + 
-            '              ,{ "phase": "Combat",    "stage": "Player Attacks", "name": "{pp}Choose Enemy to Attack and Attackers", "actionwindow" : true, "playerskip" : "{pn} is not Attacking an{|other} Enemy?~Select if all Attacks by {pn} have been resolved.", "playerloop" : "{pp}Determine Combat Damage to Enemy", "boxes" : [0,3330,470,3585], "help" : [[51,0,290,1,1],[240],[131,0,85,1,1]] } ' + 
+            '              ,{ "phase": "Combat",    "stage": "Player Attacks", "name": "{pp}Choose Enemy to Attack and Attackers", "actionwindow" : true, "playerskip" : "{pn} is not attacking an{=other} Enemy?~Select if all Attacks by {pn} have been resolved.", "playerloop" : "{pp}Determine Combat Damage to Enemy", "boxes" : [0,3330,470,3585], "help" : [[51,0,290,1,1],[240],[131,0,85,1,1]] } ' + 
             '              ,{ "phase": "Combat",    "stage": "Player Attacks", "name": "{pp}Determine Attacker Strength", "actionwindow" : true , "boxes" : [0,3585,470,3705], "help" : [[51,0,345,2,2],[240],[131,0,160,2,2]] } ' + 
             '              ,{ "phase": "Combat",    "stage": "Player Attacks", "name": "{pp}Determine Combat Damage to Enemy", "actionwindow" : true, "boxes" : [0,3705,470,3825], "help" : [[51,0,390,3,3],[240],[131,0,350,3,3]] } ' + 
             '              ,{ "phase": "Combat",    "name": "Discard All Shadow Cards", "boxes" : [0,4060,470,4110], "help" : [[51,0,860,4,4]] } ' + 
@@ -1193,17 +1193,22 @@
         { 
         console.log(' '.repeat(ind++)+'>game_expandText("'+text+'")'); 
             if (text.includes('{')) { 
-                // convert {pn} to a player name 
+                // convert {pn} to the current player's name 
                 text = text.replace('{pn}', Options.names[current.player]); 
  
-                // convert {pp} to a player prefix (used in displaying stage names) 
+                // convert {pn+} to the next player's name 
+                text = text.replace('{pn+}', Options.names[game_getNextPlayer(current.player, current.active)]); 
+ 
+                // convert {pp} to the current player's 'prefix' (used in displaying stage names) 
                 text = text.replace('{pp}', (current.numPlayers == 1) ? "" : Options.names[current.player] + ": "); 
                  
                 // convert {a|b} to "a" if there is only one player, and "b" if there are more than one 
                 text = (text.replace(RegexMultiplayerMatch, (current.numPlayers == 1) ? "$1" : "$2")); 
  
-                // convert {a=b} to "a" if the player is the same as the last step's, and "b" if it is a different player. 
-                text = (text.replace(RegexSamePlayerMatch, (previous == null) || (current.player == previous.player) ? "$1" : "$2")); 
+                // convert {a=b} to "a" if the player is the same as the last step's, and "b" if it is a different player.
+                var same = (previous == null) || 
+                           ((current.player == previous.player) && (current.stepNum < previous.stepNum)) 
+                text = (text.replace(RegexSamePlayerMatch, same ? "$2" : "$1")); 
             } 
  
         console.log(' '.repeat(--ind)+'<game_expandText'); 
@@ -1264,7 +1269,7 @@
                 }
             } else { 
                 // insert the new state and save it. 
-                StateHistory.splice(0,0,currentStateHash); 
+                StateHistory.unshift(currentStateHash); 
                 localStorage.setItem(StateStorageKey, StateHistory.toString()); 
             } 
  
@@ -1275,7 +1280,7 @@
                 }); 
             } 
  
-            var bannerInfo = game_setStandardBanners(current, previous.step.phase); 
+            var bannerInfo = game_setStandardBanners(current, previous); 
             var banner = bannerInfo[0]; 
             var changeBanner = bannerInfo[1]; 
             var showClose = bannerInfo[2]; 
@@ -1357,7 +1362,7 @@
                     skipInfo = [skipText, current.step.skipto, current.first]; 
                     break; 
                 case (current.step.playerskip != null): 
-                    var skipText = expantText(current.step.playerskip, current, previous) 
+                    var skipText = game_expandText(current.step.playerskip, current, previous) 
                     var skiptoStepNum = (isLastPlayer) ? current.step.playerloopend + 1 : current.stepNum; 
                     var skiptoPlayer = game_getNextPlayer(current.player, current.active); 
                     skipInfo = [skipText, skiptoStepNum, skiptoPlayer]; 
@@ -1395,7 +1400,7 @@
         console.log(' '.repeat(--ind)+'<game_setCurrentState'); 
         } 
  
-        function game_setStandardBanners(currentState, previousPhase) { 
+        function game_setStandardBanners(currentState, previousState) { 
         console.log(' '.repeat(ind++)+'>game_setStandardBanners'); 
             // banner: shows the current round 
             var banner = (currentState.round == 0) 
@@ -1403,11 +1408,11 @@
                 : 'Round ' + currentState.round + '{| : (' + currentState.numPlayers + ' players)}'; 
  
             // change banner: shows when the phase changes (unless phase changes are shown as steps) 
-            var isPhaseChange = (currentState.step.phase != previousPhase) &&  
+            var isPhaseChange = (currentState.step.phase != previousState.step.phase) &&  
                                 (!currentState.step.phase.startsWith('Special')) && 
-                                (!previousPhase.startsWith('Special')); 
+                                (!previousState.step.phase.startsWith('Special')); 
             var changeBanner = (isPhaseChange && !Options.showChangePhaseSteps) 
-                ? 'End of the ' + previousPhase + ' Phase<br>' + 'Start of the ' + currentState.step.phase + ' Phase' 
+                ? 'End of the ' + previousState.step.phase + ' Phase<br>' + 'Start of the ' + currentState.step.phase + ' Phase' 
                 : ''; 
  
             // close button: shows only for the new game state 
@@ -1419,7 +1424,7 @@
                 ((currentState.step.stage == null) ? '' : ': ' + currentState.step.stage + ' Stage'); 
  
         console.log(' '.repeat(--ind)+'<game_setStandardBanners'); 
-            return [game_expandText(banner, currentState), 
+            return [game_expandText(banner, currentState, previousState), 
                     changeBanner,  
                     showClose,  
                     header 
@@ -1539,9 +1544,13 @@
 
         function gui_showLoadSave() {
         console.log(' '.repeat(ind++)+'>gui_showLoadSave');
+            var b36 = '';
+            if (StateHistory) {
+                StateHistory.forEach(sh => b36 += parseInt(sh).toString(36) + ':');
+                b36.slice(0, -1);
+            }
             CODE_ERR.innerHTML = '';
-            CODE_BOX.value = btoa(((StateHistory) ? JSON.stringify(StateHistory) : '') + '|' +
-                                  ((Options) ? JSON.stringify(Options) : ''));
+            CODE_BOX.value = btoa(b36 + '|' + ((Options) ? JSON.stringify(Options) : ''));
 
             if (LOAD_AREA.classList.contains('hidden')) { 
                 LOAD_AREA.classList.add('fade-in'); 
@@ -1562,7 +1571,12 @@
                     if (CODE_BOX.value.trim() != '') {
                         try {
                             var saved = atob(CODE_BOX.value.trim()).split('|');
-                            StateHistory = (saved[0] == '') ? null : JSON.parse(saved[0]);
+                            if (saved[0] == '') {
+                                StateHistory = null;
+                             } else {
+                                 StateHistory = [];
+                                 saved[0].split(':').forEach(sh => StateHistory.push(parseInt(sh, 36)));
+                             }
                             Options = JSON.parse(saved[1]);
                         }
                         catch(err) {

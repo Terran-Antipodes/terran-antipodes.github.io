@@ -15,7 +15,7 @@ Suite A:
   - hover over version:
     o sequence image is removed.
     - end hover:
-      o returns sequence image.
+      o displays sequence image.
   - About:
     o About text is displayed.
     - click on background:
@@ -37,9 +37,9 @@ Suite B: requires save code from Suite A
     - copy save code from Suite A into text area:
     - click on background:
       o removes Load/Save.
-  - Options:
-    o selected - PDF, Show general tooltips, Show End/Start of phases
-    o not selected - HTML, Show tooltips on tabs, Alternate Setup. 
+    - Options:
+      o selected - PDF, Show general tooltips, Show End/Start of phases
+      o not selected - HTML, Show tooltips on tabs, Alternate Setup. 
   - New Game:
     o closes Options
     o asks Regular or Campaign
@@ -118,10 +118,10 @@ Suite C: requires save code from Suite B
     - click on background:
       o removes Load/Save.
       o displays step "Gain Resources".
-  - Options:
-    o selected - HTML, Show End/Start of phases
-    o not selected - PDF, Show tooltips on tabs, Show general tooltips, Alternate Setup. 
-    - close options:
+    - Options:
+      o selected - HTML, Show End/Start of phases
+      o not selected - PDF, Show tooltips on tabs, Show general tooltips, Alternate Setup. 
+      - close options:
   - Next:
     o displays step "Draw Card & Action Window" (note singular Card).
     o Action Window is highlighted.
@@ -137,27 +137,65 @@ Suite C: requires save code from Suite B
         o Action Window text is highlighted.
         - close tab:
       - close Help:
-    - Next:
-      o displays step "End of the Resource Phase Start of the Planning Phase".
-    - Options:
-      - deselect Show End/Start of phases:
-      - close Options:
-        o displays round as 1 with End and Start of Phase messages.
-        o displays phase as "Planning Phase".
-        o displays step "Special Action Window" in highlighted colour.
-        o outline around 2.1 to 2.3.
-    - Next:
-      o displays step "Quest Action Window".
-    - Next, Next:
-      o displays step "Staging Action Window".
-    - Next, Next, Next, Next, Next:
-      o Combat Check tab appears, extends, and retracts.
-      o displays step "Combat Check".
+  - Next:
+    o displays step "End of the Resource Phase Start of the Planning Phase".
+  - Options:
+    - deselect Show End/Start of phases:
+    - close Options:
+      o displays round as 1 with End and Start of Phase messages.
+      o displays phase as "Planning Phase".
+      o displays step "Special Action Window" in highlighted colour.
+      o outline around 2.1 to 2.3.
+  - Next:
+    o displays step "Quest Action Window".
+  - Next, Next, Next:
+    o displays step "Staging Action Window".
+  - Next, Next, Next, Next, Next:
+    o Combat Check tab appears, extends, and retracts.
+    o displays step "Combat Check".
+    o skip tab appears, extends and retracts.
+    o skip tab text is "No Combat?"
   - Load/Save:
     - copy save code and save as Suite C.
 
-
-
+Suite D: requires save code from Suite C
+  - clear browser local storage of LOTR_Options and LOTR_StateHistory:
+  - Load/Save:
+    - copy save code from Suite C into text area:
+    - click on background:
+      o removes Load/Save.
+      o displays step "Combat Check".
+  - Next:
+    o skip tab extends and retracts.
+    o displays step "Deal Shadow Cards...".
+    o skip tab text is "No Enemies attacking the player?"
+  - Next:
+    o skip tab extends and retracts.
+    o displays step "Choose Attacking Enemy...".
+    o skip tab text is "the player is not being attacked by an Enemy?"
+    - Next, Next, Next:
+      o displays step "Determine Combat Damage to Defender".
+    - Next:
+      o displays step "Choose Attacking Enemy....".
+      o skip tab text is "the player is not being attacked by another Enemy?" (note "another" instead of "an")
+  - Skip:
+    o skip tab extends and retracts.
+    o displays step "Choose Enemy to Attack...".
+    o skip tab text is "the player is not attacking an Enemy?"
+  - Next, Next:
+    o displays step "Determine Combat Damage to Enemy...".
+    - Next:
+      o displays step "Choose Attacking Enemy....".
+      o skip tab text is "the player is not attacking another Enemy?" (note "another" instead of "an")
+  - Skip:
+    o displays step "Discard All Shadow Cards".
+  - Next, Next, Next:
+    o displays step "End of Round Action Window".
+    - Next:
+      o displays round as "Round 2".
+      o displays step "Gain Resources".
+  - Load/Save:
+    - copy save code and save as Suite D.
 
 Test Topics:
   - Not yet covered:
@@ -167,6 +205,7 @@ Test Topics:
     - multiple players: plural for of 'deck(s)', etc.
     - multiple players: pass 1st player token to player name
     - multiple players: player names used in steps
+    - multiple players: last step is pass the token
     - can eliminate player
     - eliminated player skipped in sequence
     - eliminiating the first player automatically changes 1st player
