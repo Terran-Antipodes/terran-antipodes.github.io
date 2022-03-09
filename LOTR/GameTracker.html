@@ -41,9 +41,12 @@
         } 
  
         /* centres buttons within their div */ 
-        .buttonHolder { 
+        .centredHolder { 
             display: flex; 
+            flex-direction: row;
+            flex-wrap: wrap;
             justify-content: center; 
+            align-items: center;
         } 
  
         .bordered { 
@@ -541,6 +544,25 @@
             0% { opacity: 1; }  
             100% { opacity: 0; } 
         } 
+ 
+        #NamesArea .nameInp { 
+            flex-basis: 55%;
+            text-align: center; 
+            width: 16;
+            background-color: rgb(180, 181, 91);
+            border-radius: 6px; 
+            margin: 1%;
+            padding: 1vmax;  
+            z-index: 50; 
+            width: fit-content; 
+        }
+
+        #NamesArea .nameSwap {    
+            flex-basis: 80%;
+            color:rgb(200, 250, 100);
+            background-color: #909497;
+            border-radius: 3px; 
+        }
     </style> 
     <style> /* Help */ 
         .help { 
@@ -553,7 +575,7 @@
             background: #909497; 
         } 
  
-        #gameHelpHeader { 
+        #helpAreaHeader { 
             margin-top: 7vh 0 10vh; 
             color: #FFD700; 
             font-size: 5vh; 
@@ -651,7 +673,7 @@
 
         #codeErr {
             color:rgba(100, 0, 0, .75);
-        }
+        } 
     </style> 
 </head> 
  
@@ -683,14 +705,15 @@
                 <span id='modalClose' class='closeBtn tooltipContainer'>&times;</span> 
                 <h1>header: phase information goes here</h1> 
                 <p>detail: step information goes here</p> 
-                <div class='modalButtonsArea buttonHolder'></div> 
+                <div class='modalButtonsArea centredHolder'></div> 
             </div> 
-            <div id='GameHelp' class='help'> 
-                <div id='gameHelpHeader'> 
+            <div id='NamesArea' class='centredHolder'></div>
+            <div id='HelpArea' class='help'> 
+                <div id='helpAreaHeader'> 
                     <span class='closeBtn tooltipContainer' onclick='game_hideHelp()'>&times;</span> 
                     <p>step name goes here</p> 
                 </div> 
-                <div id='gameHelpDisplay'></div> 
+                <div id='helpAreaDisplay'></div> 
             </div> 
         </div> 
         <div id='InfoArea' onclick='gui_clearAndReload()'></div> 
@@ -769,7 +792,7 @@
             '                ,{ "phase": "Setup", "name": "Perform Campaign Setup", "help" : [[47,0,700,3,4],[210]], "type": "campaign" } ' + 
             '                ,{ "phase": "Setup", "name": "Set Threat Level{|s}", "help" : [[47,0,400,2,5],[210]] } ' + 
             '                ,{ "phase": "Setup", "name": "Create Token Bank{|s}", "help" : [[47,500,305,4,6],[211]] } ' + 
-            '                ,{ "phase": "Setup", "name": "Determine First Player", "help" : [[47,500,380,5,7],[212]], "type": "multi" } ' + 
+            '                ,{ "phase": "Setup", "name": "Determine First Player", "help" : [[47,500,380,5,7],[212]], "type": "1st multi" } ' + 
             '                ,{ "phase": "Setup", "name": "Draw Starting Hand{|s}", "help" : [[47,500,455,6,8],[213]] } ' + 
             '                ,{ "phase": "Setup", "name": "Place Quest Cards", "help" : [[47,500,555,7,9],[214]] } ' + 
             '                ,{ "phase": "Setup", "name": "Perform Scenario Setup", "help" : [[47,500,650,8,10],[215]] } ' + 
@@ -781,7 +804,7 @@
             '               ,{ "phase": "Setup", "name": "Set up Boons and Burdens from the Campaign Pool", "type": "campaign", "help" : [[47,0,700,3,4],[210]] } ' + 
             '               ,{ "phase": "Setup", "name": "Set Threat Level{|s}", "help" : [[47,0,400,2,5],[210]] } ' + 
             '               ,{ "phase": "Setup", "name": "Create Token Bank{|s}", "help" : [[47,500,305,4,6],[211]] } ' + 
-            '               ,{ "phase": "Setup", "name": "Determine First Player", "help" : [[47,500,380,5,7],[212]], "type": "multi" } ' + 
+            '               ,{ "phase": "Setup", "name": "Determine First Player", "help" : [[47,500,380,5,7],[212]], "type": "1st multi" } ' + 
             '               ,{ "phase": "Setup", "name": "Perform Campaign Setup", "help" : [[47,0,700,3,4],[210]], "type": "campaign" } ' + 
             '               ,{ "phase": "Setup", "name": "Perform Scenario Setup", "help" : [[47,500,650,8,10],[215]] } ' + 
             '               ,{ "phase": "Setup", "name": "Shuffle Player Deck{|s}", "help" : [[47,0,135,1,1],[209]] } ' + 
@@ -960,16 +983,18 @@
         const MODAL_CLOSE = document.getElementById('modalClose'); 
         const MODAL_BUTTONS_AREA = MODAL_DIALOGUE.getElementsByClassName('modalButtonsArea')[0]; 
         const GAME_OUTLINE = document.getElementById('gameOutline'); 
-        const GAME_HELP = document.getElementById('GameHelp'); 
-        const GAME_HELP_HEADER = document.getElementById('gameHelpHeader'); 
-        const GAME_HELP_TEXT = GAME_HELP_HEADER.getElementsByTagName('p')[0]; 
-        const GAME_HELP_DISPLAY = document.getElementById('gameHelpDisplay'); 
+        const HELP_AREA = document.getElementById('HelpArea'); 
+        const HELP_AREA_HEADER = document.getElementById('helpAreaHeader'); 
+        const HELP_AREA_TEXT = HELP_AREA_HEADER.getElementsByTagName('p')[0]; 
+        const HELP_AREA_DISPLAY = document.getElementById('helpAreaDisplay'); 
         const INFO_AREA = document.getElementById('InfoArea'); 
         const ABOUT_AREA = document.getElementById('AboutArea'); 
         const OPTIONS_AREA = document.getElementById('OptionsArea');
         const LOAD_AREA = document.getElementById('LoadSaveArea'); 
         const CODE_BOX = document.getElementById('codeBox');
         const CODE_ERR = document.getElementById('codeErr');
+        const NAMES_AREA = document.getElementById('NamesArea');
+        const NAMES_FORM = document.getElementById('playernames');
         const IS_MOBILE = navigator.userAgentData.mobile; 
  
         /* Define webpage globals */ 
@@ -995,37 +1020,98 @@
         var StateHistory; 
         var RegexMultiplayerMatch = new RegExp("\\{([^\}\|]*)\\|([^\}\|]*)\\}"); 
         var RegexSamePlayerMatch = new RegExp("\\{([^\}\|]*)\\=([^\}\|]*)\\}"); 
+
+        // Ensure certain page elements are not visible on start up. 
+        MODAL_BANNER.classList.add('hidden'); 
+        MODAL_CHANGE_BANNER.classList.add('hidden'); 
+        MODAL_CHANGE_BANNER.innerHTML = ''; 
+        NAMES_AREA.classList.add('hidden');
+        HELP_AREA.classList.add('hidden'); 
+        GAME_OUTLINE.classList.add('hidden'); 
+        ABOUT_AREA.classList.add('hidden'); 
+        OPTIONS_AREA.classList.add('hidden'); 
+        LOAD_AREA.classList.add('hidden');  
     </script> 
     <script> /* main code */ 
         ind=0;console.log(' '.repeat(ind++)+'>main'); 
         INFO_AREA.innerHTML = VERSION; 
         gui_loadBackground('./Images/RoundSequence.png'); 
  
-        function newgame_setup(token) { // Open modal dialogue to get information about (or to cancel) a new game 
-        console.log(' '.repeat(ind++)+'>newgame_setup('+token+')'); 
+        function newgame_setup(token, nmbr) { // Open modal dialogue to get information about (or to cancel) a new game 
+        console.log(' '.repeat(ind++)+'>newgame_setup('+token+','+nmbr+')'); 
             Options.campaign = (token == 'c'); 
+            var prompt = '';
             var closeTip = '(press to return without starting a new game)'; 
             var buttons = []; 
             switch (token) { 
-                case 'a': 
-                    var prompt = 'Is this new game part of a campaign?' 
+                case 'a': // a = ask for type of game
+                    prompt = 'Is this new game part of a campaign?' 
                     buttons = [gui_generateButton('Regular', 'newgame_setup("r")'), 
                                gui_generateButton('Campaign', 'newgame_setup("c")') 
                               ]; 
                     break; 
-                case 'c': 
-                case 'r': 
+                case 'c': // c = campaign game
+                case 'r': // r = regular game
                     var prompt = 'How many players in the ' + (Options.campaign ? 'campaign' : 'new game') + '?'; 
                     for (var x = 1; x <= MAXPLAYERS; x++) { 
-                        buttons[x] = gui_generateButton('&nbsp;' + x + '&nbsp;', 'newgame_start(' + x + ')'); 
+                        buttons[x - 1] = gui_generateButton('&nbsp;' + x + '&nbsp;', 'newgame_setup("n",' + x + ')'); 
                     } 
                     break; 
+                case 'n': // n = ask for names
+                    if (nmbr == 1) {
+                        Options.names = [ '', 'The player'];
+                        newgame_start(1);
+                        return; // do not continue - the modal should not be shown again.
+                    }
+                    game_setNames(nmbr);
+                    buttons = [gui_generateButton('Done', 'NAMES_AREA.classList.add("hidden");NAMES_AREA.innerHTML="";newgame_start(' + nmbr + ')')]; 
+                    break;
             } 
  
             gui_showModal('', '', closeTip, prompt, '', buttons); 
         console.log(' '.repeat(--ind)+'<newgame_setup'); 
         } 
- 
+
+        function game_setNames(numPlayers) {
+        console.log(' '.repeat(ind++)+'>game_setNames(' + numPlayers + ')'); 
+            if (Options.names.length != numPlayers + 1) {
+                Options.names = new Array(numPlayers + 1);           
+                for(let pn = 1; pn <= numPlayers; pn++) {
+                    Options.names[pn] = 'Player ' + pn;
+                } 
+            }
+            NAMES_AREA.innerHTML = '';
+            for(let pn = 1; pn <= numPlayers; pn++) { 
+                NAMES_AREA.innerHTML += 
+                        '<div class="nameInp">' +
+                            '<label>Player ' + pn + ': </label>' +
+                            '<input type="text" id="nameInp' + pn +'" onchange="game_changeName('+pn+',this.value)" value="' + Options.names[pn] +'"></input>' +
+                        '</div>' +
+                        ((pn < numPlayers) ? '<button type="button" class="nameSwap" onclick="game_swapNames('+pn+')">&#8645;' + '&nbsp;'.repeat(10) + '&#8645;</button>' : '');
+                }            
+            NAMES_AREA.classList.remove("hidden");
+        console.log(' '.repeat(--ind)+'<game_setNames'); 
+        }
+            
+        function game_changeName(player, name) {
+            Options.names[player] = name;
+        }
+
+        function game_swapNames(playerNum){
+            var aElement = document.getElementById('nameInp' + playerNum);
+            var bElement = document.getElementById('nameInp' + (playerNum + 1));
+            var aName = (Options.names[playerNum + 1] == 'Player ' + (playerNum + 1))
+                ? 'Player ' + playerNum
+                : Options.names[playerNum + 1];
+            var bName = (Options.names[playerNum] == 'Player ' + playerNum)
+                ? 'Player ' + (playerNum + 1)
+                : Options.names[playerNum];
+            aElement.value = aName;
+            Options.names[playerNum] = aName;
+            bElement.value = bName;
+            Options.names[playerNum + 1] = bName;
+        }
+
         function newgame_start(numPlayers) { // Resets the page for a new game 
         console.log(' '.repeat(ind++)+'>newgame_start('+numPlayers+')'); 
             var newStateHash = (Math.pow(2, numPlayers) - 1) * ACTIVE_PLAYERS_EVS.cram + 
@@ -1036,10 +1122,6 @@
             StateHistory = [newStateHash]; 
             localStorage.setItem(StateStorageKey, StateHistory.toString()); 
             Options.previouslyExtended = []; 
-            Options.names = new Array(numPlayers + 1); 
-            for(let pn = 1; pn <= numPlayers; pn++) { 
-                Options.names[pn] = (numPlayers == 1) ? "the player" : "Player " + pn; 
-            } 
             gui_recordOptions(); 
              
             gui_initializeSteps(); 
@@ -1072,7 +1154,7 @@
             }; 
  
             var newStateHash = 
-                toState.active * ACTIVE_PLAYERS_EVS.cram + 
+                parseInt(toState.active.trim(), 2) * ACTIVE_PLAYERS_EVS.cram + 
                 toState.first * FIRST_PLAYER_EVS.cram + 
                 toState.player * CURRENT_PLAYER_EVS.cram + 
                 toState.round * ROUND_EVS.cram + 
@@ -1092,7 +1174,7 @@
                     first: initial.first, 
                 }; 
             while ((((Sequence.steps[relevant.stepNum].type ?? '') == 'campaign') && !Options.campaign) || // skip campaign steps when it is not a campaign game 
-                   (((Sequence.steps[relevant.stepNum].type ?? '') == 'multi') && (initial.active.length == 2)) || // skip multiplayer steps when there is only one player 
+                   (((Sequence.steps[relevant.stepNum].type ?? '').includes('multi')) && (initial.active.length == 2)) || // skip multiplayer steps when there is only one player 
                    ((Sequence.steps[relevant.stepNum].phase == 'Change') && !Options.showChangePhaseSteps) || // skip phase end/start steps when they are to be shown 
                    (((Sequence.steps[relevant.stepNum].type ?? '') == 'postPhaseChange') && Options.showChangePhaseSteps)) // special: skip this step when phase end/start steps are shown 
             { 
@@ -1209,6 +1291,9 @@
                 var same = (previous == null) || 
                            ((current.player == previous.player) && (current.stepNum < previous.stepNum)) 
                 text = (text.replace(RegexSamePlayerMatch, same ? "$2" : "$1")); 
+
+                // kludge fix for single-player references at start and mid-phrase.
+                text = text.replace(' The ', ' the ');
             } 
  
         console.log(' '.repeat(--ind)+'<game_expandText'); 
@@ -1249,7 +1334,7 @@
  
         function game_hideHelp() { 
         console.log(' '.repeat(ind++)+'>game_hideHelp'); 
-            GameHelp.classList.add("hidden") 
+            HelpArea.classList.add("hidden");
             gui_showSideTab('all'); // the help display hides the side tabs 
         console.log(' '.repeat(--ind)+'<game_hideHelp'); 
         } 
@@ -1346,7 +1431,13 @@
  
             // buttons 
             var buttons = []; 
-            buttons.push(gui_generateButton('Next', 'game_advanceToStep(' + next.stepNum + ',' + next.player + ',' + next.first + ',' + next.round + ')')); 
+            if ((current.numPlayers > 1) && ((current.step.type ?? '').includes('1st'))) {
+                for (pn = 1; pn <= current.numPlayers; pn++) {
+                    buttons.push(gui_generateButton(Options.names[pn], 'game_advanceToStep(' + next.stepNum + ',' + next.player + ',' + pn + ',' + next.round + ')')); 
+                }
+            } else {
+                buttons.push(gui_generateButton('Next', 'game_advanceToStep(' + next.stepNum + ',' + next.player + ',' + next.first + ',' + next.round + ')')); 
+            }
             if (current.step.help) { 
                 buttons.push(gui_generateButton('Help', 'game_showHelp("' + stepName + '",' + JSON.stringify(current.step.help) + ')')); 
             } 
@@ -1435,8 +1526,8 @@
         console.log(' '.repeat(ind++)+'>game_showCompanion'); 
             var address = 'https://lotr-lcg-quest-companion.gamersdungeon.net/#Rule'; 
  
-            GAME_HELP_DISPLAY.innerHTML = "<iframe src='" + address + pageNum + "' type='text/html'></iframe>"; 
-            GAME_HELP.classList.remove('hidden'); 
+            HELP_AREA_DISPLAY.innerHTML = "<iframe src='" + address + pageNum + "' type='text/html'></iframe>"; 
+            HELP_AREA.classList.remove('hidden'); 
  
             if (event?.altKey) { 
                 window.open(address + pageNum, 'Quest Companion'); 
@@ -1452,7 +1543,7 @@
                     address = './RulesCompendium_v2.0/Rules_Compendium_v2_0.html'; 
                     fragment = '#p' + helpInfo[0].toString().padStart(3, '0') + '_' + helpInfo[3]; 
                     query = '?section=s' + helpInfo[0].toString().padStart(3, '0') + '_' + helpInfo[4] + 
-                            '&cwidth=' + GAME_HELP_DISPLAY.offsetWidth; 
+                            '&cwidth=' + HELP_AREA_DISPLAY.offsetWidth; 
                     break; 
                 case 'PDF': 
                     address = './Images/RulesCompendium_v2.0.pdf'; 
@@ -1460,8 +1551,8 @@
                     query = ''; 
                     break; 
             } 
-            GAME_HELP_DISPLAY.innerHTML = "<iframe src='" + address + query + fragment + "' ></iframe>"; 
-            GAME_HELP.classList.remove('hidden'); 
+            HELP_AREA_DISPLAY.innerHTML = "<iframe src='" + address + query + fragment + "' ></iframe>"; 
+            HELP_AREA.classList.remove('hidden'); 
  
             if (event?.altKey) { 
                 window.open(address + query + fragment, 'Rules Compendium'); 
@@ -1475,9 +1566,9 @@
             var companionInfo = (helpLocations.length < 2) ? [] : helpLocations[1]; 
             var actionWindowInfo = (helpLocations.length < 3) ? [] : helpLocations[2]; 
             var tipText = (Options.showGeneralTips && !IS_MOBILE) ? 'Hold Alt while pressing the button to open help in a new tab' : ''; 
-            GAME_HELP_TEXT.innerHTML = 
+            HELP_AREA_TEXT.innerHTML = 
                 stepText + 
-                '<div class="buttonHolder">' + 
+                '<div class="centredHolder">' + 
                 ((compendiumInfo.length == 0) ? '' : gui_generateButton('Compendium<br/>', 'Options.preferCompendium=true;game_showCompendium(' + JSON.stringify(compendiumInfo) + ',event)', 'helpBtn', tipText)) + 
                 ((companionInfo.length == 0) ? '' : gui_generateButton('Companion<br/>', 'Options.preferCompendium=false;game_showCompanion(' + companionInfo[0] + ',event)', 'helpBtn', tipText)) + 
                 ((actionWindowInfo.length == 0) ? '' : gui_generateButton('Action Window<br/>', 'game_showCompendium(' + JSON.stringify(actionWindowInfo) + ',event)', 'helpBtn', tipText)) + 
@@ -1585,7 +1676,9 @@
                             return;
                         }
                         if (StateHistory) {
-                          game_setCurrentState(StateHistory[0], true);
+                            game_setCurrentState(StateHistory[0], true);
+                        } else {
+                            gui_initializeSideTabs(StateHistory == null);
                         }
                     }
                     window.removeEventListener('click', loadUserClicked); 
@@ -1656,16 +1749,6 @@
  
         function gui_initialize() { 
         console.log(' '.repeat(ind++)+'>gui_initialize'); 
-            // Ensure certain page elements are not visible on start up. 
-            MODAL_BANNER.classList.add('hidden'); 
-            MODAL_CHANGE_BANNER.classList.add('hidden'); 
-            MODAL_CHANGE_BANNER.innerHTML = ''; 
-            GAME_HELP.classList.add('hidden'); 
-            GAME_OUTLINE.classList.add('hidden'); 
-            ABOUT_AREA.classList.add('hidden'); 
-            OPTIONS_AREA.classList.add('hidden'); 
-            LOAD_AREA.classList.add('hidden'); 
- 
             // The ImageObserver waits for background image areas to come into view before 
             // determining which image to load. 
             ImageObserver = new IntersectionObserver(function(entries) { 
@@ -1689,16 +1772,21 @@
             INFO_AREA.addEventListener('mouseenter', gui_hideForeground); 
             INFO_AREA.addEventListener('mouseleave', gui_showForeground); 
  
-            gui_showSideTab(TAB_NEW, 'New Game', function () { newgame_setup('a'); }, null, (StateHistory == null)); 
-            gui_showSideTab(TAB_OPTIONS, 'Options', function () { gui_showOptions(); }, 'Configure game and page settings', (StateHistory == null)); 
-            gui_showSideTab(TAB_ABOUT, 'About', function () { gui_showAbout(); }, 'Show creators, rights, and version', (StateHistory == null)); 
-            gui_showSideTab(TAB_LOADSAVE, 'Load/Save', function () { gui_showLoadSave(); }, null, (StateHistory == null)); 
- 
+            gui_initializeSideTabs(StateHistory == null);
             gui_initializeSteps();             
         console.log(' '.repeat(--ind)+'<gui_initialize'); 
         } 
+
+        function gui_initializeSideTabs(extend) {
+        console.log(' '.repeat(ind++)+'>gui_initializeSideTabs');     
+            gui_showSideTab(TAB_NEW, 'New Game', function () { newgame_setup('a'); }, null, extend);
+            gui_showSideTab(TAB_OPTIONS, 'Options', function () { gui_showOptions(); }, 'Configure game and page settings', extend);
+            gui_showSideTab(TAB_ABOUT, 'About', function () { gui_showAbout(); }, 'Show creators, rights, and version', extend);
+            gui_showSideTab(TAB_LOADSAVE, 'Load/Save', function () { gui_showLoadSave(); }, null, extend);
+        console.log(' '.repeat(--ind)+'<gui_initializeSideTabs'); 
+        }
  
-        function gui_initializeSteps() {    
+        function gui_initializeSteps() {
         console.log(' '.repeat(ind++)+'>gui_initializeSteps');     
             Sequence.steps =  
                 ((Options.altSetup) ? Sequence.altSetup : Sequence.origSetup).concat(Sequence.mainSeq) 
@@ -1994,6 +2082,8 @@
                     OPTIONS_AREA.addEventListener('animationend', optionsFadeoutDone);
                     if (StateHistory) {
                         game_setCurrentState(StateHistory[0], true);
+                    } else {
+                        gui_initializeSideTabs(false);
                     }
                 } 
             } 

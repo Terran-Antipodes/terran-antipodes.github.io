@@ -26,6 +26,9 @@ Suite A:
     - select PDF, deselect Show tooltips on tabs:
     - click on background:
       o removes Options.
+    - hover over side tabs:
+      o side tabs extend.
+      o tooltips are not displayed.
   - Load/Save:
     o displays Load/Save.
     o save code displayed and selected.
@@ -52,11 +55,6 @@ Suite B: requires save code from Suite A
     - select 1:
       o displays phase "Setup Phase"
       o displays step "Shuffle Player Deck" (note singular "Deck")
-  - hover over side tabs:
-    o side tabs extend.
-    o tooltips are not displayed.
-    - end hover:
-      o side tabs retract.
   - Help:
     o displays compendium as PDF at "Shuffle Decks".
     - hover over Compendium and Companion buttons:
@@ -151,7 +149,6 @@ Suite C: requires save code from Suite B
   - Next, Next, Next:
     o displays step "Staging Action Window".
   - Next, Next, Next, Next, Next:
-    o Combat Check tab appears, extends, and retracts.
     o displays step "Combat Check".
     o skip tab appears, extends and retracts.
     o skip tab text is "No Combat?"
@@ -172,21 +169,21 @@ Suite D: requires save code from Suite C
   - Next:
     o skip tab extends and retracts.
     o displays step "Choose Attacking Enemy...".
-    o skip tab text is "the player is not being attacked by an Enemy?"
+    o skip tab text is "The player is not being attacked by an Enemy?"
     - Next, Next, Next:
       o displays step "Determine Combat Damage to Defender".
     - Next:
       o displays step "Choose Attacking Enemy....".
-      o skip tab text is "the player is not being attacked by another Enemy?" (note "another" instead of "an")
+      o skip tab text is "The player is not being attacked by another Enemy?" (note "another" instead of "an")
   - Skip:
     o skip tab extends and retracts.
     o displays step "Choose Enemy to Attack...".
-    o skip tab text is "the player is not attacking an Enemy?"
+    o skip tab text is "The player is not attacking an Enemy?"
   - Next, Next:
     o displays step "Determine Combat Damage to Enemy...".
     - Next:
       o displays step "Choose Attacking Enemy....".
-      o skip tab text is "the player is not attacking another Enemy?" (note "another" instead of "an")
+      o skip tab text is "The player is not attacking another Enemy?" (note "another" instead of "an")
   - Skip:
     o displays step "Discard All Shadow Cards".
   - Next, Next, Next:
@@ -194,14 +191,21 @@ Suite D: requires save code from Suite C
     - Next:
       o displays round as "Round 2".
       o displays step "Gain Resources".
+      o background images change.
   - Load/Save:
     - copy save code and save as Suite D.
 
+Suite E: 
+  - clear browser local storage of LOTR_Options and LOTR_StateHistory:
+  - refresh browser:
+    o side tabs New Game, Options, About, Load/Save appear, extend and retract.
+    o background pics are displayed.
+    o sequence image is displayed.
+    o version is displayed.
+
+
 Test Topics:
   - Not yet covered:
-    - single player referred to as 'the player'
-    - single player: no reference to passing the 1st player token
-    - single player: no naming the player
     - multiple players: plural for of 'deck(s)', etc.
     - multiple players: pass 1st player token to player name
     - multiple players: player names used in steps
@@ -209,4 +213,3 @@ Test Topics:
     - can eliminate player
     - eliminated player skipped in sequence
     - eliminiating the first player automatically changes 1st player
-    - Combat Check skips combat
