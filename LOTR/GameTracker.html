@@ -557,8 +557,11 @@
             width: fit-content; 
         }
 
-        #NamesArea .nameSwap {    
-            flex-basis: 80%;
+        #NamesArea .tooltipContainer {   
+            flex-basis: 50%;
+        }
+
+        #NamesArea .nameSwap { 
             color:rgb(200, 250, 100);
             background-color: #909497;
             border-radius: 3px; 
@@ -705,9 +708,9 @@
                 <span id='modalClose' class='closeBtn tooltipContainer'>&times;</span> 
                 <h1>header: phase information goes here</h1> 
                 <p>detail: step information goes here</p> 
+                <div id='NamesArea' class='centredHolder'></div>
                 <div class='modalButtonsArea centredHolder'></div> 
             </div> 
-            <div id='NamesArea' class='centredHolder'></div>
             <div id='HelpArea' class='help'> 
                 <div id='helpAreaHeader'> 
                     <span class='closeBtn tooltipContainer' onclick='game_hideHelp()'>&times;</span> 
@@ -828,8 +831,7 @@
 		    '              ,{ "phase": "Encounter", "name": "Optional Engagement", "actionwindow" : true, "boxes" : [60,1860,490,1980], "help" : [[49,500,750,2,2],[232],[129,0,910,5,5]] } ' + 
             '              ,{ "phase": "Encounter", "name": "Engagement Checks", "actionwindow" : true, "boxes" : [60,1980,490,2100], "help" : [[50,0,50,1,1],[233],[129,0,980,6,6]] } ' + 
 		    '              ,{ "phase": "Change",    "name": "End of the Encounter Phase<br/>Start of the Combat Phase", "teamskip" : ["No Combat?~Select if there are no Enemy or Player Attacks this Round", "Ready All Cards"], "boxes" : [60,2105,490,2310] } ' + 
-            '              ,{ "phase": "Combat",    "name": "Combat Check", "type": "postPhaseChange", "teamskip" : ["No Combat?~Select if there are no Enemy or Player Attacks this Round", "Ready All Cards"], "boxes" : [60,2215,490,2320] } ' + 
-            '              ,{ "phase": "Combat",    "name": "{pp}Deal Shadow Cards", "actionwindow" : true, "teamskip" : ["No Enemies attacking {pn}?~Select if no Enemies are attacking {pn}", "{pp}Choose Enemy to Attack and Attackers"], "teamloop" : "{pp}Deal Shadow Cards", "boxes" : [60,2320,490,2428], "help" : [[50,0,845,2,2],[237],[130,0,130,1,1]] } ' + 
+            '              ,{ "phase": "Combat",    "name": "{pp}Deal Shadow Cards", "actionwindow" : true, "teamskip" : ["No Combat?~Select if there are no Enemy or Player Attacks this Round", "Ready All Cards"], "teamloop" : "{pp}Deal Shadow Cards", "boxes" : [60,2320,490,2428], "help" : [[50,0,845,2,2],[237],[130,0,130,1,1]] } ' + 
             '              ,{ "phase": "Combat",    "stage": "Enemy Attacks",  "name": "{pp}Choose Attacking Enemy", "actionwindow" : true, "playerskip" : "{pn} is not being attacked by an{=other} Enemy?~Select if all Enemy attacks against {pn} have been resolved", "playerloop" : "{pp}Determine Combat Damage to Defender", "boxes" : [[60,2428,490,2675],[60,2480,490,2675]], "help" : [[50,500,150,3,3],[238],[130,0,270,2,2]] } ' + 
             '              ,{ "phase": "Combat",    "stage": "Enemy Attacks",  "name": "{pp}Declare Defender", "actionwindow" : true, "boxes" : [60,2675,490,2795], "help" : [[50,500,190,4,4],[238],[130,0,410,3,3]] } ' + 
             '              ,{ "phase": "Combat",    "stage": "Enemy Attacks",  "name": "{pp}Reveal and Resolve Shadow Effect", "actionwindow" : true, "boxes" : [60,2795,490,2915], "help" : [[50,500,300,5,5],[238],[130,0,535,4,4]] } ' + 
@@ -1039,6 +1041,7 @@
  
         function newgame_setup(token, nmbr) { // Open modal dialogue to get information about (or to cancel) a new game 
         console.log(' '.repeat(ind++)+'>newgame_setup('+token+','+nmbr+')'); 
+            NAMES_AREA.innerHTML="";
             Options.campaign = (token == 'c'); 
             var prompt = '';
             var closeTip = '(press to return without starting a new game)'; 
@@ -1063,8 +1066,10 @@
                         newgame_start(1);
                         return; // do not continue - the modal should not be shown again.
                     }
+                    prompt = "Enter the players' names";
                     game_setNames(nmbr);
-                    buttons = [gui_generateButton('Done', 'NAMES_AREA.classList.add("hidden");NAMES_AREA.innerHTML="";newgame_start(' + nmbr + ')')]; 
+                    buttons = [gui_generateButton('Done', 'NAMES_AREA.classList.add("hidden");newgame_start(' + nmbr + ')')]; 
+                    closeTip = false;
                     break;
             } 
  
@@ -1087,7 +1092,12 @@
                             '<label>Player ' + pn + ': </label>' +
                             '<input type="text" id="nameInp' + pn +'" onchange="game_changeName('+pn+',this.value)" value="' + Options.names[pn] +'"></input>' +
                         '</div>' +
-                        ((pn < numPlayers) ? '<button type="button" class="nameSwap" onclick="game_swapNames('+pn+')">&#8645;' + '&nbsp;'.repeat(10) + '&#8645;</button>' : '');
+                        ((pn < numPlayers) 
+                            ? '<span class="tooltipContainer">' +
+                                '<button type="button" class="nameSwap" onclick="game_swapNames('+pn+')">&#8645;' + '&nbsp;'.repeat(10) + '&#8645;</button>' +
+                                (Options.showGeneralTips ? '<span class="tooltiptext">Switch Player ' + pn + ' with Player ' + (pn + 1) + '</span>' : '') + 
+                              '</span>' 
+                            : '');
                 }            
             NAMES_AREA.classList.remove("hidden");
         console.log(' '.repeat(--ind)+'<game_setNames'); 
@@ -1113,7 +1123,8 @@
         }
 
         function newgame_start(numPlayers) { // Resets the page for a new game 
-        console.log(' '.repeat(ind++)+'>newgame_start('+numPlayers+')'); 
+        console.log(' '.repeat(ind++)+'>newgame_start('+numPlayers+')');
+            NAMES_AREA.innerHTML="";
             var newStateHash = (Math.pow(2, numPlayers) - 1) * ACTIVE_PLAYERS_EVS.cram + 
                                1 * FIRST_PLAYER_EVS.cram + 
                                1 * CURRENT_PLAYER_EVS.cram + 
@@ -1166,18 +1177,17 @@
  
         function game_autoAdvanceStep(initial) { 
         console.log(' '.repeat(ind++)+'>game_autoAdvanceStep');  
-            var relevant =  
-                { 
-                    stepNum: initial.stepNum, 
-                    player: initial.player, 
-                    round: initial.round, 
-                    first: initial.first, 
-                }; 
-            while ((((Sequence.steps[relevant.stepNum].type ?? '') == 'campaign') && !Options.campaign) || // skip campaign steps when it is not a campaign game 
-                   (((Sequence.steps[relevant.stepNum].type ?? '').includes('multi')) && (initial.active.length == 2)) || // skip multiplayer steps when there is only one player 
-                   ((Sequence.steps[relevant.stepNum].phase == 'Change') && !Options.showChangePhaseSteps) || // skip phase end/start steps when they are to be shown 
-                   (((Sequence.steps[relevant.stepNum].type ?? '') == 'postPhaseChange') && Options.showChangePhaseSteps)) // special: skip this step when phase end/start steps are shown 
-            { 
+            var relevant = { 
+                stepNum: initial.stepNum, 
+                player: initial.player, 
+                round: initial.round, 
+                first: initial.first, 
+            }; 
+
+            while ((((Sequence.steps[relevant.stepNum].type ?? '').includes('campaign')) && !Options.campaign) || // skip campaign steps when it is not a campaign game 
+                    (((Sequence.steps[relevant.stepNum].type ?? '').includes('multi')) && (initial.active.length == 2)) || // skip multiplayer steps when there is only one player 
+                    ((Sequence.steps[relevant.stepNum].phase == 'Change') && !Options.showChangePhaseSteps) // skip phase end/start steps when they are to be shown 
+                  ) { 
                 if (Sequence.steps[relevant.stepNum].gameloopstart != null) { 
                     relevant.stepNum = Sequence.steps[relevant.stepNum].gameloopstart; 
                     relevant.player = game_getNextPlayer(relevant.player, initial.active) 
@@ -1221,7 +1231,7 @@
             var current = game_decodeStateHash(StateHistory[0]); 
             var previous = game_decodeStateHash(StateHistory[1]); 
  
-            var bannerInfo = game_setStandardBanners(current, previous.step.phase); 
+            var bannerInfo = game_setStandardBanners(current, previous); 
             var banner = bannerInfo[0]; 
             var changeBanner = bannerInfo[1]; 
             var showClose = bannerInfo[2]; 
@@ -1237,7 +1247,7 @@
                 var next = game_getNextPlayer(player, current.active); 
                 var newStateHash = 
                     (current.active - Math.pow(2, player)) * ACTIVE_PLAYERS_EVS.cram + 
-                    current.first * FIRST_PLAYER_EVS.cram + 
+                    ((player == current.first) ? next : current.first) * FIRST_PLAYER_EVS.cram + 
                     ((player == current.player) ? next : player) * CURRENT_PLAYER_EVS.cram + 
                     current.round * ROUND_EVS.cram + 
                     current.stepNum * STEPNUM_EVS.cram;  
@@ -1493,10 +1503,10 @@
  
         function game_setStandardBanners(currentState, previousState) { 
         console.log(' '.repeat(ind++)+'>game_setStandardBanners'); 
-            // banner: shows the current round 
+            // banner: shows the current round and first player
             var banner = (currentState.round == 0) 
                 ? '' 
-                : 'Round ' + currentState.round + '{| : (' + currentState.numPlayers + ' players)}'; 
+                : 'Round ' + currentState.round + '{| : (' + Options.names[currentState.first] + ' is 1st player)}'; 
  
             // change banner: shows when the phase changes (unless phase changes are shown as steps) 
             var isPhaseChange = (currentState.step.phase != previousState.step.phase) &&  
@@ -1676,6 +1686,7 @@
                             return;
                         }
                         if (StateHistory) {
+                            gui_initializeSteps();
                             game_setCurrentState(StateHistory[0], true);
                         } else {
                             gui_initializeSideTabs(StateHistory == null);
