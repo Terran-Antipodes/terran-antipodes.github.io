@@ -1,0 +1,407 @@
+Suite A:
+  - click on version:
+    o local storage of LOTR_StateHistory is deleted
+    o local storage of LOTR_Settings.altSetup = false
+    o local storage of LOTR_Settings.campaign = false
+    o local storage of LOTR_Settings.names = []
+    o local storage of LOTR_Settings.preferCompendium = true
+    o local storage of LOTR_Settings.previouslyExtended = ["New Game", "Options", "About", "Load/Save"]altSetup is false
+    - manually delete local storage of LOTR_Options if present:
+  - refresh browser:
+    o side tabs New Game, Options, About, Load/Save appear, extend and retract.
+    o background pics are displayed.
+    o sequence image is displayed.
+    o version is displayed.
+  - scroll down:
+    o background pics are loaded and displayed as needed.
+  - hover over side tabs:
+    o side tabs extend.
+    o tooltips are displayed.
+    - end hover:
+      o side tabs retract.
+  - hover over version:
+    o sequence image is removed.
+    - end hover:
+      o displays sequence image.
+  - About:
+    o About text is displayed.
+    - click on background:
+      o removes About text.
+  - Options:
+    o selected - HTML, Show general tooltips, Show tooltips on tabs, Show End/Start of phases
+    o not selected - PDF, Alternate Setup.
+    - select PDF, deselect Show tooltips on tabs:
+    - click on background:
+      o removes Options.
+    - hover over side tabs:
+      o side tabs extend.
+      o tooltips are not displayed.
+  - Load/Save:
+    o displays Load/Save.
+    o save code displayed and selected.
+    - copy save code and save as Suite A.
+
+Suite B: requires save code from Suite A
+  - use version to clear local storage of LOTR_Settings and LOTR_StateHistory:
+  - Options:
+    - select HTML, Show general tooltips, Show tooltips on tabs, Alternate Setup, Show End/Start of phases:
+  - Load/Save:
+    o closes Options
+    - copy save code from Suite A into text area:
+    - click on background:
+      o removes Load/Save.
+    - Options:
+      o selected - HTML, Show general tooltips, Show tooltips on tabs, Alternate Setup, Show End/Start of phases
+      - select PDF, deselect show tootips on tabs, Alternate Setup: 
+  - New Game:
+    o closes Options
+    o asks Regular or Campaign
+    - hover over close (x):
+      o shows tooltip
+    - close:
+      o return to default page
+  - New Game, Regular:
+    o displays options for number of players
+    - select 1:
+      o displays phase "Setup Phase"
+      o displays step "Shuffle Player Deck" (note singular "Deck")
+  - Help:
+    o displays compendium as PDF at "Shuffle Decks".
+    - hover over Compendium and Companion buttons:
+      o tooltip is displayed.
+    - Companion:
+      o displays Companion at "Shuffle Decks".
+    - Alt+Compendium:
+      o opens Compendium PDF in a new tab at "Shuffle Decks".
+    - close tab, Alt+Companion:
+      o opens Companion in a new tab at "Shuffle Decks".
+    - close tab, close Help:
+  - Help:
+    o opens Companion.
+    - close Help:
+  - Next:
+    o side tab Back appears, extends, and retracts.
+    o displays step "Shuffle Encounter Deck".
+    - Back:
+      o Back disappears
+      o displays step "Shuffle Player Deck".
+    - Next:
+      o Back appears without extending.
+      o displays step "Shuffle Encounter Deck".
+  - Next, Next:
+    o displays step "Set Threat Level" (note singular Level).
+  - Next, Next:
+    o displays step "Draw Starting Hand" (note singular Hand).
+  - Next, Next, Next:
+    o side tabs Out of Sequence Enemy / Player Attacks appear, extend and retract.
+    o displays round as "1".
+    o displays step as "Start of the Resource Phase".
+    o phase is not displayed.
+    o Help button is not displayed.
+    o outline appears around 1.1.
+  - Next:
+    o displays phase as "Resource Phase".
+    o outline appears around 1.2.
+    - Help:
+      o displays Companion at "Resource Phase".
+      - Compendium:
+        o displays Compendium as PDF at "Resource Phase".
+      - close Help:
+    - Options:
+      - select HTML, deselect Show general tooltips:
+      - close Options:
+    - Help:
+      o displays Compendium as HTML at "Phase 1 Resource".
+      o 1st paragraph is highlighted.
+      - hover over Compendium and Companion buttons:
+        o no tooltips are displayed. 
+      - close Help:
+  - Load/Save:
+    - copy save code and save as Suite B.
+
+Suite C: requires save code from Suite B
+  - use version to clear local storage of LOTR_Settings and LOTR_StateHistory:
+  - Options:
+    - select HTML, Show End/Start of phases. deselect all others:
+  - Load/Save:
+    - copy save code from Suite B into text area:
+    - click on background:
+      o removes Load/Save.
+      o displays step "Gain Resources".
+  - Next:
+    o displays step "Draw Card & Action Window" (note singular Card).
+    o Action Window is highlighted.
+  - Help:
+    o displays Compendium as HTML at "Phase 1 Resource".
+    o 2nd and 3rd paragraphs are highlighted.
+    o displays Action Window button.
+    - Action Window:
+      - o displays Compendium at "Resource Phase" - "Action Window"
+      - o Action Window text is highlighted.
+      - Alt+Action Window:
+        o displays Compendium in new tab at "Resource Phase" - "Action Window"
+        o Action Window text is highlighted.
+        - close tab:
+      - close Help:
+  - Next:
+    o displays step "End of the Resource Phase Start of the Planning Phase".
+  - Options:
+    - deselect Show End/Start of phases:
+    - close Options:
+      o displays round as 1 with End and Start of Phase messages.
+      o displays phase as "Planning Phase".
+      o displays step "Special Action Window" in highlighted colour.
+      o outline around 2.1 to 2.3.
+  - Next:
+    o displays step "Quest Action Window".
+  - Next, Next, Next:
+    o displays step "Staging Action Window".
+  - Next, Next, Next, Next, Next:
+    o displays step "Deal Shadow Cards...".
+    o skip tab appears, extends and retracts.
+    o skip tab text is "No Combat?"
+  - Load/Save:
+    - copy save code and save as Suite C.
+
+Suite D: requires save code from Suite C
+  - use version to clear local storage of LOTR_Settings and LOTR_StateHistory:
+  - Options:
+    - select HTML, deselect all others:
+  - Load/Save:
+    - copy save code from Suite C into text area:
+    - click on background:
+      o removes Load/Save.
+      o skip tab extends and retracts.
+      o displays step "Deal Shaow Cards...".
+      o skip tab text is "No Combat?"
+  - Next:
+    o skip tab extends and retracts.
+    o displays step "Choose Attacking Enemy...".
+    o skip tab text is "The player is not being attacked by an Enemy?"
+    - Next, Next, Next:
+      o displays step "Determine Combat Damage to Defender".
+    - Next:
+      o displays step "Choose Attacking Enemy....".
+      o skip tab text is "The player is not being attacked by another Enemy?" (note "another" instead of "an")
+  - Skip:
+    o skip tab extends and retracts.
+    o displays step "Choose Enemy to Attack...".
+    o skip tab text is "The player is not attacking an Enemy?"
+  - Next, Next:
+    o displays step "Determine Combat Damage to Enemy...".
+    - Next:
+      o displays step "Choose Enemy to Attack...".
+      o skip tab text is "The player is not attacking another Enemy?" (note "another" instead of "an")
+  - Skip:
+    o displays step "Discard All Shadow Cards".
+  - Next, Next, Next:
+    o displays step "End of Round Action Window".
+    - Next:
+      o displays round as "Round 2".
+      o displays step "Gain Resources".
+      o background images change.
+  - Load/Save:
+    - copy save code and save as Suite D.
+
+Suite E: 
+  - use version to clear local storage of LOTR_Settings and LOTR_StateHistory:
+  - refresh browser:
+    o side tabs New Game, Options, About, Load/Save appear, extend and retract.
+    o background pics are displayed.
+    o sequence image is displayed.
+    o version is displayed.
+  - Options:
+    - select HTML, Alternate Setup:
+    - deselect all others:
+  - New Game, Regular, 3:
+    o no close button
+    - Player 2: Charlie
+    - Player 3: Archie
+    - swap 2 & 3:
+      o player 1 is 'Player 1'
+      o player 2 is 'Archie'
+      o player 3 is 'Charlie'
+    - swap 1 & 2:
+      o player 1 is 'Archie'
+      o player 2 is 'Player 2'
+      o player 3 is 'Charlie'
+    - Player 2: Betty
+    - Done:
+      o displays phase "Setup Phase"
+      o displays step "Place Heroes and Player Decks" (note plural "Decks")
+  - Load/Save:
+    - copy save code and save as Suite E.
+
+Suite F: requires save code from Suite E
+  - use version to clear local storage of LOTR_Settings and LOTR_StateHistory:
+  - Options:
+    - select HTML, Alternate Setup:
+    - deselect all others:
+  - Load/Save:
+    - copy save code from Suite E into text area:
+    - click on background:
+      o removes Load/Save.
+      o displays step "Place Heroes and Player Decks".
+  - Next, Next, Next:
+    o displays step "Set Theat Levels" (note pluralized "Levels")
+  - Next, Next:
+    o displays step "Determine First Player"
+    o buttons displayed for Archie, Betty, Charlie
+    - Betty:
+      o displays step "Perform Scenario Setup"
+  - Next, Next, Next:
+    o displays step "Draw Starting Hands" (note pluralized "Hands").
+  - Next: 
+    o side tabs Elimination, Out of Sequence Enemy / Player Attacks appear, extend and retract.
+    o displays round as "1  (Betty is 1st player)".
+    o displays phase as "Resource Phase".
+    o displays step "Gain Resources".
+    o Help button is not displayed.
+    o outline appears around 1.2.
+  - Next, Next:
+    o display step "Betty Special Action Window".
+  - Next:
+    o display step "Charlie Special Action Window".
+  - Next:
+    o display step "Archie Special Action Window".
+  - Next, Next, Next:
+    o displays step "Betty Staging".
+  - Next, Next, Next:
+    o displays step "Staging Action Window".
+  - Next, Next, Next, Next:
+    o displays step "Engagement Checks...".
+  - Next:
+    o skip tab appears, extends and retracts.
+    o displays step "Betty Deal Shadow Cards...".
+    o skip tab text is "No Combat?"
+  - Load/Save:
+    - copy save code and save as Suite F.
+
+Suite G: requires save code from Suite C
+  - use version to clear local storage of LOTR_Settings and LOTR_StateHistory:
+  - Options:
+    - select HTML, deselect all others:
+  - Load/Save:
+    - copy save code from Suite C into text area:
+    - click on background:
+      o skip tab appears, extends and retracts.
+      o displays step "Deal Shadow Cards...".
+      o skip tab text is "No Combat?"
+  - Skip:
+    o displays step "Ready All Cards".
+  - Next:
+    o displays step "Raise Threat Level" (note singular "Level")
+  - Next:
+    o displays step "End of Round Action Window".
+  - Next:
+    o displays round as "Round 2".
+    o display step "Gain Resources".
+
+Suite H: requires save code from Suite F
+  - use version to clear local storage of LOTR_Settings and LOTR_StateHistory:
+  - Options:
+    - select HTML, Alternate Setup:
+    - deselect all others:
+  - Load/Save:
+    - copy save code from Suite F into text area:
+    - click on background:
+      o skip tab appears, extends and retracts.
+      o displays step "Betty Deal Shadow Cards...".
+      o skip tab text is "No Combat?"
+  - Next:
+    o skip tab disappears.
+    o displays step "Charlie Deal Shadow Cards...".
+  - Next:
+    o displays step "Archie Deal Shadow Cards...".
+  - Next:
+    o skip tab appears, extends and retracts.
+    o displays step "Betty Choose Attacking Enemy...".
+    o skip tab text is "Betty is not being attacked by an Enemy".
+  - Next, Next, Next, Next:
+    o skip tab appears, extends and retracts.
+    o displays step "Betty Choose Attacking Enemy...".
+    o skip tab text is "Betty is not being attacked by another Enemy" (note "another").
+  - Skip:
+    o displays step "Charlie Choose Attacking Enemy...".
+  - Skip, Skip:
+    o skip tab appears, extends and retracts.
+    o displays step "Betty Choose Enemy to Attack...".
+    o skip tab text is "Betty is not attacking an Enemy".
+  - Skip, Skip, Skip:
+    o displays step "Discard All Shadow Cards".
+  - Next, Next:
+    o displays step "Raise Threat Levels" (note pluralized "Levels").
+  - Next:
+    o displays step "Pass First Player Token to Charlie...".
+  - Next:
+    o displays round as "Round 2 (Charlie is 1st player)".
+    o displays step "Gain Resources".
+  - Load/Save:
+    - copy save code and save as Suite H.
+
+Suite I: requires save code from Suite F
+  - use version to clear local storage of LOTR_Settings and LOTR_StateHistory:
+  - Options:
+    - select HTML, Alternate Setup:
+    - deselect all others:
+  - Load/Save:
+    - copy save code from Suite F into text area:
+    - click on background:
+      o skip tab appears, extends and retracts.
+      o displays step "Betty Deal Shadow Cards...".
+      o skip tab text is "No Combat?".
+  - Out of Sequence Enemy Attack:
+    o displays phase as "Special Phase Out of Sequence Combat Stage".
+    o displays step "Deal Shadow Card".
+    o tabs Out of Sequence Enemy / Player Attack disappear.
+  - Next, Next, Next, Next:
+    o returns to step "Betty Deal Shadow Cards...".
+  - Out of Sequence Player Attack:
+    o displays phase as "Special Phase Out of Sequence Combat Stage".
+    o displays step "Declare Attacked Enemy and Attackers...".
+    o tabs Out of Sequence Enemy / Player Attack disappear.
+  - Next, Next, Next:
+    o returns to step "Betty Deal Shadow Cards...".
+
+Suite J: requires save code from Suite F
+  - use version to clear local storage of LOTR_Settings and LOTR_StateHistory:
+  - Options:
+    - select HTML, Alternate Setup:
+    - deselect all others:
+  - Load/Save:
+    - copy save code from Suite F into text area:
+    - click on background:
+      o skip tab appears, extends and retracts.
+      o displays round as "Round 1 (Betty is 1st player)"
+      o displays step "Betty Deal Shadow Cards...".
+      o skip tab text is "No Combat?".
+  - Elimination:
+    o shows option for each player (Archie, Betty, Charlie), plus Cancel.
+    - Cancel:
+      o displays step "Betty Deal Shadow Cards...".
+    - Next:
+      o displays step "Charlie Deal Shadow Cards...".
+    - Next:
+      o displays step "Archie Deal Shadow Cards...".
+    - Next:
+      o displays round as "Round 1 (Betty is 1st player)"
+      o displays step "Betty Choose Attacking Enemy...".
+  - Elimination:
+      o shows option for each player (Archie, Betty, Charlie), plus Cancel
+    - select Betty:
+      o displays round as "Round 1 (Charlie is 1st player)"
+      o displays step "Charlie Choose Attacking Enemy...".
+    - Skip:
+      o displays step "Archie Choose Attacking Enemy...".
+    - Skip:
+      o displays step "Charlie Choose Enemy...".
+  - Elimination:
+    o shows option for remaining players (Charlie, Archie), plus Cancel.
+    - select Archie:
+      o displays step "Charlie Choose Enemy...".
+      o displays round as "Round 1" (note no display of 1st player).
+      o Elimination tab disappears
+  - Skip, Next, Next:
+    o displays step "Raise Threat Level" (note singular "Level").
+  - New Game, Regular, 4:
+    o displays player names "Archie", "Betty", "Charlie", "Player 4"
