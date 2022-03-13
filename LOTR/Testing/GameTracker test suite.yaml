@@ -1,5 +1,12 @@
 Suite A:
-  - clear browser local storage of LOTR_Options and LOTR_StateHistory:
+  - click on version:
+    o local storage of LOTR_StateHistory is deleted
+    o local storage of LOTR_Settings.altSetup = false
+    o local storage of LOTR_Settings.campaign = false
+    o local storage of LOTR_Settings.names = []
+    o local storage of LOTR_Settings.preferCompendium = true
+    o local storage of LOTR_Settings.previouslyExtended = ["New Game", "Options", "About", "Load/Save"]altSetup is false
+    - manually delete local storage of LOTR_Options if present:
   - refresh browser:
     o side tabs New Game, Options, About, Load/Save appear, extend and retract.
     o background pics are displayed.
@@ -35,14 +42,17 @@ Suite A:
     - copy save code and save as Suite A.
 
 Suite B: requires save code from Suite A
-  - clear browser local storage of LOTR_Options and LOTR_StateHistory:
+  - use version to clear local storage of LOTR_Settings and LOTR_StateHistory:
+  - Options:
+    - select HTML, Show general tooltips, Show tooltips on tabs, Alternate Setup, Show End/Start of phases:
   - Load/Save:
+    o closes Options
     - copy save code from Suite A into text area:
     - click on background:
       o removes Load/Save.
     - Options:
-      o selected - PDF, Show general tooltips, Show End/Start of phases
-      o not selected - HTML, Show tooltips on tabs, Alternate Setup. 
+      o selected - HTML, Show general tooltips, Show tooltips on tabs, Alternate Setup, Show End/Start of phases
+      - select PDF, deselect show tootips on tabs, Alternate Setup: 
   - New Game:
     o closes Options
     o asks Regular or Campaign
@@ -110,16 +120,14 @@ Suite B: requires save code from Suite A
     - copy save code and save as Suite B.
 
 Suite C: requires save code from Suite B
-  - clear browser local storage of LOTR_Options and LOTR_StateHistory:
+  - use version to clear local storage of LOTR_Settings and LOTR_StateHistory:
+  - Options:
+    - select HTML, Show End/Start of phases. deselect all others:
   - Load/Save:
     - copy save code from Suite B into text area:
     - click on background:
       o removes Load/Save.
       o displays step "Gain Resources".
-    - Options:
-      o selected - HTML, Show End/Start of phases
-      o not selected - PDF, Show tooltips on tabs, Show general tooltips, Alternate Setup. 
-      - close options:
   - Next:
     o displays step "Draw Card & Action Window" (note singular Card).
     o Action Window is highlighted.
@@ -156,7 +164,9 @@ Suite C: requires save code from Suite B
     - copy save code and save as Suite C.
 
 Suite D: requires save code from Suite C
-  - clear browser local storage of LOTR_Options and LOTR_StateHistory:
+  - use version to clear local storage of LOTR_Settings and LOTR_StateHistory:
+  - Options:
+    - select HTML, deselect all others:
   - Load/Save:
     - copy save code from Suite C into text area:
     - click on background:
@@ -194,7 +204,7 @@ Suite D: requires save code from Suite C
     - copy save code and save as Suite D.
 
 Suite E: 
-  - clear browser local storage of LOTR_Options and LOTR_StateHistory:
+  - use version to clear local storage of LOTR_Settings and LOTR_StateHistory:
   - refresh browser:
     o side tabs New Game, Options, About, Load/Save appear, extend and retract.
     o background pics are displayed.
@@ -208,6 +218,7 @@ Suite E:
     - Player 2: Charlie
     - Player 3: Archie
     - swap 2 & 3:
+      o player 1 is 'Player 1'
       o player 2 is 'Archie'
       o player 3 is 'Charlie'
     - swap 1 & 2:
@@ -222,7 +233,10 @@ Suite E:
     - copy save code and save as Suite E.
 
 Suite F: requires save code from Suite E
-  - clear browser local storage of LOTR_Options and LOTR_StateHistory:
+  - use version to clear local storage of LOTR_Settings and LOTR_StateHistory:
+  - Options:
+    - select HTML, Alternate Setup:
+    - deselect all others:
   - Load/Save:
     - copy save code from Suite E into text area:
     - click on background:
@@ -260,12 +274,14 @@ Suite F: requires save code from Suite E
     - copy save code and save as Suite F.
 
 Suite G: requires save code from Suite C
-  - clear browser local storage of LOTR_Options and LOTR_StateHistory:
+  - use version to clear local storage of LOTR_Settings and LOTR_StateHistory:
+  - Options:
+    - select HTML, deselect all others:
   - Load/Save:
     - copy save code from Suite C into text area:
     - click on background:
       o skip tab appears, extends and retracts.
-      o displays step "Betty Deal Shadow Cards...".
+      o displays step "Deal Shadow Cards...".
       o skip tab text is "No Combat?"
   - Skip:
     o displays step "Ready All Cards".
@@ -276,7 +292,10 @@ Suite G: requires save code from Suite C
     o display step "Gain Resources".
 
 Suite H: requires save code from Suite F
-  - clear browser local storage of LOTR_Options and LOTR_StateHistory:
+  - use version to clear local storage of LOTR_Settings and LOTR_StateHistory:
+  - Options:
+    - select HTML, Alternate Setup:
+    - deselect all others:
   - Load/Save:
     - copy save code from Suite F into text area:
     - click on background:
@@ -292,7 +311,7 @@ Suite H: requires save code from Suite F
     o skip tab appears, extends and retracts.
     o displays step "Betty Choose Attacking Enemy...".
     o skip tab text is "Betty is not being attacked by an Enemy".
-  - Next, Next, Next:
+  - Next, Next, Next, Next:
     o skip tab appears, extends and retracts.
     o displays step "Betty Choose Attacking Enemy...".
     o skip tab text is "Betty is not being attacked by another Enemy" (note "another").
@@ -313,18 +332,35 @@ Suite H: requires save code from Suite F
     o displays step "Gain Resources".
   - Load/Save:
     - copy save code and save as Suite H.
-  
 
-
-
+Suite I: requires save code from Suite F
+  - use version to clear local storage of LOTR_Settings and LOTR_StateHistory:
+  - Options:
+    - select HTML, Alternate Setup:
+    - deselect all others:
+  - Load/Save:
+    - copy save code from Suite F into text area:
+    - click on background:
+      o skip tab appears, extends and retracts.
+      o displays step "Betty Deal Shadow Cards...".
+      o skip tab text is "No Combat?".
+  - Out of Sequence Enemy Attack:
+    o displays phase as "Special Phase Out of Sequence Combat Stage".
+    o displays step "Deal Shadow Card".
+  - Next, Next, Next, Next:
+    o returns to step "Betty Deal Shadow Cards...".
+  - Out of Sequence Player Attack:
+    o displays phase as "Special Phase Out of Sequence Combat Stage".
+    o displays step "Declare Attacked Enemy and Attackers...".
+  - Next, Next, Next:
+    o returns to step "Betty Deal Shadow Cards...".
 
 Test Topics:
   - Not yet covered:
-    - multiple players: plural for of 'deck(s)', etc.
-    - multiple players: pass 1st player token to player name
-    - multiple players: last step is pass the token
     - can eliminate player
     - eliminated player skipped in sequence
     - eliminating the first player automatically changes 1st player
     - eliminating penultimate player remove eliminate option 
-    
+    - changing start sequence option does not affect current game
+    - changing start sequence option does not affect loaded game
+    - use names from previous game
