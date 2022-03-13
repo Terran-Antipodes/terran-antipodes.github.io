@@ -2,6 +2,44 @@
 This website is an SPA intended to provide a non-commercial aid while playing the [Lord of the Rings LCG](https://www.fantasyflightgames.com/en/products/the-lord-of-the-rings-the-card-game/) from [Final Flight Game](https://www.fantasyflightgames.com/en/index/).
 
 ## Version History
+### v2.0.0 Feature Complete Release
+Players in multiplayer games can be named.
+Tracks and displays the 1st player.
+Players can be eliminated from the game.
+Removed Victory Points.
+Added Out Of Sequence Player Attacks.
+Added Load/Save.
+Eliminated need for "Combat Check" step.
+Removed format updating.
+- Internal:
+  Improved use of {} for alternate wordings.
+  Removed use of [] for alternate state text.
+  Eliminated use of ALLPLAYER.
+  Reorganized and renamed code functions.
+  Isolated auto-skip of stages to new function.
+  Standardized naming of sliding buttons as side tabs.
+  Added support for side tabs at bottom of screen.
+  Auto-advance in Options and Load/Save.
+  Added suite of tests.
+  Removed unneeded styling of active anchor tag.
+  Initial state now includes active player info.
+  Standardized variable naming for step vs stepNum.
+  Auto-advance if Show Start/End phase option is deselected while on a Start/End phase step.
+  Standardized tooltip text separator as tilde.
+  Options are now applied to the current state's display when Options is closed.
+  Minor text revisions.
+  Standardized naming of elements formerly identified as GAME_HELP to HELP_AREA.
+  Avoid flashing of dialogues on startup by moving the hiding of elements to earlier in the code execution.
+  Eliminated unneeded postPhaseChange step type.
+  Display 1st player name with round information.
+  Introduced Settings to hold game specific parameters that are not part of the StateHistory.
+  Extracted game specific items from Options and placed in new Settings structure.
+  Automatic activation/suppression of trace messages.
+  Added Settings to browser local storage.
+  Options are not cleared by clicking on version.
+  Compendium/Companion preference now set in methods rather than button.
+  Added fast fades.
+  Corrected several issues with active players by adding new, always active player 0.
 #### v1.8.4 Image Processing
 JIT Image loading
 StateHistory: changed from retreival of local storage string to global array.
