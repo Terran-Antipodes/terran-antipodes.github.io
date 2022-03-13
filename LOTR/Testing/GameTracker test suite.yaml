@@ -242,7 +242,9 @@ Suite F: requires save code from Suite E
     - click on background:
       o removes Load/Save.
       o displays step "Place Heroes and Player Decks".
-  - Next, Next, Next, Next, Next:
+  - Next, Next, Next:
+    o displays step "Set Theat Levels" (note pluralized "Levels")
+  - Next, Next:
     o displays step "Determine First Player"
     o buttons displayed for Archie, Betty, Charlie
     - Betty:
@@ -250,7 +252,7 @@ Suite F: requires save code from Suite E
   - Next, Next, Next:
     o displays step "Draw Starting Hands" (note pluralized "Hands").
   - Next: 
-    o side tabs Out of Sequence Enemy / Player Attacks appear, extend and retract.
+    o side tabs Elimination, Out of Sequence Enemy / Player Attacks appear, extend and retract.
     o displays round as "1  (Betty is 1st player)".
     o displays phase as "Resource Phase".
     o displays step "Gain Resources".
@@ -258,13 +260,15 @@ Suite F: requires save code from Suite E
     o outline appears around 1.2.
   - Next, Next:
     o display step "Betty Special Action Window".
-    - Next:
-      o display step "Charlie Special Action Window".
-    - Next:
-      o display step "Archie Special Action Window".
+  - Next:
+    o display step "Charlie Special Action Window".
+  - Next:
+    o display step "Archie Special Action Window".
   - Next, Next, Next:
     o displays step "Betty Staging".
-  - Next, Next, Next, Next, Next, Next, Next:
+  - Next, Next, Next:
+    o displays step "Staging Action Window".
+  - Next, Next, Next, Next:
     o displays step "Engagement Checks...".
   - Next:
     o skip tab appears, extends and retracts.
@@ -285,7 +289,9 @@ Suite G: requires save code from Suite C
       o skip tab text is "No Combat?"
   - Skip:
     o displays step "Ready All Cards".
-  - Next, Next:
+  - Next:
+    o displays step "Raise Threat Level" (note singular "Level")
+  - Next:
     o displays step "End of Round Action Window".
   - Next:
     o displays round as "Round 2".
@@ -347,20 +353,55 @@ Suite I: requires save code from Suite F
   - Out of Sequence Enemy Attack:
     o displays phase as "Special Phase Out of Sequence Combat Stage".
     o displays step "Deal Shadow Card".
+    o tabs Out of Sequence Enemy / Player Attack disappear.
   - Next, Next, Next, Next:
     o returns to step "Betty Deal Shadow Cards...".
   - Out of Sequence Player Attack:
     o displays phase as "Special Phase Out of Sequence Combat Stage".
     o displays step "Declare Attacked Enemy and Attackers...".
+    o tabs Out of Sequence Enemy / Player Attack disappear.
   - Next, Next, Next:
     o returns to step "Betty Deal Shadow Cards...".
 
-Test Topics:
-  - Not yet covered:
-    - can eliminate player
-    - eliminated player skipped in sequence
-    - eliminating the first player automatically changes 1st player
-    - eliminating penultimate player remove eliminate option 
-    - changing start sequence option does not affect current game
-    - changing start sequence option does not affect loaded game
-    - use names from previous game
+Suite J: requires save code from Suite F
+  - use version to clear local storage of LOTR_Settings and LOTR_StateHistory:
+  - Options:
+    - select HTML, Alternate Setup:
+    - deselect all others:
+  - Load/Save:
+    - copy save code from Suite F into text area:
+    - click on background:
+      o skip tab appears, extends and retracts.
+      o displays round as "Round 1 (Betty is 1st player)"
+      o displays step "Betty Deal Shadow Cards...".
+      o skip tab text is "No Combat?".
+  - Elimination:
+    o shows option for each player (Archie, Betty, Charlie), plus Cancel.
+    - Cancel:
+      o displays step "Betty Deal Shadow Cards...".
+    - Next:
+      o displays step "Charlie Deal Shadow Cards...".
+    - Next:
+      o displays step "Archie Deal Shadow Cards...".
+    - Next:
+      o displays round as "Round 1 (Betty is 1st player)"
+      o displays step "Betty Choose Attacking Enemy...".
+  - Elimination:
+      o shows option for each player (Archie, Betty, Charlie), plus Cancel
+    - select Betty:
+      o displays round as "Round 1 (Charlie is 1st player)"
+      o displays step "Charlie Choose Attacking Enemy...".
+    - Skip:
+      o displays step "Archie Choose Attacking Enemy...".
+    - Skip:
+      o displays step "Charlie Choose Enemy...".
+  - Elimination:
+    o shows option for remaining players (Charlie, Archie), plus Cancel.
+    - select Archie:
+      o displays step "Charlie Choose Enemy...".
+      o displays round as "Round 1" (note no display of 1st player).
+      o Elimination tab disappears
+  - Skip, Next, Next:
+    o displays step "Raise Threat Level" (note singular "Level").
+  - New Game, Regular, 4:
+    o displays player names "Archie", "Betty", "Charlie", "Player 4"

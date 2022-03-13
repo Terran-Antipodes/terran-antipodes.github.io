@@ -148,6 +148,84 @@
             opacity: 1; 
             transition: all 3s; 
         } 
+ 
+        .fade-in { 
+            animation: fadeIn ease 2s; 
+            -webkit-animation: fadeIn ease 2s; 
+            -moz-animation: fadeIn ease 2s; 
+            -o-animation: fadeIn ease 2s; 
+        } 
+        
+        .fade-in-fast { 
+            animation: fadeIn ease 0.5s; 
+            -webkit-animation: fadeIn ease 0.5s; 
+            -moz-animation: fadeIn ease 0.5s; 
+            -o-animation: fadeIn ease 0.5s; 
+        } 
+
+        @keyframes fadeIn { 
+            0% { opacity: 0; }  
+            100% { opacity: 1; } 
+        } 
+
+        @-moz-keyframes fadeIn { 
+            0% { opacity: 0; }  
+            100% { opacity: 1; } 
+        } 
+
+        @-webkit-keyframes fadeIn { 
+            0% { opacity: 0; }  
+            100% { opacity: 1; } 
+        } 
+
+        @-o-keyframes fadeIn { 
+            0% { opacity: 0; }  
+            100% { opacity: 1; } 
+        } 
+
+        @-ms-keyframes fadeIn { 
+            0% { opacity: 0; }  
+            100% { opacity: 1; } 
+        } 
+
+        .fade-out { 
+            animation: fadeOut ease 2s; 
+            -webkit-animation: fadeOut ease 2s; 
+            -moz-animation: fadeOut ease 2s; 
+            -o-animation: fadeOut ease 2s; 
+        } 
+
+        .fade-out-fast { 
+            animation: fadeOut ease 0.5s; 
+            -webkit-animation: fadeOut ease 0.5s; 
+            -moz-animation: fadeOut ease 0.5s; 
+            -o-animation: fadeOut ease 0.5s; 
+        } 
+
+        @keyframes fadeOut { 
+            0% { opacity: 1; }  
+            100% { opacity: 0; } 
+        } 
+
+        @-moz-keyframes fadeOut { 
+            0% { opacity: 1; }  
+            100% { opacity: 0; } 
+        } 
+
+        @-webkit-keyframes fadeOut { 
+            0% { opacity: 1; }  
+            100% { opacity: 0; } 
+        } 
+
+        @-o-keyframes fadeOut { 
+            0% { opacity: 1; }  
+            100% { opacity: 0; } 
+        } 
+
+        @-ms-keyframes fadeOut { 
+            0% { opacity: 1; }  
+            100% { opacity: 0; } 
+        } 
     </style> 
     <style> /* Custom radio buttons and checkboxes */ 
         /* Style for the label */ 
@@ -477,72 +555,6 @@
  
         .modalBtn.small { 
             font-size: 2vw; 
-        } 
- 
-        /* Used to fade in the banner when changing to a new phase */ 
-        .fade-in { 
-            animation: fadeIn ease 2s; 
-            -webkit-animation: fadeIn ease 2s; 
-            -moz-animation: fadeIn ease 2s; 
-            -o-animation: fadeIn ease 2s; 
-        } 
- 
-        @keyframes fadeIn { 
-            0% { opacity: 0; }  
-            100% { opacity: 1; } 
-        } 
- 
-        @-moz-keyframes fadeIn { 
-            0% { opacity: 0; }  
-            100% { opacity: 1; } 
-        } 
- 
-        @-webkit-keyframes fadeIn { 
-            0% { opacity: 0; }  
-            100% { opacity: 1; } 
-        } 
- 
-        @-o-keyframes fadeIn { 
-            0% { opacity: 0; }  
-            100% { opacity: 1; } 
-        } 
- 
-        @-ms-keyframes fadeIn { 
-            0% { opacity: 0; }  
-            100% { opacity: 1; } 
-        } 
- 
-        /* Used to fade out the banner when moving to a new step */ 
-        .fade-out { 
-            animation: fadeOut ease 2s; 
-            -webkit-animation: fadeOut ease 2s; 
-            -moz-animation: fadeOut ease 28s; 
-            -o-animation: fadeOut ease 2s; 
-        } 
- 
-        @keyframes fadeOut { 
-            0% { opacity: 1; }  
-            100% { opacity: 0; } 
-        } 
- 
-        @-moz-keyframes fadeOut { 
-            0% { opacity: 1; }  
-            100% { opacity: 0; } 
-        } 
- 
-        @-webkit-keyframes fadeOut { 
-            0% { opacity: 1; }  
-            100% { opacity: 0; } 
-        } 
- 
-        @-o-keyframes fadeOut { 
-            0% { opacity: 1; }  
-            100% { opacity: 0; } 
-        } 
- 
-        @-ms-keyframes fadeOut { 
-            0% { opacity: 1; }  
-            100% { opacity: 0; } 
         } 
  
         #NamesArea .nameInp { 
@@ -1139,7 +1151,7 @@
         function newgame_start(numPlayers) { // Resets the page for a new game 
             logenter('newgame_start('+numPlayers+')');
             NAMES_AREA.innerHTML="";
-            var newStateHash = (Math.pow(2, numPlayers) - 1) * ACTIVE_PLAYERS_EVS.cram + 
+            var newStateHash = (Math.pow(2, numPlayers + 1) - 1) * ACTIVE_PLAYERS_EVS.cram + 
                                1 * FIRST_PLAYER_EVS.cram + 
                                1 * CURRENT_PLAYER_EVS.cram + 
                                0 * ROUND_EVS.cram + 
@@ -1159,7 +1171,7 @@
                     player: 1, 
                     round: 0, 
                     first: 1, 
-                    active: ' ' + '1'.repeat(numPlayers) 
+                    active: '1'.repeat(numPlayers + 1) 
                 }; 
             start = game_autoAdvanceStep(start) 
             game_advanceToStep(start.stepNum); 
@@ -1181,7 +1193,7 @@
             }; 
  
             var newStateHash = 
-                parseInt(toState.active.trim(), 2) * ACTIVE_PLAYERS_EVS.cram + 
+                parseInt(toState.active, 2) * ACTIVE_PLAYERS_EVS.cram + 
                 toState.first * FIRST_PLAYER_EVS.cram + 
                 toState.player * CURRENT_PLAYER_EVS.cram + 
                 toState.round * ROUND_EVS.cram + 
@@ -1231,10 +1243,10 @@
             var players = modulo(stateHash, ACTIVE_PLAYERS_EVS.extract).toString(2); 
             var stepNum = modulo(parseInt(stateHash, 10), STEPNUM_EVS.extract); 
             var decoded = { 
-                active     : ' ' + players, 
+                active     : players, 
                 first      : modulo(stateHash, FIRST_PLAYER_EVS.extract), 
                 player     : modulo(stateHash, CURRENT_PLAYER_EVS.extract), 
-                numPlayers : players.length, 
+                numPlayers : players.length - 1, 
                 round      : modulo(stateHash, ROUND_EVS.extract), 
                 stepNum    : stepNum, 
                 step       : Sequence.steps[stepNum] 
@@ -1262,9 +1274,9 @@
             do { 
                 var next = game_getNextPlayer(player, current.active); 
                 var newStateHash = 
-                    (current.active - Math.pow(2, player)) * ACTIVE_PLAYERS_EVS.cram + 
+                    (parseInt(current.active,2) - Math.pow(2, current.numPlayers-player)) * ACTIVE_PLAYERS_EVS.cram + 
                     ((player == current.first) ? next : current.first) * FIRST_PLAYER_EVS.cram + 
-                    ((player == current.player) ? next : player) * CURRENT_PLAYER_EVS.cram + 
+                    ((player == current.player) ? next : current.player) * CURRENT_PLAYER_EVS.cram + 
                     current.round * ROUND_EVS.cram + 
                     current.stepNum * STEPNUM_EVS.cram;  
                 buttons.push(gui_generateButton(Settings.names[player], 'game_setCurrentState(' + newStateHash + ')')); 
@@ -1311,7 +1323,7 @@
                 text = text.replace('{pp}', (current.numPlayers == 1) ? "" : Settings.names[current.player] + ": "); 
                  
                 // convert {a|b} to "a" if there is only one player, and "b" if there are more than one 
-                text = (text.replace(RegexMultiplayerMatch, (current.numPlayers == 1) ? "$1" : "$2")); 
+                text = (text.replace(RegexMultiplayerMatch, ((current.active.match(/1/g) || []).length == 2) ? "$1" : "$2")); 
  
                 // convert {a=b} to "a" if the player is the same as the last step's, and "b" if it is a different player.
                 var same = (previous == null) || 
@@ -1366,9 +1378,6 @@
             logenter('game_setCurrentState'); 
             var previous = game_decodeStateHash(StateHistory[0]); 
             var current = game_decodeStateHash(currentStateHash); 
-            console.log('previous step: #' + previous.stepNum + '(' + previous.step.name + ')');
-            console.log('current step: #' + current.stepNum + '(' + current.step.name + ')');
-
             if (isRefresh) {
                 // If refresh is used on a step that should be skipped then advance to next step.
                 // This can occur when Options have been changed.
@@ -1489,7 +1498,7 @@
             } 
  
             // SideTab: eliminate player 
-            var showElim = ((current.players > 1) && (current.step.phase != "Setup")); 
+            var showElim = (((current.active.match(/1/g) || []).length > 2) && (current.step.phase != "Setup")); 
  
             // SideTab: out of sequence combat 
             var showOOS = (current.step.phase != "Setup") && (!current.step.phase.startsWith("Special")); 
@@ -1686,13 +1695,13 @@
             CODE_BOX.value = btoa(b36 + '|' + ((Settings) ? JSON.stringify(Settings) : ''));
 
             if (LOAD_AREA.classList.contains('hidden')) { 
-                LOAD_AREA.classList.add('fade-in'); 
+                LOAD_AREA.classList.add('fade-in-fast'); 
                 LOAD_AREA.classList.remove('hidden'); 
                 LOAD_AREA.addEventListener('animationend', loadFadeinDone); 
             } 
  
             function loadFadeinDone() { 
-                LOAD_AREA.classList.remove('fade-in'); 
+                LOAD_AREA.classList.remove('fade-in-fast'); 
                 LOAD_AREA.removeEventListener('animationend', loadFadeinDone); 
                 window.addEventListener('click', loadUserClicked); 
                 CODE_BOX.focus();
@@ -1725,14 +1734,14 @@
                         }
                     }
                     window.removeEventListener('click', loadUserClicked); 
-                    LOAD_AREA.classList.add('fade-out'); 
+                    LOAD_AREA.classList.add('fade-out-fast'); 
                     LOAD_AREA.addEventListener('animationend', loadFadeoutDone); 
                 } 
             } 
 
             function loadFadeoutDone() { 
                 LOAD_AREA.classList.add('hidden'); 
-                LOAD_AREA.classList.remove('fade-out'); 
+                LOAD_AREA.classList.remove('fade-out-fast'); 
                 LOAD_AREA.removeEventListener('animationend', loadFadeoutDone); 
             } 
 
@@ -1974,7 +1983,7 @@
             // background image and outlining box: 
             // (this must be done AFTER the modal dialogue has been rendered) 
             gui_showOutline(); 
-            logleave('gui_adgui_showModaljustBackground'); 
+            logleave('gui_showModal'); 
         } 
  
         function gui_showOutline() { 
