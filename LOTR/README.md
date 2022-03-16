@@ -2,6 +2,10 @@
 This website is an SPA intended to provide a non-commercial aid while playing the [Lord of the Rings LCG](https://www.fantasyflightgames.com/en/products/the-lord-of-the-rings-the-card-game/) from [Final Flight Game](https://www.fantasyflightgames.com/en/index/).
 
 ## Version History
+#### v2.0.1
+- Internal:
+  Bug Fix: function logleave() did not return values in live environment.
+  Removed test files from main branch.
 ### v2.0.0 Feature Complete Release
 Players in multiplayer games can be named.
 Tracks and displays the 1st player.
