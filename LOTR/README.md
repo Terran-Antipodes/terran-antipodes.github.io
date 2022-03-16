@@ -31,6 +31,10 @@ When the GameTracker is opened, the following elements should be visible:
 ### Getting Started
 Simply move to the *New Game* side tab and click on it. The Main Dialogue will appear and guide you through setting up a game.
 ## Version History
+#### v2.0.1
+- Internal:
+  Bug Fix: function logleave() did not return values in live environment.
+  Removed test files from main branch.
 ### v2.0.0 Feature Complete Release
 Players in multiplayer games can be named.
 Tracks and displays the 1st player.

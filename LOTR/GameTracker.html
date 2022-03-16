@@ -779,7 +779,7 @@
         </div>
     </div> 
     <script> /*Set up */ 
-        var VERSION = 'v2.0.0x'; 
+        var VERSION = 'v2.0.1x'; 
  
         /* define game steps */ 
         var Sequence = JSON.parse( 
@@ -1052,7 +1052,7 @@
         } else { 
             function log(message) {}
             function logenter(meesage) {}
-            function logleave(p1, p2) {}
+            function logleave(p1, p2) { return p1; }
         }
     </script> 
     <script> /* main code */ 
@@ -1333,14 +1333,9 @@
         function game_findStepNum(searchName) { 
             logenter('game_findStepNum('+searchName+')'); 
             var step = null; 
+            var found = false; 
             for (step = 0; step < Sequence.steps.length; step++) { 
-                var names = (Array.isArray(Sequence.steps[step].name))  
-                    ? Sequence.steps[step].name 
-                    : [ Sequence.steps[step].name ];  
-                var found = false; 
-                names.forEach(name => { 
-                    found |= (name.startsWith(searchName)); 
-                }); 
+                found = (Sequence.steps[step].name.startsWith(searchName));
                 if (found) { 
                     break 
                 }; 
