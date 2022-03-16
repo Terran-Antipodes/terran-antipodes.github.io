@@ -1,6 +1,35 @@
 # GameTracker
 This website is an SPA intended to provide a non-commercial aid while playing the [Lord of the Rings LCG](https://www.fantasyflightgames.com/en/products/the-lord-of-the-rings-the-card-game/) from [Final Flight Game](https://www.fantasyflightgames.com/en/index/).
 
+## Rights and Permissions
+This GameTracker webpage is the property of Clive Pottinger. Email any comments or concerns to terran.antipodes@gmail.com.
+All displayed images, arts, fonts and The Lord of The Rings: The Card Game are copyrighted at © Fantasy Flight Games.  
+The copyrightable portions of The Lord of the Rings: The Card Game and its expansions are © 2011 - 2020 Fantasy Flight Publishing, Inc.  
+The Lord of the Rings, and the characters, items, events and places therein are trademarks or registered trademarks of The Saul Zaentz Company / Middle-earth Enterprises and are used, under license, by Fantasy light Games. Living Card Game, LCG, LCG logo and Fantasy Flight Supply are trademarks and/or registered trademarks of Fantasy Flight Publishing, Inc.  
+All Rights Reserved to their respective owners.<br /> 
+The Rules Compendium and Rules Companion are the intellectual property of, and used by the permission of, Mathieu Martin. 
+
+## Using the GameTracker
+### Purpose
+I created GameTracker when my wife and I started playing Lord Of The Rings LCG. There was a lot to learn and every time we had to clarify a rule we ended up reading cards, thumbing through rule books, and scouring the web. We often forgot where we were in the game and what to do next. So, I created the first GameTracker to help us remember.
+Over time the GameTracker evolved, and new features were added (and some removed). But I have tried to keep the purpose the same: to guide players through the sequence of steps in the game. The tracker does not help with how to use cards, how to interpret rules, or even what the players' threat levels are. It's only purpose is to let players know what is the next step in the game. 
+
+### Screen Elements
+When the GameTracker is opened, the following elements should be visible:
+  - Background images: a set of pictures from the LOTR LCG site that scroll with the page
+  - The Sequence image: shows all phases and steps of regular game-play starting with the "I. Resource Phase" and ending with "7.5 Refresh phase ends".
+  - Side tabs: coloured rectangle that expand when hovered over to provide various actions.
+    - Initially, the visible side tabs should include:
+      - *New Game* (green)
+      - *Options* (teal)
+      - *About* (yellow)
+      - *Load/Save* (purple - at the bottom of the screen)
+    - If you have already started a game, then other side tabs may also be visible.
+  - Main Dialogue: this won't be visible unless you have started a game.
+  - Pop ups: these will appear when certain side tabs are clicked on (*Options*, *About*, *Load/Save*).
+
+### Getting Started
+Simply move to the *New Game* side tab and click on it. The Main Dialogue will appear and guide you through setting up a game.
 ## Version History
 ### v2.0.0 Feature Complete Release
 Players in multiplayer games can be named.
@@ -14,7 +43,6 @@ Removed format updating.
 - Internal:
   Improved use of {} for alternate wordings.
   Removed use of [] for alternate state text.
-  Eliminated use of ALLPLAYER.
   Reorganized and renamed code functions.
   Isolated auto-skip of stages to new function.
   Standardized naming of sliding buttons as side tabs.
