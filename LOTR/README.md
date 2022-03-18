@@ -1,8 +1,8 @@
-# GameTracker
+# GameTracker v2.02
 
 This website is an SPA intended to provide a non-commercial aid while playing the [Lord of the Rings LCG](https://www.fantasyflightgames.com/en/products/the-lord-of-the-rings-the-card-game/) from [Final Flight Games](https://www.fantasyflightgames.com/en/index/).
 
-- [GameTracker](#gametracker)
+- [GameTracker v2.02](#gametracker-v202)
   - [Rights and Permissions](#rights-and-permissions)
   - [Using the GameTracker](#using-the-gametracker)
     - [Purpose](#purpose)
