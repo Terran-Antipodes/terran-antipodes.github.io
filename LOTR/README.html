@@ -47,14 +47,176 @@
     </head>
     <body class="vscode-body vscode-light">
         <h1 id="gametracker">GameTracker</h1>
-<p>This website is an SPA intended to provide a non-commercial aid while playing the <a href="https://www.fantasyflightgames.com/en/products/the-lord-of-the-rings-the-card-game/">Lord of the Rings LCG</a> from <a href="https://www.fantasyflightgames.com/en/index/">Final Flight Game</a>.</p>
+<p>This website is an SPA intended to provide a non-commercial aid while playing the <a href="https://www.fantasyflightgames.com/en/products/the-lord-of-the-rings-the-card-game/">Lord of the Rings LCG</a> from <a href="https://www.fantasyflightgames.com/en/index/">Final Flight Games</a>.</p>
+<ul>
+<li><a href="#gametracker">GameTracker</a>
+<ul>
+<li><a href="#rights-and-permissions">Rights and Permissions</a></li>
+<li><a href="#using-the-gametracker">Using the GameTracker</a>
+<ul>
+<li><a href="#purpose">Purpose</a></li>
+<li><a href="#screen-elements">Screen Elements</a></li>
+<li><a href="#getting-started-new-game-tab">Getting Started: New Game tab</a></li>
+<li><a href="#help">Help</a></li>
+<li><a href="#side-tabs">Side Tabs</a>
+<ul>
+<li><a href="#options-tab">Options tab</a></li>
+<li><a href="#about-tab">About tab</a></li>
+<li><a href="#back-tab">Back tab</a></li>
+<li><a href="#loadsave">Load/Save</a></li>
+<li><a href="#skip-tab">Skip tab</a></li>
+<li><a href="#elimination">Elimination</a></li>
+<li><a href="#out-of-sequence-enemy-attack">Out Of Sequence Enemy Attack</a></li>
+<li><a href="#out-of-sequence-player-attack">Out Of Sequence Player Attack</a></li>
+</ul>
+</li>
+<li><a href="#options">Options</a>
+<ul>
+<li><a href="#display-the-compendium-rules-as">Display the Compendium Rules as</a></li>
+<li><a href="#show-tooltips">Show Tooltips</a></li>
+<li><a href="#sequence-options">Sequence Options</a></li>
+</ul>
+</li>
+<li><a href="#version">Version</a></li>
+</ul>
+</li>
+<li><a href="#version-history">Version History</a>
+<ul>
+<li><a href="#v201">v2.0.1</a></li>
+<li><a href="#v200-feature-complete-release">v2.0.0 Feature Complete Release</a></li>
+<li><a href="#earlier-versions">Earlier versions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="rights-and-permissions">Rights and Permissions</h2>
 <p>This GameTracker webpage is the property of Clive Pottinger. Email any comments or concerns to <a href="mailto:terran.antipodes@gmail.com">terran.antipodes@gmail.com</a>.
 All displayed images, arts, fonts and The Lord of The Rings: The Card Game are copyrighted at © Fantasy Flight Games.<br>
 The copyrightable portions of The Lord of the Rings: The Card Game and its expansions are © 2011 - 2020 Fantasy Flight Publishing, Inc.<br>
 The Lord of the Rings, and the characters, items, events and places therein are trademarks or registered trademarks of The Saul Zaentz Company / Middle-earth Enterprises and are used, under license, by Fantasy light Games. Living Card Game, LCG, LCG logo and Fantasy Flight Supply are trademarks and/or registered trademarks of Fantasy Flight Publishing, Inc.<br>
 All Rights Reserved to their respective owners.<br />
 The Rules Compendium and Rules Companion are the intellectual property of, and used by the permission of, Mathieu Martin.</p>
+<h2 id="using-the-gametracker">Using the GameTracker</h2>
+<h3 id="purpose">Purpose</h3>
+<p>I created the GameTracker when my wife and I started playing Lord Of The Rings LCG. There was a lot to learn and every time we had to clarify a rule we ended up reading cards, thumbing through rule books, and scouring the web. We often forgot where we were in the game and what to do next. So, I created the first GameTracker to help us remember.</p>
+<p>Over time the GameTracker evolved, and new features were added (and some removed). But I have tried to keep the purpose the same: to guide players through the sequence of steps in the game. The tracker does not help with how to use cards, how to interpret rules, or even what the players' threat levels are. It's only purpose is to let players know what is the next step in the game.</p>
+<h3 id="screen-elements">Screen Elements</h3>
+<p>When the GameTracker is opened, the following elements should be visible:</p>
+<ul>
+<li>Background images: a set of pictures from the LOTR LCG site that scroll with the page</li>
+<li>The Sequence image: shows all phases and steps of regular game-play starting with the &quot;I. Resource Phase&quot; and ending with &quot;7.5 Refresh phase ends&quot;.</li>
+<li>Side tabs: coloured rectangles that expand when hovered over to allow various actions.
+<ul>
+<li>Initially, the visible side tabs should include:
+<ul>
+<li><a href="#getting-started-new-game-tab"><em>New Game</em></a> (green)</li>
+<li><a href="#options-tab"><em>Options</em></a> (teal)</li>
+<li><a href="#about-tab"><em>About</em></a> (yellow)</li>
+<li><a href="#loadsave-tab"><em>Load/Save</em></a> (fuscia - at the bottom of the screen)</li>
+</ul>
+</li>
+<li>If you have already started a game, then other side tabs may also be visible.</li>
+</ul>
+</li>
+<li>Main Dialogue: this won't be visible unless you have started a game.</li>
+<li>Pop ups: these will appear when certain side tabs are clicked on (<a href="#options-tab"><em>Options</em></a>, <a href="#about-tab"><em>About</em></a>, <a href="#loadsave-tab"><em>Load/Save</em></a>).</li>
+<li>Version number: appears in the bottom left corner.</li>
+</ul>
+<h3 id="getting-started-new-game-tab">Getting Started: New Game tab</h3>
+<p>Simply move to the <a href="#getting-started-new-game-tab"><em>New Game</em></a> side tab and click on it. The Main Dialogue will appear and guide you through setting up a game.</p>
+<p>The player's progress throughout the game is recorded in the browser's internal storage. So if the players leave this site and return, it should resume exactly where the players left off.</p>
+<p>Note that starting a new game will overwrite any stored information about the previously active game.</p>
+<p>Tips:</p>
+<ul>
+<li>Treat the automatic <strong>Do not rely only on the browser to hold the record the game's progress</strong>. Browser information can easily be cleared as a result of several factors unrelated to the use of the GameTracker. For that reason, the GameTracker includes a <a href="#loadsave-tab"><em>Load/Save</em></a> capability (outlined below) that should be used to ensure that a game's progress is not lost.</li>
+</ul>
+<h3 id="help">Help</h3>
+<p>Detailed information on playing the game has been compiled, by Mathiew Martin, in two excellent source: <strong>The Rule Compendium</strong> and <strong>The Companion</strong> website.</p>
+<p>Where possible, the GameTracker provides context sensitive links to these source. Most steps will display a Help button which allows the players to view either source's notes about that particular step.</p>
+<p>Tips:</p>
+<ul>
+<li>Clicking on the green <em>Compendium</em> and <em>Companion</em> buttons will switch which source is used to show the help. This selection will be remembered the next time the Help button is used.</li>
+<li>The <em>Compendium</em> can be viewed in either PDF form or HTML. The HTML view will highlight the pertinent text in the display (see <a href="#options"><em>Options</em></a>).</li>
+<li>Click Alt + either button will open the source in a seperate browser tab.</li>
+<li>I <strong>highly</strong> recommend spending some some browsing through these sources. They contain a wealth of information about playing the game.</li>
+</ul>
+<h3 id="side-tabs">Side Tabs</h3>
+<p>Tips:</p>
+<ul>
+<li>Some side tabs will appear as needed as the players advance through the game sequence, and disappear when appropriate.</li>
+<li>A side tab will automatically extend to show its text the first time appears while playing a game. After a few seconds, it will automatically retract.</li>
+<li>Some side tabs (particularly the <a href="#skip-tab"><em>Skip</em> tab</a>) will extend each time it changes, just remind the players that it is there.</li>
+</ul>
+<h4 id="options-tab">Options tab</h4>
+<p>The Options pop up allows some customization of how the GameTracker appears and operates. The various options and their effects are covered in the <a href="#options">Options</a> section below.</p>
+<h4 id="about-tab">About tab</h4>
+<p>Well, if you are reading this, then you already know what that side tab is for.</p>
+<h4 id="back-tab">Back tab</h4>
+<p>The <em>Back</em> side tab allows the players to go back to previous steps. Technically, using this tab is a LOTR &quot;no-no&quot; - but... everyone makes mistakes (especially when first learning to play).</p>
+<p>Tips:</p>
+<ul>
+<li>The GameTracker, by default, remembers all the steps executed in the current game (right back to the initial setup), which players were active and which were eliminated, and who was the First Player.</li>
+<li>Though the players can go backwards through the game, there is no mechanism for going forward again. Once the <em>Back</em> side tab is used, any subsequent changes to the game (active/eliminated players, out-of-sequenct attacks, etc) are forgotten.</li>
+</ul>
+<h4 id="loadsave">Load/Save</h4>
+<p>This side tab appears at the bottom of the screen. It can be used to obtain a block of text that has all the information about the current game in an encoded format. By copying this text block and saving it to disk, the players can be sure that they will not lose their game information if, for whatever reason, the browser's internal storage is cleared.</p>
+<p>At any time, the players can paste a copy of a previously stored coded block of text, and the GameTracker will instantly display the game at the point where the code was generated.</p>
+<p>Tips:</p>
+<ul>
+<li>The <em>Load/Save</em> pop up will automatically display the save code for the current game and will automatically select the entire block for copying (or deleting).</li>
+<li>When maunually selecting a block of text code to copy, take care to note that the entire block has been selected. Some methods of selecting blocks of text (e.g. double-clicking on the text) will, sometimes, not select the entire block. This will be the case if the block ends in one or more equals signs (=, ==).</li>
+</ul>
+<h4 id="skip-tab">Skip tab</h4>
+<p>At various points during the progression of the game, the red <em>Skip</em> tab will appear on the left side of the screen. The wording on the tab is dependent on the situation and player, but it always has the same purpose: to allow the players to jump past a set of steps. For instance, when the players reach the start of the Combat Phase, the <em>Skip</em> tab appears and reads &quot;No Combat?&quot;. If the conditions of the game mean that no enemies will engage the players and the players will not be attacking, then the players may click on the <em>Skip</em> tab and jump directly to the Refresh Phase.</p>
+<h4 id="elimination">Elimination</h4>
+<p>During multi-player games, the GameTracker tracks which of the players is the round's First Player. It also cycles through the players during any set of steps that are to executed by each player in sequence (e.g. the Special Action Window, Combat).</p>
+<p>If a player is eliminated from the game (the player's heroes die, or the treat level rises to 50), the <em>Elimination</em> tab should be clicked to mark that player as no longer active. The GameTracker can then skip that player when determining the next player to perform a set of steps, and when the First Player token is to be passed.</p>
+<h4 id="out-of-sequence-enemy-attack">Out Of Sequence Enemy Attack</h4>
+<p>If any card or card effects would cause an enemy to attack a player before, or after, the normal &quot;Resolve Enemy Attacks&quot; portion of the Combat Phase, then the players can click on the <em>Out Of Sequence Enemy Attack</em> tab to progress through the combat steps.</p>
+<p>Once the combat is resolved, the GameTracker returns to the step that was interrupeted by the attack.</p>
+<p>Tips:</p>
+<ul>
+<li>The GameTracker does not support the interruption of one Out Of Sequence attack by another. Should such a situation arise, the players will have to handle the interrupting interruption on their own (sorry).</li>
+</ul>
+<h4 id="out-of-sequence-player-attack">Out Of Sequence Player Attack</h4>
+<p>If any card or card effects would allow a player to attack an enemy before, or after, the normal &quot;Player Attacks&quot; portion of the Combat Phase, then the players can click on the <em>Out Of Sequence Player Attack</em> tab to progress through the combat steps.</p>
+<p>Once the combat is resolved, the GameTracker returns to the step that was interrupeted by the attack.</p>
+<p>Tips:</p>
+<ul>
+<li>The GameTracker does not support the interruption of one Out Of Sequence attack by another. Should such a situation arise, the players will have to handle the interrupting interruption on their own (sorry).</li>
+</ul>
+<h3 id="options">Options</h3>
+<h5 id="display-the-compendium-rules-as">Display the Compendium Rules as</h5>
+<p>This allows the players to choose whether the Help button will display the <em>Compendium</em> information as either a PDF or as HTML. The choice is completely up to the players as the information displayed is the same in either format.</p>
+<p>Tips:</p>
+<ul>
+<li>When HTML is chosen, the display will highlight the particular text on the page that is relevant to the step chosen.</li>
+</ul>
+<h5 id="show-tooltips">Show Tooltips</h5>
+<p>Tooltips appear as white text on a black background when the mouse hovers over certain screen elements. They can be useful when first using the GameTracker, and can be turned off here when no longer needed.</p>
+<h5 id="sequence-options">Sequence Options</h5>
+<p>The <em>Alternate Setup</em> option changes the sequence of steps in the intial Setup Phase of a new game. The regular setup sequence tends to require many reshufflings of the players' decks as well as the encounter decks. The alternate sequence was designed to minimimize that annoyance.</p>
+<p>The <em>Show End/Start of phases as steps</em> option will cause the a step to displayed whenever one phase is ending and a new one is starting. THis does not affect the game play in any way.</p>
+<p>Tips:</p>
+<ul>
+<li>Changing the option <em>Alternate Setup</em> option has no effect once a game has started. It is only applied when the New Game side tab is used.</li>
+<li>Using the <em>Show End/Start of phases as steps</em> option to show the changes in phases can be handy reminder to activate/deactive abilities, remove cards that only apply to the current phase, or to perform other tasks as various scenarios require.</li>
+</ul>
+<h3 id="version">Version</h3>
+<p>The GameTracker's current version number is displayed in a small grey box in the bottom left of the screen.</p>
+<p>Tips:</p>
+<ul>
+<li>Please include the version number in any questions or bug reports you may send.</li>
+<li>Hovering over the version number will cause the Sequence image, the Main Dialogue, and the Side tabs to disappear, allowing a clear view of the wonderful artwork that various artists have created for LOTR LCG and that I have included as backround images.</li>
+</ul>
 <h2 id="version-history">Version History</h2>
+<h4 id="v201">v2.0.1</h4>
+<ul>
+<li>Internal:
+Bug Fix: function logleave() did not return values in the live environment.
+Removed test files from main branch.</li>
+</ul>
 <h3 id="v200-feature-complete-release">v2.0.0 Feature Complete Release</h3>
 <p>Players in multiplayer games can be named.
 Tracks and displays the 1st player.
@@ -94,26 +256,27 @@ Compendium/Companion preference now set in methods rather than button.
 Added fast fades.
 Corrected several issues with active players by adding new, always active player 0.</li>
 </ul>
-<h4 id="v184-image-processing">v1.8.4 Image Processing</h4>
+<h3 id="earlier-versions">Earlier versions</h3>
+<p>-- <strong>v1.8.4 Image Processing</strong></p>
 <p>JIT Image loading
 StateHistory: changed from retreival of local storage string to global array.
 Change images each round.
 Fixed appearance of Back button at step 0.
 Delay the retraction of extended Skip nav buttons.</p>
-<h4 id="v183">v1.8.3</h4>
+<p>-- <strong>v1.8.3</strong></p>
 <p>Added out-of-sequence attack steps.
 Altered positioning of tooltips.
 Corrected version number.
 Fixed display of step name in help dialogue.
 Fixed tooltip for opening help in another tab.</p>
-<h4 id="v182">v1.8.2</h4>
+<p>-- <strong>v1.8.2</strong></p>
 <p>Added tooltips for Nav bars.
 Sequence steps include tooltips for special action Nav bars.</p>
-<h4 id="v181">v1.8.1</h4>
+<p>-- <strong>v1.8.1</strong></p>
 <p>Added alternate setup sequence.
 shortened tooltip fade time to 3 sec.
 support more variation of step name depending on number of players.</p>
-<h3 id="v180">v1.8.0</h3>
+<p>-- <strong>v1.8.0</strong></p>
 <p>Overhaul
 Features:</p>
 <ul>
@@ -146,17 +309,17 @@ new storage location for state history.</li>
 <li>GetStandardBanners() now accepts a current state object and previous state name, rather than hash values.</li>
 <li>Changed Option for compendium format from boolean to string.</li>
 </ul>
-<h4 id="v172">v1.7.2</h4>
+<p>-- <strong>v1.7.2</strong></p>
 <p>Corrected display of tooltips.
 Removed display of &quot;TrackerDisplay&quot; as tooltip.</p>
-<h4 id="v171">v1.7.1</h4>
+<p>-- <strong>v1.7.1</strong></p>
 <p>Changed About text.
 Shortened URLs of background images.
 HTML conversion in progress:</p>
 <ul>
 <li>pgs 1-120: complete</li>
 </ul>
-<h3 id="v170">v1.7.0</h3>
+<p>-- <strong>v1.7.0</strong></p>
 <p>Added Campaign mode.
 Skip campaign-only steps in regular mode.</p>
 <ul>
@@ -165,22 +328,22 @@ Fixed bug that prevented display of round and points.
 Changed display of final step for single-player.
 Reformatted document.</li>
 </ul>
-<h3 id="v160">v1.6.0</h3>
+<p>-- <strong>v1.6.0</strong></p>
 <p>Added support for tooltips.
 Tooltip for help buttons.
 Tooltip for close button for new game.
 Fixed sizing of frame used to display help.
 Help display scales to fit containing frame.</p>
-<h4 id="v151">v1.5.1</h4>
+<p>-- <strong>v1.5.1</strong></p>
 <p>Additional conversion changes to the HTML Compendium.</p>
-<h3 id="v150">v1.5.0</h3>
-<p>Compendium and Companion can be opened in new tabs.</p>
-<h4 id="v141">v1.4.1</h4>
+<p>-- <strong>v1.5.0</strong></p>
+<p>Compendium and Companion can be opened in new tabs.
+-- <strong>v1.4.1</strong></p>
 <p>i3: Compendium PDF does not display in Chrome on certain devices</p>
 <ul>
 <li>Switched from object to iframe for display area.</li>
 </ul>
-<h3 id="v140">v1.4.0</h3>
+<p>-- <strong>v1.4.0</strong></p>
 <p>Revised help system</p>
 <ul>
 <li>i3: Added HTML display of the Rules Compendium.
@@ -203,30 +366,30 @@ Internal</li>
 <li>Standardized coding standard on CAPS for constants, CamelCase for globals.</li>
 <li>Change declaration of constants and globals.</li>
 </ul>
-<h4 id="v131">v1.3.1</h4>
+<p>-- <strong>v1.3.1</strong></p>
 <p>Fixed Help close button not working.</p>
-<h3 id="v130">v1.3.0</h3>
+<p>-- <strong>v1.3.0</strong></p>
 <p>Added ability to support option flags.
 Record Compendium vs Companion in option flags.
 Changed stylings and formatting of About display.
 Internal changes to code styling (use of CAPS for constants, CamelCase for globals).</p>
-<h4 id="v125">v1.2.5</h4>
+<p>-- <strong>v1.2.5</strong></p>
 <p>Added copyrights and attributions. Added About button. Standardized SideNav naming conventions. Removed unneeded stylings and classes.</p>
-<h4 id="v124">v1.2.4</h4>
+<p>-- <strong>v1.2.4</strong></p>
 <p>Cleanup of data organization and comments. Removed obsolete CCS elements. Images change based on day rather than day of the month.</p>
-<h4 id="v123">v1.2.3</h4>
+<p>-- <strong>v1.2.3</strong></p>
 <p>Background images change daily.</p>
-<h4 id="v122">v1.2.2</h4>
+<p>-- <strong>v1.2.2</strong></p>
 <p>i6: Corrected sizing of the background images.</p>
-<h4 id="v121">v1.2.1</h4>
+<p>-- <strong>v1.2.1</strong></p>
 <p>i4: Corrected confusing colouring of &quot;Action Window&quot; text.</p>
-<h3 id="v120">v1.2.0</h3>
+<p>-- <strong>v1.2.0</strong></p>
 <p>Use new encoding values.
 Changes to display of sequence image.
 Support new levels of looping and skips,</p>
-<h3 id="v110">v1.1.0</h3>
+<p>-- **v1.1.0 **</p>
 <p>Added scrollable background.</p>
-<h3 id="v100">v1.0.0</h3>
+<p>-- <strong>v1.0.0</strong></p>
 <p>Added player elimination.
 Help button to display online Companion links.</p>
 

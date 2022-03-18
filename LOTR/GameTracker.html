@@ -654,6 +654,16 @@
             z-index: 50; 
         } 
  
+        .about iframe { 
+            width: 80vw; 
+            height: 65vh; 
+            background-color: #CCCCCC;
+        } 
+ 
+        .about iframe body { 
+            transform: scale(3); 
+        } 
+ 
         #OptionsArea { 
             position: absolute; 
             top: 15vh; 
@@ -732,7 +742,7 @@
             </div> 
         </div> 
         <div id='InfoArea' onclick='gui_clearAndReload()'></div> 
-        <div id='AboutArea'> 
+        <div id='AboutArea' class='about'> 
             <iframe src='readme.html' type='text/html'></iframe>
         </div> 
         <div id='OptionsArea'> 
@@ -779,7 +789,7 @@
         </div>
     </div> 
     <script> /*Set up */ 
-        var VERSION = 'v2.0.1x'; 
+        var VERSION = 'v2.0.2x'; 
  
         /* define game steps */ 
         var Sequence = JSON.parse( 
