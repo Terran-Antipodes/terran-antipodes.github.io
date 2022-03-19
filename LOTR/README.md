@@ -1,8 +1,8 @@
-# GameTracker v2.02
+# GameTracker v2.1.0
 
 This website is an SPA intended to provide a non-commercial aid while playing the [Lord of the Rings LCG](https://www.fantasyflightgames.com/en/products/the-lord-of-the-rings-the-card-game/) from [Final Flight Games](https://www.fantasyflightgames.com/en/index/).
 
-- [GameTracker v2.02](#gametracker-v202)
+- [GameTracker v2.1.0](#gametracker-v210)
   - [Rights and Permissions](#rights-and-permissions)
   - [Using the GameTracker](#using-the-gametracker)
     - [Purpose](#purpose)
@@ -24,6 +24,8 @@ This website is an SPA intended to provide a non-commercial aid while playing th
         - [Sequence Options](#sequence-options)
     - [Version](#version)
   - [Version History](#version-history)
+      - [v2.1.0](#v210)
+      - [v2.0.2](#v202)
       - [v2.0.1](#v201)
     - [v2.0.0 Feature Complete Release](#v200-feature-complete-release)
     - [Earlier versions](#earlier-versions)
@@ -175,6 +177,12 @@ Tips:
   - Hovering over the version number will cause the Sequence image, the Main Dialogue, and the Side tabs to disappear, allowing a clear view of the wonderful artwork that various artists have created for LOTR LCG and that I have included as backround images. 
 
 ## Version History
+#### v2.1.0
+
+Corrected versioning error (v2.0.2 should have been v.2.1.0).
+Bug Fix: About HTML did not display because of GitHub requirement for matching case for file names.
+
+#### v2.0.2
 
 #### v2.0.1
 
@@ -193,33 +201,33 @@ Added Load/Save.
 Eliminated need for "Combat Check" step.
 Removed format updating.
 - Internal:
-  Improved use of {} for alternate wordings.
-  Removed use of [] for alternate state text.
-  Reorganized and renamed code functions.
-  Isolated auto-skip of stages to new function.
-  Standardized naming of sliding buttons as side tabs.
-  Added support for side tabs at bottom of screen.
-  Auto-advance in Options and Load/Save.
-  Added suite of tests.
-  Removed unneeded styling of active anchor tag.
-  Initial state now includes active player info.
-  Standardized variable naming for step vs stepNum.
-  Auto-advance if Show Start/End phase option is deselected while on a Start/End phase step.
-  Standardized tooltip text separator as tilde.
-  Options are now applied to the current state's display when Options is closed.
-  Minor text revisions.
-  Standardized naming of elements formerly identified as GAME_HELP to HELP_AREA.
-  Avoid flashing of dialogues on startup by moving the hiding of elements to earlier in the code execution.
-  Eliminated unneeded postPhaseChange step type.
-  Display 1st player name with round information.
-  Introduced Settings to hold game specific parameters that are not part of the StateHistory.
-  Extracted game specific items from Options and placed in new Settings structure.
-  Automatic activation/suppression of trace messages.
-  Added Settings to browser local storage.
-  Options are not cleared by clicking on version.
-  Compendium/Companion preference now set in methods rather than button.
-  Added fast fades.
-  Corrected several issues with active players by adding new, always active player 0.
+  - Improved use of {} for alternate wordings.
+  - Removed use of [] for alternate state text.
+  - Reorganized and renamed code functions.
+  - Isolated auto-skip of stages to new function.
+  - Standardized naming of sliding buttons as side tabs.
+  - Added support for side tabs at bottom of screen.
+  - Auto-advance in Options and Load/Save.
+  - Added suite of tests.
+  - Removed unneeded styling of active anchor tag.
+  - Initial state now includes active player info.
+  - Standardized variable naming for step vs stepNum.
+  - Auto-advance if Show Start/End phase option is deselected while on a Start/End phase step.
+  - Standardized tooltip text separator as tilde.
+  - Options are now applied to the current state's display when Options is closed.
+  - Minor text revisions.
+  - Standardized naming of elements formerly identified as GAME_HELP to HELP_AREA.
+  - Avoid flashing of dialogues on startup by moving the hiding of elements to earlier in the code execution.
+  - Eliminated unneeded postPhaseChange step type.
+  - Display 1st player name with round information.
+  - Introduced Settings to hold game specific parameters that are not part of the StateHistory.
+  - Extracted game specific items from Options and placed in new Settings structure.
+  - Automatic activation/suppression of trace messages.
+  - Added Settings to browser local storage.
+  - Options are not cleared by clicking on version.
+  - Compendium/Companion preference now set in methods rather than button.
+  - Added fast fades.
+  - Corrected several issues with active players by adding new, always active player 0.
 
 ### Earlier versions
 
