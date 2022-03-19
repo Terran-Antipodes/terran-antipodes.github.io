@@ -24,6 +24,7 @@ This website is an SPA intended to provide a non-commercial aid while playing th
         - [Sequence Options](#sequence-options)
     - [Version](#version)
   - [Version History](#version-history)
+      - [v2.0.2](#v202)
       - [v2.0.1](#v201)
     - [v2.0.0 Feature Complete Release](#v200-feature-complete-release)
     - [Earlier versions](#earlier-versions)
@@ -175,6 +176,9 @@ Tips:
   - Hovering over the version number will cause the Sequence image, the Main Dialogue, and the Side tabs to disappear, allowing a clear view of the wonderful artwork that various artists have created for LOTR LCG and that I have included as backround images. 
 
 ## Version History
+#### v2.0.2
+
+About side tab now shows contents of README file.
 
 #### v2.0.1
 
