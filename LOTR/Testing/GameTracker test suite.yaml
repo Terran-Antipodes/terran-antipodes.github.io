@@ -25,11 +25,12 @@ Suite A:
       o displays sequence image.
   - About:
     o About text is displayed.
+    o About text show proper version in Header, TOC and Version History
     - click on background:
       o removes About text.
   - Options:
     o selected - HTML, Show general tooltips, Show tooltips on tabs, Show End/Start of phases
-    o not selected - PDF, Alternate Setup.
+    o not selected - PDF, Alternate Setup, Save extended history.
     - select PDF, deselect Show tooltips on tabs:
     - click on background:
       o removes Options.
@@ -52,7 +53,7 @@ Suite B: requires save code from Suite A
       o removes Load/Save.
     - Options:
       o selected - HTML, Show general tooltips, Show tooltips on tabs, Alternate Setup, Show End/Start of phases
-      - select PDF, deselect show tootips on tabs, Alternate Setup: 
+      - select PDF, deselect Show tootips on tabs, Alternate Setup: 
   - New Game:
     o closes Options
     o asks Regular or Campaign
@@ -148,7 +149,7 @@ Suite C: requires save code from Suite B
   - Options:
     - deselect Show End/Start of phases:
     - close Options:
-      o displays round as 1 with End and Start of Phase messages.
+      o displays round as 1 and step with End and Start of Phase messages.
       o displays phase as "Planning Phase".
       o displays step "Special Action Window" in highlighted colour.
       o outline around 2.1 to 2.3.
@@ -156,7 +157,9 @@ Suite C: requires save code from Suite B
     o displays step "Quest Action Window".
   - Next, Next, Next:
     o displays step "Staging Action Window".
-  - Next, Next, Next, Next, Next:
+  - Next, Next:
+    o displays step "Travel Opportunity...".
+  - Next, Next, Next:
     o displays step "Deal Shadow Cards...".
     o skip tab appears, extends and retracts.
     o skip tab text is "No Combat?"
@@ -166,7 +169,7 @@ Suite C: requires save code from Suite B
 Suite D: requires save code from Suite C
   - use version to clear local storage of LOTR_Settings and LOTR_StateHistory:
   - Options:
-    - select HTML, deselect all others:
+    - select HTML, Save extended history, deselect all others:
   - Load/Save:
     - copy save code from Suite C into text area:
     - click on background:
@@ -201,7 +204,11 @@ Suite D: requires save code from Suite C
       o displays step "Gain Resources".
       o background images change.
   - Load/Save:
-    - copy save code and save as Suite D.
+    - copy save code and save as Suite D1.
+  - Options:
+    - deselect Save extended history.
+  - Load/Save:
+    - copy save code and save as Suite D2.
 
 Suite E: 
   - use version to clear local storage of LOTR_Settings and LOTR_StateHistory:
@@ -268,9 +275,9 @@ Suite F: requires save code from Suite E
     o displays step "Betty Staging".
   - Next, Next, Next:
     o displays step "Staging Action Window".
-  - Next, Next, Next, Next:
-    o displays step "Engagement Checks...".
-  - Next:
+  - Next, Next:
+    o displays step "Travel Opportunity...".
+  - Next, Next, Next:
     o skip tab appears, extends and retracts.
     o displays step "Betty Deal Shadow Cards...".
     o skip tab text is "No Combat?"
@@ -317,7 +324,9 @@ Suite H: requires save code from Suite F
     o skip tab appears, extends and retracts.
     o displays step "Betty Choose Attacking Enemy...".
     o skip tab text is "Betty is not being attacked by an Enemy".
-  - Next, Next, Next, Next:
+  - Next, Next:
+    o displays step "Betty Reveal and Resolve..."
+  - Next, Next:
     o skip tab appears, extends and retracts.
     o displays step "Betty Choose Attacking Enemy...".
     o skip tab text is "Betty is not being attacked by another Enemy" (note "another").
@@ -354,7 +363,9 @@ Suite I: requires save code from Suite F
     o displays phase as "Special Phase Out of Sequence Combat Stage".
     o displays step "Deal Shadow Card".
     o tabs Out of Sequence Enemy / Player Attack disappear.
-  - Next, Next, Next, Next:
+  - Next, Next:
+    o displays step "Reveal and Resolve Shadow Effects..."
+  - Next, Next:
     o returns to step "Betty Deal Shadow Cards...".
   - Out of Sequence Player Attack:
     o displays phase as "Special Phase Out of Sequence Combat Stage".
@@ -405,3 +416,13 @@ Suite J: requires save code from Suite F
     o displays step "Raise Threat Level" (note singular "Level").
   - New Game, Regular, 4:
     o displays player names "Archie", "Betty", "Charlie", "Player 4"
+
+Suite K: requires save code from Suite D1
+  - use version to clear local storage of LOTR_Settings and LOTR_StateHistory:
+  - Options:
+    - select HTML, deselect all others:
+  - Load/Save:
+    - copy save code from Suite D1 into text area:
+    - click on background:
+      o displays round as "Round 2".
+      o displays step "Gain Resources".
