@@ -2,7 +2,7 @@
     <html>
     <head>
         <meta charset="UTF-8">
-        <title>GameTracker v2&period;2&period;0</title>
+        <title>GameTracker v2&period;2&period;1</title>
         <style>
 /* From extension vscode.github */
 /*---------------------------------------------------------------------------------------------
@@ -46,10 +46,10 @@
         
     </head>
     <body class="vscode-body vscode-light">
-        <h1 id="gametracker-v220">GameTracker v2.2.0</h1>
+        <h1 id="gametracker-v221">GameTracker v2.2.1</h1>
 <p>This website is an SPA intended to provide a non-commercial aid while playing the <a href="https://www.fantasyflightgames.com/en/products/the-lord-of-the-rings-the-card-game/">Lord of the Rings LCG</a> from <a href="https://www.fantasyflightgames.com/en/index/">Final Flight Games</a>.</p>
 <ul>
-<li><a href="#gametracker-v220">GameTracker v2.2.0</a>
+<li><a href="#gametracker-v221">GameTracker v2.2.1</a>
 <ul>
 <li><a href="#rights-and-permissions">Rights and Permissions</a></li>
 <li><a href="#using-the-gametracker">Using the GameTracker</a>
@@ -81,6 +81,7 @@
 </li>
 <li><a href="#version-history">Version History</a>
 <ul>
+<li><a href="#v221">v2.2.1</a></li>
 <li><a href="#v220">v2.2.0</a></li>
 <li><a href="#v210">v2.1.0</a></li>
 <li><a href="#v202">v2.0.2</a></li>
@@ -210,6 +211,10 @@
 <li>Hovering over the version number will cause the Sequence image, the Main Dialogue, and the Side tabs to disappear, allowing a clear view of the wonderful artwork that various artists have created for LOTR LCG and that I have included as backround images.</li>
 </ul>
 <h2 id="version-history">Version History</h2>
+<h4 id="v221">v2.2.1</h4>
+<ul>
+<li>Bug fix: Side tabs did not retract in live environment.</li>
+</ul>
 <h4 id="v220">v2.2.0</h4>
 <ul>
 <li>Save code records last 2 rounds of information by default.</li>
@@ -228,6 +233,7 @@
 <li>Bug Fix: About HTML did not display because of GitHub requirement for matching case for file - names.</li>
 </ul>
 <h4 id="v202">v2.0.2</h4>
+<p>About side tab now shows contents of README file.</p>
 <h4 id="v201">v2.0.1</h4>
 <ul>
 <li>Internal:
@@ -249,36 +255,33 @@
 <li>Removed format updating.</li>
 <li>i7: Hover over version # to see art.</li>
 <li>Internal:
-<ul>
-<li>Improved use of {} for alternate wordings.</li>
-<li>Removed use of [] for alternate state text.</li>
-<li>Reorganized and renamed code functions.</li>
-<li>Isolated auto-skip of stages to new function.</li>
-<li>Standardized naming of sliding buttons as side tabs.</li>
-<li>Added support for side tabs at bottom of screen.</li>
-<li>Auto-advance in Options and Load/Save.</li>
-<li>Added suite of tests.</li>
-<li>Removed unneeded styling of active anchor tag.</li>
-<li>Initial state now includes active player info.</li>
-<li>Standardized variable naming for step vs stepNum.</li>
-<li>Auto-advance if Show Start/End phase option is deselected while on a Start/End phase step.</li>
-<li>Standardized tooltip text separator as tilde.</li>
-<li>Options are now applied to the current state's display when Options is closed.</li>
-<li>Minor text revisions.</li>
-<li>Standardized naming of elements formerly identified as GAME_HELP to HELP_AREA.</li>
-<li>Avoid flashing of dialogues on startup by moving the hiding of elements to earlier in the code execution.</li>
-<li>Eliminated unneeded postPhaseChange step type.</li>
-<li>Display 1st player name with round information.</li>
-<li>Introduced Settings to hold game specific parameters that are not part of the StateHistory.</li>
-<li>Extracted game specific items from Options and placed in new Settings structure.</li>
-<li>Automatic activation/suppression of trace messages.</li>
-<li>Added Settings to browser local storage.</li>
-<li>Options are not cleared by clicking on version.</li>
-<li>Compendium/Companion preference now set in methods rather than button.</li>
-<li>Added fast fades.</li>
-<li>Corrected several issues with active players by adding new, always active player 0.</li>
-</ul>
-</li>
+Improved use of {} for alternate wordings.
+Removed use of [] for alternate state text.
+Reorganized and renamed code functions.
+Isolated auto-skip of stages to new function.
+Standardized naming of sliding buttons as side tabs.
+Added support for side tabs at bottom of screen.
+Auto-advance in Options and Load/Save.
+Added suite of tests.
+Removed unneeded styling of active anchor tag.
+Initial state now includes active player info.
+Standardized variable naming for step vs stepNum.
+Auto-advance if Show Start/End phase option is deselected while on a Start/End phase step.
+Standardized tooltip text separator as tilde.
+Options are now applied to the current state's display when Options is closed.
+Minor text revisions.
+Standardized naming of elements formerly identified as GAME_HELP to HELP_AREA.
+Avoid flashing of dialogues on startup by moving the hiding of elements to earlier in the code execution.
+Eliminated unneeded postPhaseChange step type.
+Display 1st player name with round information.
+Introduced Settings to hold game specific parameters that are not part of the StateHistory.
+Extracted game specific items from Options and placed in new Settings structure.
+Automatic activation/suppression of trace messages.
+Added Settings to browser local storage.
+Options are not cleared by clicking on version.
+Compendium/Companion preference now set in methods rather than button.
+Added fast fades.
+Corrected several issues with active players by adding new, always active player 0.</li>
 </ul>
 <h3 id="earlier-versions">Earlier versions</h3>
 <p>-- <strong>v1.8.4 Image Processing</strong></p>

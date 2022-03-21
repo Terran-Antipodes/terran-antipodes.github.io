@@ -1,7 +1,7 @@
-# GameTracker v2.2.0
+# GameTracker v2.2.1
 This website is an SPA intended to provide a non-commercial aid while playing the [Lord of the Rings LCG](https://www.fantasyflightgames.com/en/products/the-lord-of-the-rings-the-card-game/) from [Final Flight Games](https://www.fantasyflightgames.com/en/index/).
 
-- [GameTracker v2.2.0](#gametracker-v220)
+- [GameTracker v2.2.1](#gametracker-v221)
   - [Rights and Permissions](#rights-and-permissions)
   - [Using the GameTracker](#using-the-gametracker)
     - [Purpose](#purpose)
@@ -22,6 +22,7 @@ This website is an SPA intended to provide a non-commercial aid while playing th
       - [Sequence Options](#sequence-options)
     - [Version](#version)
   - [Version History](#version-history)
+      - [v2.2.1](#v221)
       - [v2.2.0](#v220)
       - [v2.1.0](#v210)
       - [v2.0.2](#v202)
@@ -178,6 +179,10 @@ Tips:
   - Hovering over the version number will cause the Sequence image, the Main Dialogue, and the Side tabs to disappear, allowing a clear view of the wonderful artwork that various artists have created for LOTR LCG and that I have included as backround images. 
 
 ## Version History
+
+#### v2.2.1
+
+- Bug fix: Side tabs did not retract in live environment.
 
 #### v2.2.0
 
