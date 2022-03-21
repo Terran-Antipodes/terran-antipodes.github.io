@@ -775,6 +775,10 @@
                     <label class='choiceHolder'>Show End/Start of phases as steps 
                         <input type='checkbox' name='showChangePhaseSteps'> 
                         <span class='indicator'></span> 
+                    </label>
+                    <label class='choiceHolder'>Save extended history
+                        <input type='checkbox' name='saveExtendedHistory'> 
+                        <span class='indicator'></span> 
                     </label> 
                 </div> 
             </form> 
@@ -789,10 +793,10 @@
         </div>
     </div> 
     <script> /*Set up */ 
-        var VERSION = 'v2.1.0'; 
+        const VERSION = 'v2.2.0x'; 
  
         /* define game steps */ 
-        var Sequence = JSON.parse( 
+        let Sequence = JSON.parse( 
             // boxes format (in px): [left, top, right, bottom] or [initialplayerbox, subsequentplayerbox, finalplayerbox] 
             // help format: [compendium_info, companion_info, action_window_info] 
             //              compendium_info:    [page number, pdf horiz offset, pdf offset, html jump index, html highlight index] 
@@ -1015,14 +1019,14 @@
         const IS_MOBILE = navigator.userAgentData.mobile; 
  
         /* Define webpage globals */ 
-        var SequenceImage; 
-        var SequenceImageSize; 
-        var ImageObserver; 
-        var OutlineBox; 
-        var StateStorageKey = 'LOTR_States'; 
-        var StateHistory; 
-        var SettingsStorageKey = 'LOTR_Settings';
-        var Settings = 
+        let SequenceImage; 
+        let SequenceImageSize; 
+        let ImageObserver; 
+        let OutlineBox; 
+        let StateStorageKey = 'LOTR_States'; 
+        let StateHistory; 
+        let SettingsStorageKey = 'LOTR_Settings';
+        let Settings = 
             {
                 preferCompendium: true,
                 campaign: false,
@@ -1030,17 +1034,18 @@
                 altSetup: false,
                 names: [], 
             }
-        var OptionsStorageKey = 'LOTR_Options'; 
-        var Options =  
+        let OptionsStorageKey = 'LOTR_Options'; 
+        let Options =  
             { 
                 compendiumFormat: 'HTML', 
                 showGeneralTips: true, 
                 showTabTips: true, 
                 showChangePhaseSteps: true, 
+                saveExtendedHistory: false,
                 altSetup: false,
             }; 
-        var RegexMultiplayerMatch = new RegExp("\\{([^\}\|]*)\\|([^\}\|]*)\\}"); 
-        var RegexSamePlayerMatch = new RegExp("\\{([^\}\|]*)\\=([^\}\|]*)\\}"); 
+        let RegexMultiplayerMatch = new RegExp("\\{([^\}\|]*)\\|([^\}\|]*)\\}"); 
+        let RegexSamePlayerMatch = new RegExp("\\{([^\}\|]*)\\=([^\}\|]*)\\}"); 
 
         // Ensure certain page elements are not visible on start up. 
         MODAL_BANNER.classList.add('hidden'); 
@@ -1074,9 +1079,9 @@
             logenter('newgame_setup('+token+','+nmbr+')'); 
             NAMES_AREA.innerHTML="";
             Settings.campaign = (token == 'c'); 
-            var prompt = '';
-            var closeTip = '(press to return without starting a new game)'; 
-            var buttons = []; 
+            let prompt = '';
+            let closeTip = '(press to return without starting a new game)'; 
+            let buttons = []; 
             switch (token) { 
                 case 'a': // a = ask for type of game
                     prompt = 'Is this new game part of a campaign?' 
@@ -1086,8 +1091,8 @@
                     break; 
                 case 'c': // c = campaign game
                 case 'r': // r = regular game
-                    var prompt = 'How many players in the ' + (Settings.campaign ? 'campaign' : 'new game') + '?'; 
-                    for (var x = 1; x <= MAXPLAYERS; x++) { 
+                    prompt = 'How many players in the ' + (Settings.campaign ? 'campaign' : 'new game') + '?'; 
+                    for (let x = 1; x <= MAXPLAYERS; x++) { 
                         buttons[x - 1] = gui_generateButton('&nbsp;' + x + '&nbsp;', 'newgame_setup("n",' + x + ')'); 
                     } 
                     break; 
@@ -1110,7 +1115,7 @@
 
         function game_setNames(numPlayers) {
             logenter('game_setNames(' + numPlayers + ')'); 
-            var prevNames = Settings.names;
+            let prevNames = Settings.names;
             for(let pn = 1; pn <= numPlayers; pn++) {
                 Settings.names[pn] = (pn < prevNames.length) ? prevNames[pn] : 'Player ' + pn;
             }
@@ -1136,13 +1141,13 @@
             Settings.names[player] = name;
         }
 
-        function game_swapNames(playerNum){
-            var aElement = document.getElementById('nameInp' + playerNum);
-            var bElement = document.getElementById('nameInp' + (playerNum + 1));
-            var aName = (Settings.names[playerNum + 1] == 'Player ' + (playerNum + 1))
+        function game_swapNames(playerNum) {
+            let aElement = document.getElementById('nameInp' + playerNum);
+            let bElement = document.getElementById('nameInp' + (playerNum + 1));
+            let aName = (Settings.names[playerNum + 1] == 'Player ' + (playerNum + 1))
                 ? 'Player ' + playerNum
                 : Settings.names[playerNum + 1];
-            var bName = (Settings.names[playerNum] == 'Player ' + playerNum)
+            let bName = (Settings.names[playerNum] == 'Player ' + playerNum)
                 ? 'Player ' + (playerNum + 1)
                 : Settings.names[playerNum];
             aElement.value = aName;
@@ -1154,7 +1159,7 @@
         function newgame_start(numPlayers) { // Resets the page for a new game 
             logenter('newgame_start('+numPlayers+')');
             NAMES_AREA.innerHTML="";
-            var newStateHash = (Math.pow(2, numPlayers + 1) - 1) * ACTIVE_PLAYERS_EVS.cram + 
+            let newStateHash = (Math.pow(2, numPlayers + 1) - 1) * ACTIVE_PLAYERS_EVS.cram + 
                                1 * FIRST_PLAYER_EVS.cram + 
                                1 * CURRENT_PLAYER_EVS.cram + 
                                0 * ROUND_EVS.cram + 
@@ -1168,7 +1173,7 @@
             
             gui_initializeSteps(); 
  
-            var start = 
+            let start = 
                 {  
                     stepNum: 0, 
                     player: 1, 
@@ -1185,9 +1190,9 @@
             logenter('game_advanceToStep('+newStepNum+')'); 
             // At this point we have not yet changed our state to be in the new step. 
             // We are gathering information about the current state we are moving from and the new state we are move to. 
-            var fromState = game_decodeStateHash(StateHistory[0]); 
+            let fromState = game_decodeStateHash(StateHistory[0]); 
  
-            var toState = { 
+            let toState = { 
                 active  : fromState.active, 
                 first   : newFirst ?? fromState.first, 
                 player  : newPlayer ?? fromState.player, 
@@ -1195,7 +1200,7 @@
                 stepNum : newStepNum, 
             }; 
  
-            var newStateHash = 
+            let newStateHash = 
                 parseInt(toState.active, 2) * ACTIVE_PLAYERS_EVS.cram + 
                 toState.first * FIRST_PLAYER_EVS.cram + 
                 toState.player * CURRENT_PLAYER_EVS.cram + 
@@ -1208,7 +1213,7 @@
  
         function game_autoAdvanceStep(initial) { 
             logenter('game_autoAdvanceStep');  
-            var relevant = { 
+            let relevant = { 
                 stepNum: initial.stepNum, 
                 player: initial.player, 
                 round: initial.round, 
@@ -1234,7 +1239,7 @@
  
         function game_backToPreviousStep() { 
             logenter('game_backToPreviousStep'); 
-            var toStateHash = StateHistory[1]; // the previous state is index 1 because we have already added the current state to the history. 
+            let toStateHash = StateHistory[1]; // the previous state is index 1 because we have already added the current state to the history. 
             StateHistory.splice(0, 2); // remove the current and previous state from the history. 
             localStorage.setItem(StateStorageKey, StateHistory.toString()); 
             game_setCurrentState(toStateHash); 
@@ -1243,9 +1248,9 @@
  
         function game_decodeStateHash(stateHash) { 
             logenter('game_decodeStateHash'); 
-            var players = modulo(stateHash, ACTIVE_PLAYERS_EVS.extract).toString(2); 
-            var stepNum = modulo(parseInt(stateHash, 10), STEPNUM_EVS.extract); 
-            var decoded = { 
+            let players = modulo(stateHash, ACTIVE_PLAYERS_EVS.extract).toString(2); 
+            let stepNum = modulo(parseInt(stateHash, 10), STEPNUM_EVS.extract); 
+            let decoded = { 
                 active     : players, 
                 first      : modulo(stateHash, FIRST_PLAYER_EVS.extract), 
                 player     : modulo(stateHash, CURRENT_PLAYER_EVS.extract), 
@@ -1259,24 +1264,24 @@
  
         function game_eliminatePlayer() { 
             logenter('game_eliminatePlayer'); 
-            var current = game_decodeStateHash(StateHistory[0]); 
-            var previous = game_decodeStateHash(StateHistory[1]); 
+            let current = game_decodeStateHash(StateHistory[0]); 
+            let previous = game_decodeStateHash(StateHistory[1]); 
  
-            var bannerInfo = game_setStandardBanners(current, previous); 
-            var banner = bannerInfo[0]; 
-            var changeBanner = bannerInfo[1]; 
-            var showClose = bannerInfo[2]; 
-            var header = bannerInfo[3]; 
+            let bannerInfo = game_setStandardBanners(current, previous); 
+            let banner = bannerInfo[0]; 
+            let changeBanner = bannerInfo[1]; 
+            let showClose = bannerInfo[2]; 
+            let header = bannerInfo[3]; 
  
             // text: 
-            var detail = 'Select the player to eliminate'; 
+            let detail = 'Select the player to eliminate'; 
  
             // buttons 
-            var buttons = []; 
-            var player = current.first; 
+            let buttons = []; 
+            let player = current.first; 
             do { 
-                var next = game_getNextPlayer(player, current.active); 
-                var newStateHash = 
+                let next = game_getNextPlayer(player, current.active); 
+                let newStateHash = 
                     (parseInt(current.active,2) - Math.pow(2, current.numPlayers-player)) * ACTIVE_PLAYERS_EVS.cram + 
                     ((player == current.first) ? next : current.first) * FIRST_PLAYER_EVS.cram + 
                     ((player == current.player) ? next : current.player) * CURRENT_PLAYER_EVS.cram + 
@@ -1289,24 +1294,24 @@
             buttons.push(gui_generateButton('Cancel', 'game_setCurrentState(' + StateHistory[0] + ',"true")')); 
  
             // SideTab: back 
-            var showBack = false; 
+            let showBack = false; 
  
             // SideTab: skip 
-            var skipInfo = null; 
+            let skipInfo = null; 
  
             // SideTab: eliminate player 
-            var showElim = false; 
+            let showElim = false; 
  
             // SideTab: victory points 
-            var showVP = false; 
+            let showVP = false; 
  
             // SideTab: out of sequence combat 
-            var showOOSEA = false; 
+            let showOOSEA = false; 
  
-            var SideTabInfo = [showBack, skipInfo, showElim, showVP, showOOSEA]; 
+            let SideTabInfo = [showBack, skipInfo, showElim, showVP, showOOSEA]; 
  
             // repositioning of the background image 
-            var box = null; 
+            let box = null; 
  
             gui_showModal(banner, changeBanner, showClose, header, detail, buttons, SideTabInfo, box); 
             logleave('game_eliminatePlayer'); 
@@ -1329,7 +1334,7 @@
                 text = (text.replace(RegexMultiplayerMatch, ((current.active.match(/1/g) || []).length == 2) ? "$1" : "$2")); 
  
                 // convert {a=b} to "a" if the player is the same as the last step's, and "b" if it is a different player.
-                var same = (previous == null) || 
+                let same = (previous == null) || 
                            ((current.player == previous.player) && (current.stepNum < previous.stepNum)) 
                 text = (text.replace(RegexSamePlayerMatch, same ? "$2" : "$1")); 
 
@@ -1342,8 +1347,8 @@
  
         function game_findStepNum(searchName) { 
             logenter('game_findStepNum('+searchName+')'); 
-            var step = null; 
-            var found = false; 
+            let step = null; 
+            let found = false; 
             for (step = 0; step < Sequence.steps.length; step++) { 
                 found = (Sequence.steps[step].name.startsWith(searchName));
                 if (found) { 
@@ -1355,8 +1360,8 @@
  
         function game_getNextPlayer(player, active, dir=1) { 
             logenter('game_getNextPlayer('+player+',"'+active+'",'+dir+')'); 
-            var next_player = player; 
-            var num_players = active.length - 1; 
+            let next_player = player; 
+            let num_players = active.length - 1; 
             do { 
                 next_player = modulo(next_player - 1 + dir, num_players) + 1;                 
             } 
@@ -1374,12 +1379,12 @@
  
         function game_setCurrentState(currentStateHash, isRefresh = false) { 
             logenter('game_setCurrentState'); 
-            var previous = game_decodeStateHash(StateHistory[0]); 
-            var current = game_decodeStateHash(currentStateHash); 
+            let previous = game_decodeStateHash(StateHistory[0]); 
+            let current = game_decodeStateHash(currentStateHash); 
             if (isRefresh) {
                 // If refresh is used on a step that should be skipped then advance to next step.
                 // This can occur when Options have been changed.
-                var advanced = game_autoAdvanceStep(current);
+                let advanced = game_autoAdvanceStep(current);
                 if (advanced.stepNum != current.stepNum) {
                     game_advanceToStep(advanced.stepNum);                   
                     return; // do not continue - game_advanceToStep() has made its own call to game_setCurrentState() to show the new step.
@@ -1397,16 +1402,16 @@
                 }); 
             } 
  
-            var bannerInfo = game_setStandardBanners(current, previous); 
-            var banner = bannerInfo[0]; 
-            var changeBanner = bannerInfo[1]; 
-            var showClose = bannerInfo[2]; 
-            var header = bannerInfo[3]; 
+            let bannerInfo = game_setStandardBanners(current, previous); 
+            let banner = bannerInfo[0]; 
+            let changeBanner = bannerInfo[1]; 
+            let showClose = bannerInfo[2]; 
+            let header = bannerInfo[3]; 
  
-            var isFirstPlayer = (current.player == current.first); 
-            var isLastPlayer = (current.player == game_getNextPlayer(current.first, current.active, -1)); 
+            let isFirstPlayer = (current.player == current.first); 
+            let isLastPlayer = (current.player == game_getNextPlayer(current.first, current.active, -1)); 
  
-            var next =  
+            let next =  
                 {  
                     stepNum: current.stepNum + 1, 
                     player: current.player, 
@@ -1441,16 +1446,16 @@
             next = game_autoAdvanceStep(next); 
              
             // stepName: Shows the current step. 
-            var stepName = game_expandText(current.step.name, current);  
+            let stepName = game_expandText(current.step.name, current);  
  
-            var hasActionWindow = (current.step.actionwindow || stepName.includes('Action Window')); 
-            var tipClass = (hasActionWindow && Options.showGeneralTips) ? ' class="tooltipContainer"' : ''; 
-            var spanTag = (hasActionWindow) ? '<span style="color:SpringGreen"' + tipClass + '>' : ''; 
-            var tipText = (stepName.startsWith('Special'))  
+            let hasActionWindow = (current.step.actionwindow || stepName.includes('Action Window')); 
+            let tipClass = (hasActionWindow && Options.showGeneralTips) ? ' class="tooltipContainer"' : ''; 
+            let spanTag = (hasActionWindow) ? '<span style="color:SpringGreen"' + tipClass + '>' : ''; 
+            let tipText = (stepName.startsWith('Special'))  
                 ? 'May play Ally, Attachment and/or Event cards' 
                 : 'May play Event cards only'; 
-            var spanEndTag = (hasActionWindow && Options.showGeneralTips) ? '<span class="tooltiptext">' + tipText + '</span></span>' : '</span>'; 
-            var detail = ''; 
+            let spanEndTag = (hasActionWindow && Options.showGeneralTips) ? '<span class="tooltiptext">' + tipText + '</span></span>' : '</span>'; 
+            let detail = ''; 
             switch (true) { 
                 case (stepName.includes('Action Window')): 
                     detail += spanTag + stepName + spanEndTag; 
@@ -1465,7 +1470,7 @@
             detail = game_expandText(detail, current); 
  
             // buttons 
-            var buttons = []; 
+            let buttons = []; 
             if ((current.numPlayers > 1) && ((current.step.type ?? '').includes('1st'))) {
                 for (pn = 1; pn <= current.numPlayers; pn++) {
                     buttons.push(gui_generateButton(Settings.names[pn], 'game_advanceToStep(' + next.stepNum + ',' + next.player + ',' + pn + ',' + next.round + ')')); 
@@ -1478,30 +1483,31 @@
             } 
  
             // SideTab: back 
-            var showBack = (current.stepNum > 1); 
+            let showBack = (current.stepNum > 1); 
  
             // SideTab: skip 
-            var skipInfo = null; 
+            let skipInfo = null; 
+            let skipText = '';
             switch (true) { 
                 case ((current.step.teamskip != null) && (isFirstPlayer)): 
                     skipText = game_expandText(current.step.teamskip[0], current); 
                     skipInfo = [skipText, current.step.skipto, current.first]; 
                     break; 
                 case (current.step.playerskip != null): 
-                    var skipText = game_expandText(current.step.playerskip, current, previous) 
-                    var skiptoStepNum = (isLastPlayer) ? current.step.playerloopend + 1 : current.stepNum; 
-                    var skiptoPlayer = game_getNextPlayer(current.player, current.active); 
+                    skipText = game_expandText(current.step.playerskip, current, previous) 
+                    let skiptoStepNum = (isLastPlayer) ? current.step.playerloopend + 1 : current.stepNum; 
+                    let skiptoPlayer = game_getNextPlayer(current.player, current.active); 
                     skipInfo = [skipText, skiptoStepNum, skiptoPlayer]; 
                     break; 
             } 
  
             // SideTab: eliminate player 
-            var showElim = (((current.active.match(/1/g) || []).length > 2) && (current.step.phase != "Setup")); 
+            let showElim = (((current.active.match(/1/g) || []).length > 2) && (current.step.phase != "Setup")); 
  
             // SideTab: out of sequence combat 
-            var showOOS = (current.step.phase != "Setup") && (!current.step.phase.startsWith("Special")); 
+            let showOOS = (current.step.phase != "Setup") && (!current.step.phase.startsWith("Special")); 
              
-            var SideTabInfo = [showBack, skipInfo, showElim, showOOS]; 
+            let SideTabInfo = [showBack, skipInfo, showElim, showOOS]; 
  
             // repositioning of the background image 
             switch (true) { 
@@ -1529,27 +1535,27 @@
         function game_setStandardBanners(currentState, previousState) { 
             logenter('game_setStandardBanners'); 
             // banner: shows the current round and first player
-            var banner = (currentState.round == 0) 
+            let banner = (currentState.round == 0) 
                 ? '' 
                 : 'Round ' + currentState.round + '{| : (' + Settings.names[currentState.first] + ' is 1st player)}'; 
  
             // change banner: shows when the phase changes (unless phase changes are shown as steps) 
-            var isPhaseChange = (currentState.step.phase != previousState.step.phase) &&  
+            let isPhaseChange = (currentState.step.phase != previousState.step.phase) &&  
                                 (!currentState.step.phase.startsWith('Special')) && 
                                 (!previousState.step.phase.startsWith('Special')); 
-            var changeBanner = (isPhaseChange && !Options.showChangePhaseSteps) 
+            let changeBanner = (isPhaseChange && !Options.showChangePhaseSteps) 
                 ? 'End of the ' + previousState.step.phase + ' Phase<br>' + 'Start of the ' + currentState.step.phase + ' Phase' 
                 : ''; 
  
             // close button: shows only for the new game state 
-            var showClose = false; 
+            let showClose = false; 
  
             // header: shows the current phase and stage 
-            var header =  
+            let header =  
                 ((currentState.step.phase == 'Change') ? '' : currentState.step.phase + ' Phase') + 
                 ((currentState.step.stage == null) ? '' : ': ' + currentState.step.stage + ' Stage'); 
  
-            var banners = [game_expandText(banner, currentState, previousState), 
+            let banners = [game_expandText(banner, currentState, previousState), 
                     changeBanner,  
                     showClose,  
                     header 
@@ -1559,7 +1565,7 @@
  
         function game_showCompanion(pageNum, event = null) { 
             logenter('game_showCompanion'); 
-            var address = 'https://lotr-lcg-quest-companion.gamersdungeon.net/#Rule'; 
+            let address = 'https://lotr-lcg-quest-companion.gamersdungeon.net/#Rule'; 
  
             HELP_AREA_DISPLAY.innerHTML = "<iframe src='" + address + pageNum + "' type='text/html'></iframe>"; 
             HELP_AREA.classList.remove('hidden'); 
@@ -1578,7 +1584,7 @@
  
         function game_showCompendium(helpInfo, event=null, changePref=true) { 
             logenter('game_showCompendium'); 
-            var address, fragment, query; 
+            let address, fragment, query; 
             switch(Options.compendiumFormat) { 
                 case 'HTML': 
                     address = './RulesCompendium_v2.0/Rules_Compendium_v2_0.html'; 
@@ -1609,10 +1615,10 @@
  
         function game_showHelp(stepText, helpLocations) { 
             logenter('game_showHelp'); 
-            var compendiumInfo = helpLocations[0]; 
-            var companionInfo = (helpLocations.length < 2) ? [] : helpLocations[1]; 
-            var actionWindowInfo = (helpLocations.length < 3) ? [] : helpLocations[2]; 
-            var tipText = (Options.showGeneralTips && !IS_MOBILE) ? 'Hold Alt while pressing the button to open help in a new tab' : ''; 
+            let compendiumInfo = helpLocations[0]; 
+            let companionInfo = (helpLocations.length < 2) ? [] : helpLocations[1]; 
+            let actionWindowInfo = (helpLocations.length < 3) ? [] : helpLocations[2]; 
+            let tipText = (Options.showGeneralTips && !IS_MOBILE) ? 'Hold Alt while pressing the button to open help in a new tab' : ''; 
             HELP_AREA_TEXT.innerHTML = 
                 stepText + 
                 '<div class="centredHolder">' + 
@@ -1635,8 +1641,8 @@
  
         function game_startOutOfSeqAttack(attacker) { 
             logenter('game_startOutOfSeqAttack'); 
-            var current = game_decodeStateHash(StateHistory[0]); 
-            var oosStart = game_findStepNum((attacker == 'enemy') ? 'Deal Shadow Card' : 'Declare Attacked Enemy and Attackers'); 
+            let current = game_decodeStateHash(StateHistory[0]); 
+            let oosStart = game_findStepNum((attacker == 'enemy') ? 'Deal Shadow Card' : 'Declare Attacked Enemy and Attackers'); 
             game_advanceToStep(oosStart); 
             logleave('game_startOutOfSeqAttack'); 
         } 
@@ -1654,7 +1660,7 @@
         function gui_loadBackground(url) { 
             logenter('gui_loadBackground'); 
             // Read any recorded history, options, and settings and display the game state. 
-            var read = localStorage.getItem(SettingsStorageKey);   
+            let read = localStorage.getItem(SettingsStorageKey);   
             if (read) { 
                 Settings = JSON.parse(read); 
             } 
@@ -1684,10 +1690,16 @@
 
         function gui_showLoadSave() {
             logenter('gui_showLoadSave');
-            var b36 = '';
+            let b36 = '';
             if (StateHistory) {
-                StateHistory.forEach(sh => b36 += parseInt(sh).toString(36) + ':');
-                b36.slice(0, -1);
+                let currentRound = game_decodeStateHash(StateHistory[0]).round;
+                for (let i = 0; i < StateHistory.length; i++) {
+                    if (!Options.saveExtendedHistory && ((currentRound - game_decodeStateHash(StateHistory[i]).round) > 1)) {
+                        break;
+                    }
+                    b36 += parseInt(StateHistory[i]).toString(36) + ':';
+                }
+                b36 = b36.slice(0, -1);
             }
             CODE_ERR.innerHTML = '';
             CODE_BOX.value = btoa(b36 + '|' + ((Settings) ? JSON.stringify(Settings) : ''));
@@ -1710,7 +1722,7 @@
                 if (!LOAD_AREA.contains(e.target)) { 
                     if (CODE_BOX.value.trim() != '') {
                         try {
-                            var saved = atob(CODE_BOX.value.trim()).split('|');
+                            let saved = atob(CODE_BOX.value.trim()).split('|');
                             if (saved[0] == '') {
                                 StateHistory = null;
                              } else {
@@ -1748,17 +1760,17 @@
 
         function gui_adjustBackground() { 
             logenter('gui_adjustBackground'); 
-            var pageTop = window.pageYOffset; 
-            var pageBottom = pageTop + window.innerHeight; 
+            let pageTop = window.pageYOffset; 
+            let pageBottom = pageTop + window.innerHeight; 
  
             // size the background images so that, when scrolling down, each image appears behind the corresponding area of the sequence. 
-            var bounds = SequenceImage.getBoundingClientRect(); 
-            var vscale = bounds.height / SequenceImageSize[0]; // vscale: 1px of the sequence image is being rendered as ?px high onscreen 
-            var offset = SEQUENCE_AREA.offsetTop 
-            var images = BACKGROUND_CONTAINER.getElementsByClassName('fixed'); 
-            for (var index = 0; index < images.length; index++) { 
-                var imageTop = Sequence.areas[index].voffset; 
-                var imageBottom = Sequence.areas[index + 1].voffset; 
+            let bounds = SequenceImage.getBoundingClientRect(); 
+            let vscale = bounds.height / SequenceImageSize[0]; // vscale: 1px of the sequence image is being rendered as ?px high onscreen 
+            let offset = SEQUENCE_AREA.offsetTop 
+            let images = BACKGROUND_CONTAINER.getElementsByClassName('fixed'); 
+            for (let index = 0; index < images.length; index++) { 
+                let imageTop = Sequence.areas[index].voffset; 
+                let imageBottom = Sequence.areas[index + 1].voffset; 
                 images[index].style.height = offset + (imageBottom - imageTop) * vscale + 'px'; 
                 images[index].style.backgroundSize = "cover"; 
                 offset = 0; 
@@ -1775,8 +1787,8 @@
  
         function gui_setBackgroundImages() { 
             logenter('gui_setBackgroundImages'); 
-            for (var index = 0; index < Sequence.areas.length - 1; index++) { 
-                var imageDiv = document.createElement('div'); 
+            for (let index = 0; index < Sequence.areas.length - 1; index++) { 
+                let imageDiv = document.createElement('div'); 
                 imageDiv.classList.add('fixed'); 
                 imageDiv.setAttribute('id', 'bg_' + index); 
                 BACKGROUND_CONTAINER.appendChild(imageDiv);  
@@ -1787,11 +1799,11 @@
  
         function gui_setBackgroundImageUrl(imageContainer) { 
             logenter('gui_setBackgroundImageUrl'); 
-            var round = (StateHistory) ? modulo(StateHistory[0], ROUND_EVS.extract) : 0; 
+            let round = (StateHistory) ? modulo(StateHistory[0], ROUND_EVS.extract) : 0; 
             offset = (round == 0) ? 1 : round * round; 
             imageIndex = imageContainer.id.split('_')[1] 
-            var selectionNum = modulo(Math.floor(Date.now() / 86400000) + offset, Sequence.areas[imageIndex].images.length); 
-            var selection = Sequence.areas[imageIndex].images[selectionNum]; 
+            let selectionNum = modulo(Math.floor(Date.now() / 86400000) + offset, Sequence.areas[imageIndex].images.length); 
+            let selection = Sequence.areas[imageIndex].images[selectionNum]; 
             if (!imageContainer.style.backgroundImage.includes(selection)) { 
                 imageContainer.style.backgroundImage = "url('https://images-cdn.fantasyflightgames.com/filer_public/" + selection + "')"; 
             } 
@@ -1845,19 +1857,19 @@
                 .concat(Sequence.oosPAttack); 
  
             // translate the step names that define loops into step numbers 
-            for (var step = 0; step < Sequence.steps.length; step++) { 
+            for (let step = 0; step < Sequence.steps.length; step++) { 
                 if (Sequence.steps[step].gameloop) { 
-                    var gameloopend = game_findStepNum(Sequence.steps[step].gameloop); 
+                    let gameloopend = game_findStepNum(Sequence.steps[step].gameloop); 
                     Sequence.steps[step].gameloopend = gameloopend; 
                     Sequence.steps[gameloopend].gameloopstart = step; 
                 } 
                 if (Sequence.steps[step].teamloop) { 
-                    var teamloopend = game_findStepNum(Sequence.steps[step].teamloop); 
+                    let teamloopend = game_findStepNum(Sequence.steps[step].teamloop); 
                     Sequence.steps[step].teamloopend = teamloopend; 
                     Sequence.steps[teamloopend].teamloopstart = step; 
                 } 
                 if (Sequence.steps[step].playerloop) { 
-                    var playerloopend = game_findStepNum(Sequence.steps[step].playerloop); 
+                    let playerloopend = game_findStepNum(Sequence.steps[step].playerloop); 
                     Sequence.steps[step].playerloopend = playerloopend; 
                     Sequence.steps[playerloopend].playerloopstart = step; 
                 } 
@@ -1898,8 +1910,8 @@
             } 
  
             // close button: 
-            var showClose = (typeof (closeInfo) == 'boolean') ? closeInfo : (showClose != ''); 
-            var closeTip = (Options.showGeneralTips && (typeof (closeInfo) == 'string')) ? closeInfo : ''; 
+            let showClose = (typeof (closeInfo) == 'boolean') ? closeInfo : (closeInfo != ''); 
+            let closeTip = (Options.showGeneralTips && (typeof (closeInfo) == 'string')) ? closeInfo : ''; 
             if (showClose) { // make the close <span> appear 
                 MODAL_CLOSE.innerHTML = '&times;' + ((closeTip == '') ? '' : '<span class="tooltiptext">' + closeTip + '</span>'); 
                 MODAL_CLOSE.style.display = 'block'; 
@@ -1925,10 +1937,10 @@
             buttons.forEach(b => MODAL_BUTTONS_AREA.innerHTML += b); 
  
             // SideTabs: 
-            var showBack = (SideTabInfo == null) ? false : SideTabInfo[0]; 
-            var skipInfo = (SideTabInfo == null) ? null : SideTabInfo[1]; 
-            var showElim = (SideTabInfo == null) ? false : SideTabInfo[2] 
-            var showOOS = (SideTabInfo == null) ? false : SideTabInfo[3]; 
+            let showBack = (SideTabInfo == null) ? false : SideTabInfo[0]; 
+            let skipInfo = (SideTabInfo == null) ? null : SideTabInfo[1]; 
+            let showElim = (SideTabInfo == null) ? false : SideTabInfo[2] 
+            let showOOS = (SideTabInfo == null) ? false : SideTabInfo[3]; 
  
             // SideTabs: new game: 
             gui_showSideTab(TAB_NEW, 'New Game', function () { newgame_setup('a'); }); 
@@ -1944,10 +1956,10 @@
             if (skipInfo == null) { 
                 gui_hideSideTab(TAB_SKIP); 
             } else { 
-                var skiptext = skipInfo[0].split('~')[0]; 
-                var skiptip = (skipInfo[0] + '~').split('~')[1]; 
-                var skipToStepNum = skipInfo[1]; 
-                var skipToPlayer = skipInfo[2]; 
+                let skiptext = skipInfo[0].split('~')[0]; 
+                let skiptip = (skipInfo[0] + '~').split('~')[1]; 
+                let skipToStepNum = skipInfo[1]; 
+                let skipToPlayer = skipInfo[2]; 
                 gui_showSideTab(TAB_SKIP, skiptext, function () { game_advanceToStep(skipToStepNum, skipToPlayer); }, skiptip, true); 
             } 
  
@@ -1989,25 +2001,25 @@
             if (OutlineBox == null) { 
                 GAME_OUTLINE.classList.add('hidden'); 
             } else { 
-                var bounds = SequenceImage.getBoundingClientRect(); 
-                var vscale = bounds.height / SequenceImageSize[0]; // factor: 1px of the sequence image is being rendered as ?px high onscreen 
-                var hscale = bounds.width / SequenceImageSize[1];  // factor: 1px of the sequence image is being rendered as ?px wide onscreen 
+                let bounds = SequenceImage.getBoundingClientRect(); 
+                let vscale = bounds.height / SequenceImageSize[0]; // factor: 1px of the sequence image is being rendered as ?px high onscreen 
+                let hscale = bounds.width / SequenceImageSize[1];  // factor: 1px of the sequence image is being rendered as ?px wide onscreen 
  
-                var modalBottom = Math.ceil(MODAL_DIALOGUE.offsetTop + MODAL_DIALOGUE.offsetHeight); 
-                var outlineOffset = Math.floor(Math.max(window.innerHeight / 20, 25)); // how many pixels from the bottom of the modal dialogue to where the current step will be shown. 
-                var sequenceAreaTargetOffset = Math.max((modalBottom + outlineOffset) - SEQUENCE_AREA.offsetTop, 0); // how many pixels from the top of the sequence image display area to where we want to scroll the current step to. 
+                let modalBottom = Math.ceil(MODAL_DIALOGUE.offsetTop + MODAL_DIALOGUE.offsetHeight); 
+                let outlineOffset = Math.floor(Math.max(window.innerHeight / 20, 25)); // how many pixels from the bottom of the modal dialogue to where the current step will be shown. 
+                let sequenceAreaTargetOffset = Math.max((modalBottom + outlineOffset) - SEQUENCE_AREA.offsetTop, 0); // how many pixels from the top of the sequence image display area to where we want to scroll the current step to. 
  
                 // scroll the sequence image to show the current step under the modal dialogue 
-                var sequenceImageOffsetTop = Math.max(OutlineBox[1] * vscale - sequenceAreaTargetOffset * vscale, 0); 
+                let sequenceImageOffsetTop = Math.max(OutlineBox[1] * vscale - sequenceAreaTargetOffset * vscale, 0); 
                 window.scrollTo({ 
                     top: sequenceImageOffsetTop, 
                     left: 0, 
                     behavior: 'smooth' 
                 }); 
  
-                var boxTop = OutlineBox[1] * vscale; // as measured from the top of the sequence image on the current display 
-                var boxHeight = (OutlineBox[3] - OutlineBox[1]) * vscale; 
-                var boxWidth = (OutlineBox[2] - OutlineBox[0]) * hscale; 
+                let boxTop = OutlineBox[1] * vscale; // as measured from the top of the sequence image on the current display 
+                let boxHeight = (OutlineBox[3] - OutlineBox[1]) * vscale; 
+                let boxWidth = (OutlineBox[2] - OutlineBox[0]) * hscale; 
  
                 GAME_OUTLINE.style.top = boxTop + 'px'; 
                 GAME_OUTLINE.style.height = boxHeight + 'px'; 
@@ -2029,7 +2041,7 @@
                     : '<span>' + textContent + '</span>'; 
                 tabElement.parentElement.onclick = onclick; 
                 tabElement.parentElement.classList.remove('hidden'); 
-                var notBeenExtended = !Settings.previouslyExtended.includes(textContent); 
+                let notBeenExtended = !Settings.previouslyExtended.includes(textContent); 
                 if (extend || notBeenExtended) { 
                     tabElement.classList.add('simhover'); 
                     gui_retractSideTab(tabElement); 
@@ -2059,7 +2071,7 @@
         } 
  
         async function gui_retractSideTab(SideTab) { 
-            var i = ind;log(' '.repeat(i)+'>gui_retractSideTab'); 
+            let i = ind;log(' '.repeat(i)+'>gui_retractSideTab'); 
             await sleep(5000); 
             SideTab.classList.remove('simhover'); 
             log(' '.repeat(i)+'<gui_retractSideTab'); 
@@ -2155,6 +2167,7 @@
             document.options.showTabTips.checked = Options.showTabTips; 
             document.options.altSetup.checked = Options.altSetup; 
             document.options.showChangePhaseSteps.checked = Options.showChangePhaseSteps; 
+            document.options.saveExtendedHistory.checked = Options.saveExtendedHistory;
             logleave('gui_setOptionsControls'); 
         } 
  
@@ -2166,6 +2179,7 @@
                 Options.showTabTips = document.options.showTabTips.checked; 
                 Options.altSetup = document.options.altSetup.checked; 
                 Options.showChangePhaseSteps = document.options.showChangePhaseSteps.checked; 
+                Options.saveExtendedHistory = document.options.saveExtendedHistory.checked;
             } 
             localStorage.setItem(OptionsStorageKey, JSON.stringify(Options)); 
             logleave('gui_recordOptions'); 
@@ -2173,15 +2187,15 @@
  
         function gui_generateButton(buttonText, onclick = null, btnClass = 'modalBtn', btnToolTip = '') { 
             logenter('gui_generateButton('+buttonText+')'); 
-            var ocevent = (onclick == null) ? '' : " onclick='" + onclick + "'"; 
-            var tt = ''; 
+            let ocevent = (onclick == null) ? '' : " onclick='" + onclick + "'"; 
+            let tt = ''; 
  
             if (Options.showGeneralTips && (btnToolTip != '')) { 
                 btnClass += ' tooltipContainer'; 
                 tt = '<span class="tooltiptext">' + btnToolTip + '</span>'; 
             } 
  
-            var buttonhtml = "<button type='button' class='" + btnClass + "'" + ocevent + '>' + buttonText + tt + '</button>';
+            let buttonhtml = "<button type='button' class='" + btnClass + "'" + ocevent + '>' + buttonText + tt + '</button>';
             return logleave(buttonhtml, 'gui_generateButton');  
         } 
  
