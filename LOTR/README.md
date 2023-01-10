@@ -1,37 +1,39 @@
 # GameTracker v2.2.1
+
 This website is an SPA intended to provide a non-commercial aid while playing the [Lord of the Rings LCG](https://www.fantasyflightgames.com/en/products/the-lord-of-the-rings-the-card-game/) from [Final Flight Games](https://www.fantasyflightgames.com/en/index/).
 
 - [GameTracker v2.2.1](#gametracker-v221)
   - [Rights and Permissions](#rights-and-permissions)
   - [Using the GameTracker](#using-the-gametracker)
-    - [Purpose](#purpose)
-    - [Screen Elements](#screen-elements)
-    - [Getting Started: New Game tab](#getting-started-new-game-tab)
-    - [Help](#help)
-    - [Side Tabs](#side-tabs)
-      - [Options tab](#options-tab)
-      - [About tab](#about-tab)
-      - [Back tab](#back-tab)
-      - [Load/Save](#loadsave)
-      - [Skip tab](#skip-tab)
-      - [Elimination](#elimination)
-      - [Out Of Sequence Enemy / Player Attack](#out-of-sequence-enemy--player-attack)
-    - [Options](#options)
-      - [Display the Compendium Rules as](#display-the-compendium-rules-as)
-      - [Show Tooltips](#show-tooltips)
-      - [Sequence Options](#sequence-options)
+    - [**Purpose**](#purpose)
+    - [**Screen Elements**](#screen-elements)
+    - [**Getting Started: New Game tab**](#getting-started-new-game-tab)
+    - [**Help**](#help)
+    - [**Side Tabs**](#side-tabs)
+      - [**Options tab**](#options-tab)
+      - [**About tab**](#about-tab)
+      - [**Back tab**](#back-tab)
+      - [**Load/Save tab**](#loadsave-tab)
+      - [**Skip tab**](#skip-tab)
+      - [**Elimination**](#elimination)
+      - [**Out Of Sequence Enemy / Player Attack**](#out-of-sequence-enemy--player-attack)
+    - [**Options**](#options)
+      - [**Display the Compendium Rules as**](#display-the-compendium-rules-as)
+      - [**Show Tooltips**](#show-tooltips)
+      - [**Sequence Options**](#sequence-options)
     - [Version](#version)
   - [Version History](#version-history)
-      - [v2.2.1](#v221)
-      - [v2.2.0](#v220)
-      - [v2.1.0](#v210)
-      - [v2.0.2](#v202)
-      - [v2.0.1](#v201)
+    - [v2.2.1](#v221)
+    - [v2.2.0](#v220)
+    - [v2.1.0](#v210)
+    - [v2.0.2](#v202)
+    - [v2.0.1](#v201)
     - [v2.0.0 Feature Complete Release](#v200-feature-complete-release)
     - [Earlier versions](#earlier-versions)
 
 ## Rights and Permissions
-The GameTracker webpage, and it's accompanying README markdown and HTML files are, the property of Clive Pottinger. Email any comments or concerns to terran.antipodes@gmail.com.
+
+The GameTracker webpage, and it's accompanying README markdown and HTML files, are the property of Clive Pottinger. Email any comments or concerns to terran.antipodes@gmail.com.
 
 All displayed images, arts, fonts and The Lord of The Rings: The Card Game are copyrighted at © Fantasy Flight Games.  
 
@@ -47,28 +49,30 @@ All Rights Reserved to their respective owners.
 
 ## Using the GameTracker
 
-### Purpose
+### **Purpose**
+
 I created the GameTracker when my wife and I started playing Lord Of The Rings LCG. There was a lot to learn and every time we had to clarify a rule we ended up reading cards, thumbing through rule books, and scouring the web. We often forgot where we were in the game and what to do next. So, I created the first GameTracker to help us remember.
 
-Over time the GameTracker evolved, and new features were added (and some removed). But I have tried to keep the purpose the same: to guide players through the sequence of steps in the game. The tracker does not help with how to use cards, how to interpret rules, or even what the players' threat levels are. It's only purpose is to let players know what is the next step in the game. 
+Over time the GameTracker evolved, and new features were added (and some removed). But I have tried to keep the purpose the same: to guide players through the sequence of steps in the game. The tracker does not help with how to use cards, how to interpret rules, or even what the players' threat levels are. It's only purpose is to let players know what is the next step in the game.
 
-### Screen Elements
+### **Screen Elements**
 
 When the GameTracker is opened, the following elements should be visible:
-  - Background images: a set of pictures from the LOTR LCG site that scroll with the page
-  - The Sequence image: shows all phases and steps of regular game-play starting with the "I. Resource Phase" and ending with "7.5 Refresh phase ends".
-  - Side tabs: coloured rectangles that expand when hovered over to allow various actions.
-    - Initially, the visible side tabs should include:
-      - [*New Game*](#getting-started-new-game-tab) (green)
-      - [*Options*](#options-tab) (teal)
-      - [*About*](#about-tab) (yellow)
-      - [*Load/Save*](#loadsave-tab) (fuscia - at the bottom of the screen)
-    - If you have already started a game, then other side tabs may also be visible.
-  - Main Dialogue: this won't be visible unless you have started a game.
-  - Pop ups: these will appear when certain side tabs are clicked ([*Options*](#options-tab), [*About*](#about-tab), [*Load/Save*](#loadsave-tab)).
-  - Version number: appears in the bottom left corner.
 
-### Getting Started: New Game tab
+- Background images: a set of pictures from the LOTR LCG site that scroll with the page
+- The Sequence image: shows all phases and steps of regular game-play starting with the "I. Resource Phase" and ending with "7.5 Refresh phase ends".
+- Side tabs: coloured rectangles that expand when hovered over to allow various actions.
+  - Initially, the visible side tabs should include:
+    - [*New Game*](#getting-started-new-game-tab) (green)
+    - [*Options*](#options-tab) (teal)
+    - [*About*](#about-tab) (yellow)
+    - [*Load/Save*](#loadsave-tab) (fuscia - at the bottom of the screen)
+  - If you have already started a game, then other side tabs may also be visible.
+- Main Dialogue: this won't be visible unless you have started a game.
+- Pop ups: these will appear when certain side tabs are clicked ([*Options*](#options-tab), [*About*](#about-tab), [*Load/Save*](#loadsave-tab)).
+- Version number: appears in the bottom left corner.
+
+### **Getting Started: New Game tab**
 
 Simply move to the [*New Game*](#getting-started-new-game-tab) side tab and click on it. The Main Dialogue will appear and guide you through setting up a game.
 
@@ -77,114 +81,125 @@ The player's progress throughout the game is recorded in the browser's internal 
 Note that starting a new game will overwrite any stored information about the previously active game.
 
 Tips:
-  - Treat the automatic **Do not rely only on the browser to record the game's progress**. Browser information can easily be cleared as a result of several factors unrelated to the use of the GameTracker. For that reason, the GameTracker includes a [*Load/Save*](#loadsave-tab) capability that should be used regularly to ensure that a game's progress is not lost.
 
-### Help 
+>- **Do not rely ONLY on the browser to record the game's progress**. Browser information can easily be cleared as a result of several factors unrelated to the use of the GameTracker.
+>- The GameTracker includes a [*Load/Save*](#loadsave-tab) capability that should be used regularly to ensure that a game's progress is not lost.
+
+### **Help**
 
 Detailed information on playing the game has been compiled by Mathiew Martin in two excellent sources: **The Rule Compendium** and **The Companion** website.
 
 Where possible, the GameTracker provides context sensitive links to these sources. Most steps will display a Help button which allows the players to view either source's notes about that particular step.
 
 Tips:
-  - Clicking on the green *Compendium* and *Companion* buttons will switch which source is used to show the help. This selection will be remembered the next time the Help button is used.
-  - The *Compendium* can be viewed in either PDF form or HTML. The HTML view will highlight the pertinent text in the display (see [*Options*](#options)).
-  - Click Alt + either button will open the source in a seperate browser tab.
-  - I **highly** recommend spending some some browsing through these sources. They contain a wealth of information about playing the game.
 
-### Side Tabs
+>- Clicking on the green *Compendium* or *Companion* buttons will switch which source is used to show the help. This selection will be remembered the next time the Help button is used.
+>- The *Compendium* can be viewed in either PDF form or HTML. The HTML view will highlight the pertinent text in the display (see [*Options*](#options)).
+>- Clicking Alt+*Compendium* or Alt+*Companion* will open the help information in a seperate browser tab.
+>- I **highly** recommend spending some some browsing through these websites. They contain a wealth of information about playing the game.
+
+### **Side Tabs**
+
 Tips:
-  - Some side tabs will appear as needed as the players advance through the game sequence, and disappear when appropriate.
-  - A side tab will automatically extend to show its text the first time appears while playing a game. After a few seconds, it will automatically retract.
-  - Some side tabs (particularly the [*Skip* tab](#skip-tab)) will extend each time it changes, just remind the players that it is there.
 
-#### Options tab
+>- Some side tabs will appear as needed as the players advance through the game sequence, and disappear when appropriate.
+>- A side tab will automatically extend to show its text the first time appears while playing a game. After a few seconds, it will automatically retract.
+>- Some side tabs (particularly the [*Skip* tab](#skip-tab)) will extend each time it changes, just remind the players that it is there.
+
+#### **Options tab**
 
 Clicking on the *Options* tab will reveal the Options pop up. The Options pop up allows some customization of how the GameTracker appears and operates. The various options and their effects are covered in the [Options](#options) section below.
 
-#### About tab
+#### **About tab**
 
 Well, if you are reading this, then you already know what that side tab is for.
 
-#### Back tab
+#### **Back tab**
 
 The *Back* side tab allows the players to go back to previous steps. Technically, using this tab is a LOTR "no-no" - but... everyone makes mistakes (especially when first learning to play).
 
 Tips:
-  - The GameTracker, by default, remembers all the steps executed in the current game (right back to the initial setup), which players were active and which were eliminated, and who was the First Player (see *Save extended history* under [*Options*](#options-tab) for limitations).
-  - Though the players can go backwards through the game, there is no mechanism for going forward again. Each time the *Back* side tab is used, any subsequent changes to the game (active/eliminated players, out-of-sequence attacks, etc) are forgotten.
 
-#### Load/Save
+ >- The GameTracker, by default, remembers the steps executed in the current game back to the start of the previous round, which players were active and which were eliminated, and who was the First Player (see *Save extended history* under [*Options*](#options-tab) for limitations).
+ >- Though the players can go backwards through the game, there is no mechanism for going forward again. Each time the *Back* side tab is used, any subsequent changes to the game (active/eliminated players, out-of-sequence attacks, etc) are forgotten.
 
-This side tab appears at the bottom of the screen. It can be used to obtain a block of text that has all the information about the current game in an encoded format. By copying this text block and saving it to disk, the players can be sure that they will not lose their game information if, for whatever reason, the browser's internal storage is cleared, or if they wish to use the GameTracker in a different browser or on a different device.
+#### **Load/Save tab**
 
-At any time, the players can paste a copy of a previously stored coded block of text and the GameTracker will then display the game step at the point where the code was generated.
+This side tab appears at the bottom of the screen. It can be used to obtain a block of text that has all the information about the current game in an encoded format (called a *save block*). By copying this save block and saving it to disk, the players can be sure that they will not lose their game information if, for whatever reason, the browser's internal storage is cleared, or if they wish to use the GameTracker in a different browser or on a different device.
+
+At any time, the players can paste a copy of a previously stored save block to replace the displayed block and the GameTracker will then display the game step at the point where the code was generated.
 
 Tips:
-  - The *Load/Save* pop up will automatically display the save code for the current game and will automatically select the entire block for copying (or deleting).
-  - When maunually selecting a block of text code to copy, take care to note that the entire block has been selected. Some methods of selecting blocks of text (e.g. double-clicking on the text) will, sometimes, not select the entire block. This will be the case if the block ends in one or more equals signs (=, ==).
 
-#### Skip tab
+>- The *Load/Save* pop up will automatically display the save block for the current game and will automatically select the entire block for copying (or deleting).
+>- When manually selecting a block of text code to copy, take care to note that the entire block has been selected. Some methods of selecting blocks of text (e.g. double-clicking on the text) will, sometimes, not select the entire block. This will be the case if the save block ends in one or more equals signs (=, ==).
 
-At various points during the progression of the game, the red *Skip* tab will appear on the left side of the screen. The wording on the tab is dependent on the situation and player, but it always has the same purpose: to allow the players to jump past a set of unnecessary steps. For instance, when the players reach the start of the Combat Phase, the *Skip* tab appears and reads "No Combat?". If the conditions of the game mean that no enemies will engage the players and the players will not be attacking, then the players may click on the *Skip* tab and jump directly to the Refresh Phase.
+#### **Skip tab**
 
-#### Elimination
+At various points during the progression of the game, the red *Skip* tab will appear on the left side of the screen. The wording on the tab is dependent on the situation and player, but it always has the same purpose: to allow the players to jump past a set of optional or unnecessary steps. For instance, when the players reach the start of the Combat Phase, the *Skip* tab appears and reads "No Combat?". If the conditions of the game mean that no enemies will engage the players and the players will not be attacking, then the players may click on the *Skip* tab and jump directly to the Refresh Phase.
+
+#### **Elimination**
 
 During multi-player games, the GameTracker tracks which of the players is the round's First Player. It also cycles through the players during any set of steps that are to be executed by each player in sequence (e.g. the Special Action Window, Combat).
 
-If a player is eliminated from the game (the player's heroes die, or the treat level rises to 50), the *Elimination* tab should be used to select a player to mark as no longer active. The GameTracker will then skip that player when determining the next player to perform a set of steps, and when the First Player token is to be passed.
+If a player is eliminated from the game (the player's heroes die, or the treat level rises to 50), the *Elimination* tab should be used to select a player and mark that player as no longer active in the game. The GameTracker will then skip that player when determining the next player to perform a set of steps, and when the First Player token is to be passed.
 
-#### Out Of Sequence Enemy / Player Attack
+#### **Out Of Sequence Enemy / Player Attack**
 
 If any card or card effects would cause an enemy to attack a player before, or after, the normal "Resolve Enemy Attacks" portion of the Combat Phase, then the players can click on the *Out Of Sequence Enemy Attack* tab to progress through the combat steps.
 
 Similarly, if any card or card effects would allow a player to attack an enemy before, or after, the normal "Player Attacks" portion of the Combat Phase, then the players can click on the *Out Of Sequence Player Attack* tab to progress through the combat steps.
 
-Once the combat is resolved, the GameTracker returns to the step that was interrupeted by the attack.
+Once the combat is resolved, the GameTracker returns to the step that was interrupted by the attack.
 
 Tips:
-  - The GameTracker does not support the interruption of one Out Of Sequence attack by another. Should such a situation arise, the players will have to handle the interrupting interruption on their own (sorry).
 
-### Options
+>- The GameTracker does not support the interruption of one Out Of Sequence attack by another. Should such a situation arise, the players will have to handle the interrupting interruption on their own (sorry).
 
-#### Display the Compendium Rules as
+### **Options**
+
+#### **Display the Compendium Rules as**
 
 This allows the players to choose whether the Help button will display the *Compendium* information as either a PDF or as HTML. The choice is completely up to the players as the information displayed is the same in either format.
 
 Tips:
-  - When HTML is chosen, the display will highlight the particular text on the page that is relevant to the step chosen.
 
-#### Show Tooltips
+>- When HTML is chosen, the display will highlight the particular text on the page that is relevant to the current step.
+
+#### **Show Tooltips**
 
 Tooltips appear as white text on a black background when the mouse hovers over certain screen elements. They can be useful when first using the GameTracker, and can be turned off here when no longer needed.
 
-#### Sequence Options
+#### **Sequence Options**
 
 The *Alternate Setup* option changes the sequence of steps in the intial Setup Phase of a new game. The regular setup sequence tends to require many reshufflings of the players' decks as well as the encounter decks. The alternate sequence was designed to minimimize that annoyance.
 
-The *Show End/Start of phases as steps* option will cause display an extra step whenever one phase is ending and a new one is starting. This does not affect the game play in any way.
+The *Show End/Start of phases as steps* option will cause the GameTracker to display an extra step whenever one phase is ending and a new one is starting. This does not affect the game play in any way.
 
-The *Save extended history* option determines how many previous steps are recorded in a save code (see [*Load/Save*](#loadsave-tab)). By default this is off, which means that the save code will contain information about the current and previous rounds only. If this option is selected then the save code will contain all currently available previous steps (potentially right back to the initial set up step).
+The *Save extended history* option determines how many previous steps are recorded in a save block (see [*Load/Save*](#loadsave-tab)). By default this is setting is off, which means that the save code will contain information about the current and previous rounds only. If this option is selected then the save code will contain all currently available previous steps (potentially right back to the initial set up step).
 
 Tips:
-  - Changing the option *Alternate Setup* option has no effect once a game has started. It is only applied when the [*New Game*](#getting-started-new-game-tab) side tab is used.
-  - Using the *Show End/Start of phases as steps* option to show the changes in phases can be a handy reminder to activate/deactive abilities, remove cards that only apply to the current phase, or to perform other tasks as various scenarios require.
-  - Using the *Save extended history* can produce extremely long save codes that may exceed the abililty of certain systems to handle. It is recommended to leave this option unselected.
+
+>- Changing the option *Alternate Setup* option has no effect once a game has started. It is only applied when the [*New Game*](#getting-started-new-game-tab) side tab is used.
+>- Using the *Show End/Start of phases as steps* option to show the changes in phases can be a handy reminder to activate/deactive abilities, remove cards that only apply to the current phase, or to perform other tasks as various scenarios require.
+>- Using the *Save extended history* can produce extremely long save codes that may exceed the abililty of certain systems to handle. It is recommended to leave this option unselected.
 
 ### Version
 
-The GameTracker's current version number is displayed in a small grey box in the bottom left of the screen. 
+The GameTracker's current version number is displayed in a small grey box in the bottom left of the screen.
 
 Tips:
-  - Please include the version number in any questions or bug reports you may send.
-  - Hovering over the version number will cause the Sequence image, the Main Dialogue, and the Side tabs to disappear, allowing a clear view of the wonderful artwork that various artists have created for LOTR LCG and that I have included as backround images. 
+
+>- Include the version number in any questions or bug reports you may send.
+>- Hovering over the version number will cause the Sequence image, the Main Dialogue, and the Side tabs to disappear, allowing a clear view of the wonderful artwork that various artists have created for LOTR LCG and that I have included as backround images.
 
 ## Version History
 
-#### v2.2.1
+### v2.2.1
 
 - Bug fix: Side tabs did not retract in live environment.
 
-#### v2.2.0
+### v2.2.0
 
 - Save code records last 2 rounds of information by default.
 - Added option to record all available history.
@@ -193,14 +208,14 @@ Tips:
   - Minor changes to [Rights and Permissions](#rights-and-permissions)
   - Bug Fix: save code included invalid initial state.
 
-#### v2.1.0
+### v2.1.0
 
 - Corrected versioning error (v2.0.2 should have been v.2.1.0).
 - Bug Fix: About HTML did not display because of GitHub requirement for matching case for file - names.
 
-#### v2.0.2
+### v2.0.2
 
-#### v2.0.1
+### v2.0.1
 
 - Internal:
   - Bug Fix: function logleave() did not return values in the live environment.
@@ -290,7 +305,7 @@ Tips:
   - While altering Victory Points, the new value was not clearly shown.
   - Option for displaying tooltips was not being correctly parsed.
   - Option for compendium/companion preferrence was not being correctly parsed.
-  - Option for compendium foramt was not being parsed.
+  - Option for compendium format was not being parsed.
 - Internal:
   - Added code to automatically upgrade data storage formats.
   - Added new format: options are stored separately from the state history, new storage location for state history.
@@ -378,22 +393,22 @@ Removed display of "TrackerDisplay" as tooltip.
 
 -- **v1.3.0**
 
-- Added ability to support option flags. 
-- Record Compendium vs Companion in option flags. 
+- Added ability to support option flags.
+- Record Compendium vs Companion in option flags.
 - Changed stylings and formatting of About display.
 - Internal changes to code styling (use of CAPS for constants, CamelCase for globals).
 
 -- **v1.2.5**
 
 - Added copyrights and attributions.
-- Added About button. 
-- Standardized SideNav naming conventions. 
+- Added About button.
+- Standardized SideNav naming conventions.
 - Removed unneeded stylings and classes.
 
 -- **v1.2.4**
 
-- Cleanup of data organization and comments. 
-- Removed obsolete CCS elements. 
+- Cleanup of data organization and comments.
+- Removed obsolete CCS elements.
 - Images change based on day rather than day of the month.
 
 -- **v1.2.3**
