@@ -126,7 +126,7 @@
             transform: rotate(45deg); 
         } 
  
-        /* Style to tooltip text */ 
+        /* Style the tooltip text */ 
         .tooltipContainer .tooltiptext { 
             position: absolute; 
             display: inline-block; 
@@ -793,7 +793,7 @@
         </div>
     </div> 
     <script> /*Set up */ 
-        const VERSION = 'v2.2.1'; 
+        const VERSION = 'v2.2.1x'; 
  
         /* define game steps */ 
         let Sequence = JSON.parse( 
@@ -1075,8 +1075,8 @@
         INFO_AREA.innerHTML = VERSION; 
         gui_loadBackground('./Images/RoundSequence.png'); 
  
-        function newgame_setup(token, nmbr) { // Open modal dialogue to get information about (or to cancel) a new game 
-            logenter('newgame_setup('+token+','+nmbr+')'); 
+        function newgame_setup(token, nmbrPlayers) { // Open modal dialogue to get information about (or to cancel) a new game 
+            logenter('newgame_setup('+token+','+nmbrPlayers+')'); 
             NAMES_AREA.innerHTML="";
             Settings.campaign = (token == 'c'); 
             let prompt = '';
@@ -1097,14 +1097,14 @@
                     } 
                     break; 
                 case 'n': // n = ask for names
-                    if (nmbr == 1) {
+                    if (nmbrPlayers == 1) {
                         Settings.names = [ '', 'The player'];
                         newgame_start(1);
-                        return; // do not continue - the modal should not be shown again.
+                        logleave('newgame_setup'); // do not continue - the modal should not be shown again.
                     }
                     prompt = "Enter the players' names";
-                    game_setNames(nmbr);
-                    buttons = [gui_generateButton('Done', 'NAMES_AREA.classList.add("hidden");newgame_start(' + nmbr + ')')]; 
+                    game_setNames(nmbrPlayers);
+                    buttons = [gui_generateButton('Done', 'NAMES_AREA.classList.add("hidden");newgame_start(' + nmbrPlayers + ')')]; 
                     closeTip = false;
                     break;
             } 
@@ -1222,7 +1222,7 @@
 
             while ((((Sequence.steps[relevant.stepNum].type ?? '').includes('campaign')) && !Settings.campaign) || // skip campaign steps when it is not a campaign game 
                     (((Sequence.steps[relevant.stepNum].type ?? '').includes('multi')) && (initial.active.length == 2)) || // skip multiplayer steps when there is only one player 
-                    ((Sequence.steps[relevant.stepNum].phase == 'Change') && !Options.showChangePhaseSteps) // skip phase end/start steps when they are to be shown 
+                    ((Sequence.steps[relevant.stepNum].phase == 'Change') && !Options.showChangePhaseSteps) // skip phase end/start steps when they are not to be shown 
                   ) { 
                 if (Sequence.steps[relevant.stepNum].gameloopstart != null) { 
                     relevant.stepNum = Sequence.steps[relevant.stepNum].gameloopstart; 
@@ -1322,13 +1322,13 @@
             logenter('game_expandText'); 
             if (text.includes('{')) { 
                 // convert {pn} to the current player's name 
-                text = text.replace('{pn}', Settings.names[current.player]); 
+                text = text.replace(/{pn}/g, Settings.names[current.player]); 
  
                 // convert {pn+} to the next player's name 
-                text = text.replace('{pn+}', Settings.names[game_getNextPlayer(current.player, current.active)]); 
+                text = text.replace(/{pn\+}/g, Settings.names[game_getNextPlayer(current.player, current.active)]); 
  
                 // convert {pp} to the current player's 'prefix' (used in displaying stage names) 
-                text = text.replace('{pp}', (current.numPlayers == 1) ? "" : Settings.names[current.player] + ": "); 
+                text = text.replace(/{pp}/g, (current.numPlayers == 1) ? "" : Settings.names[current.player] + ": "); 
                  
                 // convert {a|b} to "a" if there is only one player, and "b" if there are more than one 
                 text = (text.replace(RegexMultiplayerMatch, ((current.active.match(/1/g) || []).length == 2) ? "$1" : "$2")); 
@@ -1339,7 +1339,7 @@
                 text = (text.replace(RegexSamePlayerMatch, same ? "$2" : "$1")); 
 
                 // kludge fix for single-player references at start and mid-phrase.
-                text = text.replace(' The ', ' the ');
+                text = text.replace(/ The /g, / the /g);
             } 
  
             return logleave(text, 'game_expandText'); 
@@ -1387,7 +1387,7 @@
                 let advanced = game_autoAdvanceStep(current);
                 if (advanced.stepNum != current.stepNum) {
                     game_advanceToStep(advanced.stepNum);                   
-                    return; // do not continue - game_advanceToStep() has made its own call to game_setCurrentState() to show the new step.
+                    logleave('game_setCurrentState'); ; // do not continue - game_advanceToStep() has made its own call to game_setCurrentState() to show the new step.
                 }
             } else { 
                 // insert the new state and save it. 
@@ -1430,7 +1430,6 @@
                     break; 
                 case (current.step.gameloopstart != null): 
                     next.stepNum = current.step.gameloopstart; 
-                    nextPlayer = game_getnext.player(current); 
                     next.round = current.round + 1; 
                     next.first = game_getNextPlayer (current.first, current.active); 
                     break; 
@@ -2030,7 +2029,7 @@
         } 
  
         function gui_showSideTab(tabElement, textContent, onclick, tipText = null, extend = false) { 
-            logenter('gui_showSideTab'); 
+            logenter('gui_showSideTab('+textContent+')'); 
             if (tabElement == 'all') { // Used when all tabs are hidden (e.g. when showing help) 
                 document.getElementById('SideTabLeft').classList.remove('hidden'); 
                 document.getElementById('SideTabRight').classList.remove('hidden'); 
@@ -2041,6 +2040,7 @@
                     : '<span>' + textContent + '</span>'; 
                 tabElement.parentElement.onclick = onclick; 
                 tabElement.parentElement.classList.remove('hidden'); 
+                tabElement.content = textContent;
                 let notBeenExtended = !Settings.previouslyExtended.includes(textContent); 
                 if (extend || notBeenExtended) { 
                     tabElement.classList.add('simhover'); 
@@ -2051,11 +2051,11 @@
                     } 
                 } 
             } 
-            logleave('gui_showSideTab'); 
+            logleave('gui_showSideTab('+textContent+')');
         } 
  
         function gui_hideSideTab(tabElement) { 
-            logenter('gui_hideSideTab'); 
+            logenter('gui_hideSideTab('+tabElement.content+')'); 
             if (tabElement == 'all') { 
                 document.getElementById('SideTabLeft').classList.add('hidden'); 
                 document.getElementById('SideTabRight').classList.add('hidden'); 
@@ -2067,14 +2067,14 @@
                 tabElement.parentElement.classList.add('hidden'); 
                 tabElement.innerHTML = ''; 
             } 
-            logleave('gui_hideSideTab'); 
+            logleave('gui_hideSideTab('+tabElement.content+')');
         } 
  
         async function gui_retractSideTab(SideTab) { 
-            let i = ind;log(' '.repeat(i)+'>gui_retractSideTab'); 
+            logenter('gui_retractSideTab'); 
             await sleep(5000); 
             SideTab.classList.remove('simhover'); 
-            log(' '.repeat(i)+'<gui_retractSideTab'); 
+            logleave('gui_retractSideTab'); 
         } 
  
         function gui_showAbout() { 
@@ -2188,8 +2188,8 @@
         function gui_generateButton(buttonText, onclick = null, btnClass = 'modalBtn', btnToolTip = '') { 
             logenter('gui_generateButton('+buttonText+')'); 
             let ocevent = (onclick == null) ? '' : " onclick='" + onclick + "'"; 
-            let tt = ''; 
  
+            let tt = ''; 
             if (Options.showGeneralTips && (btnToolTip != '')) { 
                 btnClass += ' tooltipContainer'; 
                 tt = '<span class="tooltiptext">' + btnToolTip + '</span>'; 
