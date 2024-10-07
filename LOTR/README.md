@@ -197,7 +197,20 @@ Tips:
 
 ### v2.2.1
 
-- Bug fix: Side tabs did not retract in live environment.
+- Corrected displaying of player name.
+- Fixed kludge replacement of 'The'.
+- Minor corrections to README.
+
+- Internal
+  - Test Suite
+    - changed file format from .yaml to .md
+    - minor adjustments.
+  - Tracker
+    - changed variable\parameters from `nmbr` to `nmbrPlayers` for clarity.
+    - changed mid-function returns to `logleave` for better logging.
+    - minor comment changes.
+    - removed unnecessary variable nextPlayer.
+    - Added display of tab content to debugging messages.
 
 ### v2.2.0
 
