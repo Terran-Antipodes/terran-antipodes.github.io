@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-    <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>GameTracker v2&period;2&period;1</title>
-        <style>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>GameTracker v2&period;2&period;1</title>
+            <style>
 /* From extension vscode.github */
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
@@ -11,12 +11,14 @@
  *--------------------------------------------------------------------------------------------*/
 
 .vscode-dark img[src$=\#gh-light-mode-only],
-.vscode-light img[src$=\#gh-dark-mode-only] {
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
 	display: none;
 }
 
 </style>
-        
+            
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
 <style>
@@ -37,10 +39,106 @@
     pointer-events: none;
 }
 </style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
         
-    </head>
-    <body class="vscode-body vscode-light">
-        <h1 id="gametracker-v221">GameTracker v2.2.1</h1>
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="gametracker-v221">GameTracker v2.2.1</h1>
 <p>This website is an SPA intended to provide a non-commercial aid while playing the <a href="https://www.fantasyflightgames.com/en/products/the-lord-of-the-rings-the-card-game/">Lord of the Rings LCG</a> from <a href="https://www.fantasyflightgames.com/en/index/">Final Flight Games</a>.</p>
 <ul>
 <li><a href="#gametracker-v221">GameTracker v2.2.1</a>
@@ -141,7 +239,7 @@
 <li>Clicking on the green <em>Compendium</em> or <em>Companion</em> buttons will switch which source is used to show the help. This selection will be remembered the next time the Help button is used.</li>
 <li>The <em>Compendium</em> can be viewed in either PDF form or HTML. The HTML view will highlight the pertinent text in the display (see <a href="#options"><em>Options</em></a>).</li>
 <li>Clicking Alt+<em>Compendium</em> or Alt+<em>Companion</em> will open the help information in a seperate browser tab.</li>
-<li>I <strong>highly</strong> recommend spending some some browsing through these websites. They contain a wealth of information about playing the game.</li>
+<li>I <strong>highly</strong> recommend spending some time browsing through these websites. They contain a wealth of information about playing the game.</li>
 </ul>
 </blockquote>
 <h3 id="side-tabs"><strong>Side Tabs</strong></h3>
@@ -203,8 +301,8 @@
 <h4 id="show-tooltips"><strong>Show Tooltips</strong></h4>
 <p>Tooltips appear as white text on a black background when the mouse hovers over certain screen elements. They can be useful when first using the GameTracker, and can be turned off here when no longer needed.</p>
 <h4 id="sequence-options"><strong>Sequence Options</strong></h4>
-<p>The <em>Alternate Setup</em> option changes the sequence of steps in the intial Setup Phase of a new game. The regular setup sequence tends to require many reshufflings of the players' decks as well as the encounter decks. The alternate sequence was designed to minimimize that annoyance.</p>
-<p>The <em>Show End/Start of phases as steps</em> option will cause the GameTracker to display an extra step whenever one phase is ending and a new one is starting. This does not affect the game play in any way.</p>
+<p>The <em>Alternate Setup</em> option changes the sequence of steps in the intial Setup Phase of a new game. The regular setup sequence tends to require many reshufflings of the players' decks as well as the encounter decks. The alternate sequence was designed by me to minimimize that annoyance.</p>
+<p>The <em>Show End/Start of phases as steps</em> option will cause the GameTracker to display an extra step whenever one phase is ending and a new one is starting. This does not affect the game play in any way. Its intention is to serve as a reminder to players to check for any activity that may be required at the start or end of phase (e.g. removing the +1 willpower gained by each character after using Faramir's action).</p>
 <p>The <em>Save extended history</em> option determines how many previous steps are recorded in a save block (see <a href="#loadsave-tab"><em>Load/Save</em></a>). By default this is setting is off, which means that the save code will contain information about the current and previous rounds only. If this option is selected then the save code will contain all currently available previous steps (potentially right back to the initial set up step).</p>
 <p>Tips:</p>
 <blockquote>
@@ -508,7 +606,7 @@ Removed display of &quot;TrackerDisplay&quot; as tooltip.</li>
 <li>Help button to display online Companion links.</li>
 </ul>
 
-        
-        
-    </body>
-    </html>
+            
+            
+        </body>
+        </html>

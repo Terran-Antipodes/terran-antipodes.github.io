@@ -96,7 +96,7 @@ Tips:
 >- Clicking on the green *Compendium* or *Companion* buttons will switch which source is used to show the help. This selection will be remembered the next time the Help button is used.
 >- The *Compendium* can be viewed in either PDF form or HTML. The HTML view will highlight the pertinent text in the display (see [*Options*](#options)).
 >- Clicking Alt+*Compendium* or Alt+*Companion* will open the help information in a seperate browser tab.
->- I **highly** recommend spending some some browsing through these websites. They contain a wealth of information about playing the game.
+>- I **highly** recommend spending some time browsing through these websites. They contain a wealth of information about playing the game.
 
 ### **Side Tabs**
 
@@ -172,9 +172,9 @@ Tooltips appear as white text on a black background when the mouse hovers over c
 
 #### **Sequence Options**
 
-The *Alternate Setup* option changes the sequence of steps in the intial Setup Phase of a new game. The regular setup sequence tends to require many reshufflings of the players' decks as well as the encounter decks. The alternate sequence was designed to minimimize that annoyance.
+The *Alternate Setup* option changes the sequence of steps in the intial Setup Phase of a new game. The regular setup sequence tends to require many reshufflings of the players' decks as well as the encounter decks. The alternate sequence was designed by me to minimimize that annoyance.
 
-The *Show End/Start of phases as steps* option will cause the GameTracker to display an extra step whenever one phase is ending and a new one is starting. This does not affect the game play in any way.
+The *Show End/Start of phases as steps* option will cause the GameTracker to display an extra step whenever one phase is ending and a new one is starting. This does not affect the game play in any way. Its intention is to serve as a reminder to players to check for any activity that may be required at the start or end of phase (e.g. removing the +1 willpower gained by each character after using Faramir's action).
 
 The *Save extended history* option determines how many previous steps are recorded in a save block (see [*Load/Save*](#loadsave-tab)). By default this is setting is off, which means that the save code will contain information about the current and previous rounds only. If this option is selected then the save code will contain all currently available previous steps (potentially right back to the initial set up step).
 
