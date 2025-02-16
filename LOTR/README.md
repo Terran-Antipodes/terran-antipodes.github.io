@@ -1,8 +1,8 @@
-# GameTracker v2.2.1
+# GameTracker v2.2.2
 
 This website is an SPA intended to provide a non-commercial aid while playing the [Lord of the Rings LCG](https://www.fantasyflightgames.com/en/products/the-lord-of-the-rings-the-card-game/) from [Final Flight Games](https://www.fantasyflightgames.com/en/index/).
 
-- [GameTracker v2.2.1](#gametracker-v221)
+- [GameTracker v2.2.2](#gametracker-v222)
   - [Rights and Permissions](#rights-and-permissions)
   - [Using the GameTracker](#using-the-gametracker)
     - [**Purpose**](#purpose)
@@ -23,6 +23,7 @@ This website is an SPA intended to provide a non-commercial aid while playing th
       - [**Sequence Options**](#sequence-options)
     - [Version](#version)
   - [Version History](#version-history)
+    - [v2.2.2](#v222)
     - [v2.2.1](#v221)
     - [v2.2.0](#v220)
     - [v2.1.0](#v210)
@@ -87,9 +88,11 @@ Tips:
 
 ### **Help**
 
-Detailed information on playing the game has been compiled by Mathiew Martin in two excellent sources: **The Rule Compendium** and **The Companion** website.
+Detailed information on playing the game has been compiled by Mathiew Martin in two excellent sources: **The Rule Compendium** and [**The Companion**][2] website.
 
 Where possible, the GameTracker provides context sensitive links to these sources. Most steps will display a Help button which allows the players to view either source's notes about that particular step.
+
+[2]: <https://lotr-lcg-quest-companion.gamersdungeon.net/>
 
 Tips:
 
@@ -194,6 +197,12 @@ Tips:
 >- Hovering over the version number will cause the Sequence image, the Main Dialogue, and the Side tabs to disappear, allowing a clear view of the wonderful artwork that various artists have created for LOTR LCG and that I have included as backround images.
 
 ## Version History
+
+### v2.2.2
+
+- Bug fix: The Special Action Window in the Planning Phase sometimes skipped a player.
+  - Cause: When advancing to the next round, the active player was not set to the new 1st player.
+- Added link to the Companion website to documentation.
 
 ### v2.2.1
 

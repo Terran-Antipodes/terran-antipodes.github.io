@@ -1,6 +1,5 @@
 <!DOCTYPE HTML> 
-<html> 
- 
+<html>  
 <head> 
     <style> /* General styling */ 
         html { 
@@ -793,7 +792,7 @@
         </div>
     </div> 
     <script> /*Set up */ 
-        const VERSION = 'v2.2.1'; 
+        const VERSION = 'v2.2.2x'; 
  
         /* define game steps */ 
         let Sequence = JSON.parse( 
@@ -1431,7 +1430,8 @@
                 case (current.step.gameloopstart != null): 
                     next.stepNum = current.step.gameloopstart; 
                     next.round = current.round + 1; 
-                    next.first = game_getNextPlayer (current.first, current.active); 
+                    next.first = game_getNextPlayer (current.first, current.active);
+                    next.player = next.first;
                     break; 
                 case (current.step.oosReturn != null):
                     next.stepNum = game_decodeStateHash(StateHistory[current.step.oosReturn]).stepNum;
